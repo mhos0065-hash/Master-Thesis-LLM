@@ -1,0 +1,3 @@
+[from fresh profiler run]
+
+The dataset contains various columns with different data types, a specific number of rows, and a few sample rows for inspection.

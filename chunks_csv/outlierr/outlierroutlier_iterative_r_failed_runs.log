@@ -1,0 +1,9 @@
+
+[2026-08-07T12:36:29.766224+00:00] FAILED: mode=single model=openai/o4-mini chunk=outlierr_2021_no2_kingston_upon_thames
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_outlier_iterative_r.py", line 104, in <module>
+    run_one(cid, manifest[cid], args.model)
+                 ~~~~~~~~^^^^^
+KeyError: 'outlierr_2021_no2_kingston_upon_thames'
+
+----------------------------------------------------------------------

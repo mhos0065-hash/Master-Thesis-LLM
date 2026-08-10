@@ -1,0 +1,5 @@
+1. Load the crime rate data for the 33 London boroughs and the neighbor adjacency list
+2. Calculate Global Moran's I statistic using the crime rates as the variable of interest and the neighbor relationships as the spatial weights matrix
+3. Perform a permutation test with at least 500 random shuffles to determine the p-value for the Moran's I statistic
+4. Check if the p-value is statistically significant (p < 0.05) and interpret the Moran's I value (positive = clustered, negative = dispersed, near zero = random)
+5. Output the Moran's I value and p-value to determine if crime rates are spatially clustered or randomly distributed

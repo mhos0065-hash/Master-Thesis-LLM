@@ -1,0 +1,8 @@
+StartBorough,EndBorough,n_trips,distance_km
+Islington,Camden,3042,1.72056477228639
+Islington,City of London,2873,1.55185447811848
+Islington,Hackney,2206,1.71252343854985
+Islington,Kensington and Chelsea,49,6.62815135824047
+Islington,Lambeth,850,3.79508586624884
+Islington,Wandsworth,21,8.11619462488944
+Islington,Westminster,1895,3.86094385410883

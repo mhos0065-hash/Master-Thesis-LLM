@@ -1,0 +1,1 @@
+CLUSTERED (Moran's I = <value>, p = <value>) or NOT CLUSTERED (Moran's I = <value>, p = <value>)

@@ -1,0 +1,6 @@
+StartBorough,EndBorough,n_trips,distance_km
+Lambeth,City of London,3852,2.84755985433688
+Lambeth,Islington,754,3.79508586624884
+Lambeth,Kensington and Chelsea,385,4.73221244306424
+Lambeth,Southwark,2591,1.87217776185284
+Lambeth,Wandsworth,722,4.79528940548914

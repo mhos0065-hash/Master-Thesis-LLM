@@ -1,0 +1,9 @@
+year,window_id,window_start,window_end,Indicator,Moran_I,Expected_I,Variance,p_value_MC,p_value_std,n_missing,Significant,Interpretation
+2016,w000,10/01/2016,16/01/2016,DeparturesPerStation,0.2834,-0.0909,0.028806,0.02,0.0137,0,Yes,Moderate clustering
+2016,w001,11/01/2016,17/01/2016,DeparturesPerStation,0.3001,-0.0909,0.029291,0.018,0.0112,0,Yes,Strong clustering
+2016,w002,12/01/2016,18/01/2016,DeparturesPerStation,0.3013,-0.0909,0.029336,0.016,0.011,0,Yes,Strong clustering
+2016,w003,13/01/2016,19/01/2016,DeparturesPerStation,0.3062,-0.0909,0.029471,0.012,0.0104,0,Yes,Strong clustering
+2016,w004,14/01/2016,20/01/2016,DeparturesPerStation,0.3172,-0.0909,0.02979,0.012,0.009,0,Yes,Strong clustering
+2016,w005,15/01/2016,21/01/2016,DeparturesPerStation,0.3252,-0.0909,0.030201,0.013,0.0083,0,Yes,Strong clustering
+2016,w006,16/01/2016,22/01/2016,DeparturesPerStation,0.3324,-0.0909,0.030527,0.009,0.0077,0,Yes,Strong clustering
+2016,w007,17/01/2016,23/01/2016,DeparturesPerStation,0.3671,-0.0909,0.032004,0.013,0.0052,0,Yes,Strong clustering

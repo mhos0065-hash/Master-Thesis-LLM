@@ -1,0 +1,1 @@
+Follow the above plan to compute Moran's I and determine spatial clustering.

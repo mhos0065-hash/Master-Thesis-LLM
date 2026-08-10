@@ -1,0 +1,11 @@
+1. Load the crime rate data (column: 'crime_rate') and neighbor relationships (columns: 'borough' and 'neighbor') into pandas DataFrames
+2. Create a binary spatial weights matrix W where W[i,j] = 1 if borough i and j are neighbors, else 0 (symmetric, diagonal=0)
+3. Calculate Global Moran's I using the formula: I = (N/W0) * ΣΣ w_ij*(x_i - x̄)*(x_j - x̄) / Σ(x_i - x̄)^2 where W0 = ΣΣ w_ij
+4. Perform a permutation test (500+ shuffles) to calculate p-value by randomly shuffling crime rates and recomputing Moran's I each time
+5. Compare the original Moran's I to the distribution of permuted values - if original I is in top/bottom 2.5% of distribution (p<0.05), conclude clustering exists
+
+The Coder should verify:
+- W matrix is properly constructed (symmetric, zero diagonal)
+- Crime rates are properly standardized (mean-centered)
+- Permutation test uses sufficient shuffles (≥500)
+- Moran's I calculation matches the standard formula

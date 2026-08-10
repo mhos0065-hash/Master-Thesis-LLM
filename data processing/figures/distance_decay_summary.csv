@@ -1,0 +1,2 @@
+"n_borough_pairs","slope_beta","slope_p_value","r_squared","pearson_correlation","significant","interpretation"
+117,-3.243,0,0.6398,-0.7999,"Yes","DISTANCE_DECAY_PRESENT -- trip volume significantly decreases with distance (real gravity-model relationship)"

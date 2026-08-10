@@ -1,0 +1,6 @@
+StartBorough,EndBorough,n_trips,distance_km
+Hackney,Camden,1265,3.43295765834056
+Hackney,City of London,2148,1.99950303188025
+Hackney,Islington,2307,1.71252343854985
+Hackney,Newham,17,4.76807821958086
+Hackney,Westminster,631,5.50252075693848

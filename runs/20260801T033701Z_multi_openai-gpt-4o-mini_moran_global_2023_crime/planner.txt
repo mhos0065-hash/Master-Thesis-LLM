@@ -1,0 +1,5 @@
+1. Extract the crime rate data for the 33 London boroughs from the dataset, ensuring it is in a suitable format (e.g., a pandas Series).
+2. Create a spatial weights matrix based on the geographic neighbors of each borough, where each borough is represented as a row and its neighbors are indicated in the matrix.
+3. Compute the Global Moran's I statistic using the crime rate data and the spatial weights matrix, following the formula for Moran's I.
+4. Perform a permutation/randomization test with at least 500 shuffles to assess the significance of the computed Moran's I, comparing the observed value to the distribution of values obtained from the randomizations.
+5. Determine if the p-value from the permutation test is less than 0.05 to conclude whether the crime rates are spatially clustered or not, and report the computed Moran's I and p-value.

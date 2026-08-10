@@ -1,0 +1,9 @@
+mode,model,insight_type,modality,n,n_ambiguous,pct_with_evidence,accuracy,precision,recall,f1
+single,deepseek/deepseek-chat-v3-0324,spatial_correlation,spatial,74,22,0.459,0.405,0.714,0.405,0.517
+single,deepseek/deepseek-r1-0528,spatial_correlation,spatial,74,6,0.797,0.703,0.75,0.73,0.74
+single,meta-llama/llama-3.1-8b-instruct,spatial_correlation,spatial,74,22,0.081,0.23,0.0,0.0,0.0
+single,openai/gpt-4,spatial_correlation,spatial,74,35,0.027,0.162,0.0,0.0,0.0
+single,openai/gpt-4o-mini,spatial_correlation,spatial,74,21,0.176,0.392,0.75,0.324,0.453
+single,openai/o3,spatial_correlation,spatial,74,11,0.365,0.405,0.6,0.162,0.255
+single,openai/o4-mini,spatial_correlation,spatial,74,1,0.865,0.797,0.806,0.784,0.795
+single,qwen/qwen3-32b,spatial_correlation,spatial,74,1,0.716,0.527,0.552,0.432,0.485

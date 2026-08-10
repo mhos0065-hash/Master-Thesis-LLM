@@ -1,0 +1,1 @@
+Follow the above plan to compute Moran's I and its significance, and determine whether crime rates are CLUSTERED or NOT CLUSTERED.

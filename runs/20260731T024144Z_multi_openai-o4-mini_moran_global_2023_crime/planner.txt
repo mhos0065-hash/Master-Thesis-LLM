@@ -1,0 +1,4 @@
+1. Load the borough dataset and extract the “crime_rate” column and the “neighbors” list for each borough.
+2. Construct a binary spatial weights matrix W where W[i,j]=1 if borough j appears in borough i’s neighbors list (0 otherwise), then row-standardize W.
+3. Use PySAL’s esda.Moran (or equivalent) to compute Global Moran’s I on “crime_rate” with 999 random permutations to obtain I and its p-value.
+4. Check significance: if p-value < 0.05 conclude clustered; otherwise conclude not clustered.

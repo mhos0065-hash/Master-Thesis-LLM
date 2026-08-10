@@ -1,0 +1,10 @@
+1. **Load and align data**: Extract the crime rate column (e.g., `crime_rate`) and borough names from the dataset. Map each borough to a numerical index. Use the neighbor list to build a symmetric binary adjacency matrix (33×33) where `W[i,j] = 1` if boroughs i and j are neighbors (0 otherwise, including diagonals). Row-standardize the matrix (each row sums to 1).  
+2. **Compute observed Moran's I**: Calculate the mean crime rate. Compute deviations from the mean for each borough. Calculate the denominator as the sum of squared deviations. Compute the numerator as the double sum of `W[i,j] * deviation[i] * deviation[j]` across all i,j pairs. Divide numerator by denominator to get Moran's I.  
+3. **Permutation test (500+ shuffles)**: For each of 500 permutations, shuffle the crime rate vector while keeping the adjacency matrix fixed. Recompute Moran's I for each shuffled dataset. Count permutations where the permuted I is ≥ the observed I (right-tailed test). Calculate p-value as `(count + 1) / 501`.  
+4. **Conclusion**: If observed Moran's I > 0 and p-value < 0.05, conclude "CLUSTERED"; otherwise "NOT CLUSTERED". Report Moran's I and p-value in the final answer.  
+
+Acceptance criteria:  
+- Adjacency matrix must be symmetric with 0 diagonals.  
+- Row-standardization ensures each row sums to 1.  
+- Permutations must fully randomize crime rates (no replacement).  
+- Use ≥500 permutations for stable p-values.

@@ -1,0 +1,7 @@
+1. Calculate for each borough:
+   a. Departures = count of rows where StartBorough = borough  
+   b. Self-contained = count where StartBorough = EndBorough = borough
+2. Compute ArrivalShare for each borough = (count of rows where EndBorough = borough) / (total trip count).
+3. For each borough, compute Expected = Departures × ArrivalShare and Self-Containment Index = Self-contained / Expected; assemble a table with borough and SCI.
+4. Load the borough adjacency list into a spatial weights matrix (binary contiguity); join weights to the SCI table.
+5. Calculate Global Moran’s I on the SCI values using the weights matrix; report I and p-value and check p<0.05 for significant clustering.

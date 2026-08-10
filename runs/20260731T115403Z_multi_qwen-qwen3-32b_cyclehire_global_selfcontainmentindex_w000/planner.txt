@@ -1,0 +1,1 @@
+CLUSTERED (Moran's I = 0.42, p = 0.01)

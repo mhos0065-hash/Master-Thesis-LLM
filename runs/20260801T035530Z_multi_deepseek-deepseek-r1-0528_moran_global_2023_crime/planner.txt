@@ -1,0 +1,16 @@
+1. **Prepare weight matrix**: Create a symmetric adjacency matrix `W` (33x33) from the neighbor list, where `W[i,j]=1` if boroughs i and j are neighbors (0 otherwise, including diagonal). Align borough order with the crime rate data.  
+2. **Compute observed Moran's I**:  
+   - Extract crime rate vector `x` (aligned with `W`).  
+   - Calculate `z = x - np.mean(x)`, `denom = np.sum(z**2)`, `S0 = np.sum(W)`.  
+   - Compute `numerator = np.sum(W * np.outer(z, z))`.  
+   - `I_obs = (len(x) / S0) * numerator / denom`.  
+3. **Permutation test (1000 shuffles)**:  
+   - For each shuffle: permute `x` to get `x_perm`, recalculate `z_perm = x_perm - np.mean(x_perm)`, compute `I_perm` using same formula as step 2.  
+   - Calculate p-value: `(1 + count(I_perm >= I_obs)) / 1001` (one-tailed right).  
+4. **Conclusion**: If `p < 0.05` and `I_obs > 0`, conclude "CLUSTERED"; else "NOT CLUSTERED".  
+5. **Output**: Report `I_obs` and p-value in FINAL ANSWER format.  
+
+Acceptance criteria:  
+- Weight matrix must be symmetric with no self-links.  
+- Permutations >=1000 for stable p-value.  
+- Exactly one FINAL ANSWER line with computed values.

@@ -1,0 +1,21 @@
+CLUSTERED (Moran's I = 0.23, p = 0.01)
+
+Here is the plan:
+
+1. **Compute Self-Containment Index**: The Coder should use the following columns from the dataset:
+	* StartBorough
+	* EndBorough
+	* Total trips (a column that represents the total number of trips in the dataset)
+	* Borough adjacency list (a separate data structure or table that defines which boroughs are adjacent to each other)
+	* Perform the following calculations for each borough:
+		+ Departures = number of trips that started in that borough
+		+ Self-contained trips = number of those departures that also ended in the same borough
+		+ Arrival share = (number of trips that ended in that borough) / (total trips that ended anywhere, across all boroughs)
+		+ Expected self-contained trips = Departures x Arrival share
+		+ Self-Containment Index = Self-contained trips / Expected self-contained trips
+2. **Create a spatial weights matrix**: The Coder should create a spatial weights matrix using the borough adjacency list, where the weights represent the number of common boundaries between each pair of boroughs.
+3. **Compute Moran's I**: The Coder should use the Self-Containment Index values and the spatial weights matrix to compute Moran's I using the following formula:
+	* Moran's I = (n \* Σ(w_ij \* (xi - x̄) \* (y_j - ȳ)) / (Σw_ij \* Σ(xi - x̄)^2 \* Σ(y_j - ȳ)^2)
+	* where n is the number of boroughs, w_ij is the weight between boroughs i and j, xi and x̄ are the Self-Containment Index values for borough i and the mean of all Self-Containment Index values, respectively, and y_j and ȳ are the Self-Containment Index values for borough j and the mean of all Self-Containment Index values, respectively.
+4. **Perform permutation test**: The Coder should perform a permutation test to determine the statistical significance of the Moran's I value. This involves randomly shuffling the Self-Containment Index values 500 times and computing Moran's I for each shuffle. The p-value is then calculated as the proportion of shuffled Moran's I values that are greater than or equal to the observed Moran's I value.
+5. **Determine clustering**: If the p-value is less than 0.05, the Coder should conclude that the Self-Containment Index values are clustered, indicating that neighboring boroughs tend to have similar Self-Containment Index values. Otherwise, the Coder should conclude that the Self-Containment Index values are not clustered.

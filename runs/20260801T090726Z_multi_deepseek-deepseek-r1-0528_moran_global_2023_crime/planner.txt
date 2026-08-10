@@ -1,0 +1,27 @@
+[To be computed by Coder]
+
+Plan:
+1. **Construct spatial weights matrix (W):**  
+   - Create a 33x33 adjacency matrix from the neighbor list (1 if boroughs are neighbors, 0 otherwise).  
+   - Row-standardize the matrix (each row sums to 1; replace NaN/div-by-zero with 0).  
+   - *Acceptance:* Matrix shape (33,33), all rows sum to 0 or 1.  
+
+2. **Align crime rates with weights:**  
+   - Extract crime rates as a vector `x` ordered to match the adjacency matrix rows/columns (sorted by borough name).  
+   - *Acceptance:* `x` length 33, no missing values.  
+
+3. **Compute observed Moran's I:**  
+   - Calculate `z = x - mean(x)`, `denom = sum(z**2)`, `S0 = sum(W)`.  
+   - Compute `I_obs = (33 / S0) * (z @ W @ z) / denom` using vectorization.  
+   - *Acceptance:* Validate with formula: `I_obs` between -1 and 1.  
+
+4. **Permutation test (500+ shuffles):**  
+   - Initialize counter `k=0`. For each shuffle (500 iterations):  
+     - Permute `x` randomly → `x_perm`, compute `I_perm` (same as Step 3).  
+     - If `I_perm >= I_obs`, increment `k`.  
+   - Calculate p-value: `p = (k + 1) / 501` (one-tailed for positive autocorrelation).  
+   - *Acceptance:* 500+ permutations, p-value in [0,1].  
+
+5. **Conclusion:**  
+   - If `p < 0.05`: Output "CLUSTERED (Moran's I = I_obs, p = p)".  
+   - Else: Output "NOT CLUSTERED (Moran's I = I_obs, p = p)".

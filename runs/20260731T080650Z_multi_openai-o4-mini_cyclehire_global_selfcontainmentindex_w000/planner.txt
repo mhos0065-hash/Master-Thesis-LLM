@@ -1,0 +1,14 @@
+1. Aggregate trips by borough:
+   a. Compute Departures[b] = count of trips where StartBorough = b.
+   b. Compute SelfContained[b] = count where StartBorough = b AND EndBorough = b.
+   c. Compute Arrivals[b] = count where EndBorough = b; TotalArrivals = sum over all b.
+2. For each borough b, compute:
+   a. ArrivalShare[b] = Arrivals[b] / TotalArrivals.
+   b. ExpectedSelf[b] = Departures[b] * ArrivalShare[b].
+   c. SelfContainIndex[b] = SelfContained[b] / ExpectedSelf[b].
+   Acceptance: ExpectedSelf[b] > 0 for all b.
+3. Build a spatial weights matrix W from the borough adjacency list (binary contiguity, row-standardized).
+   Acceptance: W is symmetric and each borough has at least one neighbor.
+4. Compute Global Moran’s I on SelfContainIndex using W; perform a permutation test to get a p-value.
+   Acceptance: use α=0.05 to decide clustering.
+5. Return Moran’s I and p-value. If p<0.05 conclude “CLUSTERED,” else “NOT CLUSTERED.”

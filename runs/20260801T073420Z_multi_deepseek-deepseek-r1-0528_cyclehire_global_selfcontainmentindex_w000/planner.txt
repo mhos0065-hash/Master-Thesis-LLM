@@ -1,0 +1,27 @@
+1. Compute the Self-Containment Index for each borough:  
+   - Calculate **Departures** per borough (count trips where `StartBorough` = borough).  
+   - Calculate **Self-contained trips** per borough (count trips where `StartBorough` = `EndBorough` = borough).  
+   - Calculate **Total arrivals** (sum of all trips ending in any borough).  
+   - Compute **Arrival share** per borough: (arrivals in borough) / Total arrivals.  
+   - Compute **Expected self-contained trips**: Departures × Arrival share.  
+   - Compute **Index**: Self-contained trips / Expected self-contained trips.  
+   *Acceptance*: Index > 1 indicates higher self-containment than random.  
+
+2. Build spatial weights matrix **W** from adjacency list:  
+   - Create a symmetric binary matrix (1 if adjacent, 0 otherwise) with diagonal = 0.  
+   - Align borough order with the Index DataFrame.  
+   *Acceptance*: Matrix must be symmetric with no self-links.  
+
+3. Compute observed **Global Moran's I**:  
+   - Let `x` = array of Self-Containment Indices.  
+   - Compute `z = x - mean(x)`.  
+   - Calculate `S0 = sum(W)` (sum of all weights).  
+   - Compute `I = (n / S0) * (z @ W @ z) / (z @ z)`, where `n` = number of boroughs.  
+
+4. Run permutation test (500+ shuffles) for positive spatial autocorrelation:  
+   - Shuffle `x` 500 times, recompute Moran's I for each shuffle (`I_perm`).  
+   - Count permutations where `I_perm >= observed I`.  
+   - Calculate p-value: `(count + 1) / 501`.  
+   *Acceptance*: p ≤ 0.05 and I > 0 → "CLUSTERED"; else "NOT CLUSTERED".  
+
+5. Output FINAL ANSWER line with `Moran's I` and `p-value`.

@@ -1,0 +1,1 @@
+The coder agent should perform these computations using the 'StartBorough', 'EndBorough' columns and the borough adjacency list. The acceptance criteria is a p-value less than 0.05 for the permutation test, indicating that the Self-Containment Index values are significantly clustered.

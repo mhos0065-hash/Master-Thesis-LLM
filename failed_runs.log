@@ -1,0 +1,138 @@
+
+[2026-08-01T17:36:27.067564+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=cyclehire_global_selfcontainmentratio_w001
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 151, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 70, in run_one
+    verdict, final_text, log = agent_loop(SYSTEM_PROMPT, prompt, meta["csv_path"], run_dir,
+                               ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           model=model, require_structured_verdict=require_structured,
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           extra_files=extra_files)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 163840 tokens. However, you requested about 362385 tokens (362385 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-01T17:45:22.761193+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=cyclehire_global_selfcontainmentindex_w003
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 151, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 70, in run_one
+    verdict, final_text, log = agent_loop(SYSTEM_PROMPT, prompt, meta["csv_path"], run_dir,
+                               ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           model=model, require_structured_verdict=require_structured,
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           extra_files=extra_files)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"message\":\"invalid request error trace_id: 8a4a92667a752542158670e52ed3a4d9\",\"type\":\"invalid_request_error\"}\n","provider_name":"Novita","is_byok":false,"previous_errors":[{"code":429,"message":"Provider returned er
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-01T17:51:29.586192+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=cyclehire_global_selfcontainmentratio_w003
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 151, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 70, in run_one
+    verdict, final_text, log = agent_loop(SYSTEM_PROMPT, prompt, meta["csv_path"], run_dir,
+                               ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           model=model, require_structured_verdict=require_structured,
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           extra_files=extra_files)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API response missing 'choices' (attempt 5/5). Full response: {'error': {'message': 'invalid request error trace_id: 275a005b6a5f5565c9789f6718acb548', 'code': 400}}
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-01T18:07:45.524707+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=cyclehire_global_selfcontainmentindex_w006
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 151, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 70, in run_one
+    verdict, final_text, log = agent_loop(SYSTEM_PROMPT, prompt, meta["csv_path"], run_dir,
+                               ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           model=model, require_structured_verdict=require_structured,
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           extra_files=extra_files)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"message\":\"invalid request error trace_id: 332fdc933d3d1e4ace55ef54204479ce\",\"type\":\"invalid_request_error\"}\n","provider_name":"Novita","is_byok":false,"previous_errors":[{"code":429,"message":"Provider returned er
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-01T21:26:12.965356+00:00] FAILED: mode=single model=meta-llama/llama-3.1-8b-instruct chunk=cyclehire_global_selfcontainmentindex_w000
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 151, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 70, in run_one
+    verdict, final_text, log = agent_loop(SYSTEM_PROMPT, prompt, meta["csv_path"], run_dir,
+                               ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           model=model, require_structured_verdict=require_structured,
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           extra_files=extra_files)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 131072 tokens. However, you requested about 200339 tokens (200339 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-01T22:56:39.524436+00:00] FAILED: mode=single model=openai/o3 chunk=moran_global_2022_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 151, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent.py", line 70, in run_one
+    verdict, final_text, log = agent_loop(SYSTEM_PROMPT, prompt, meta["csv_path"], run_dir,
+                               ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           model=model, require_structured_verdict=require_structured,
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                           extra_files=extra_files)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1785624978-Qm2PUxdEU9qEsHrr0c9P', 'object': 'chat.completion', 'created': 1785624978, 'model': 'openai/o3', 'provider': 'OpenAI', 'system_fingerprint': None, 'service_tier': 'default', 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 'completed'
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------

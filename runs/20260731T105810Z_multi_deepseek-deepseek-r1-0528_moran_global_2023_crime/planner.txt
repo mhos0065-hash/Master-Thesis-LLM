@@ -1,0 +1,6 @@
+NOT CLUSTERED (Moran's I = <value>, p = <value>)`  
+
+Acceptance criteria:  
+- Weights matrix must be row-standardized and match the borough order.  
+- Permutation test must use exactly 9,999 permutations.  
+- Crime rate vector must exclude missing values and align with the weights matrix rows.

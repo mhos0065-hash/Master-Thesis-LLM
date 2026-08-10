@@ -1,0 +1,7 @@
+1. Compute the Self-Containment Index for each borough using the given method (Departures, Self-contained trips, Arrival share, Expected self-contained trips).
+2. Create a spatial weights matrix using the borough adjacency list to define neighbors.
+3. Calculate Global Moran's I using the Self-Containment Index values and the spatial weights matrix, with at least 500 permutations for significance testing.
+4. Interpret the Moran's I value and p-value to determine if the Self-Containment Index is spatially clustered or randomly distributed.
+5. Check that the p-value is stable by ensuring the permutation test uses sufficient iterations (≥500). 
+
+Acceptance criteria: Moran's I should be between -1 and 1, and the p-value should be based on ≥500 permutations. The conclusion should match the statistical significance (p < 0.05 for clustered, p ≥ 0.05 for not clustered).

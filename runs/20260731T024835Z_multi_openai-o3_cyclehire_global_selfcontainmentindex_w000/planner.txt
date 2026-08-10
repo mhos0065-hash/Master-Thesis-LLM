@@ -1,0 +1,21 @@
+1. Load the two input files:  
+   a. Trip data → dataframe trips with columns StartBorough and EndBorough.  
+   b. Borough-adjacency list → dataframe adj with two columns, Borough and Neighbor, representing undirected contiguity.
+
+2. From trips, aggregate by borough:  
+   a. Departures[b] = count of rows where StartBorough == b.  
+   b. Arrivals[b]   = count of rows where EndBorough   == b.  
+   c. SelfContained[b] = count of rows where StartBorough == b AND EndBorough == b.  
+   d. ArrivalShare[b] = Arrivals[b] / Arrivals.sum().  
+   e. ExpectedSelf[b] = Departures[b] * ArrivalShare[b].  
+   f. SCI[b] = SelfContained[b] / ExpectedSelf[b].  
+   Store results in dataframe sci with columns Borough and SCI.
+
+3. Build a binary spatial-weights matrix W for the same borough index order as sci using adj: W_ij = 1 if borough i is listed as a Neighbor of j (or vice-versa), else 0; set diagonal to 0 and row-standardise.
+
+4. Using esda.Moran (or equivalent), compute Global Moran’s I on the SCI vector with W, with 999 random permutations to obtain a pseudo-p value.  
+
+Acceptance criteria:  
+• All boroughs present in trip data appear in sci and in W.  
+• SCI computed exactly as in step 2 (no divisions by zero; if ExpectedSelf==0, drop or set SCI=nan).  
+• Moran’s I and its p-value are returned; if p < 0.05 label result “CLUSTERED”, else “NOT CLUSTERED”.

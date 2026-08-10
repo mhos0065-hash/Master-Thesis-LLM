@@ -1,0 +1,1 @@
+The coder should follow the above steps to compute Moran's I and the p-value, and then conclude whether the crime rates are clustered or not clustered.

@@ -1,0 +1,32 @@
+1. Compute Self-Containment Index (SCI) for each borough:
+   - Calculate Departures: Group trip data by StartBorough, count rows.
+   - Calculate Self-contained trips: Filter trips where StartBorough == EndBorough, group by StartBorough, count.
+   - Calculate Arrival share: Group by EndBorough to get arrivals per borough, divide by total trips (sum of all arrivals).
+   - Compute Expected self-contained trips: Departures × Arrival share (align by borough).
+   - SCI = Self-contained trips / Expected self-contained trips (handle division by zero → set to 0).
+   - Output: DataFrame with boroughs and corresponding SCI values.
+
+2. Prepare spatial weights matrix from adjacency list:
+   - Create list of unique boroughs from adjacency list (sorted order).
+   - Build binary adjacency matrix W (n x n) where W[i,j] = 1 if borough i and j are adjacent (else 0), diagonal=0.
+   - Row-standardize W: Divide each row by its sum (skip zero-sum rows).
+
+3. Calculate observed Moran's I:
+   - Vector x: SCI values ordered to match matrix W's borough sequence.
+   - Compute z = x - np.mean(x).
+   - Numerator = z.T @ W @ z (matrix multiplication).
+   - Denominator = np.sum(z**2).
+   - Moran's I = (numerator / denominator) (n = number of boroughs).
+
+4. Run permutation test (501 samples including observed):
+   - Store observed I in results[0].
+   - For 500 iterations:
+        - Randomly permute x (shuffle SCI values).
+        - Recompute Moran's I with permuted x (same W).
+        - Store result.
+   - p-value = (count of I_perm >= observed I) / 501.
+
+5. Determine conclusion:
+   - If p ≤ 0.05 and observed I > 0 → "CLUSTERED"
+   - Else → "NOT CLUSTERED"
+   - Format final output: "CLUSTERED (Moran's I = X, p = Y)" or "NOT CLUSTERED (Moran's I = X, p = Y)"

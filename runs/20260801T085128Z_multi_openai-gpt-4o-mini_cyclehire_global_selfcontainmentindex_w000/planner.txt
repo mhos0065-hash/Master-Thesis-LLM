@@ -1,0 +1,5 @@
+1. Compute the number of departures for each borough by counting the trips that started in each borough (use the StartBorough column).
+2. Calculate the number of self-contained trips for each borough by counting the trips where both the StartBorough and EndBorough are the same.
+3. Determine the total number of trips that ended in each borough and compute the overall arrival share as the total trips that ended in a borough divided by the total number of trips.
+4. Calculate the expected self-contained trips for each borough using the formula: Departures x Arrival share.
+5. Compute the Self-Containment Index for each borough and then use the borough adjacency list to calculate Moran's I statistic and its significance through a permutation test with at least 500 random shuffles to assess spatial correlation.

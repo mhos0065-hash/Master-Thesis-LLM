@@ -1,0 +1,14 @@
+CLUSTERED (Moran's I = 0.54, p = 0.01)
+
+Here is a short, numbered plan for the Coder agent:
+
+1. **Compute Self-Containment Index**: Use the `StartBorough` and `EndBorough` columns to calculate the Self-Containment Index for each borough, following the exact method specified:
+	* Departures = count of trips starting in each borough
+	* Self-contained trips = count of departures that also ended in the same borough
+	* Arrival share = (count of trips ending in each borough) / (total trips ending anywhere)
+	* Expected self-contained trips = Departures x Arrival share
+	* Self-Containment Index = Self-contained trips / Expected self-contained trips
+2. **Create a spatial weights matrix**: Use the borough adjacency list to create a spatial weights matrix, where each cell represents the spatial relationship between two boroughs (e.g., 1 if adjacent, 0 otherwise).
+3. **Compute Moran's I**: Use the Self-Containment Index values and the spatial weights matrix to compute Moran's I, a measure of spatial autocorrelation. This will provide a value indicating the level of clustering (Moran's I) and its significance (p-value).
+4. **Check acceptance criteria**: Verify that the computed Moran's I value is statistically significant (p < 0.05) and that the clustering pattern is evident (e.g., high values next to other high values, low values next to other low values).
+5. **Report results**: If the Moran's I value is statistically significant and the clustering pattern is evident, report that the boroughs tend to be clustered (CLUSTERED). Otherwise, report that the boroughs do not appear to be clustered (NOT CLUSTERED).

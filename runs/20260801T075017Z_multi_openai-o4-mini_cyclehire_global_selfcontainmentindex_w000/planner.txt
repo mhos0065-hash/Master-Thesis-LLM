@@ -1,0 +1,5 @@
+1. From the trip table, group by StartBorough to count Departures, and count SelfContained = trips where EndBorough = StartBorough. Also group by EndBorough to get total Arrivals; compute ArrivalShare[b] = Arrivals[b] / sum(Arrivals).
+2. For each borough b, compute ExpectedSelf[b] = Departures[b] * ArrivalShare[b] and SelfContainmentIndex[b] = SelfContained[b] / ExpectedSelf[b].
+3. Load the borough adjacency list; build a symmetric weight matrix W where W[i,j]=1 if boroughs i and j are adjacent, 0 otherwise; compute S0 = sum of all W entries; standardize if desired.
+4. Compute observed Moran’s I = (N/S0) * (Σ_i Σ_j W[i,j]*(SCI[i]–μ)*(SCI[j]–μ)) / Σ_i (SCI[i]–μ)², where μ = mean SCI.
+5. Perform at least 500 random permutations of the SCI vector, recompute I for each, and calculate p = proportion of permuted I ≥ observed I (for positive clustering). Conclude CLUSTERED if observed I>0 and p<0.05; otherwise conclude NOT CLUSTERED.

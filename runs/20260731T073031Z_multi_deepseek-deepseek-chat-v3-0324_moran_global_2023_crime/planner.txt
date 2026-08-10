@@ -1,0 +1,11 @@
+1. Load the crime rate data and the neighbor list for the 33 London boroughs
+2. Create a spatial weights matrix from the neighbor list (binary adjacency where 1=neighbors, 0=not neighbors)
+3. Compute Global Moran's I statistic using the crime rates and spatial weights matrix
+4. Calculate the p-value for the Moran's I statistic to determine significance
+5. Check if Moran's I is significantly positive (clustered), negative (dispersed), or not significant (random) based on p<0.05 threshold
+
+The Coder should verify: 
+- All boroughs have both crime data and neighbor information
+- The spatial weights matrix is correctly constructed
+- The Moran's I calculation properly uses the weights matrix
+- The p-value is computed correctly for the given spatial configuration

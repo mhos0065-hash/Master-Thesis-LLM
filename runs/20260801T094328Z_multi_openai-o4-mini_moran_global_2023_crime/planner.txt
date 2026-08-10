@@ -1,0 +1,5 @@
+1. Load the borough crime data into a pandas DataFrame `df` (indexed by borough name) and load the neighbor‐list into a dict `neighbors` mapping each borough to its list of adjacent boroughs; extract the ‘crime_rate’ column as a NumPy array `x`.
+2. Build the binary weight matrix W (shape n×n) in NumPy: W[i,j]=1 if borough j is in `neighbors[i]`, else 0; compute S0 = W.sum() and n = len(df).
+3. Compute mean µ = x.mean(), deviations y = x–µ, and the observed Moran’s I: I_obs = (n/S0) * (y.T @ W @ y) / (y.T @ y).
+4. Perform B=500 random permutations: for each, shuffle y to y_perm, compute I_perm = (n/S0)*(y_perm.T @ W @ y_perm)/(y_perm.T @ y_perm), collect all I_perm; then compute one-sided p-value p = (count(I_perm ≥ I_obs)+1)/(B+1).
+5. Check significance: if p<0.05 conclude CLUSTERED, else NOT CLUSTERED.

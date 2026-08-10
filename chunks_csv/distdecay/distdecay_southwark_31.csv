@@ -1,0 +1,6 @@
+StartBorough,EndBorough,n_trips,distance_km
+Southwark,Camden,1021,3.58263422280386
+Southwark,Hackney,463,3.47193629756454
+Southwark,Hammersmith and Fulham,301,8.33376298044681
+Southwark,Wandsworth,145,6.62308565963402
+Southwark,Westminster,2147,4.10801737397233

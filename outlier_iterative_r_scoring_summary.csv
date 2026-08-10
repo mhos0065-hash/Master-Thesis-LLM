@@ -1,0 +1,9 @@
+model,mode,N_Query,Reply_ambiguous,n_implausible,non_ambiguous,correct_predicted,pct_with_evidence,TP_Borough_level,FP_Borough_level,accuracy,precision,recall,F1,correct_predicted_Evidence,TP_Evidence_Borough_level,FP_Evidence_Borough_level,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
+deepseek/deepseek-chat-v3-0324,single,50,2,0,48,46,1.0,46,2,0.92,0.833,0.938,0.856,46,46,2,0.92,0.833,0.938,0.856
+deepseek/deepseek-r1-0528,single,50,0,1,49,46,1.0,46,3,0.92,0.821,0.943,0.853,46,46,3,0.92,0.821,0.943,0.853
+meta-llama/llama-3.1-8b-instruct,single,50,29,0,21,7,0.095,7,14,0.14,0.271,0.107,0.134,0,0,2,0.0,0.0,0.0,0.0
+openai/gpt-4,single,50,37,0,13,13,1.0,13,0,0.26,1.0,0.319,0.458,13,13,0,0.26,1.0,0.319,0.458
+openai/gpt-4o-mini,single,50,10,0,40,33,0.75,33,7,0.66,0.907,0.633,0.711,29,29,1,0.58,0.978,0.567,0.711
+openai/o3,single,50,5,0,45,31,0.933,31,14,0.62,0.758,0.774,0.68,29,29,13,0.58,0.756,0.74,0.669
+openai/o4-mini,single,50,0,0,50,49,0.98,49,1,0.98,0.984,0.988,0.986,49,49,0,0.98,1.0,0.988,0.994
+qwen/qwen3-32b,single,50,3,0,47,27,0.979,27,20,0.54,0.515,0.645,0.476,27,27,19,0.54,0.565,0.645,0.479

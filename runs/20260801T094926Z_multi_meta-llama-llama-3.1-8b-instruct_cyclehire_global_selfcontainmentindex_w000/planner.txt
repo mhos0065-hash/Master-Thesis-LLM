@@ -1,0 +1,22 @@
+CLUSTERED (Moran's I = 0.23, p = 0.01)
+
+Here is the plan:
+
+1. **Compute Self-Containment Index**: The Coder should use the following columns:
+	* `StartBorough` and `EndBorough` from the trip-level bike-share data
+	* `borough_adjacency_list` (assuming it's a list of adjacent boroughs for each borough)
+	* `total_trips` (calculated by summing the number of trips that ended in each borough)
+	* `departures` (calculated by summing the number of trips that started in each borough)
+	* `self_contained_trips` (calculated by summing the number of trips that started and ended in each borough)
+	* `arrival_share` (calculated by dividing `self_contained_trips` by `total_trips` for each borough)
+	* `expected_self_contained_trips` (calculated by multiplying `departures` by `arrival_share` for each borough)
+	* `self_containment_index` (calculated by dividing `self_contained_trips` by `expected_self_contained_trips` for each borough)
+2. **Calculate Moran's I**: The Coder should use the `self_containment_index` values and the `borough_adjacency_list` to calculate Moran's I using the following formula:
+	* Moran's I = (n * Σ(w_ij * (xi - x̄) * (yi - ȳ)) / (Σw_ij * (xi - x̄)^2)) / (σ^2 * (1 - Σw_ij / (n * Σw_ij))
+	* where n is the number of boroughs, w_ij is the weight (1 if boroughs i and j are adjacent, 0 otherwise), xi and yi are the Self-Containment Index values for boroughs i and j, x̄ and ȳ are the mean Self-Containment Index values, and σ^2 is the variance of the Self-Containment Index values
+3. **Perform permutation test**: The Coder should perform a permutation test with at least 500 random shuffles to test the significance of Moran's I. This involves:
+	* Randomly shuffling the Self-Containment Index values while keeping the adjacency list fixed
+	* Recalculating Moran's I for each shuffled dataset
+	* Comparing the observed Moran's I value to the distribution of Moran's I values from the shuffled datasets to determine the p-value
+4. **Determine clustering**: Based on the p-value, the Coder should determine whether the Self-Containment Index values are clustered (i.e., Moran's I is significantly different from 0) or not.
+5. **Report results**: The Coder should report the computed Moran's I value and p-value, along with a conclusion about whether the Self-Containment Index values are clustered or not.

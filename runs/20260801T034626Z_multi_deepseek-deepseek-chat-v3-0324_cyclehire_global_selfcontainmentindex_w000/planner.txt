@@ -1,0 +1,1 @@
+[CLUSTERED/NOT CLUSTERED] (Moran's I = <value>, p = <value>)

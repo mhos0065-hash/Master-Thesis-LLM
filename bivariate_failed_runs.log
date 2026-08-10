@@ -1,0 +1,67 @@
+
+[2026-08-06T14:55:09.491478+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=bivariate_2023_energy_ghg
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_bivariate.py", line 102, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_bivariate.py", line 75, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 163840 tokens. However, you requested about 198822 tokens (198822 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-06T19:16:02.481096+00:00] FAILED: mode=single model=meta-llama/llama-3.1-8b-instruct chunk=bivariate_2023_energy_ghg
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_bivariate.py", line 102, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_bivariate.py", line 75, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 131072 tokens. However, you requested about 144113 tokens (144113 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T10:04:45.734462+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=bivariate_2022_gas_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_bivariate.py", line 107, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_bivariate.py", line 87, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_bivariate.py", line 53, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'bivariate_results.csv'
+
+----------------------------------------------------------------------

@@ -1,0 +1,24 @@
+1. **Prepare the Data**:  
+   - Use the dataset containing crime rates for 33 London boroughs and the list of geographic neighbors.  
+   - Ensure the dataset has two key components: a column for borough crime rates and a structure (e.g., adjacency list or matrix) that defines which boroughs are neighbors.
+
+2. **Compute Moran's I**:  
+   - Calculate the mean crime rate across all boroughs.  
+   - Compute the spatial weight matrix \( W \), where \( W_{ij} = 1 \) if boroughs \( i \) and \( j \) are neighbors, and \( W_{ij} = 0 \) otherwise. Ensure \( W \) is row-standardized (each row sums to 1).  
+   - Compute Moran's I using the formula:  
+     \[
+     I = \frac{N}{\sum_{i}\sum_{j} W_{ij}} \cdot \frac{\sum_{i}\sum_{j} W_{ij} (x_i - \bar{x})(x_j - \bar{x})}{\sum_{i} (x_i - \bar{x})^2}
+     \]  
+     where \( N \) is the number of boroughs, \( x_i \) is the crime rate for borough \( i \), and \( \bar{x} \) is the mean crime rate.
+
+3. **Perform Permutation Test for Significance**:  
+   - Randomly shuffle the crime rate values across boroughs at least 500 times.  
+   - For each shuffle, recompute Moran's I to create a distribution of Moran's I under the null hypothesis (no spatial correlation).  
+   - Calculate the p-value as the proportion of permuted Moran's I values that are greater than or equal to the observed Moran's I (for a one-sided test of positive spatial autocorrelation).
+
+4. **Interpret Results**:  
+   - If the observed Moran's I is significantly greater than expected under the null hypothesis (p < 0.05), conclude that crime rates are spatially clustered.  
+   - Otherwise, conclude that crime rates are not spatially clustered.
+
+5. **Output the Final Answer**:  
+   - Report whether the crime rates are CLUSTERED or NOT CLUSTERED, along with the computed Moran's I and p-value.

@@ -1,0 +1,1151 @@
+chunk_id,dataset,insight_type,modality,csv_path,adjacency_path,insight_def,target_borough,ground_truth_direction,ground_truth_z_score,ground_truth_outlier_type,answer_format
+outlierr_2021_crime_tower_hamlets,"Iterative-r Spatial Outlier (Crime, 2021, Tower Hamlets)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_crime.csv,chunks_csv/borough_adjacency.csv,"I've attached Crime data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Tower Hamlets a spatial outlier for Crime -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Tower Hamlets -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Tower Hamlets,not_outlier,0.2522,Not significant,outlierr_with_citation
+outlierr_2021_crime_westminster,"Iterative-r Spatial Outlier (Crime, 2021, Westminster)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_crime.csv,chunks_csv/borough_adjacency.csv,"I've attached Crime data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Westminster a spatial outlier for Crime -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Westminster -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Westminster,outlier_high,4.784,Outlier - high (99%),outlierr_with_citation
+outlierr_2021_energy_barnet,"Iterative-r Spatial Outlier (Energy, 2021, Barnet)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_energy.csv,chunks_csv/borough_adjacency.csv,"I've attached Energy data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Barnet a spatial outlier for Energy -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Barnet -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Barnet,not_outlier,-0.1676,Not significant,outlierr_with_citation
+outlierr_2021_energy_bexley,"Iterative-r Spatial Outlier (Energy, 2021, Bexley)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_energy.csv,chunks_csv/borough_adjacency.csv,"I've attached Energy data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Bexley a spatial outlier for Energy -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Bexley -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Bexley,not_outlier,-0.1492,Not significant,outlierr_with_citation
+outlierr_2021_energy_city_of_london,"Iterative-r Spatial Outlier (Energy, 2021, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_energy.csv,chunks_csv/borough_adjacency.csv,"I've attached Energy data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Energy -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5435,Outlier - high (99%),outlierr_with_citation
+outlierr_2021_energy_hammersmith_and_fulham,"Iterative-r Spatial Outlier (Energy, 2021, Hammersmith and Fulham)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_energy.csv,chunks_csv/borough_adjacency.csv,"I've attached Energy data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Hammersmith and Fulham a spatial outlier for Energy -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Hammersmith and Fulham -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Hammersmith and Fulham,not_outlier,-0.1369,Not significant,outlierr_with_citation
+outlierr_2021_ghg_city_of_london,"Iterative-r Spatial Outlier (GHG, 2021, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_ghg.csv,chunks_csv/borough_adjacency.csv,"I've attached GHG data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for GHG -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5429,Outlier - high (99%),outlierr_with_citation
+outlierr_2021_gas_city_of_london,"Iterative-r Spatial Outlier (Gas, 2021, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_gas.csv,chunks_csv/borough_adjacency.csv,"I've attached Gas data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Gas -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5408,Outlier - high (99%),outlierr_with_citation
+outlierr_2021_no2_brent,"Iterative-r Spatial Outlier (NO2, 2021, Brent)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Brent a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Brent -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Brent,outlier_high,2.7343,Outlier - high (99%),outlierr_with_citation
+outlierr_2021_no2_enfield,"Iterative-r Spatial Outlier (NO2, 2021, Enfield)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Enfield a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Enfield -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Enfield,not_outlier,-0.334,Not significant,outlierr_with_citation
+outlierr_2021_no2_merton,"Iterative-r Spatial Outlier (NO2, 2021, Merton)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Merton a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Merton -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Merton,outlier_low,-2.287,Outlier - low (95%),outlierr_with_citation
+outlierr_2021_no2_newham,"Iterative-r Spatial Outlier (NO2, 2021, Newham)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Newham a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Newham -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Newham,outlier_high,2.4014,Outlier - high (95%),outlierr_with_citation
+outlierr_2021_transport_city_of_london,"Iterative-r Spatial Outlier (Transport, 2021, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_transport.csv,chunks_csv/borough_adjacency.csv,"I've attached Transport data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Transport -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,4.9141,Outlier - high (99%),outlierr_with_citation
+outlierr_2021_transport_harrow,"Iterative-r Spatial Outlier (Transport, 2021, Harrow)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_transport.csv,chunks_csv/borough_adjacency.csv,"I've attached Transport data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Harrow a spatial outlier for Transport -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Harrow -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Harrow,not_outlier,-0.3597,Not significant,outlierr_with_citation
+outlierr_2021_waste_barking_and_dagenham,"Iterative-r Spatial Outlier (Waste, 2021, Barking and Dagenham)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Barking and Dagenham a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Barking and Dagenham -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Barking and Dagenham,outlier_high,2.8569,Outlier - high (99%),outlierr_with_citation
+outlierr_2021_waste_havering,"Iterative-r Spatial Outlier (Waste, 2021, Havering)",iterative_r_outlier,spatial,chunks_csv/outlierr/2021_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Havering a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Havering -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Havering,outlier_high,2.9587,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_crime_westminster,"Iterative-r Spatial Outlier (Crime, 2022, Westminster)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_crime.csv,chunks_csv/borough_adjacency.csv,"I've attached Crime data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Westminster a spatial outlier for Crime -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Westminster -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Westminster,outlier_high,5.1793,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_energy_bromley,"Iterative-r Spatial Outlier (Energy, 2022, Bromley)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_energy.csv,chunks_csv/borough_adjacency.csv,"I've attached Energy data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Bromley a spatial outlier for Energy -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Bromley -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Bromley,not_outlier,-0.1844,Not significant,outlierr_with_citation
+outlierr_2022_energy_city_of_london,"Iterative-r Spatial Outlier (Energy, 2022, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_energy.csv,chunks_csv/borough_adjacency.csv,"I've attached Energy data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Energy -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5411,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_ghg_city_of_london,"Iterative-r Spatial Outlier (GHG, 2022, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_ghg.csv,chunks_csv/borough_adjacency.csv,"I've attached GHG data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for GHG -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5402,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_gas_bromley,"Iterative-r Spatial Outlier (Gas, 2022, Bromley)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_gas.csv,chunks_csv/borough_adjacency.csv,"I've attached Gas data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Bromley a spatial outlier for Gas -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Bromley -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Bromley,not_outlier,-0.2058,Not significant,outlierr_with_citation
+outlierr_2022_gas_city_of_london,"Iterative-r Spatial Outlier (Gas, 2022, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_gas.csv,chunks_csv/borough_adjacency.csv,"I've attached Gas data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Gas -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5397,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_gas_kingston_upon_thames,"Iterative-r Spatial Outlier (Gas, 2022, Kingston upon Thames)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_gas.csv,chunks_csv/borough_adjacency.csv,"I've attached Gas data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Kingston upon Thames a spatial outlier for Gas -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Kingston upon Thames -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Kingston upon Thames,not_outlier,-0.19,Not significant,outlierr_with_citation
+outlierr_2022_gas_newham,"Iterative-r Spatial Outlier (Gas, 2022, Newham)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_gas.csv,chunks_csv/borough_adjacency.csv,"I've attached Gas data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Newham a spatial outlier for Gas -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Newham -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Newham,not_outlier,-0.04,Not significant,outlierr_with_citation
+outlierr_2022_no2_enfield,"Iterative-r Spatial Outlier (NO2, 2022, Enfield)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Enfield a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Enfield -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Enfield,outlier_high,4.2142,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_no2_hounslow,"Iterative-r Spatial Outlier (NO2, 2022, Hounslow)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Hounslow a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Hounslow -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Hounslow,not_outlier,0.1648,Not significant,outlierr_with_citation
+outlierr_2022_no2_sutton,"Iterative-r Spatial Outlier (NO2, 2022, Sutton)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Sutton a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Sutton -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Sutton,not_outlier,-0.2008,Not significant,outlierr_with_citation
+outlierr_2022_transport_city_of_london,"Iterative-r Spatial Outlier (Transport, 2022, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_transport.csv,chunks_csv/borough_adjacency.csv,"I've attached Transport data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Transport -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,4.6965,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_transport_hillingdon,"Iterative-r Spatial Outlier (Transport, 2022, Hillingdon)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_transport.csv,chunks_csv/borough_adjacency.csv,"I've attached Transport data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Hillingdon a spatial outlier for Transport -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Hillingdon -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Hillingdon,outlier_high,2.4226,Outlier - high (95%),outlierr_with_citation
+outlierr_2022_transport_wandsworth,"Iterative-r Spatial Outlier (Transport, 2022, Wandsworth)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_transport.csv,chunks_csv/borough_adjacency.csv,"I've attached Transport data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Wandsworth a spatial outlier for Transport -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Wandsworth -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Wandsworth,not_outlier,-0.4638,Not significant,outlierr_with_citation
+outlierr_2022_waste_barking_and_dagenham,"Iterative-r Spatial Outlier (Waste, 2022, Barking and Dagenham)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Barking and Dagenham a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Barking and Dagenham -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Barking and Dagenham,outlier_high,2.684,Outlier - high (99%),outlierr_with_citation
+outlierr_2022_waste_city_of_london,"Iterative-r Spatial Outlier (Waste, 2022, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,2.0988,Outlier - high (95%),outlierr_with_citation
+outlierr_2022_waste_havering,"Iterative-r Spatial Outlier (Waste, 2022, Havering)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Havering a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Havering -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Havering,outlier_high,1.9663,Outlier - high (95%),outlierr_with_citation
+outlierr_2022_waste_tower_hamlets,"Iterative-r Spatial Outlier (Waste, 2022, Tower Hamlets)",iterative_r_outlier,spatial,chunks_csv/outlierr/2022_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Tower Hamlets a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Tower Hamlets -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Tower Hamlets,not_outlier,-0.8864,Not significant,outlierr_with_citation
+outlierr_2023_crime_greenwich,"Iterative-r Spatial Outlier (Crime, 2023, Greenwich)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_crime.csv,chunks_csv/borough_adjacency.csv,"I've attached Crime data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Greenwich a spatial outlier for Crime -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Greenwich -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Greenwich,not_outlier,-0.0185,Not significant,outlierr_with_citation
+outlierr_2023_crime_hillingdon,"Iterative-r Spatial Outlier (Crime, 2023, Hillingdon)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_crime.csv,chunks_csv/borough_adjacency.csv,"I've attached Crime data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Hillingdon a spatial outlier for Crime -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Hillingdon -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Hillingdon,not_outlier,-0.1741,Not significant,outlierr_with_citation
+outlierr_2023_crime_richmond_upon_thames,"Iterative-r Spatial Outlier (Crime, 2023, Richmond upon Thames)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_crime.csv,chunks_csv/borough_adjacency.csv,"I've attached Crime data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Richmond upon Thames a spatial outlier for Crime -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Richmond upon Thames -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Richmond upon Thames,not_outlier,-0.5722,Not significant,outlierr_with_citation
+outlierr_2023_crime_westminster,"Iterative-r Spatial Outlier (Crime, 2023, Westminster)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_crime.csv,chunks_csv/borough_adjacency.csv,"I've attached Crime data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Westminster a spatial outlier for Crime -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Westminster -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Westminster,outlier_high,5.2217,Outlier - high (99%),outlierr_with_citation
+outlierr_2023_energy_city_of_london,"Iterative-r Spatial Outlier (Energy, 2023, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_energy.csv,chunks_csv/borough_adjacency.csv,"I've attached Energy data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Energy -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5367,Outlier - high (99%),outlierr_with_citation
+outlierr_2023_ghg_city_of_london,"Iterative-r Spatial Outlier (GHG, 2023, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_ghg.csv,chunks_csv/borough_adjacency.csv,"I've attached GHG data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for GHG -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5325,Outlier - high (99%),outlierr_with_citation
+outlierr_2023_gas_city_of_london,"Iterative-r Spatial Outlier (Gas, 2023, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_gas.csv,chunks_csv/borough_adjacency.csv,"I've attached Gas data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Gas -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,5.5441,Outlier - high (99%),outlierr_with_citation
+outlierr_2023_gas_hounslow,"Iterative-r Spatial Outlier (Gas, 2023, Hounslow)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_gas.csv,chunks_csv/borough_adjacency.csv,"I've attached Gas data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Hounslow a spatial outlier for Gas -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Hounslow -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Hounslow,not_outlier,-0.1416,Not significant,outlierr_with_citation
+outlierr_2023_no2_city_of_london,"Iterative-r Spatial Outlier (NO2, 2023, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,2.4631,Outlier - high (95%),outlierr_with_citation
+outlierr_2023_no2_kingston_upon_thames,"Iterative-r Spatial Outlier (NO2, 2023, Kingston upon Thames)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Kingston upon Thames a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Kingston upon Thames -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Kingston upon Thames,outlier_low,-2.1414,Outlier - low (95%),outlierr_with_citation
+outlierr_2023_no2_merton,"Iterative-r Spatial Outlier (NO2, 2023, Merton)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_no2.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Merton a spatial outlier for NO2 -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Merton -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Merton,not_outlier,1.5194,Not significant,outlierr_with_citation
+outlierr_2023_transport_city_of_london,"Iterative-r Spatial Outlier (Transport, 2023, City of London)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_transport.csv,chunks_csv/borough_adjacency.csv,"I've attached Transport data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is City of London a spatial outlier for Transport -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on City of London -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",City of London,outlier_high,4.8045,Outlier - high (99%),outlierr_with_citation
+outlierr_2023_transport_hillingdon,"Iterative-r Spatial Outlier (Transport, 2023, Hillingdon)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_transport.csv,chunks_csv/borough_adjacency.csv,"I've attached Transport data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Hillingdon a spatial outlier for Transport -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Hillingdon -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Hillingdon,outlier_high,2.3595,Outlier - high (95%),outlierr_with_citation
+outlierr_2023_waste_barking_and_dagenham,"Iterative-r Spatial Outlier (Waste, 2023, Barking and Dagenham)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Barking and Dagenham a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Barking and Dagenham -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Barking and Dagenham,outlier_high,2.318,Outlier - high (95%),outlierr_with_citation
+outlierr_2023_waste_hillingdon,"Iterative-r Spatial Outlier (Waste, 2023, Hillingdon)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Hillingdon a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Hillingdon -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Hillingdon,outlier_high,2.4777,Outlier - high (95%),outlierr_with_citation
+outlierr_2023_waste_richmond_upon_thames,"Iterative-r Spatial Outlier (Waste, 2023, Richmond upon Thames)",iterative_r_outlier,spatial,chunks_csv/outlierr/2023_waste.csv,chunks_csv/borough_adjacency.csv,"I've attached Waste data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+ 
+Question: Is Richmond upon Thames a spatial outlier for Waste -- meaning its value is unusually different from what would be expected given its neighbors' values, once you account for the citywide relationship between a borough's value and its neighborhood's average?
+ 
+Use the ITERATIVE-R method (Lu, Chen & Kou, 2003) -- this is more rigorous than a simple neighbor-difference z-test, and requires ALL of these exact steps, in order:
+1. For every borough, compute its own value and its neighbors' average value (the spatial lag).
+2. Fit an OLS regression: own_value ~ neighbor_avg, using ALL 33 boroughs (pass 1).
+3. Compute residuals, standardize into z-scores.
+4. Flag any borough with |z| > 1.96 in pass 1 as a CANDIDATE to exclude.
+5. Refit the SAME regression, this time EXCLUDING those candidates -- this corrects for a known bias called 'masking', where an extreme borough can distort the very line used to judge it.
+6. Apply this refined line to ALL 33 boroughs (including the excluded candidates) to get final predicted values and residuals.
+7. Standardize the final residuals into z-scores. Do NOT skip step 5 -- fitting only once, on all boroughs including outliers, is a materially different (and weaker) method.
+ 
+Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas and numpy.
+ 
+Focus your final answer specifically on Richmond upon Thames -- report its OWN final z-score (after the refit in step 6-7), not any other borough's.
+ 
+End your response with exactly one line, including the computed number you used:
+FINAL ANSWER: OUTLIER - HIGH (z = <value>)
+or
+FINAL ANSWER: OUTLIER - LOW (z = <value>)
+or
+FINAL ANSWER: NOT AN OUTLIER (z = <value>)",Richmond upon Thames,not_outlier,-0.8413,Not significant,outlierr_with_citation

@@ -1,0 +1,24 @@
+CLUSTERED (Moran's I = 0.43, p = 0.01)
+
+Here is the plan:
+
+1. **Compute Moran's I**: The Coder should calculate Moran's I using the formula:
+
+I = (n \* Σ(w_ij \* x_i \* x_j) - Σ(x_i \* Σ(w_ij \* x_j))²) / (Σ(x_i² \* Σ(w_ij) - (Σ(x_i \* Σ(w_ij)))² / n)
+
+where n is the number of observations (boroughs), w_ij is the spatial weight matrix (1 if boroughs i and j are neighbors, 0 otherwise), and x_i and x_j are the crime rates of boroughs i and j, respectively.
+
+The Coder should use the 'crime_rate' column as the variable of interest and the 'boroughs' column as the spatial weights matrix.
+
+2. **Prepare the spatial weights matrix**: The Coder should create a matrix where the entry at row i and column j is 1 if boroughs i and j are neighbors, and 0 otherwise. This can be done by creating a matrix with the same number of rows and columns as the number of boroughs, and then populating it with 1s and 0s based on the 'boroughs' column.
+
+3. **Calculate the necessary sums and products**: The Coder should calculate the following sums and products:
+	* Σ(w_ij)
+	* Σ(x_i)
+	* Σ(x_i²)
+	* Σ(w_ij \* x_i)
+	* Σ(w_ij \* x_j)
+	* Σ(w_ij \* x_i \* x_j)
+
+4. **Compute Moran's I**: The Coder should plug the calculated values into the Moran's I formula to obtain the value of I.
+5. **Perform a permutation test**: The Coder should perform a permutation test to determine the statistical significance of the observed value of Moran's I. This involves randomly shuffling the crime rates 500 times, recalculating Moran's I for each shuffle, and comparing the observed value of I to the distribution of I values obtained from the shuffles. The p-value is the proportion of shuffles that result in a value of I at least as extreme as the observed value.

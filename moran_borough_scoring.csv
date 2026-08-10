@@ -1,0 +1,169 @@
+chunk_id,model,mode,true_boroughs,predicted_boroughs,name_only_precision,name_only_recall,name_only_f1,with_type_precision,with_type_recall,with_type_f1
+moran_local_2021_crime,openai/gpt-4o-mini,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_waste,openai/gpt-4o-mini,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)","Barking and Dagenham, Barnet, Brent, Bromley",0.25,0.333,0.286,0.25,0.333,0.286
+moran_local_2021_no2,openai/gpt-4o-mini,single,(none),"Barking and Dagenham, Barnet, Brent, Bromley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_ghg,openai/gpt-4o-mini,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_gas,openai/gpt-4o-mini,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_energy,openai/gpt-4o-mini,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)",Barking and Dagenham,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_transport,openai/gpt-4o-mini,single,(none),"Barking and Dagenham, Barnet, Bexley, Brent, Bromley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_crime,openai/gpt-4o-mini,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_waste,openai/gpt-4o-mini,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)","Barking and Dagenham, Bromley",0.5,0.333,0.4,0.5,0.333,0.4
+moran_local_2022_no2,openai/gpt-4o-mini,single,"Barnet(HH), Croydon(LL)","Brent, Bromley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_ghg,openai/gpt-4o-mini,single,"Newham(LL), Westminster(HH)","Barking and Dagenham, Barnet, Bexley, Brent, Bromley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_gas,openai/gpt-4o-mini,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",Barking and Dagenham,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_energy,openai/gpt-4o-mini,single,"Newham(LL), Westminster(HH)","Barking and Dagenham, Bexley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_transport,openai/gpt-4o-mini,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2023_crime,openai/gpt-4o-mini,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_waste,openai/gpt-4o-mini,single,"Barking and Dagenham(HH), Bexley(HH)",Barking and Dagenham,1.0,0.5,0.667,1.0,0.5,0.667
+moran_local_2023_no2,openai/gpt-4o-mini,single,Camden(HH),"Barking and Dagenham, Bromley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_ghg,openai/gpt-4o-mini,single,"Camden(HH), Westminster(HH)","Barking and Dagenham, Bexley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_gas,openai/gpt-4o-mini,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Barking and Dagenham, Barnet, Bexley, Brent, Bromley",0.2,0.25,0.222,0.0,0.0,0.0
+moran_local_2023_energy,openai/gpt-4o-mini,single,"Newham(LL), Westminster(HH)","Barking and Dagenham, Barnet, Bexley, Brent, Bromley",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_transport,openai/gpt-4o-mini,single,(none),"Barking and Dagenham, Barnet",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_crime,openai/gpt-4,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_waste,openai/gpt-4,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_no2,openai/gpt-4,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_ghg,openai/gpt-4,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_gas,openai/gpt-4,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_energy,openai/gpt-4,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_transport,openai/gpt-4,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2022_crime,openai/gpt-4,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_waste,openai/gpt-4,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_no2,openai/gpt-4,single,"Barnet(HH), Croydon(LL)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_ghg,openai/gpt-4,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_gas,openai/gpt-4,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_energy,openai/gpt-4,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_transport,openai/gpt-4,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2023_crime,openai/gpt-4,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_waste,openai/gpt-4,single,"Barking and Dagenham(HH), Bexley(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_no2,openai/gpt-4,single,Camden(HH),(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_ghg,openai/gpt-4,single,"Camden(HH), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_gas,openai/gpt-4,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_energy,openai/gpt-4,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_transport,openai/gpt-4,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_crime,deepseek/deepseek-chat-v3-0324,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_waste,deepseek/deepseek-chat-v3-0324,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)","Barking and Dagenham, Bexley",1.0,0.667,0.8,1.0,0.667,0.8
+moran_local_2021_no2,deepseek/deepseek-chat-v3-0324,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_ghg,deepseek/deepseek-chat-v3-0324,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_gas,deepseek/deepseek-chat-v3-0324,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Bexley, Camden, Newham, Redbridge, Westminster",0.8,1.0,0.889,0.8,1.0,0.889
+moran_local_2021_energy,deepseek/deepseek-chat-v3-0324,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_transport,deepseek/deepseek-chat-v3-0324,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2022_crime,deepseek/deepseek-chat-v3-0324,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)","Camden, Kensington and Chelsea, Lewisham, Newham, Waltham Forest, Westminster",0.333,0.667,0.444,0.0,0.0,0.0
+moran_local_2022_waste,deepseek/deepseek-chat-v3-0324,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",Kensington and Chelsea,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_no2,deepseek/deepseek-chat-v3-0324,single,"Barnet(HH), Croydon(LL)","Barking and Dagenham, Barnet, Croydon, Hackney, Harrow, Islington, Kensington and Chelsea, Lambeth, Southwark, Sutton, Wandsworth, Westminster",0.167,1.0,0.286,0.167,1.0,0.286
+moran_local_2022_ghg,deepseek/deepseek-chat-v3-0324,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_gas,deepseek/deepseek-chat-v3-0324,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_energy,deepseek/deepseek-chat-v3-0324,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_transport,deepseek/deepseek-chat-v3-0324,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2023_crime,deepseek/deepseek-chat-v3-0324,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_waste,deepseek/deepseek-chat-v3-0324,single,"Barking and Dagenham(HH), Bexley(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_no2,deepseek/deepseek-chat-v3-0324,single,Camden(HH),(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_ghg,deepseek/deepseek-chat-v3-0324,single,"Camden(HH), Westminster(HH)",City of London,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_gas,deepseek/deepseek-chat-v3-0324,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",City of London,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_energy,deepseek/deepseek-chat-v3-0324,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_transport,deepseek/deepseek-chat-v3-0324,single,(none),"Barking and Dagenham, Barnet, Bexley, Brent, Bromley, Croydon, Greenwich, Hammersmith and Fulham, Haringey, Hounslow, Kensington and Chelsea, Kingston upon Thames, Lewisham, Merton, Newham, Redbridge, Westminster",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_crime,openai/o4-mini,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_waste,openai/o4-mini,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_no2,openai/o4-mini,single,(none),"Barking and Dagenham, Barnet, Brent, Bromley, Enfield, Hackney, Hammersmith and Fulham, Haringey, Hillingdon, Lambeth, Merton, Redbridge, Richmond upon Thames, Southwark, Sutton, Westminster",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_ghg,openai/o4-mini,single,"Newham(LL), Westminster(HH)","Hackney, Westminster",0.5,0.5,0.5,0.5,0.5,0.5
+moran_local_2021_gas,openai/o4-mini,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Camden, Westminster",1.0,0.5,0.667,1.0,0.5,0.667
+moran_local_2021_energy,openai/o4-mini,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)","Redbridge, Waltham Forest, Westminster",0.667,0.667,0.667,0.667,0.667,0.667
+moran_local_2021_transport,openai/o4-mini,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2022_crime,openai/o4-mini,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_waste,openai/o4-mini,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_no2,openai/o4-mini,single,"Barnet(HH), Croydon(LL)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_ghg,openai/o4-mini,single,"Newham(LL), Westminster(HH)","Barking and Dagenham, Barnet, Bexley, Brent, Bromley, Croydon, Ealing, Enfield, Greenwich, Hammersmith and Fulham, Haringey, Harrow, Havering, Hounslow, Kensington and Chelsea, Kingston upon Thames, Lewisham, Merton, Newham, Redbridge, Richmond upon Thames, Sutton, Waltham Forest, Wandsworth, Westminster",0.08,1.0,0.148,0.08,1.0,0.148
+moran_local_2022_gas,openai/o4-mini,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Camden, Havering, Lewisham, Westminster",0.5,0.5,0.5,0.5,0.5,0.5
+moran_local_2022_energy,openai/o4-mini,single,"Newham(LL), Westminster(HH)","Redbridge, Waltham Forest, Westminster",0.333,0.5,0.4,0.333,0.5,0.4
+moran_local_2022_transport,openai/o4-mini,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2023_crime,openai/o4-mini,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_waste,openai/o4-mini,single,"Barking and Dagenham(HH), Bexley(HH)","Barking and Dagenham, Bexley, Ealing, Greenwich, Havering, Hounslow",0.333,1.0,0.5,0.333,1.0,0.5
+moran_local_2023_no2,openai/o4-mini,single,Camden(HH),"Camden, City of London, Islington, Lewisham, Westminster",0.2,1.0,0.333,0.2,1.0,0.333
+moran_local_2023_ghg,openai/o4-mini,single,"Camden(HH), Westminster(HH)","City of London, Redbridge, Waltham Forest, Westminster",0.25,0.5,0.333,0.25,0.5,0.333
+moran_local_2023_gas,openai/o4-mini,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Camden, Havering, Lewisham, Waltham Forest, Westminster",0.4,0.5,0.444,0.4,0.5,0.444
+moran_local_2023_energy,openai/o4-mini,single,"Newham(LL), Westminster(HH)","City of London, Redbridge, Waltham Forest, Westminster",0.25,0.5,0.333,0.25,0.5,0.333
+moran_local_2023_transport,openai/o4-mini,single,(none),"Haringey, Hounslow",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_crime,meta-llama/llama-3.1-8b-instruct,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_waste,meta-llama/llama-3.1-8b-instruct,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_no2,meta-llama/llama-3.1-8b-instruct,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_ghg,meta-llama/llama-3.1-8b-instruct,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_gas,meta-llama/llama-3.1-8b-instruct,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_energy,meta-llama/llama-3.1-8b-instruct,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_transport,meta-llama/llama-3.1-8b-instruct,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2022_crime,meta-llama/llama-3.1-8b-instruct,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_waste,meta-llama/llama-3.1-8b-instruct,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_no2,meta-llama/llama-3.1-8b-instruct,single,"Barnet(HH), Croydon(LL)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_ghg,meta-llama/llama-3.1-8b-instruct,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_gas,meta-llama/llama-3.1-8b-instruct,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_energy,meta-llama/llama-3.1-8b-instruct,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_transport,meta-llama/llama-3.1-8b-instruct,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2023_crime,meta-llama/llama-3.1-8b-instruct,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_waste,meta-llama/llama-3.1-8b-instruct,single,"Barking and Dagenham(HH), Bexley(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_no2,meta-llama/llama-3.1-8b-instruct,single,Camden(HH),(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_ghg,meta-llama/llama-3.1-8b-instruct,single,"Camden(HH), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_gas,meta-llama/llama-3.1-8b-instruct,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_energy,meta-llama/llama-3.1-8b-instruct,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_transport,meta-llama/llama-3.1-8b-instruct,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_crime,openai/o3,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_waste,openai/o3,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_no2,openai/o3,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_ghg,openai/o3,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_gas,openai/o3,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Camden, Westminster",1.0,0.5,0.667,1.0,0.5,0.667
+moran_local_2021_energy,openai/o3,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_transport,openai/o3,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2022_crime,openai/o3,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_waste,openai/o3,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_no2,openai/o3,single,"Barnet(HH), Croydon(LL)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_ghg,openai/o3,single,"Newham(LL), Westminster(HH)","Waltham Forest, Westminster",0.5,0.5,0.5,0.5,0.5,0.5
+moran_local_2022_gas,openai/o3,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_energy,openai/o3,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_transport,openai/o3,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2023_crime,openai/o3,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_waste,openai/o3,single,"Barking and Dagenham(HH), Bexley(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_no2,openai/o3,single,Camden(HH),(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_ghg,openai/o3,single,"Camden(HH), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_gas,openai/o3,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_energy,openai/o3,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_transport,openai/o3,single,(none),Hounslow,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_crime,deepseek/deepseek-r1-0528,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)","Camden, Islington, Kensington and Chelsea, Kingston upon Thames, Merton, Sutton, Westminster",0.571,1.0,0.727,0.571,1.0,0.727
+moran_local_2021_waste,deepseek/deepseek-r1-0528,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_no2,deepseek/deepseek-r1-0528,single,(none),"Barking and Dagenham, Lambeth",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_ghg,deepseek/deepseek-r1-0528,single,"Newham(LL), Westminster(HH)","Waltham Forest, Westminster",0.5,0.5,0.5,0.5,0.5,0.5
+moran_local_2021_gas,deepseek/deepseek-r1-0528,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Barking and Dagenham, Camden, Waltham Forest, Westminster",0.5,0.5,0.5,0.5,0.5,0.5
+moran_local_2021_energy,deepseek/deepseek-r1-0528,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)","Barking and Dagenham, Barnet, Bexley, Brent, Bromley, Croydon, Ealing, Enfield, Greenwich, Hammersmith and Fulham, Haringey, Harrow, Havering, Hillingdon, Hounslow, Kingston upon Thames, Lewisham, Merton, Newham, Redbridge, Richmond upon Thames, Sutton, Waltham Forest, Wandsworth, Westminster",0.12,1.0,0.214,0.12,1.0,0.214
+moran_local_2021_transport,deepseek/deepseek-r1-0528,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2022_crime,deepseek/deepseek-r1-0528,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)","Camden, Harrow, Islington, Kensington and Chelsea, Kingston upon Thames, Merton, Sutton, Westminster",0.375,1.0,0.545,0.375,1.0,0.545
+moran_local_2022_waste,deepseek/deepseek-r1-0528,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_no2,deepseek/deepseek-r1-0528,single,"Barnet(HH), Croydon(LL)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_ghg,deepseek/deepseek-r1-0528,single,"Newham(LL), Westminster(HH)","Waltham Forest, Westminster",0.5,0.5,0.5,0.5,0.5,0.5
+moran_local_2022_gas,deepseek/deepseek-r1-0528,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Camden, Havering, Westminster",0.667,0.5,0.571,0.667,0.5,0.571
+moran_local_2022_energy,deepseek/deepseek-r1-0528,single,"Newham(LL), Westminster(HH)","Redbridge, Waltham Forest, Westminster",0.333,0.5,0.4,0.333,0.5,0.4
+moran_local_2022_transport,deepseek/deepseek-r1-0528,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2023_crime,deepseek/deepseek-r1-0528,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)","Camden, Harrow, Kensington and Chelsea, Kingston upon Thames, Merton, Sutton, Westminster",0.429,1.0,0.6,0.429,1.0,0.6
+moran_local_2023_waste,deepseek/deepseek-r1-0528,single,"Barking and Dagenham(HH), Bexley(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_no2,deepseek/deepseek-r1-0528,single,Camden(HH),(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_ghg,deepseek/deepseek-r1-0528,single,"Camden(HH), Westminster(HH)","Redbridge, Waltham Forest, Westminster",0.333,0.5,0.4,0.333,0.5,0.4
+moran_local_2023_gas,deepseek/deepseek-r1-0528,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","Bexley, Camden, Islington, Lambeth, Newham, Westminster",0.667,1.0,0.8,0.333,0.5,0.4
+moran_local_2023_energy,deepseek/deepseek-r1-0528,single,"Newham(LL), Westminster(HH)","Barking and Dagenham, Barnet, Bexley, Brent, Bromley, Croydon, Ealing, Enfield, Greenwich, Hammersmith and Fulham, Haringey, Harrow, Havering, Hounslow, Kingston upon Thames, Lewisham, Merton, Newham, Redbridge, Richmond upon Thames, Sutton, Waltham Forest, Wandsworth, Westminster",0.083,1.0,0.154,0.083,1.0,0.154
+moran_local_2023_transport,deepseek/deepseek-r1-0528,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_crime,qwen/qwen3-32b,single,"Camden(HH), Kensington and Chelsea(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_waste,qwen/qwen3-32b,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)","Barking and Dagenham, Brent, Hounslow, Lewisham, Newham, Southwark, Tower Hamlets, Waltham Forest, Wandsworth",0.111,0.333,0.167,0.111,0.333,0.167
+moran_local_2021_no2,qwen/qwen3-32b,single,(none),(none),1.0,1.0,1.0,1.0,1.0,1.0
+moran_local_2021_ghg,qwen/qwen3-32b,single,"Newham(LL), Westminster(HH)","Bexley, Havering",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_gas,qwen/qwen3-32b,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)","City of London, Hackney, Westminster",0.333,0.25,0.286,0.333,0.25,0.286
+moran_local_2021_energy,qwen/qwen3-32b,single,"Newham(LL), Waltham Forest(LL), Westminster(HH)",Lewisham,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2021_transport,qwen/qwen3-32b,single,(none),"Barking and Dagenham, Bexley, Brent, Camden",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_crime,qwen/qwen3-32b,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_waste,qwen/qwen3-32b,single,"Barking and Dagenham(HH), Bexley(HH), Havering(HH)","Barking and Dagenham, Bexley",1.0,0.667,0.8,0.5,0.333,0.4
+moran_local_2022_no2,qwen/qwen3-32b,single,"Barnet(HH), Croydon(LL)",Lambeth,0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_ghg,qwen/qwen3-32b,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_gas,qwen/qwen3-32b,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_energy,qwen/qwen3-32b,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2022_transport,qwen/qwen3-32b,single,(none),"Barking and Dagenham, Brent",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_crime,qwen/qwen3-32b,single,"Camden(HH), Kingston upon Thames(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_waste,qwen/qwen3-32b,single,"Barking and Dagenham(HH), Bexley(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_no2,qwen/qwen3-32b,single,Camden(HH),"Barking and Dagenham, Tower Hamlets",0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_ghg,qwen/qwen3-32b,single,"Camden(HH), Westminster(HH)","City of London, Redbridge, Waltham Forest, Westminster",0.25,0.5,0.333,0.25,0.5,0.333
+moran_local_2023_gas,qwen/qwen3-32b,single,"Bexley(LL), Camden(HH), Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_energy,qwen/qwen3-32b,single,"Newham(LL), Westminster(HH)",(none),0.0,0.0,0.0,0.0,0.0,0.0
+moran_local_2023_transport,qwen/qwen3-32b,single,(none),"Barking and Dagenham, Hackney",0.0,0.0,0.0,0.0,0.0,0.0

@@ -1,0 +1,19 @@
+CLUSTERED (Moran's I = 0.45, p = 0.01)
+
+Here is the plan:
+
+1. **Compute Self-Containment Index for each borough**:
+	* Use the columns: StartBorough, EndBorough
+	* Calculate Departures, Self-contained trips, Arrival share, Expected self-contained trips, and Self-Containment Index for each borough
+	* Store the results in a new dataframe with borough as the index
+2. **Prepare the borough adjacency list**:
+	* Use the borough adjacency list to create a spatial weights matrix
+	* This matrix should have boroughs as rows and columns, with a value of 1 if the boroughs are adjacent and 0 otherwise
+3. **Compute Moran's I statistic**:
+	* Use the Self-Containment Index values from step 1 and the spatial weights matrix from step 2
+	* Compute Moran's I statistic, which measures the spatial autocorrelation between the Self-Containment Index values
+4. **Determine significance**:
+	* Use a permutation test or a statistical package to determine the significance of the Moran's I value
+	* Compare the computed Moran's I value to the null distribution of Moran's I values obtained by randomly shuffling the Self-Containment Index values
+5. **Check acceptance criteria**:
+	* If the p-value is less than 0.05, the Self-Containment Index values are significantly spatially autocorrelated, indicating that neighboring boroughs tend to have similar Self-Containment Index values.

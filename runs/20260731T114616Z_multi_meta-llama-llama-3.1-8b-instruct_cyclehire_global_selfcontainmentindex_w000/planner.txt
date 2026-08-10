@@ -1,0 +1,14 @@
+CLUSTERED (Moran's I = 0.45, p = 0.01)
+
+Here's the plan for the Coder agent:
+
+1. **Compute Self-Containment Index**: Use the trip-level data to calculate the Self-Containment Index for each borough, following the exact method described:
+	* Departures = number of trips that started in that borough
+	* Self-contained trips = number of those departures that also ended in the same borough
+	* Arrival share = (number of trips that ended in that borough) / (total trips that ended anywhere, across all boroughs)
+	* Expected self-contained trips = Departures x Arrival share
+	* Self-Containment Index = Self-contained trips / Expected self-contained trips
+2. **Prepare borough adjacency list**: Use the provided borough adjacency list to create a spatial weights matrix, where each row represents a borough and each column represents a neighboring borough.
+3. **Calculate Moran's I**: Use the computed Self-Containment Index values and the spatial weights matrix to calculate Moran's I, a measure of spatial autocorrelation. This will give us a value that indicates the strength of the relationship between neighboring boroughs' Self-Containment Index values.
+4. **Determine significance**: Use a statistical test (e.g., permutation test) to determine the significance of the Moran's I value. This will tell us whether the observed pattern of Self-Containment Index values is likely to occur by chance.
+5. **Check acceptance criteria**: Verify that the computed Moran's I value is positive (indicating a positive spatial autocorrelation) and that the p-value is below a certain threshold (e.g., 0.05), indicating that the observed pattern is statistically significant.

@@ -1,0 +1,8 @@
+"year","Indicator","Moran_I","Expected_I","Variance","p_value_MC","p_value_std","n_missing","Significant","Interpretation"
+"2023","Crime",0.1671,-0.0312,0.003921,0.005,8e-04,1,"Yes","Moderate clustering"
+"2023","Waste",0.104,-0.0312,0.01056,0.089,0.094,1,"No","Not significant"
+"2023","NO2",0.0837,-0.0312,0.010601,0.131,0.132,5,"No","Not significant"
+"2023","GHG",-0.0054,-0.0312,0.000411,0.102,0.1012,0,"No","Dispersed/Random"
+"2023","Gas",-0.0088,-0.0312,0.000309,0.106,0.101,0,"No","Dispersed/Random"
+"2023","Energy",-0.0088,-0.0312,0.000369,0.126,0.1208,0,"No","Dispersed/Random"
+"2023","Transport",-0.0709,-0.0312,0.004923,0.678,0.714,0,"No","Dispersed/Random"

@@ -1,0 +1,11 @@
+1. Load the crime rate data (column: 'crime_rate') and the neighbor relationships (adjacency list) for the 33 London boroughs  
+2. Compute the spatial weights matrix based on the neighbor relationships (binary adjacency where 1=neighbors, 0=otherwise)  
+3. Calculate Global Moran's I statistic using the crime rates and spatial weights matrix  
+4. Perform a significance test (permutation or z-test) to get the p-value for Moran's I  
+5. Check: If Moran's I is significantly positive (p<0.05), conclude clustered; if near 0 (p>0.05), conclude random  
+
+Acceptance criteria:  
+- Verify all 33 boroughs have both crime rate data and neighbor information  
+- Confirm spatial weights matrix is symmetric and correctly represents adjacency  
+- Ensure Moran's I value is between -1 and 1  
+- Validate p-value calculation method (recommend 999 permutations)

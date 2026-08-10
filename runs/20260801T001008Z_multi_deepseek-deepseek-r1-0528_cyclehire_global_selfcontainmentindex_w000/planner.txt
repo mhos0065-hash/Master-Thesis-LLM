@@ -1,0 +1,7 @@
+<result> (Moran's I = <I_obs>, p = <p_value>)`  
+
+**Acceptance Criteria**  
+- Use `numpy` for vector/matrix operations.  
+- Handle zero denominators in Moran's I by setting I=0.  
+- Ensure weights matrix excludes self-loops (diagonal=0).  
+- Permutations must reshuffle values across all boroughs (no spatial structure).

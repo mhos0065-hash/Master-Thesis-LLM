@@ -1,0 +1,825 @@
+
+[2026-08-07T12:18:34.659818+00:00] FAILED: mode=single model=meta-llama/llama-3.1-8b-instruct chunk=getisord_2021_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 131072 tokens. However, you requested about 136576 tokens (136576 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T14:41:40.421180+00:00] FAILED: mode=single model=meta-llama/llama-3.1-8b-instruct chunk=getisord_2022_gas
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 131072 tokens. However, you requested about 176060 tokens (176060 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.434709+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2022_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.492598+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2022_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.518660+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2022_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.533345+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2023_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.554189+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2023_energy
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.570203+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2023_ghg
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.587168+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2023_gas
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.607851+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2023_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.620892+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2023_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:20.638879+00:00] FAILED: mode=single model=deepseek/deepseek-r1-0528 chunk=getisord_2023_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.343513+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2021_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.353373+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2021_energy
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.361113+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2021_ghg
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.368745+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2021_gas
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.376120+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2021_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.387083+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2021_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.394986+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2021_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.404330+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2022_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.413663+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2022_energy
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.422211+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2022_ghg
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.431973+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2022_gas
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.439211+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2022_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.451212+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2022_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.460090+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2022_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.468347+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2023_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.477372+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2023_energy
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.484564+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2023_ghg
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.492976+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2023_gas
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.501455+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2023_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.509410+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2023_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-08-07T16:29:22.517581+00:00] FAILED: mode=single model=qwen/qwen3-32b chunk=getisord_2023_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 112, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\single_agent_getisord.py", line 81, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=max_iterations)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 213, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\thesis_experiment_pipeline\first run_new\thesis_experiment_pipeline\agent_utils.py", line 130, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: ConnectionError: HTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by NameResolutionError("HTTPSConnection(host='openrouter.ai', port=443): Failed to resolve 'openrouter.ai' ([Errno 11001] getaddrinfo failed)"))
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------

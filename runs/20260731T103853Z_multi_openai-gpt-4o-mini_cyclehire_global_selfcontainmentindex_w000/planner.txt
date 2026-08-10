@@ -1,0 +1,1 @@
+1. Compute Departures and Self-Contained Trips; 2. Calculate Arrival Share; 3. Compute Expected Self-Contained Trips; 4. Calculate Self-Containment Index; 5. Perform Spatial Autocorrelation Analysis (Moran's I).

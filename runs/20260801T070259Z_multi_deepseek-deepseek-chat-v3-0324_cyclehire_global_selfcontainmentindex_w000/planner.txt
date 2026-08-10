@@ -1,0 +1,5 @@
+1. Compute the Self-Containment Index for each borough using the given method (Departures, Self-contained trips, Arrival share, Expected self-contained trips, then the ratio).
+2. Create a spatial weights matrix from the adjacency list (1 if boroughs are adjacent, 0 otherwise).
+3. Implement Moran's I calculation using numpy/pandas: standardize the index values, compute the numerator (sum of weighted products of deviations) and denominator (sum of squared deviations), then the ratio.
+4. Perform a permutation test (500+ shuffles) to assess significance by comparing observed Moran's I to the distribution from shuffled data.
+5. Check if p-value < 0.05 to determine clustering significance. Report Moran's I and p-value in the final answer format.

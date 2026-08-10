@@ -1,0 +1,1 @@
+<label> (Moran's I = <value>, p = <value>)
