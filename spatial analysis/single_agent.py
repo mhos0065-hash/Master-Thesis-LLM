@@ -67,9 +67,12 @@ def run_one(chunk_id, meta, model):
 
     prompt = build_user_prompt(meta["insight_type"], meta["insight_def"])
     extra_files = {"ADJACENCY_PATH": meta["adjacency_path"]} if meta.get("adjacency_path") else None
-    verdict, final_text, log = agent_loop(SYSTEM_PROMPT, prompt, meta["csv_path"], run_dir,
-                                           model=model, require_structured_verdict=require_structured,
-                                           extra_files=extra_files)
+    verdict, final_text, log = agent_loop(
+                SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+                model=model, require_structured_verdict=False,
+                max_iterations=1,
+                answer_from_code_output=True,    
+                extra_files=extra_files)
 
     with open(os.path.join(run_dir, "conversation_log.json"), "w", encoding="utf-8") as f:
         json.dump(log, f, indent=2)

@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2022_energy
+
+**Predicted:** True
+
+**Detail:** Barking and Dagenham (LL, statistical method=9830.8571), Barnet (LL, statistical method=13039.4566), Bexley (LL, statistical method=13901.5831), Bromley (LL, statistical method=12268.3767), Croydon (LL, statistical method=11349.0325), Enfield (LL, statistical method=13700.4333), Greenwich (LL, statistical method=11145.7458), Haringey (LL, statistical method=10475.9987), Havering (LL, statistical method=14307.3285), Kingston upon Thames (LL, statistical method=12567.029), Lewisham (LL, statistica
+
+**Answer line:** Barking and Dagenham (LL, statistical method=9830.8571), Barnet (LL, statistical method=13039.4566), Bexley (LL, statistical method=13901.5831), Bromley (LL, statistical method=12268.3767), Croydon (LL, statistical method=11349.0325), Enfield (LL, statistical method=13700.4333), Greenwich (LL, statistical method=11145.7458), Haringey (LL, statistical method=10475.9987), Havering (LL, statistical method=14307.3285), Kingston upon Thames (LL, statistical method=12567.029), Lewisham (LL, statistical method=9045.0756), Merton (LL, statistical method=11755.3711), Newham (LL, statistical method=12554.4012), Redbridge (LL, statistical method=10041.0573), Richmond upon Thames (LL, statistical method=13316.0286), Sutton (LL, statistical method=10965.279), Waltham Forest (LL, statistical method=9438.2492)

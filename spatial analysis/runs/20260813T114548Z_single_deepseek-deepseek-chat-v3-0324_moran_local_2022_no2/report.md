@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2022_no2
+
+**Predicted:** True
+
+**Detail:** Barking and Dagenham (HH, borough_value=29.42, neighbor_median=28.49), Barnet (HH, borough_value=29.16, neighbor_median=28.91), Brent (HH, borough_value=35.49, neighbor_median=28.73), Bromley (LL, borough_value=24.67, neighbor_median=27.16), Croydon (LL, borough_value=27.16, neighbor_median=24.94), Ealing (HH, borough_value=28.35, neighbor_median=29.14), Hackney (LL, borough_value=26.08, neighbor_median=26.57), Haringey (LL, borough_value=25.33, neighbor_median=25.89), Harrow (HH, borough_value=
+
+**Answer line:** Barking and Dagenham (HH, borough_value=29.42, neighbor_median=28.49), Barnet (HH, borough_value=29.16, neighbor_median=28.91), Brent (HH, borough_value=35.49, neighbor_median=28.73), Bromley (LL, borough_value=24.67, neighbor_median=27.16), Croydon (LL, borough_value=27.16, neighbor_median=24.94), Ealing (HH, borough_value=28.35, neighbor_median=29.14), Hackney (LL, borough_value=26.08, neighbor_median=26.57), Haringey (LL, borough_value=25.33, neighbor_median=25.89), Harrow (HH, borough_value=28.91, neighbor_median=29.16), Islington (LL, borough_value=25.69, neighbor_median=25.86), Kensington and Chelsea (HH, borough_value=28.73, neighbor_median=29.40), Lambeth (LL, borough_value=25.21, neighbor_median=27.20), Southwark (LL, borough_value=27.20, neighbor_median=27.45), Westminster (HH, borough_value=30.76, neighbor_median=28.39)

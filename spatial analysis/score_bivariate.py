@@ -23,18 +23,57 @@ Reads:  bivariate_results.csv
 Writes: bivariate_scoring_summary.csv, bivariate_confusion_matrix.csv
 """
 
+import re
 import pandas as pd
 
+from bivariate_verdict import _has_self_admitted_non_computation
+
+# For multi tern
+#RESULTS_CSV = "bivariate_results_multi.csv"
+#SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
+#CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"  
+
+# For one shot
 RESULTS_CSV = "bivariate_results.csv"
-SUMMARY_OUT = "bivariate_scoring_summary.csv"
-CONFUSION_OUT = "bivariate_confusion_matrix.csv"
+SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
+CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 
 CLASSES = ["positive", "negative", "not_significant"]
 
 
+def _has_real_test_statistic(evidence_text, full_text=None):
+    """Checks that the TEST STATISTIC specifically (the first '=...,' or
+    '=...)' in the answer line -- not the p-value, which comes second) is
+    a genuine, finite number -- never nan, never inf, and never a method
+    name like 'Lee's L' left in place of a real value (the exact bug
+    found earlier this session). Method-agnostic: doesn't care what label
+    precedes the '=', or which statistical method was used, only that a
+    real number was actually computed and cited for it.
+
+    ALSO rejects a number that LOOKS real if the model's own words admit
+    it isn't -- e.g. "test statistic = 10.5 ... please replace the values
+    with the actual observed statistic" is a real observed case: the
+    number-parsing check alone would incorrectly accept 10.5 as valid
+    evidence, missing the model's own admission that it's a placeholder."""
+    if not isinstance(evidence_text, str):
+        return False
+    if _has_self_admitted_non_computation(full_text if full_text else evidence_text):
+        return False
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    if not match:
+        return False
+    val = match.group(1).strip()
+    try:
+        f = float(val)
+        return f == f and abs(f) != float("inf")  # excludes nan and inf
+    except ValueError:
+        return False  # e.g. a method name like "Lee's L" left in place of a number
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
-    df["has_evidence_bool"] = df["has_evidence"].fillna(False).astype(bool)
+    df["has_evidence_bool"] = df.apply(
+        lambda r: _has_real_test_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
     df["ambiguous"] = df["predicted"].isna() | (~df["predicted"].isin(CLASSES))
     df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])
     df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]

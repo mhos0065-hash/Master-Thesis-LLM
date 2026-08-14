@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2022_energy
+
+**Predicted:** True
+
+**Detail:** Westminster (HH, energy=37142.3454), Kingston upon Thames (LL, energy=12567.029), Croydon (LL, energy=11349.0325), Bromley (LL, energy=12268.3767), Hounslow (LL, energy=14853.8058), Ealing (LL, energy=12871.5664), Havering (LL, energy=14307.3285), Harrow (LL, energy=9988.0227), Brent (LL, energy=11972.1855), Barnet (LL, energy=13039.4566), Lewisham (LL, energy=9045.0756), Greenwich (LL, energy=11145.7458), Bexley (LL, energy=13901.5831), Enfield (LL, energy=13700.4333), Waltham Forest (LL, energ
+
+**Answer line:** Westminster (HH, energy=37142.3454), Kingston upon Thames (LL, energy=12567.029), Croydon (LL, energy=11349.0325), Bromley (LL, energy=12268.3767), Hounslow (LL, energy=14853.8058), Ealing (LL, energy=12871.5664), Havering (LL, energy=14307.3285), Harrow (LL, energy=9988.0227), Brent (LL, energy=11972.1855), Barnet (LL, energy=13039.4566), Lewisham (LL, energy=9045.0756), Greenwich (LL, energy=11145.7458), Bexley (LL, energy=13901.5831), Enfield (LL, energy=13700.4333), Waltham Forest (LL, energy=9438.2492), Redbridge (LL, energy=10041.0573), Sutton (LL, energy=10965.279), Richmond upon Thames (LL, energy=13316.0286), Merton (LL, energy=11755.3711), Wandsworth (LL, energy=10923.2265), Hammersmith and Fulham (LL, energy=14986.9318), Haringey (LL, energy=10475.9987), Newham (LL, energy=12554.4012), Barking and Dagenham (LL, energy=9830.8571)

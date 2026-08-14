@@ -70,7 +70,7 @@ def run_one(chunk_id, meta, model):
     verdict, final_text, log = agent_loop(
         SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
         model=model, require_structured_verdict=False,
-        extra_files=None, max_iterations=6)
+        extra_files=None, max_iterations=1, answer_from_code_output=True)
 
     with open(os.path.join(run_dir, "conversation_log.json"), "w", encoding="utf-8") as f:
         json.dump(log, f, indent=2)

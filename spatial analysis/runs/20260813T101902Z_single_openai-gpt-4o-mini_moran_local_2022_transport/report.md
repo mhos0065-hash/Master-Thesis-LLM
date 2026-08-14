@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2022_transport
+
+**Predicted:** True
+
+**Detail:** Hounslow (HH, transport_value=5131.3718), Westminster (HH, transport_value=4381.7938), Barking and Dagenham (LL, transport_value=2622.5508), Bexley (LL, transport_value=3470.4992), Brent (LL, transport_value=2623.3943), Bromley (LL, transport_value=3275.051), Croydon (LL, transport_value=2576.905), Greenwich (LL, transport_value=3129.4144), Hammersmith and Fulham (LL, transport_value=2621.2432), Haringey (LL, transport_value=2011.3513), Kensington and Chelsea (LL, transport_value=3184.8988), Kin
+
+**Answer line:** Hounslow (HH, transport_value=5131.3718), Westminster (HH, transport_value=4381.7938), Barking and Dagenham (LL, transport_value=2622.5508), Bexley (LL, transport_value=3470.4992), Brent (LL, transport_value=2623.3943), Bromley (LL, transport_value=3275.051), Croydon (LL, transport_value=2576.905), Greenwich (LL, transport_value=3129.4144), Hammersmith and Fulham (LL, transport_value=2621.2432), Haringey (LL, transport_value=2011.3513), Kensington and Chelsea (LL, transport_value=3184.8988), Kingston upon Thames (LL, transport_value=3279.7886), Lewisham (LL, transport_value=2051.4643), Merton (LL, transport_value=2619.7267), Newham (LL, transport_value=2427.4431), Redbridge (LL, transport_value=3089.2787), Richmond upon Thames (LL, transport_value=3415.7638), Sutton (LL, transport_value=2016.8109), Waltham Forest (LL, transport_value=2258.927), Wandsworth (LL, transport_value=2191.1961)

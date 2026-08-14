@@ -1,0 +1,7 @@
+# Single-agent report: cyclehire_global_selfcontainmentindex_w003
+
+**Predicted:** True
+
+**Detail:** CLUSTERED (statistical method = 0.23327090975362086, p = 0.03592814371257485)
+
+**Answer line:** CLUSTERED (statistical method = 0.23327090975362086, p = 0.03592814371257485)

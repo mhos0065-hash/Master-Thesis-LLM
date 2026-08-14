@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2023_transport
+
+**Predicted:** True
+
+**Detail:** Newham (LL, statistical method=0.1275), Greenwich (LL, statistical method=0.0424), Lewisham (LL, statistical method=0.0896), Hounslow (HH, statistical method=0.1627), Brent (LL, statistical method=0.0623), Barnet (LL, statistical method=0.0346), Bromley (LL, statistical method=0.0485), Barking and Dagenham (LL, statistical method=0.0378), Sutton (LL, statistical method=0.0757), Haringey (LL, statistical method=0.1465), Kensington and Chelsea (LL, statistical method=0.0245), Redbridge (LL, statis
+
+**Answer line:** Newham (LL, statistical method=0.1275), Greenwich (LL, statistical method=0.0424), Lewisham (LL, statistical method=0.0896), Hounslow (HH, statistical method=0.1627), Brent (LL, statistical method=0.0623), Barnet (LL, statistical method=0.0346), Bromley (LL, statistical method=0.0485), Barking and Dagenham (LL, statistical method=0.0378), Sutton (LL, statistical method=0.0757), Haringey (LL, statistical method=0.1465), Kensington and Chelsea (LL, statistical method=0.0245), Redbridge (LL, statistical method=0.0534), Kingston upon Thames (LL, statistical method=0.0132), Waltham Forest (LL, statistical method=0.1412), Richmond upon Thames (LL, statistical method=0.0034), Westminster (HH, statistical method=0.0411), Merton (LL, statistical method=0.0963), Wandsworth (LL, statistical method=0.0688), Hammersmith and Fulham (LL, statistical method=0.0383), Croydon (LL, statistical method=0.0875), Bexley (LL, statistical method=0.0084)

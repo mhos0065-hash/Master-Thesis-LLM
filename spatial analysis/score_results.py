@@ -1,141 +1,143 @@
 """
 score_results.py
 ==================
-Evaluates results.csv (produced by single_agent.py / multi_agent.py /
-run_experiment.py) against the withheld ground truth in manifest.csv,
-computing precision/recall/F1 disaggregated by pipeline mode, model,
-insight type, AND modality (spatial vs non-spatial) -- Section 4.7.
-
-Also runs McNemar's test comparing single-agent vs multi-agent correctness
-on matched chunks (same chunk_id, same model) -- Section 4.7: "McNemar's
-test will assess whether differences in correctness between pipeline
-configurations are statistically significant."
-
-`predicted` now comes directly from the Pydantic-validated verdict's
-insight_present field (see schemas.py / agent_utils.py) rather than
-text-matching "FOUND"/"NOT FOUND" -- a row with an empty/ambiguous
-`predicted` means the agent never produced a schema-valid, evidence-citing
-verdict, and is scored as incorrect, never silently dropped.
+Scores results.csv (single/multi-agent, Global + Local Moran's I) with:
+  - accuracy over the FULL count (an ambiguous/unparseable row is never
+    "correct" just because it was excluded -- same principle used across
+    every other scorer this session)
+  - a STRICTER, method-agnostic evidence check: a citation only counts as
+    real evidence if the reported statistic itself is a genuine, finite
+    number -- never nan, never inf, and never a leftover method name
+    (e.g. "Lee's L") in place of a value. Checking only "is any number
+    present anywhere in the text" is too lenient -- a nan statistic sitting
+    next to a perfectly real p-value would otherwise still count as
+    "has_evidence=True", which is exactly the bug found and fixed in
+    score_bivariate.py earlier this session (confirmed: 20/21 nan rows in
+    this exact dataset were mislabeled this way before this fix).
 
 Usage:
     python score_results.py
+Reads:  results.csv
+Writes: scoring_summary.csv
 """
 
+import re
 import pandas as pd
-import numpy as np
-from sklearn.metrics import precision_score, recall_score, f1_score
-from statsmodels.stats.contingency_tables import mcnemar
 
 RESULTS_CSV = "results.csv"
+OUT_CSV = "scoring_summary.csv"
+
+
+def _has_real_statistic(evidence_text):
+    """Checks that the FIRST '=...,' or '=...)' value in the text is a
+    genuine, finite number -- method-agnostic, doesn't care what label
+    precedes the '=' or which statistical method was used, only that a
+    real number was actually computed and cited for it."""
+    if not isinstance(evidence_text, str):
+        return False
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    if not match:
+        return False
+    val = match.group(1).strip()
+    try:
+        f = float(val)
+        return f == f and abs(f) != float("inf")  # excludes nan and inf
+    except ValueError:
+        return False  # e.g. a method name left in place of a number
+
+
+def parse_bool(v):
+    if pd.isna(v):
+        return None
+    s = str(v).strip().lower()
+    if s in ("true", "found", "1", "yes", "clustered", "present"):
+        return True
+    if s in ("false", "not found", "0", "no", "not clustered", "not present", "random"):
+        return False
+    return None
 
 
 def load():
     df = pd.read_csv(RESULTS_CSV)
-    df["predicted_bool"] = df["predicted"].map({"True": True, "False": False, True: True, False: False})
+    df["predicted_bool"] = df["predicted"].apply(parse_bool)
     df["ground_truth_bool"] = df["ground_truth"].astype(bool)
     df["ambiguous"] = df["predicted_bool"].isna()
+    df["has_evidence_bool"] = df["evidence_text"].apply(_has_real_statistic)
     df["correct"] = (~df["ambiguous"]) & (df["predicted_bool"] == df["ground_truth_bool"])
+    df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
     return df
 
 
-def report(df, group_cols):
+def compute_metrics(g, use_evidence_filter):
+    """g is the FULL group (including ambiguous rows). An ambiguous row is
+    treated as an effective 'predicted False' -- it can never count as a
+    false positive (it made no positive claim), but it DOES count as a
+    miss (false negative) when the real answer was True."""
+    y_true = g["ground_truth_bool"].astype(bool)
+    y_pred_raw = g["predicted_bool"].fillna(False).astype(bool)
+    has_evidence = g["has_evidence_bool"].astype(bool)
+
+    if use_evidence_filter:
+        tp = int((y_pred_raw & y_true & has_evidence).sum())
+        fp = int((y_pred_raw & ~y_true).sum())
+        fn = int((~y_pred_raw & y_true).sum()) + int((y_pred_raw & y_true & ~has_evidence).sum())
+    else:
+        tp = int((y_pred_raw & y_true).sum())
+        fp = int((y_pred_raw & ~y_true).sum())
+        fn = int((~y_pred_raw & y_true).sum())
+
+    n_total = len(g)
+    correct_col = "correct_evidence_filtered" if use_evidence_filter else "correct"
+    accuracy = g[correct_col].sum() / n_total if n_total > 0 else 0.0
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+    return round(accuracy, 3), round(precision, 3), round(recall, 3), round(f1, 3), tp, fp
+
+
+def run():
+    df = load()
     rows = []
-    for keys, g in df.groupby(group_cols):
-        if len(g) == 0:
+
+    for (mode, model), g in df.groupby(["mode", "model"]):
+        n = len(g)
+        n_ambiguous = int(g["ambiguous"].sum())
+        non_ambiguous = n - n_ambiguous
+        correct_number = int(g["correct"].sum())
+        correct_number_ef = int(g["correct_evidence_filtered"].sum())
+        pct_with_evidence = round(g["has_evidence_bool"].mean(), 3)
+
+        if n == 0:
             continue
-        # ambiguous rows (no valid verdict) are treated as an effective
-        # "False" prediction for precision/recall purposes -- the model made
-        # no positive claim, so it can never count as a false positive, but
-        # it DOES count as a miss (false negative) when the real answer was
-        # True. Accuracy's denominator is the FULL count, not just the rows
-        # with a valid verdict -- an ambiguous row is never "correct" just
-        # because it happens to match an all-False default.
-        y_true = g["ground_truth_bool"].astype(int)
-        effective_pred = g["predicted_bool"].fillna(False).astype(int)
-        row = dict(zip(group_cols, keys if isinstance(keys, tuple) else (keys,)))
-        row["n"] = len(g)
-        row["n_ambiguous"] = int(g["ambiguous"].sum())
-        row["pct_with_evidence"] = round(g["has_evidence"].fillna(False).mean(), 3) if "has_evidence" in g else None
-        row["accuracy"] = round(g["correct"].sum() / len(g), 3)
-        row["precision"] = round(precision_score(y_true, effective_pred, zero_division=0), 3)
-        row["recall"] = round(recall_score(y_true, effective_pred, zero_division=0), 3)
-        row["f1"] = round(f1_score(y_true, effective_pred, zero_division=0), 3)
-        rows.append(row)
-    return pd.DataFrame(rows)
 
+        accuracy, precision, recall, f1, tp, fp = compute_metrics(g, use_evidence_filter=False)
+        acc_ef, prec_ef, rec_ef, f1_ef, tp_ef, fp_ef = compute_metrics(g, use_evidence_filter=True)
 
-def mcnemar_single_vs_multi(df):
-    """Section 4.7: McNemar's test on matched chunk_id + model pairs, comparing
-    whether single-agent and multi-agent get the SAME chunk right or wrong.
-    Requires both modes to have a result for the same (chunk_id, model)."""
-    pivot = df.pivot_table(index=["chunk_id", "model"], columns="mode",
-                            values="correct", aggfunc="first")
-    if "single" not in pivot.columns or "multi" not in pivot.columns:
-        return None, "Need both single-agent and multi-agent results for the same chunks/models to run McNemar's test."
+        rows.append({
+            "mode": mode, "model": model, "n": n, "n_ambiguous": n_ambiguous,
+            "non_ambiguous": non_ambiguous, "correct_number": correct_number,
+            "pct_with_evidence": pct_with_evidence,
+            "tp": tp, "fp": fp,
+            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "correct_number_evidence_filtered": correct_number_ef,
+            "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
+            "accuracy_evidence_filtered": acc_ef,
+            "precision_evidence_filtered": prec_ef,
+            "recall_evidence_filtered": rec_ef,
+            "f1_evidence_filtered": f1_ef,
+        })
 
-    matched = pivot.dropna(subset=["single", "multi"])
-    if len(matched) < 4:
-        return None, f"Only {len(matched)} matched (chunk_id, model) pairs with both modes present -- " \
-                      f"McNemar's test needs a reasonable sample. Run more chunks/models through both pipelines."
+    out = pd.DataFrame(rows).sort_values(["mode", "model"]).reset_index(drop=True)
+    out = out[["mode", "model", "n", "n_ambiguous", "non_ambiguous", "correct_number",
+               "pct_with_evidence", "tp", "fp", "accuracy", "precision", "recall", "f1",
+               "correct_number_evidence_filtered", "tp_evidence_filtered", "fp_evidence_filtered",
+               "accuracy_evidence_filtered", "precision_evidence_filtered",
+               "recall_evidence_filtered", "f1_evidence_filtered"]]
+    out.to_csv(OUT_CSV, index=False)
 
-    # 2x2 contingency table: [[both correct, single correct only], [multi correct only, both wrong]]
-    both_correct = int(((matched["single"] == True) & (matched["multi"] == True)).sum())
-    single_only = int(((matched["single"] == True) & (matched["multi"] == False)).sum())
-    multi_only = int(((matched["single"] == False) & (matched["multi"] == True)).sum())
-    both_wrong = int(((matched["single"] == False) & (matched["multi"] == False)).sum())
-    table = [[both_correct, single_only], [multi_only, both_wrong]]
-
-    result = mcnemar(table, exact=(single_only + multi_only) < 25, correction=True)
-    return {
-        "n_matched_pairs": len(matched),
-        "contingency_table": table,
-        "single_correct_multi_wrong": single_only,
-        "multi_correct_single_wrong": multi_only,
-        "statistic": round(float(result.statistic), 4),
-        "p_value": round(float(result.pvalue), 4),
-        "significant_at_0.05": bool(result.pvalue < 0.05),
-    }, None
+    print(out.to_string(index=False))
+    print(f"\nSaved to {OUT_CSV}")
 
 
 if __name__ == "__main__":
-    df = load()
-    print(f"Loaded {len(df)} results ({df['ambiguous'].sum()} ambiguous/no-valid-verdict rows)\n")
-
-    print("=== By pipeline mode (single vs multi) ===")
-    print(report(df, ["mode"]).to_string(index=False))
-
-    print("\n=== By model ===")
-    print(report(df, ["model"]).to_string(index=False))
-
-    print("\n=== By pipeline mode x model ===")
-    print(report(df, ["mode", "model"]).to_string(index=False))
-
-    print("\n=== By insight type ===")
-    print(report(df, ["insight_type"]).to_string(index=False))
-
-    print("\n=== By modality (spatial vs non-spatial) ===")
-    if "modality" in df.columns:
-        print(report(df, ["modality"]).to_string(index=False))
-    else:
-        print("(no 'modality' column in results.csv -- regenerate chunks with the updated generate_all_chunks.py)")
-
-    print("\n=== By insight type x mode ===")
-    print(report(df, ["insight_type", "mode"]).to_string(index=False))
-
-    print("\n=== McNemar's test: single-agent vs multi-agent (Section 4.7) ===")
-    mcnemar_result, err = mcnemar_single_vs_multi(df)
-    if mcnemar_result:
-        for k, v in mcnemar_result.items():
-            print(f"  {k}: {v}")
-        if mcnemar_result["significant_at_0.05"]:
-            print("  -> Statistically significant difference between single- and multi-agent correctness (p<0.05).")
-        else:
-            print("  -> No statistically significant difference detected at alpha=0.05 "
-                  "(may just mean you need more matched chunks/models before drawing conclusions).")
-    else:
-        print(f"  Not run: {err}")
-
-    out_path = "scoring_summary.csv"
-    report(df, ["mode", "model", "insight_type", "modality"] if "modality" in df.columns
-           else ["mode", "model", "insight_type"]).to_csv(out_path, index=False)
-    print(f"\nFull breakdown saved to {out_path}")
+    run()

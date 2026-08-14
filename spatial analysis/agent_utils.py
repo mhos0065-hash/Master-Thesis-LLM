@@ -20,14 +20,16 @@ reload the dataset (pd.read_csv(DATASET_PATH)) in every block rather than
 assuming a dataframe from a previous turn still exists.
 
 Configure via environment variables (see .env.example):
-    LLM_API_BASE   e.g. https://api.groq.com/openai/v1
+    LLM_API_BASE   e.g. https://openrouter.ai/api/v1
     LLM_API_KEY    your key
-    LLM_MODEL      e.g. llama-3.3-70b-versatile, qwen/qwen3-32b, gpt-4o-mini
+    LLM_MODEL      e.g. openai/gpt-4o-mini, deepseek/deepseek-r1-0528, qwen/qwen3-32b
 """
 
 import os
 import time
+import re
 import requests
+import pandas as pd
 from dotenv import load_dotenv
 
 from sandbox import run_sandboxed_code, extract_code_blocks
@@ -36,27 +38,15 @@ from schemas import parse_verdict, SCHEMA_INSTRUCTIONS
 load_dotenv()  # reads .env in the current directory -- works the same on
                 # Windows/PowerShell, macOS, and Linux
 
-LLM_API_BASE = os.environ.get("LLM_API_BASE", "https://api.groq.com/openai/v1")
+LLM_API_BASE = os.environ.get("LLM_API_BASE", "https://openrouter.ai/api/v1")
 LLM_API_KEY = os.environ.get("LLM_API_KEY", "")
-LLM_MODEL = os.environ.get("LLM_MODEL", "llama-3.3-70b-versatile")
+LLM_MODEL = os.environ.get("LLM_MODEL", "openai/gpt-4o-mini")
 
-# Minimum seconds between consecutive chat() calls, to stay under free-tier
-# rate limits proactively (e.g. Groq's free tier is ~30 requests/minute) --
-# rather than only reacting after a 429 arrives. Override in .env if your
-# provider allows more, e.g. LLM_MIN_INTERVAL_SECONDS=0.5 for a paid tier.
 LLM_MIN_INTERVAL_SECONDS = float(os.environ.get("LLM_MIN_INTERVAL_SECONDS", "2.2"))
 _last_call_time = [0.0]
 
-# ---------------------------------------------------------------------
-# 1. LLM call
-# ---------------------------------------------------------------------
 
 def chat(messages, model=None, temperature=0.0, max_retries=5, timeout=180):
-    """Call an OpenAI-compatible chat completions endpoint. Returns the
-    assistant's text reply (string). Proactively paces requests to avoid
-    free-tier rate limits, and if a 429 does arrive anyway, backs off
-    (honoring the provider's Retry-After header if present) and retries
-    with a real, informative error if it still fails."""
     model = model or LLM_MODEL
     if not LLM_API_KEY:
         raise RuntimeError(
@@ -69,7 +59,6 @@ def chat(messages, model=None, temperature=0.0, max_retries=5, timeout=180):
 
     last_err_msg = "no attempts were made"
     for attempt in range(max_retries):
-        # proactive pacing -- wait out the minimum interval since the last call
         elapsed = time.time() - _last_call_time[0]
         if elapsed < LLM_MIN_INTERVAL_SECONDS:
             time.sleep(LLM_MIN_INTERVAL_SECONDS - elapsed)
@@ -82,8 +71,6 @@ def chat(messages, model=None, temperature=0.0, max_retries=5, timeout=180):
                 retry_after = resp.headers.get("Retry-After")
                 wait = float(retry_after) if retry_after else min(60, 2 ** (attempt + 2))
                 last_err_msg = f"HTTP 429 rate limited (attempt {attempt+1}/{max_retries}). Body: {resp.text[:300]}"
-                print(f"  [rate limited] waiting {wait:.0f}s before retry "
-                      f"({attempt+1}/{max_retries})...")
                 time.sleep(wait)
                 continue
 
@@ -91,31 +78,16 @@ def chat(messages, model=None, temperature=0.0, max_retries=5, timeout=180):
             data = resp.json()
 
             if "choices" not in data or not data["choices"]:
-                # Some providers return HTTP 200 with an error-shaped body
-                # (e.g. just {"error": ...}) instead of a proper 4xx/5xx --
-                # especially likely right after rate-limit retries. Treat
-                # this as retryable, same as null content below, instead of
-                # letting a raw KeyError crash the caller.
                 last_err_msg = (f"API response missing 'choices' (attempt {attempt+1}/{max_retries}). "
                                  f"Full response: {str(data)[:300]}")
-                print(f"  [malformed response] retrying ({attempt+1}/{max_retries})...")
                 time.sleep(min(30, 2 ** attempt))
                 continue
 
             content = data["choices"][0]["message"]["content"]
 
             if content is None:
-                # Some models (particularly reasoning models) can return a
-                # response where message.content is literally null -- e.g.
-                # if the model only produced internal reasoning tokens with
-                # no visible final text, or was cut off before writing any
-                # content. Returning None here would silently propagate into
-                # agent_loop()'s "FINAL ANSWER:" in reply check and crash
-                # with a confusing TypeError far from the real cause -- so
-                # treat it as a retryable failure instead, same as a 429.
                 last_err_msg = (f"API returned null content (attempt {attempt+1}/{max_retries}). "
                                  f"Full response: {str(data)[:300]}")
-                print(f"  [null content] retrying ({attempt+1}/{max_retries})...")
                 time.sleep(min(30, 2 ** attempt))
                 continue
 
@@ -132,10 +104,6 @@ def chat(messages, model=None, temperature=0.0, max_retries=5, timeout=180):
         f"If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your "
         f".env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once."
     )
-
-# ---------------------------------------------------------------------
-# 2. ReAct-style agent loop, using the real sandbox for every code block
-# ---------------------------------------------------------------------
 
 STATELESSNESS_NOTICE = (
     "IMPORTANT -- two rules that are easy to get wrong, read carefully:\n"
@@ -154,36 +122,59 @@ STATELESSNESS_NOTICE = (
     "elsewhere."
 )
 
+SINGLE_RUN_NOTICE = (
+    "3. SINGLE REPLY ONLY: you have exactly ONE reply to solve this completely -- there is "
+    "no follow-up turn, and you will NOT get to see your code's output before answering. "
+    "Your single ```python``` block must load the data, run the FULL analysis, AND print "
+    "your final answer AS THE LAST LINE OF YOUR CODE'S OWN OUTPUT, using an f-string that "
+    "substitutes your actual computed variables directly -- for example, if your code "
+    "computed a value in a variable called p_value, print it with "
+    "print(f\"p = {p_value}\"), NEVER by typing a number you believe is plausible directly "
+    "into the string, e.g. print(\"p = 0.031\") is WRONG even if 0.031 looks correct -- it "
+    "is not connected to your actual computation and will not be trusted. Your print "
+    "statement must reference the variable itself, not a number you typed by hand. "
+    "Follow the exact FINAL ANSWER format given in the question above, but it must come "
+    "from a real print() statement inside your code -- do NOT write 'FINAL ANSWER:' as "
+    "prose text outside your code. Only text your code actually prints will be read as "
+    "your answer."
+)
+
+
+def _build_data_preview(path, label):
+    try:
+        df = pd.read_csv(path)
+        preview = df.head(3).to_string(index=False)
+        return (f"\n\nReal preview of {label} (path: {path}) -- use these EXACT column "
+                f"names, do not guess:\nColumns: {list(df.columns)}\nFirst 3 rows:\n{preview}")
+    except Exception as e:
+        return f"\n\n(Could not preview {label} at {path}: {e})"
+
+
+def _extract_final_answer_from_output(output_text):
+    match = re.search(r"FINAL ANSWER:", output_text, re.IGNORECASE)
+    if not match:
+        return None
+    return output_text[match.end():].strip().splitlines()[0].strip()
+
 
 def agent_loop(system_prompt, user_prompt, dataset_path, run_dir, model=None,
-                max_iterations=6, require_structured_verdict=False, extra_files=None):
-    """Runs one agent through an iterative code-and-reason loop, with every
-    code block executed by the real sandbox (subprocess + timeout + network
-    block). `run_dir` must already exist -- the sandbox writes its temp
-    script and any ARTIFACTS_DIR contents there.
+                max_iterations=1, require_structured_verdict=False, extra_files=None,
+                answer_from_code_output=False):
+    if answer_from_code_output and require_structured_verdict:
+        raise ValueError(
+            "answer_from_code_output=True is not compatible with require_structured_verdict=True "
+            "-- code output is parsed as plain text, not validated against the JSON schema."
+        )
 
-    extra_files: optional dict of {VAR_NAME: filepath} for insight types that
-    need more than one input file (e.g. spatial correlation needing both a
-    values CSV and a borough adjacency CSV). Passed straight through to
-    sandbox.run_sandboxed_code()'s extra_vars, and mentioned in the prompt so
-    the model knows the variable exists.
-
-    If require_structured_verdict=True (use this for any agent making the
-    actual insight_present/not-present call -- the single-agent baseline,
-    or a multi-agent Reporter that itself runs code), the FINAL ANSWER must
-    be valid JSON matching schemas.AgentVerdict, with a repair retry if it
-    isn't. If False (use this for roles like Profiler/Coder that report
-    findings but don't themselves decide insight_present), FINAL ANSWER is
-    returned as plain text and verdict is always None.
-
-    Returns (verdict: AgentVerdict | None, raw_final_text: str, conversation_log: list[dict]).
-    """
-    schema_block = (
-        "\n\nWhen you have enough evidence, respond with 'FINAL ANSWER:' "
-        "followed by the JSON verdict described below.\n" + SCHEMA_INSTRUCTIONS
-        if require_structured_verdict else
-        "\n\nWhen you are done, respond with 'FINAL ANSWER:' followed by your conclusion in plain text."
-    )
+    if answer_from_code_output:
+        schema_block = "\n\n" + SINGLE_RUN_NOTICE
+    else:
+        schema_block = (
+            "\n\nWhen you have enough evidence, respond with 'FINAL ANSWER:' "
+            "followed by the JSON verdict described below.\n" + SCHEMA_INSTRUCTIONS
+            if require_structured_verdict else
+            "\n\nWhen you are done, respond with 'FINAL ANSWER:' followed by your conclusion in plain text."
+        )
     extra_files_notice = ""
     if extra_files:
         var_list = ", ".join(extra_files.keys())
@@ -197,6 +188,10 @@ def agent_loop(system_prompt, user_prompt, dataset_path, run_dir, model=None,
             f"exist. Do NOT reassign it to a path you guess or invent -- the real value is already "
             f"provided; overwriting it will break your code."
         )
+    data_preview = _build_data_preview(dataset_path, "the main dataset")
+    for var_name, filepath in (extra_files or {}).items():
+        data_preview += _build_data_preview(filepath, var_name)
+
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": (
@@ -204,6 +199,7 @@ def agent_loop(system_prompt, user_prompt, dataset_path, run_dir, model=None,
             + f"\n\nDataset path (read-only): {dataset_path}\n"
             + STATELESSNESS_NOTICE
             + extra_files_notice
+            + data_preview
             + schema_block
         )},
     ]
@@ -216,14 +212,25 @@ def agent_loop(system_prompt, user_prompt, dataset_path, run_dir, model=None,
 
         code_blocks = extract_code_blocks(reply)
 
-        # CRITICAL: if this message contains code blocks, they must be
-        # executed and their REAL output fed back -- even if the model also
-        # wrote "FINAL ANSWER:" in the same message. Otherwise a model can
-        # write code, never see it actually run, and just narrate/imagine
-        # plausible-looking output ("suppose the output is...") before
-        # declaring its answer -- a real observed failure mode, not a
-        # hypothetical one. A FINAL ANSWER is only ever accepted from a
-        # message that contains NO unexecuted code.
+        if answer_from_code_output:
+            if not code_blocks:
+                msg = "(Stopped: no code block was provided, so no analysis could run.)"
+                log.append({"role": "system", "content": msg})
+                return None, msg, log
+
+            results = []
+            for code in code_blocks:
+                result = run_sandboxed_code(code, run_dir, dataset_path, extra_vars=extra_files)
+                results.append(result)
+            feedback = "\n\n".join(f"Output {j+1}:\n{r}" for j, r in enumerate(results))
+            log.append({"role": "system", "content": f"(Sandbox output, not seen by the model in one-shot mode)\n{feedback}"})
+
+            final_text = _extract_final_answer_from_output(feedback)
+            if final_text is not None:
+                return None, final_text, log
+            msg = "(Stopped: code ran but never printed a FINAL ANSWER in its own output.)"
+            return None, msg, log
+
         if code_blocks:
             results = []
             for code in code_blocks:
@@ -249,8 +256,6 @@ def agent_loop(system_prompt, user_prompt, dataset_path, run_dir, model=None,
             verdict, err = parse_verdict(final_text)
             if verdict is not None:
                 return verdict, final_text, log
-            # invalid JSON/schema -- give the model ONE chance to fix it,
-            # rather than silently discarding a real analytical result
             repair_msg = (f"Your FINAL ANSWER could not be parsed: {err}\n"
                           f"Please resend FINAL ANSWER: followed by ONLY the "
                           f"corrected JSON object, matching the schema exactly.")

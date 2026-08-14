@@ -27,7 +27,8 @@ from agent_utils import agent_loop, LLM_MODEL
 from bivariate_verdict import parse_bivariate_with_citation
 
 MANIFEST_PATH = "chunks_csv/bivariate/bivariate_manifest.csv"
-RESULTS_CSV = "bivariate_results.csv"
+RESULTS_CSV = "bivariate_results_multi.csv" # For multi turn
+#RESULTS_CSV = "bivariate_results.csv"
 FAILED_LOG = "bivariate_failed_runs.log"
 
 SYSTEM_PROMPT = (
@@ -71,12 +72,18 @@ def run_one(chunk_id, meta, model):
     os.makedirs(run_dir, exist_ok=True)
 
     extra_files = {"ADJACENCY_PATH": meta["adjacency_path"]} if meta.get("adjacency_path") else None
-    max_iterations = 10 if meta.get("adjacency_path") else 6
 
+    # For multi -turn
     verdict, final_text, log = agent_loop(
         SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
         model=model, require_structured_verdict=False,
-        extra_files=extra_files, max_iterations=max_iterations)
+        extra_files=extra_files, max_iterations=6, answer_from_code_output=False)
+
+    # For single -turn
+    #verdict, final_text, log = agent_loop(
+        #SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        #model=model, require_structured_verdict=False,
+        #extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
 
 
     with open(os.path.join(run_dir, "conversation_log.json"), "w", encoding="utf-8") as f:

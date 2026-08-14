@@ -1,0 +1,8 @@
+"year_pair","Indicator","n_missing","moran_i","p_value","clustered"
+"2022_2023","NO2",6,-0.0687,0.6538,FALSE
+"2022_2023","Gas",0,0.0727,0.1227,FALSE
+"2022_2023","Energy",0,-0.128,0.9228,FALSE
+"2022_2023","GHG",0,-0.0816,0.9858,FALSE
+"2022_2023","Transport",0,0.0043,0.3069,FALSE
+"2022_2023","Crime",1,0.1472,0.0029,TRUE
+"2022_2023","Waste",1,0.3036,1e-04,TRUE

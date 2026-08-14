@@ -1,951 +1,801 @@
-chunk_id,dataset,insight_type,modality,csv_path,insight_def,ground_truth_direction,ground_truth_interpretation,ground_truth_slope,ground_truth_p_value,ground_truth_r_squared,answer_format
+chunk_id,dataset,insight_type,modality,csv_path,insight_def,ground_truth_direction,ground_truth_interpretation,ground_truth_slope,ground_truth_p_value,ground_truth_r_squared,answer_format,Unnamed: 12,acceptance rule
 distdecay_hammersmith_and_fulham_0,Distance-Decay Gravity Model (Hammersmith and Fulham),distance_decay,spatial,chunks_csv/distdecay/distdecay_hammersmith_and_fulham_0.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Hammersmith and Fulham, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hammersmith and Fulham to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-4.9021,0.026,0.7488,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-4.9021,0.026,0.7488,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_lambeth_1,Distance-Decay Gravity Model (Lambeth),distance_decay,spatial,chunks_csv/distdecay/distdecay_lambeth_1.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Lambeth, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Lambeth to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.2225,0.0083,0.7812,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.2225,0.0083,0.7812,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_lambeth_2,Distance-Decay Gravity Model (Lambeth),distance_decay,spatial,chunks_csv/distdecay/distdecay_lambeth_2.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Lambeth, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Lambeth to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.3019,0.0318,0.7236,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.3019,0.0318,0.7236,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_kensington_and_chelsea_3,Distance-Decay Gravity Model (Kensington and Chelsea),distance_decay,spatial,chunks_csv/distdecay/distdecay_kensington_and_chelsea_3.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Kensington and Chelsea, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Kensington and Chelsea to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.3281,0.0059,0.8777,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.3281,0.0059,0.8777,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_islington_4,Distance-Decay Gravity Model (Islington),distance_decay,spatial,chunks_csv/distdecay/distdecay_islington_4.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Islington, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Islington to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.2352,0.0072,0.7928,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.2352,0.0072,0.7928,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_westminster_5,Distance-Decay Gravity Model (Westminster),distance_decay,spatial,chunks_csv/distdecay/distdecay_westminster_5.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Westminster, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Westminster to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-5.1482,0.0087,0.9263,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-5.1482,0.0087,0.9263,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_westminster_6,Distance-Decay Gravity Model (Westminster),distance_decay,spatial,chunks_csv/distdecay/distdecay_westminster_6.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Westminster, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Westminster to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-4.2464,0.0107,0.7589,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-4.2464,0.0107,0.7589,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_islington_7,Distance-Decay Gravity Model (Islington),distance_decay,spatial,chunks_csv/distdecay/distdecay_islington_7.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Islington, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Islington to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.7624,0.0051,0.8183,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.7624,0.0051,0.8183,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_camden_8,Distance-Decay Gravity Model (Camden),distance_decay,spatial,chunks_csv/distdecay/distdecay_camden_8.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Camden, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Camden to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.084,0.0048,0.8226,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.084,0.0048,0.8226,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_camden_9,Distance-Decay Gravity Model (Camden),distance_decay,spatial,chunks_csv/distdecay/distdecay_camden_9.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Camden, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Camden to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.1849,0.0146,0.8966,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.1849,0.0146,0.8966,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_hackney_10,Distance-Decay Gravity Model (Hackney),distance_decay,spatial,chunks_csv/distdecay/distdecay_hackney_10.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Hackney, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hackney to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.5707,0.0434,0.791,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.5707,0.0434,0.791,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_hammersmith_and_fulham_11,Distance-Decay Gravity Model (Hammersmith and Fulham),distance_decay,spatial,chunks_csv/distdecay/distdecay_hammersmith_and_fulham_11.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Hammersmith and Fulham, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hammersmith and Fulham to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-4.2041,0.0208,0.7741,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-4.2041,0.0208,0.7741,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_wandsworth_12,Distance-Decay Gravity Model (Wandsworth),distance_decay,spatial,chunks_csv/distdecay/distdecay_wandsworth_12.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Wandsworth, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Wandsworth to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-4.2094,0.0033,0.8468,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-4.2094,0.0033,0.8468,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_westminster_13,Distance-Decay Gravity Model (Westminster),distance_decay,spatial,chunks_csv/distdecay/distdecay_westminster_13.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Westminster, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Westminster to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-5.1019,0.0109,0.9146,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-5.1019,0.0109,0.9146,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_14,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_14.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.3308,0.0153,0.805,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.3308,0.0153,0.805,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_camden_15,Distance-Decay Gravity Model (Camden),distance_decay,spatial,chunks_csv/distdecay/distdecay_camden_15.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Camden, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Camden to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-1.9785,0.0197,0.7797,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-1.9785,0.0197,0.7797,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_16,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_16.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.5005,0.0075,0.7899,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.5005,0.0075,0.7899,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_hammersmith_and_fulham_17,Distance-Decay Gravity Model (Hammersmith and Fulham),distance_decay,spatial,chunks_csv/distdecay/distdecay_hammersmith_and_fulham_17.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Hammersmith and Fulham, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hammersmith and Fulham to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-4.4417,0.0127,0.7421,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-4.4417,0.0127,0.7421,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_city_of_london_18,Distance-Decay Gravity Model (City of London),distance_decay,spatial,chunks_csv/distdecay/distdecay_city_of_london_18.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from City of London, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from City of London to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.386,0.0239,0.8575,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.386,0.0239,0.8575,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_hammersmith_and_fulham_19,Distance-Decay Gravity Model (Hammersmith and Fulham),distance_decay,spatial,chunks_csv/distdecay/distdecay_hammersmith_and_fulham_19.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Hammersmith and Fulham, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hammersmith and Fulham to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.9031,0.0112,0.9132,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.9031,0.0112,0.9132,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_westminster_20,Distance-Decay Gravity Model (Westminster),distance_decay,spatial,chunks_csv/distdecay/distdecay_westminster_20.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Westminster, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Westminster to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.0867,0.0096,0.8442,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.0867,0.0096,0.8442,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_kensington_and_chelsea_21,Distance-Decay Gravity Model (Kensington and Chelsea),distance_decay,spatial,chunks_csv/distdecay/distdecay_kensington_and_chelsea_21.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Kensington and Chelsea, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Kensington and Chelsea to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.6109,0.0044,0.8286,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.6109,0.0044,0.8286,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_hackney_22,Distance-Decay Gravity Model (Hackney),distance_decay,spatial,chunks_csv/distdecay/distdecay_hackney_22.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Hackney, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hackney to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-1.8634,0.0298,0.732,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-1.8634,0.0298,0.732,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_23,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_23.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.1842,0.004,0.8979,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.1842,0.004,0.8979,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_islington_24,Distance-Decay Gravity Model (Islington),distance_decay,spatial,chunks_csv/distdecay/distdecay_islington_24.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Islington, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Islington to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.1191,0.0016,0.8837,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.1191,0.0016,0.8837,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_southwark_25,Distance-Decay Gravity Model (Southwark),distance_decay,spatial,chunks_csv/distdecay/distdecay_southwark_25.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Southwark, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Southwark to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.7202,0.0491,0.572,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.7202,0.0491,0.572,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_city_of_london_26,Distance-Decay Gravity Model (City of London),distance_decay,spatial,chunks_csv/distdecay/distdecay_city_of_london_26.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from City of London, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from City of London to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-1.9818,0.0171,0.7113,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-1.9818,0.0171,0.7113,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_islington_27,Distance-Decay Gravity Model (Islington),distance_decay,spatial,chunks_csv/distdecay/distdecay_islington_27.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Islington, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Islington to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-3.0905,0.0142,0.8119,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-3.0905,0.0142,0.8119,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_islington_28,Distance-Decay Gravity Model (Islington),distance_decay,spatial,chunks_csv/distdecay/distdecay_islington_28.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Islington, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Islington to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.9711,0.0011,0.9462,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.9711,0.0011,0.9462,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_camden_29,Distance-Decay Gravity Model (Camden),distance_decay,spatial,chunks_csv/distdecay/distdecay_camden_29.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Camden, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Camden to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",negative_significant,DISTANCE_DECAY_PRESENT,-2.6878,0.0018,0.8782,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",negative_significant,DISTANCE_DECAY_PRESENT,-2.6878,0.0018,0.8782,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_hackney_30,Distance-Decay Gravity Model (Hackney),distance_decay,spatial,chunks_csv/distdecay/distdecay_hackney_30.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Hackney, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hackney to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-2.6074,0.2259,0.435,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-2.6074,0.2259,0.435,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_southwark_31,Distance-Decay Gravity Model (Southwark),distance_decay,spatial,chunks_csv/distdecay/distdecay_southwark_31.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Southwark, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Southwark to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-1.7664,0.2225,0.4397,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-1.7664,0.2225,0.4397,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_camden_32,Distance-Decay Gravity Model (Camden),distance_decay,spatial,chunks_csv/distdecay/distdecay_camden_32.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Camden, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Camden to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-2.2088,0.0898,0.671,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-2.2088,0.0898,0.671,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_33,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_33.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-3.0213,0.0792,0.4915,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-3.0213,0.0792,0.4915,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_kensington_and_chelsea_34,Distance-Decay Gravity Model (Kensington and Chelsea),distance_decay,spatial,chunks_csv/distdecay/distdecay_kensington_and_chelsea_34.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Kensington and Chelsea, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Kensington and Chelsea to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-3.4072,0.0564,0.7536,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-3.4072,0.0564,0.7536,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_hammersmith_and_fulham_35,Distance-Decay Gravity Model (Hammersmith and Fulham),distance_decay,spatial,chunks_csv/distdecay/distdecay_hammersmith_and_fulham_35.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Hammersmith and Fulham, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Hammersmith and Fulham to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-4.0738,0.0621,0.7381,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-4.0738,0.0621,0.7381,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_lambeth_36,Distance-Decay Gravity Model (Lambeth),distance_decay,spatial,chunks_csv/distdecay/distdecay_lambeth_36.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Lambeth, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Lambeth to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-1.6377,0.1203,0.6071,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-1.6377,0.1203,0.6071,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_city_of_london_37,Distance-Decay Gravity Model (City of London),distance_decay,spatial,chunks_csv/distdecay/distdecay_city_of_london_37.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from City of London, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from City of London to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-4.9103,0.2001,0.4719,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-4.9103,0.2001,0.4719,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_38,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_38.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-3.5414,0.1391,0.5718,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-3.5414,0.1391,0.5718,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_city_of_london_39,Distance-Decay Gravity Model (City of London),distance_decay,spatial,chunks_csv/distdecay/distdecay_city_of_london_39.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from City of London, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from City of London to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-4.3168,0.0529,0.5602,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-4.3168,0.0529,0.5602,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_city_of_london_40,Distance-Decay Gravity Model (City of London),distance_decay,spatial,chunks_csv/distdecay/distdecay_city_of_london_40.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from City of London, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from City of London to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-2.8603,0.1399,0.4579,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-2.8603,0.1399,0.4579,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_lambeth_41,Distance-Decay Gravity Model (Lambeth),distance_decay,spatial,chunks_csv/distdecay/distdecay_lambeth_41.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Lambeth, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Lambeth to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-2.0211,0.0816,0.6898,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-2.0211,0.0816,0.6898,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_southwark_42,Distance-Decay Gravity Model (Southwark),distance_decay,spatial,chunks_csv/distdecay/distdecay_southwark_42.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Southwark, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Southwark to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-5.4566,0.0813,0.6904,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-5.4566,0.0813,0.6904,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_city_of_london_43,Distance-Decay Gravity Model (City of London),distance_decay,spatial,chunks_csv/distdecay/distdecay_city_of_london_43.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from City of London, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from City of London to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-3.5058,0.054,0.646,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-3.5058,0.054,0.646,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_city_of_london_44,Distance-Decay Gravity Model (City of London),distance_decay,spatial,chunks_csv/distdecay/distdecay_city_of_london_44.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from City of London, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from City of London to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-4.558,0.1549,0.4338,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-4.558,0.1549,0.4338,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_45,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_45.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-3.0504,0.1097,0.6284,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-3.0504,0.1097,0.6284,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_southwark_46,Distance-Decay Gravity Model (Southwark),distance_decay,spatial,chunks_csv/distdecay/distdecay_southwark_46.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Southwark, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Southwark to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-3.433,0.2067,0.4622,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-3.433,0.2067,0.4622,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_47,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_47.csv,"I've attached real bike-share trip data for 5 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-2.5154,0.1774,0.5067,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-2.5154,0.1774,0.5067,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_southwark_48,Distance-Decay Gravity Model (Southwark),distance_decay,spatial,chunks_csv/distdecay/distdecay_southwark_48.csv,"I've attached real bike-share trip data for 6 destination boroughs reachable from Southwark, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Southwark to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-3.4979,0.0557,0.6409,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-3.4979,0.0557,0.6409,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"
 distdecay_tower_hamlets_49,Distance-Decay Gravity Model (Tower Hamlets),distance_decay,spatial,chunks_csv/distdecay/distdecay_tower_hamlets_49.csv,"I've attached real bike-share trip data for 7 destination boroughs reachable from Tower Hamlets, including the number of real trips taken and the real distance between the two boroughs' centroids.
 
 Question: Does the number of trips from Tower Hamlets to each destination decline as the distance to that destination increases -- the ""distance-decay"" or gravity-model relationship?
 
-This is a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971) -- it tests whether trip volume between places falls off as the distance between them grows, the foundational relationship in transportation geography.
-Method, in order:
-1. Take the log of n_trips and the log of distance_km for every row.
-2. Fit an OLS regression: log(n_trips) ~ log(distance_km).
-3. Check the slope's p-value for significance (p < 0.05) and its sign.
-4. Classify: DISTANCE_DECAY_PRESENT if significant AND the slope is NEGATIVE (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if significant AND the slope is POSITIVE (trips rise with distance -- unusual); NO_DISTANCE_DECAY if not statistically significant either way.
+For statistical analysis, you can use a GRAVITY MODEL / spatial interaction analysis (Wilson, 1971), or another appropriate method of your choosing, to test whether trip volume between places falls off as the distance between them grows -- the foundational relationship in transportation geography. Note: gravity-model / spatial interaction relationships are conventionally analyzed on a log-log scale, since trip volumes and distances typically follow a power-law relationship.
+Classify your finding as: DISTANCE_DECAY_PRESENT if there is a significant NEGATIVE relationship (trips fall off with distance, the expected gravity-model pattern); POSITIVE_DISTANCE_RELATIONSHIP if there is a significant POSITIVE relationship (trips rise with distance -- unusual); NO_DISTANCE_DECAY if the relationship is not statistically significant.
 
 Note: dedicated spatial-statistics or geocoding packages (pysal, esda, geopandas, or similar) are NOT installed in this environment -- implement this directly using only pandas, numpy, and scipy.stats (scipy IS available for the regression's p-value).
 
-End your response with exactly one line, including the computed slope and p-value:
+End your response with exactly one line, including the computed real number and p-value you used:
 FINAL ANSWER: DISTANCE_DECAY_PRESENT (slope = <value>, p = <value>)
 or
 FINAL ANSWER: POSITIVE_DISTANCE_RELATIONSHIP (slope = <value>, p = <value>)
 or
-FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)",not_significant,NO_DISTANCE_DECAY,-2.7855,0.0659,0.5239,distdecay_with_citation
+FINAL ANSWER: NO_DISTANCE_DECAY (slope = <value>, p = <value>)
+(slope is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",not_significant,NO_DISTANCE_DECAY,-2.7855,0.0659,0.5239,distdecay_with_citation,,"log-log OLS regression log(n_trips) ~ log(distance_km); significant if p<0.05; DISTANCE_DECAY_PRESENT if significant AND slope<0, POSITIVE_DISTANCE_RELATIONSHIP if significant AND slope>0, otherwise NO_DISTANCE_DECAY"

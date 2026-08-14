@@ -29,6 +29,8 @@ SELF_ADMITTED_NON_COMPUTATION_PHRASES = [
     "failed to converge", "insufficient data", "insufficient information",
     "could not be completed", "cannot be determined", "don't include actual",
     "do not include actual", "numerical issue that prevented",
+    "please replace the values", "replace the values with the actual",
+    "i cannot provide the actual", "i recommend running the corrected code",
 ]
 
 PYTHON_EXCEPTION_PATTERN = re.compile(

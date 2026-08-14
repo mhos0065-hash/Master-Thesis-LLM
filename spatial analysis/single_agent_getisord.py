@@ -76,12 +76,11 @@ def run_one(chunk_id, meta, model):
     os.makedirs(run_dir, exist_ok=True)
 
     extra_files = {"ADJACENCY_PATH": meta["adjacency_path"]} if meta.get("adjacency_path") else None
-    max_iterations = 10 if meta.get("adjacency_path") else 6
 
     verdict, final_text, log = agent_loop(
         SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
         model=model, require_structured_verdict=False,
-        extra_files=extra_files, max_iterations=max_iterations)
+        extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
 
 
     with open(os.path.join(run_dir, "conversation_log.json"), "w", encoding="utf-8") as f:
