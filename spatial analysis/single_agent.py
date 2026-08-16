@@ -41,7 +41,11 @@ from casual_verdict import parse_casual_final_answer, parse_casual_with_citation
 
 MANIFEST_PATH = "chunks_csv/manifest.csv"
 RUNS_DIR = "runs"
-RESULTS_CSV = "results.csv"
+
+#RESULTS_CSV = "results/results_multi.csv" # multi turn
+
+RESULTS_CSV = "results.csv" # single turn
+
 
 SYSTEM_PROMPT = """You are a single AI agent responsible for the entire analysis pipeline:
 profiling the dataset, planning the analysis, writing and running code, and reporting results.
@@ -67,6 +71,16 @@ def run_one(chunk_id, meta, model):
 
     prompt = build_user_prompt(meta["insight_type"], meta["insight_def"])
     extra_files = {"ADJACENCY_PATH": meta["adjacency_path"]} if meta.get("adjacency_path") else None
+
+    # multi turn
+    #verdict, final_text, log = agent_loop(
+                #SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+                #model=model, require_structured_verdict=False,
+                #max_iterations=6,
+                #answer_from_code_output=False,    
+                #extra_files=extra_files)
+
+    # Single turn
     verdict, final_text, log = agent_loop(
                 SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
                 model=model, require_structured_verdict=False,

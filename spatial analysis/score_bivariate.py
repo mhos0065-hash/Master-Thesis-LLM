@@ -28,15 +28,9 @@ import pandas as pd
 
 from bivariate_verdict import _has_self_admitted_non_computation
 
-# For multi tern
-#RESULTS_CSV = "bivariate_results_multi.csv"
-#SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
-#CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"  
-
-# For one shot
 RESULTS_CSV = "bivariate_results.csv"
-SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
-CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
+SUMMARY_OUT = "bivariate_scoring_summary.csv"
+CONFUSION_OUT = "bivariate_confusion_matrix.csv"
 
 CLASSES = ["positive", "negative", "not_significant"]
 
@@ -111,16 +105,25 @@ def per_class_metrics(g, use_evidence_filter):
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
         f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
-        precisions.append(precision)
-        recalls.append(recall)
-        f1_scores.append(f1)
+
+        n_real = int((y_true == cls).sum())
+        if n_real > 0:
+            # only classes with at least one real ground-truth occurrence
+            # count toward the macro average -- excluding a structurally
+            # absent class prevents it from dragging F1 down for a model
+            # that's genuinely correct on every class that actually exists
+            # (confirmed concrete case: gpt-4o-mini scored 100% accuracy on
+            # distance-decay but F1=0.667, purely from an empty third class)
+            precisions.append(precision)
+            recalls.append(recall)
+            f1_scores.append(f1)
 
         per_class[cls] = {"precision": round(precision, 3), "recall": round(recall, 3),
                            "f1": round(f1, 3), "tp": tp, "fp": fp, "fn": fn}
 
-    macro_precision = round(sum(precisions) / len(precisions), 3)
-    macro_recall = round(sum(recalls) / len(recalls), 3)
-    macro_f1 = round(sum(f1_scores) / len(f1_scores), 3)
+    macro_precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
+    macro_recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
+    macro_f1 = round(sum(f1_scores) / len(f1_scores), 3) if f1_scores else 0.0
     return per_class, macro_precision, macro_recall, macro_f1
 
 

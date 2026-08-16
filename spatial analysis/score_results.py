@@ -69,29 +69,60 @@ def load():
 
 
 def compute_metrics(g, use_evidence_filter):
-    """g is the FULL group (including ambiguous rows). An ambiguous row is
-    treated as an effective 'predicted False' -- it can never count as a
-    false positive (it made no positive claim), but it DOES count as a
-    miss (false negative) when the real answer was True."""
+    """g is the FULL group (including ambiguous rows).
+
+    precision/recall/F1 are 2-CLASS MACRO-averaged (CLUSTERED and
+    NOT_CLUSTERED each treated as their own class, then averaged) --
+    NOT the older single-class version that only measured detection of
+    CLUSTERED. That version had a real blind spot: an ambiguous row
+    (predicted_bool left unfilled) can NEVER become a TP or FP under
+    either scheme, but under single-class scoring it could ONLY ever
+    lower F1 when the real answer was CLUSTERED -- an ambiguous row
+    whose real answer was NOT_CLUSTERED contributed nothing at all to
+    F1, even though it correctly lowered accuracy. Treating
+    NOT_CLUSTERED as its own class with its own recall closes this gap:
+    an ambiguous row now counts as a missed detection of whichever class
+    was actually true, mirroring exactly how accuracy already treats it.
+    tp/fp returned are still the raw CLUSTERED-class counts (kept as
+    descriptive figures), but precision/recall/F1 no longer derive from
+    them directly."""
     y_true = g["ground_truth_bool"].astype(bool)
-    y_pred_raw = g["predicted_bool"].fillna(False).astype(bool)
     has_evidence = g["has_evidence_bool"].astype(bool)
 
     if use_evidence_filter:
-        tp = int((y_pred_raw & y_true & has_evidence).sum())
-        fp = int((y_pred_raw & ~y_true).sum())
-        fn = int((~y_pred_raw & y_true).sum()) + int((y_pred_raw & y_true & ~has_evidence).sum())
+        # an unevidenced CLUSTERED claim is downgraded to "no real answer"
+        # for macro-averaging purposes, same principle as every other
+        # evidence-filtered scorer this session
+        keep_as_is = g["predicted_bool"].isna() | (g["predicted_bool"] == False) | has_evidence
+        y_pred = g["predicted_bool"].where(keep_as_is, None)
     else:
-        tp = int((y_pred_raw & y_true).sum())
-        fp = int((y_pred_raw & ~y_true).sum())
-        fn = int((~y_pred_raw & y_true).sum())
+        y_pred = g["predicted_bool"]
+
+    tp = int(((y_pred == True) & (y_true == True)).sum())
+    fp = int(((y_pred == True) & (y_true == False)).sum())
+
+    f1s, precisions, recalls = [], [], []
+    for target_class in (True, False):
+        n_real = int((y_true == target_class).sum())
+        if n_real == 0:
+            continue  # class never occurs -- excluded from macro average
+        tp_c = int(((y_pred == target_class) & (y_true == target_class)).sum())
+        fp_c = int(((y_pred == target_class) & (y_true != target_class)).sum())
+        fn_c = int(((y_pred != target_class) & (y_true == target_class)).sum())
+        p = tp_c / (tp_c + fp_c) if (tp_c + fp_c) > 0 else 0.0
+        r = tp_c / (tp_c + fn_c) if (tp_c + fn_c) > 0 else 0.0
+        f1_c = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+        precisions.append(p)
+        recalls.append(r)
+        f1s.append(f1_c)
+
+    precision = sum(precisions) / len(precisions) if precisions else 0.0
+    recall = sum(recalls) / len(recalls) if recalls else 0.0
+    f1 = sum(f1s) / len(f1s) if f1s else 0.0
 
     n_total = len(g)
     correct_col = "correct_evidence_filtered" if use_evidence_filter else "correct"
     accuracy = g[correct_col].sum() / n_total if n_total > 0 else 0.0
-    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
     return round(accuracy, 3), round(precision, 3), round(recall, 3), round(f1, 3), tp, fp
 
 

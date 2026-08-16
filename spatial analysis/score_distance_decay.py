@@ -20,13 +20,8 @@ Writes: distance_decay_scoring_summary.csv
 import re
 import pandas as pd
 
-# Multi turn
-#RESULTS_CSV = "distance_decay_results_multi.csv"
-#OUT_CSV = "Scores/multi turn/distance_decay_scoring_summary.csv"
-
-# Single turn
 RESULTS_CSV = "distance_decay_results.csv"
-OUT_CSV = "Scores/single turn/distance_decay_scoring_summary.csv"
+OUT_CSV = "distance_decay_scoring_summary.csv"
 
 CLASSES = ["negative_significant", "positive_significant", "not_significant"]
 
@@ -95,6 +90,17 @@ def per_class_metrics(g, use_evidence_filter):
     tp_total = fp_total = 0
     precisions, recalls, f1_scores = [], [], []
     for cls in CLASSES:
+        n_real = int((y_true == cls).sum())
+        if n_real == 0:
+            # class never occurs in this group's real ground truth -- excluded
+            # from the macro average entirely, rather than defaulting to 0.0.
+            # A metric shouldn't penalize a model for a category that
+            # structurally cannot appear in the data being evaluated (confirmed
+            # concrete case: gpt-4o-mini scored 100% accuracy on distance-decay
+            # but F1=0.667, purely because positive_significant never occurs
+            # in this dataset -- fixed here).
+            continue
+
         tp = int(((y_pred == cls) & (y_true == cls)).sum())
         fp = int(((y_pred == cls) & (y_true != cls)).sum())
         fn = int(((y_pred != cls) & (y_true == cls)).sum())
@@ -108,9 +114,9 @@ def per_class_metrics(g, use_evidence_filter):
         recalls.append(recall)
         f1_scores.append(f1)
 
-    macro_precision = round(sum(precisions) / len(precisions), 3)
-    macro_recall = round(sum(recalls) / len(recalls), 3)
-    macro_f1 = round(sum(f1_scores) / len(f1_scores), 3)
+    macro_precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
+    macro_recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
+    macro_f1 = round(sum(f1_scores) / len(f1_scores), 3) if f1_scores else 0.0
     return tp_total, fp_total, macro_precision, macro_recall, macro_f1
 
 

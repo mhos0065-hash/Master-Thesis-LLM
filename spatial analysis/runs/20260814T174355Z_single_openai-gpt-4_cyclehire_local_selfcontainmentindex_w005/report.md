@@ -1,0 +1,7 @@
+# Single-agent report: cyclehire_local_selfcontainmentindex_w005
+
+**Predicted:** True
+
+**Detail:** Camden (LL, Self-Containment Index=3.0263378006136543, Average Neighbor Index=2.4419919515044497), City of London (LL, Self-Containment Index=1.9267730647782606, Average Neighbor Index=3.579405827086126), Hammersmith and Fulham (LL, Self-Containment Index=9.567310103509739, Average Neighbor Index=7.163465072444087), Islington (LL, Self-Containment Index=3.2657262364711963, Average Neighbor Index=3.162263492505945), Kensington and Chelsea (LL, Self-Containment Index=4.45170320242799, Average Neig
+
+**Answer line:** Camden (LL, Self-Containment Index=3.0263378006136543, Average Neighbor Index=2.4419919515044497), City of London (LL, Self-Containment Index=1.9267730647782606, Average Neighbor Index=3.579405827086126), Hammersmith and Fulham (LL, Self-Containment Index=9.567310103509739, Average Neighbor Index=7.163465072444087), Islington (LL, Self-Containment Index=3.2657262364711963, Average Neighbor Index=3.162263492505945), Kensington and Chelsea (LL, Self-Containment Index=4.45170320242799, Average Neighbor Index=7.192004533077937), Lambeth (LL, Self-Containment Index=2.581726318379235, Average Neighbor Index=4.565839550511295), Southwark (LL, Self-Containment Index=4.327881641542844, Average Neighbor Index=3.23183733678788), Wandsworth (LL, Self-Containment Index=9.875226942460182, Average Neighbor Index=4.683554044395214), Westminster (LL, Self-Containment Index=2.133476553263891, Average Neighbor Index=4.372353465731864)

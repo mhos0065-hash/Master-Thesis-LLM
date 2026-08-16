@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2022_gas
+
+**Predicted:** True
+
+**Detail:** Kingston upon Thames (LL, statistical method=16443.4514), Croydon (LL, statistical method=16263.8602), Bromley (LL, statistical method=15853.3946), Hounslow (LL, statistical method=18503.7151), Ealing (LL, statistical method=18110.0238), Havering (LL, statistical method=14050.5669), Hillingdon (LL, statistical method=19281.9954), Harrow (LL, statistical method=17821.3841), Lewisham (LL, statistical method=13947.9942), Greenwich (LL, statistical method=15998.6890), Bexley (LL, statistical method=
+
+**Answer line:** Kingston upon Thames (LL, statistical method=16443.4514), Croydon (LL, statistical method=16263.8602), Bromley (LL, statistical method=15853.3946), Hounslow (LL, statistical method=18503.7151), Ealing (LL, statistical method=18110.0238), Havering (LL, statistical method=14050.5669), Hillingdon (LL, statistical method=19281.9954), Harrow (LL, statistical method=17821.3841), Lewisham (LL, statistical method=13947.9942), Greenwich (LL, statistical method=15998.6890), Bexley (LL, statistical method=19338.7226), Enfield (LL, statistical method=17674.5634), Waltham Forest (LL, statistical method=14356.6283), Redbridge (LL, statistical method=16053.5303), Sutton (LL, statistical method=16191.7787), Richmond upon Thames (LL, statistical method=16732.5635), Merton (LL, statistical method=15935.6854), Hammersmith and Fulham (LL, statistical method=17974.3597), Newham (LL, statistical method=22376.5247), Barking and Dagenham (LL, statistical method=13876.2232)
