@@ -1,34 +1,34 @@
-borough,delta_value
-Kingston upon Thames,3.2857
-Croydon,2.7942
-Bromley,1.0969
-Hounslow,3.9521
-Ealing,1.8633
-Havering,9.0458
-Hillingdon,7.1853
-Harrow,1.4199
-Brent,5.8652
-Barnet,1.5772
-Lewisham,3.7126
-Greenwich,3.8983
-Bexley,3.6552
-Enfield,3.4606
-Waltham Forest,0.7471
-Lambeth,5.0598
-Redbridge,0.5253
-Sutton,2.7147
-Richmond upon Thames,2.2234
-Merton,4.4609
-Wandsworth,-2.8183
-Hammersmith and Fulham,2.2653
-Southwark,8.804
-Kensington and Chelsea,18.7587
-City of London,8.8626
-Westminster,128.7372
-Camden,31.9752
-Tower Hamlets,1.9529
-Islington,12.7655
-Hackney,2.0216
-Haringey,-0.7721
-Newham,6.3173
-Barking and Dagenham,5.0525
+borough,Crime_2021,Crime_2022,Crime_2023
+Barking and Dagenham,85.2307,90.2832,96.1718
+Barnet,68.8698,70.447,72.4557
+Bexley,59.8702,63.5254,67.1318
+Brent,80.3296,86.1948,92.6663
+Bromley,67.5061,68.603,71.1273
+Camden,131.4755,163.4507,189.524
+City of London,,,
+Croydon,82.1904,84.9846,85.5629
+Ealing,76.3552,78.2185,85.7532
+Enfield,86.5182,89.9788,89.3182
+Greenwich,87.1567,91.055,96.5825
+Hackney,117.2029,119.2245,122.4691
+Hammersmith and Fulham,105.2456,107.5109,118.9192
+Haringey,106.9833,106.2112,112.9826
+Harrow,56.238,57.6579,59.1198
+Havering,64.1756,73.2214,80.4046
+Hillingdon,79.8856,87.0709,79.0422
+Hounslow,80.2672,84.2193,94.3963
+Islington,112.3315,125.097,131.9483
+Kensington and Chelsea,126.4226,145.1813,158.7936
+Kingston upon Thames,65.3512,68.6369,71.9464
+Lambeth,98.284,103.3438,111.5838
+Lewisham,88.0273,91.7399,98.4132
+Merton,59.7677,64.2286,65.1766
+Newham,91.7061,98.0234,106.8613
+Redbridge,76.9997,77.525,78.1598
+Richmond upon Thames,56.2602,58.4836,61.7367
+Southwark,100.975,109.779,120.819
+Sutton,60.9685,63.6832,62.5811
+Tower Hamlets,101.6855,103.6384,115.9201
+Waltham Forest,79.393,80.1401,82.3922
+Wandsworth,76.2748,73.4565,81.1481
+Westminster,238.6882,367.4254,439.4224

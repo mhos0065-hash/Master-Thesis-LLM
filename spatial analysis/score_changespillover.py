@@ -24,12 +24,12 @@ import re
 import pandas as pd
 
 #Multi
-#RESULTS_CSV = "changespillover_results_multi.csv"
-#OUT_CSV = "Scores/multi turn/changespillover_scoring_summary.csv"
+RESULTS_CSV = "results/changespillover_results_multi.csv"
+OUT_CSV = "Scores/multi turn/changespillover_scoring_summary.csv"
 
 #Single
-RESULTS_CSV = "changespillover_results.csv"
-OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
+#RESULTS_CSV = "changespillover_results.csv"
+#OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
 
 SELF_ADMITTED_NON_COMPUTATION_PHRASES = [
     "not computed", "could not be computed", "unable to compute", "impossible to compute",

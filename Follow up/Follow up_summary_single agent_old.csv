@@ -1,0 +1,138 @@
+,,,1. Global and Local spatial correlation (Global and Local moran I),,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP,FP,accuracy,precision,recall,F1,
+deepseek/deepseek-chat-v3-0324,74,22,52,30,0.459,15,6,0.405,0.714,0.405,0.517,
+deepseek/deepseek-r1-0528,74,6,68,52,0.797,27,9,0.703,0.75,0.73,0.74,
+meta-llama/llama-3.1-8b-instruct,74,22,52,17,0.081,0,1,0.23,0,0,0,
+openai/gpt-4,74,35,39,12,0.027,0,0,0.162,0,0,0,
+openai/gpt-4o-mini,74,21,53,29,0.176,12,4,0.392,0.75,0.324,0.453,
+openai/o3,74,11,63,30,0.365,6,4,0.405,0.6,0.162,0.255,
+openai/o4-mini,74,1,73,59,0.865,29,7,0.797,0.806,0.784,0.795,
+qwen/qwen3-32b,74,1,73,39,0.716,16,13,0.527,0.552,0.432,0.485,
+,,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N_Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP_Evidence,FP_Evidence,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence,
+deepseek/deepseek-chat-v3-0324,74,22,52,18,0.459,10,6,0.243,0.625,0.27,0.377,
+deepseek/deepseek-r1-0528,74,6,68,49,0.797,27,9,0.662,0.75,0.73,0.74,
+meta-llama/llama-3.1-8b-instruct,74,22,52,2,0.081,0,1,0.027,0,0,0,
+openai/gpt-4,74,35,39,2,0.027,0,0,0.027,0,0,0,
+openai/gpt-4o-mini,74,21,53,9,0.176,8,4,0.122,0.667,0.216,0.327,
+openai/o3,74,11,63,17,0.365,6,4,0.23,0.6,0.162,0.255,
+openai/o4-mini,74,1,73,56,0.865,29,7,0.757,0.806,0.784,0.795,
+qwen/qwen3-32b,74,1,73,35,0.716,16,13,0.473,0.552,0.432,0.485,
+,,,,,,,,,,,,
+,,,2. Bivariate spatial correlation,,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP,FP,accuracy,precision,recall,F1,
+deepseek/deepseek-chat-v3-0324,50,10,40,31,0.86,31,9,0.62,0.466,0.407,0.43,
+deepseek/deepseek-r1-0528,50,7,43,29,0.58,29,14,0.58,0.419,0.406,0.412,
+meta-llama/llama-3.1-8b-instruct,50,15,35,23,0.28,23,12,0.46,0.256,0.197,0.222,
+openai/gpt-4,50,22,28,18,0.52,18,10,0.36,0.413,0.182,0.243,
+openai/gpt-4o-mini,50,5,45,31,0.54,31,14,0.62,0.43,0.293,0.32,
+openai/o3,50,0,50,35,0.76,35,15,0.7,0.597,0.328,0.343,
+openai/o4-mini,50,0,50,32,1,32,18,0.64,0.489,0.387,0.43,
+qwen/qwen3-32b,50,1,49,14,0.98,14,35,0.28,0.244,0.436,0.182,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N_Query,Reply_ambiguous,non_ambiguous,correct_predicted_Evidence,pct_with_evidence,TP_Evidence,FP_Evidence,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence,
+deepseek/deepseek-chat-v3-0324,50,10,40,30,0.86,30,8,0.6,0.475,0.399,0.428,
+deepseek/deepseek-r1-0528,50,7,43,19,0.58,19,10,0.38,0.428,0.321,0.36,
+meta-llama/llama-3.1-8b-instruct,50,15,35,8,0.28,8,6,0.16,0.296,0.068,0.111,
+openai/gpt-4,50,22,28,17,0.52,17,9,0.34,0.421,0.174,0.238,
+openai/gpt-4o-mini,50,5,45,19,0.54,19,8,0.38,0.467,0.191,0.264,
+openai/o3,50,0,50,25,0.76,25,13,0.5,0.591,0.242,0.295,
+openai/o4-mini,50,0,50,32,1,32,18,0.64,0.489,0.387,0.43,
+qwen/qwen3-32b,50,1,49,13,0.98,13,35,0.26,0.238,0.427,0.173,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,3. GetISord (Hotspot detection),,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N Query,Reply_ambiguous,n_implausible,non_ambiguous,correct_predicted,pct_with_evidence,"TP-
+Borough level","FP_
+Borough level",accuracy,precision,recall,F1
+deepseek/deepseek-chat-v3-0324,21,7,1,13,3,0.381,23,10,0.921,0.697,0.338,0.455
+deepseek/deepseek-r1-0528,21,0,0,21,20,0.857,67,0,0.999,1,0.985,0.992
+meta-llama/llama-3.1-8b-instruct,21,10,0,11,2,0.048,0,5,0.895,0,0,0
+openai/gpt-4,21,10,2,9,2,0.19,2,3,0.9,0.4,0.029,0.054
+openai/gpt-4o-mini,21,0,5,16,1,0.429,15,14,0.903,0.517,0.221,0.31
+openai/o3,21,0,0,21,5,0.143,12,3,0.915,0.8,0.176,0.289
+openai/o4-mini,21,0,0,21,21,0.857,68,0,1,1,1,1
+qwen/qwen3-32b,21,0,0,21,5,0.429,19,7,0.919,0.731,0.279,0.404
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N_Query,Reply_ambiguous,n_implausible,non_ambiguous,"correct_predicted_
+Evidence",pct_with_evidence,"TP_Evidence_
+Borough level","FP_Evidence_
+Borough level",accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
+deepseek/deepseek-chat-v3-0324,21,7,1,13,3,0.381,23,10,0.921,0.697,0.338,0.455
+deepseek/deepseek-r1-0528,21,0,0,21,20,0.857,67,0,0.999,1,0.985,0.992
+meta-llama/llama-3.1-8b-instruct,21,10,0,11,2,0.048,0,5,0.895,0,0,0
+openai/gpt-4,21,10,2,9,2,0.19,2,3,0.9,0.4,0.029,0.054
+openai/gpt-4o-mini,21,0,5,16,1,0.429,15,14,0.903,0.517,0.221,0.31
+openai/o3,21,0,0,21,5,0.143,12,3,0.915,0.8,0.176,0.289
+openai/o4-mini,21,0,0,21,21,0.857,68,0,1,1,1,1
+qwen/qwen3-32b,21,0,0,21,5,0.429,19,7,0.919,0.731,0.279,0.404
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,4. Spatial outlier analysis,,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N Query,Reply_ambiguous,n_implausible,non_ambiguous,correct_predicted,pct_with_evidence,TP,FP,accuracy,precision,recall,F1
+deepseek/deepseek-chat-v3-0324,50,2,0,48,46,1,46,2,0.92,0.833,0.938,0.856
+deepseek/deepseek-r1-0528,50,0,1,49,46,1,46,3,0.92,0.821,0.943,0.853
+meta-llama/llama-3.1-8b-instruct,50,29,0,21,7,0.095,7,14,0.14,0.271,0.107,0.134
+openai/gpt-4,50,37,0,13,13,1,13,0,0.26,1,0.319,0.458
+openai/gpt-4o-mini,50,10,0,40,33,0.75,33,7,0.66,0.907,0.633,0.711
+openai/o3,50,5,0,45,31,0.933,31,14,0.62,0.758,0.774,0.68
+openai/o4-mini,50,0,0,50,49,0.98,49,1,0.98,0.984,0.988,0.986
+qwen/qwen3-32b,50,3,0,47,27,0.979,27,20,0.54,0.515,0.645,0.476
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N_Query,Reply_ambiguous,n_implausible,non_ambiguous,"correct_predicted_
+Evidence",pct_with_evidence,TP_Evidence,FP_Evidence,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
+deepseek/deepseek-chat-v3-0324,50,2,0,48,46,1,46,2,0.92,0.833,0.938,0.856
+deepseek/deepseek-r1-0528,50,0,1,49,46,1,46,3,0.92,0.821,0.943,0.853
+meta-llama/llama-3.1-8b-instruct,50,29,0,21,0,0.095,0,2,0,0,0,0
+openai/gpt-4,50,37,0,13,13,1,13,0,0.26,1,0.319,0.458
+openai/gpt-4o-mini,50,10,0,40,29,0.75,29,1,0.58,0.978,0.567,0.711
+openai/o3,50,5,0,45,29,0.933,29,13,0.58,0.756,0.74,0.669
+openai/o4-mini,50,0,0,50,49,0.98,49,0,0.98,1,0.988,0.994
+qwen/qwen3-32b,50,3,0,47,27,0.979,27,19,0.54,0.565,0.645,0.479
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,5. Spatial Distance decay analysis,,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N Query,Reply_ambiguous,n_implausible,non_ambiguous,correct_predicted,pct_with_evidence,TP,FP,accuracy,precision,recall,F1
+deepseek/deepseek-chat-v3-0324,50,7,0,43,43,1,43,0,0.86,0.667,0.561,0.608
+deepseek/deepseek-r1-0528,50,0,0,50,50,1,50,0,1,0.667,0.667,0.667
+meta-llama/llama-3.1-8b-instruct,50,6,6,38,36,0.947,36,2,0.72,0.627,0.483,0.545
+openai/gpt-4,50,16,0,34,34,1,34,0,0.68,0.667,0.456,0.541
+openai/gpt-4o-mini,50,1,4,45,45,1,45,0,0.9,0.667,0.606,0.634
+openai/o3,50,2,26,22,18,0.818,18,4,0.36,0.539,0.239,0.33
+openai/o4-mini,50,0,2,48,48,1,48,0,0.96,0.667,0.644,0.655
+qwen/qwen3-32b,50,0,12,38,38,1,38,0,0.76,0.667,0.511,0.578
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,,
+,,,,,,,,,,,,
+model,N_Query,Reply_ambiguous,n_implausible,non_ambiguous,"correct_predicted_
+Evidence",pct_with_evidence,TP_Evidence,FP_Evidence,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
+deepseek/deepseek-chat-v3-0324,50,7,0,43,43,1,43,0,0.86,0.667,0.561,0.608
+deepseek/deepseek-r1-0528,50,0,0,50,50,1,50,0,1,0.667,0.667,0.667
+meta-llama/llama-3.1-8b-instruct,50,6,6,38,36,0.947,36,0,0.72,0.667,0.483,0.56
+openai/gpt-4,50,16,0,34,34,1,34,0,0.68,0.667,0.456,0.541
+openai/gpt-4o-mini,50,1,4,45,45,1,45,0,0.9,0.667,0.606,0.634
+openai/o3,50,2,26,22,17,0.818,17,1,0.34,0.639,0.222,0.328
+openai/o4-mini,50,0,2,48,48,1,48,0,0.96,0.667,0.644,0.655
+qwen/qwen3-32b,50,0,12,38,38,1,38,0,0.76,0.667,0.511,0.578

@@ -1,0 +1,170 @@
+,,,1. Global and Local spatial correlation (Global and Local moran I),,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,N Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP,FP,accuracy,precision,recall,F1
+deepseek/deepseek-chat-v3-0324,74,0,74,57,0.689,30,10,0.77,0.772,0.77,0.77
+deepseek/deepseek-r1-0528,74,0,74,60,0.622,32,9,0.811,0.814,0.811,0.81
+meta-llama/llama-3.1-8b-instruct,74,10,64,30,0.176,15,15,0.405,0.471,0.405,0.435
+moonshotai/kimi-k2.6,74,0,74,58,0.459,27,6,0.784,0.787,0.784,0.783
+openai/gpt-4o-mini,74,6,68,48,0.568,25,8,0.649,0.707,0.649,0.677
+openai/o3,74,0,74,49,0.189,14,2,0.662,0.739,0.662,0.633
+openai/o4-mini,74,0,74,58,0.743,28,7,0.784,0.785,0.784,0.784
+qwen/qwen3-32b,74,0,74,53,0.324,28,12,0.716,0.718,0.716,0.716
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,N_Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP_Evidence,FP_Evidence,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
+deepseek/deepseek-chat-v3-0324,N Query,Reply_ambiguous,non_ambiguous,42,0.689,25,7,0.568,0.788,0.703,0.743
+deepseek/deepseek-r1-0528,74,0,74,38,0.622,23,8,0.514,0.795,0.689,0.738
+meta-llama/llama-3.1-8b-instruct,74,0,74,8,0.176,8,5,0.108,0.528,0.311,0.371
+moonshotai/kimi-k2.6,74,10,64,29,0.459,22,5,0.392,0.785,0.716,0.741
+openai/gpt-4o-mini,74,0,74,37,0.568,20,5,0.5,0.729,0.581,0.642
+openai/o3,74,6,68,12,0.189,10,2,0.162,0.718,0.608,0.573
+openai/o4-mini,74,0,74,49,0.743,26,6,0.662,0.791,0.757,0.772
+qwen/qwen3-32b,74,0,74,17,0.324,17,7,0.23,0.722,0.568,0.631
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,2. Bivariate spatial correlation,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,N Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP,FP,accuracy,precision,recall,F1
+deepseek/deepseek-chat-v3-0324,50,0,50,36,0.58,36,14,0.72,0.476,0.564,0.473
+deepseek/deepseek-r1-0528,50,0,50,35,0.54,35,15,0.7,0.443,0.527,0.441
+meta-llama/llama-3.1-8b-instruct,50,10,40,11,0.64,11,29,0.22,0.446,0.309,0.235
+moonshotai/kimi-k2.6,50,0,50,36,0.68,36,14,0.72,0.414,0.422,0.417
+openai/gpt-4o-mini,50,11,39,18,0.56,18,21,0.36,0.4,0.296,0.299
+openai/o3,50,0,50,35,0.64,35,15,0.7,0.437,0.527,0.442
+openai/o4-mini,50,0,50,37,0.6,37,13,0.74,0.49,0.544,0.498
+qwen/qwen3-32b,50,1,49,31,0.7,31,18,0.62,0.365,0.35,0.356
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,N_Query,Reply_ambiguous,non_ambiguous,correct_predicted_Evidence,pct_with_evidence,TP_Evidence,FP_Evidence,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
+deepseek/deepseek-chat-v3-0324,50,0,50,27,0.58,27,2,0.54,0.333,0.231,0.273
+deepseek/deepseek-r1-0528,50,0,50,27,0.54,27,0,0.54,0.333,0.231,0.273
+meta-llama/llama-3.1-8b-instruct,50,10,40,7,0.64,7,25,0.14,0.448,0.275,0.19
+moonshotai/kimi-k2.6,50,0,50,31,0.68,31,3,0.62,0.655,0.35,0.441
+openai/gpt-4o-mini,50,11,39,13,0.56,13,15,0.26,0.393,0.168,0.23
+openai/o3,50,0,50,29,0.64,29,3,0.58,0.533,0.305,0.376
+openai/o4-mini,50,0,50,25,0.6,25,5,0.5,0.333,0.214,0.26
+qwen/qwen3-32b,50,1,49,28,0.7,28,7,0.56,0.633,0.268,0.328
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,3. GetISord (Hotspot detection),,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,N Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP_Borough,FP_Borough,accuracy (Partial),precision,recall,F1
+deepseek/deepseek-chat-v3-0324,21,0,21,8,0.524,31,0,0.536,0.667,0.536,0.572
+deepseek/deepseek-r1-0528,21,0,21,15,0.81,61,0,0.89,0.952,0.89,0.915
+meta-llama/llama-3.1-8b-instruct,21,8,13,0,0.429,6,10,0.064,0.19,0.064,0.094
+moonshotai/kimi-k2.6,21,0,21,20,0.81,67,0,0.952,0.952,0.952,0.952
+openai/gpt-4o-mini,21,9,12,1,0.238,7,6,0.105,0.167,0.129,0.127
+openai/o3,21,0,21,6,0.857,31,8,0.417,0.603,0.426,0.473
+openai/o4-mini,21,0,21,13,0.857,52,4,0.721,0.794,0.726,0.751
+qwen/qwen3-32b,21,0,21,2,0.714,19,3,0.222,0.571,0.222,0.294
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,N Query,Reply_ambiguous,non_ambiguous,"correct_predicted_
+Evidence",pct_with_evidence,"TP_Evidence_
+Borough level","FP_Evidence_
+Borough level",accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
+deepseek/deepseek-chat-v3-0324,21,0,21,5,0.524,31,0,0.536,0.667,0.536,0.572
+deepseek/deepseek-r1-0528,21,0,21,12,0.81,61,0,0.89,0.952,0.89,0.915
+meta-llama/llama-3.1-8b-instruct,21,8,13,0,0.429,6,10,0.064,0.19,0.064,0.094
+moonshotai/kimi-k2.6,21,0,21,17,0.81,67,0,0.952,0.952,0.952,0.952
+openai/gpt-4o-mini,21,9,12,0,0.238,7,6,0.105,0.167,0.129,0.127
+openai/o3,21,0,21,5,0.857,31,8,0.417,0.603,0.426,0.473
+openai/o4-mini,21,0,21,11,0.857,52,4,0.721,0.794,0.726,0.751
+qwen/qwen3-32b,21,0,21,2,0.714,19,3,0.222,0.571,0.222,0.294
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,4. Spatial outlier analysis,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,F1
+deepseek/deepseek-chat-v3-0324,50,0,50,40,1,40,10,0.8,0.556,0.571,0.544
+deepseek/deepseek-r1-0528,50,0,50,45,0.98,45,5,0.9,0.929,0.781,0.825
+meta-llama/llama-3.1-8b-instruct,50,12,38,24,0.66,24,14,0.48,0.598,0.638,0.579
+moonshotai/kimi-k2.6,50,0,50,43,1,43,7,0.86,0.906,0.912,0.902
+openai/gpt-4o-mini,50,11,39,35,0.78,35,4,0.7,0.922,0.788,0.845
+openai/o3,50,7,43,36,0.84,36,7,0.72,0.569,0.51,0.527
+openai/o4-mini,50,0,50,47,1,47,3,0.94,0.956,0.96,0.957
+qwen/qwen3-32b,50,0,50,47,0.98,47,3,0.94,0.956,0.805,0.853
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
+deepseek/deepseek-chat-v3-0324,50,0,50,40,1,40,10,0.8,0.556,0.571,0.544
+deepseek/deepseek-r1-0528,50,0,50,44,0.98,44,5,0.88,0.927,0.764,0.817
+meta-llama/llama-3.1-8b-instruct,50,12,38,19,0.66,19,10,0.38,0.576,0.419,0.46
+moonshotai/kimi-k2.6,50,0,50,43,1,43,7,0.86,0.906,0.912,0.902
+openai/gpt-4o-mini,50,11,39,35,0.78,35,4,0.7,0.922,0.788,0.845
+openai/o3,50,7,43,36,0.84,36,6,0.72,0.58,0.51,0.533
+openai/o4-mini,50,0,50,47,1,47,3,0.94,0.956,0.96,0.957
+qwen/qwen3-32b,50,0,50,46,0.98,46,3,0.92,0.956,0.793,0.846
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,5. Spatial Distance decay analysis,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,F1
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,6. Changes pill over analysis,,,,,,,,
+,,,Without filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,F1
+deepseek/deepseek-chat-v3-0324,42,0,42,36,0.857,8,2,0.857,0.838,0.8,0.815
+deepseek/deepseek-r1-0528,42,0,42,41,0.857,12,1,0.976,0.962,0.983,0.972
+meta-llama/llama-3.1-8b-instruct,42,12,30,14,0.595,5,12,0.333,0.493,0.358,0.382
+moonshotai/kimi-k2.6,42,0,42,37,0.857,7,0,0.881,0.929,0.792,0.83
+openai/gpt-4o-mini,42,11,31,25,0.595,9,5,0.595,0.792,0.642,0.687
+openai/o3,42,1,41,33,0.833,7,3,0.786,0.769,0.725,0.744
+openai/o4-mini,42,0,42,39,0.857,10,1,0.929,0.922,0.9,0.91
+qwen/qwen3-32b,42,0,42,40,0.857,12,2,0.952,0.929,0.967,0.944
+,,,,,,,,,,,
+,,,,,,,,,,,
+,,,After filtering based on correct evidence,,,,,,,,
+,,,,,,,,,,,
+model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
+deepseek/deepseek-chat-v3-0324,42,0,42,32,0.857,4,1,0.762,0.838,0.633,0.687
+deepseek/deepseek-r1-0528,42,0,42,36,0.857,7,0,0.857,1,0.775,0.86
+meta-llama/llama-3.1-8b-instruct,42,12,30,11,0.595,4,12,0.262,0.471,0.317,0.352
+moonshotai/kimi-k2.6,42,0,42,36,0.857,7,0,0.857,0.929,0.792,0.83
+openai/gpt-4o-mini,42,11,31,20,0.595,4,4,0.476,0.721,0.433,0.54
+openai/o3,42,1,41,30,0.833,5,3,0.714,0.732,0.642,0.676
+openai/o4-mini,42,0,42,36,0.857,7,0,0.857,0.968,0.775,0.844
+qwen/qwen3-32b,42,0,42,35,0.857,7,1,0.833,0.938,0.758,0.833

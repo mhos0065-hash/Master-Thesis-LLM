@@ -28,9 +28,16 @@ import pandas as pd
 
 from bivariate_verdict import _has_self_admitted_non_computation
 
-RESULTS_CSV = "bivariate_results.csv"
-SUMMARY_OUT = "bivariate_scoring_summary.csv"
-CONFUSION_OUT = "bivariate_confusion_matrix.csv"
+# For single turn
+#RESULTS_CSV = "bivariate_results.csv"
+#SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
+#CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
+
+
+# For multi turn
+RESULTS_CSV = "results/bivariate_results_multi.csv"
+SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
+CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
 
 CLASSES = ["positive", "negative", "not_significant"]
 

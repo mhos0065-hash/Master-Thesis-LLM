@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2021_ghg
+
+**Predicted:** True
+
+**Detail:** Barking and Dagenham (LL, statistical method=2.1925), Camden (HH, statistical method=4.5509), Croydon (LL, statistical method=2.5541), Ealing (HH, statistical method=2.8455), Greenwich (LL, statistical method=2.5279), Hackney (LL, statistical method=2.2099), Hammersmith and Fulham (HH, statistical method=3.2078), Hillingdon (HH, statistical method=4.8475), Hounslow (HH, statistical method=3.1866), Kensington and Chelsea (HH, statistical method=4.8682), Lambeth (LL, statistical method=2.5397), Le
+
+**Answer line:** Barking and Dagenham (LL, statistical method=2.1925), Camden (HH, statistical method=4.5509), Croydon (LL, statistical method=2.5541), Ealing (HH, statistical method=2.8455), Greenwich (LL, statistical method=2.5279), Hackney (LL, statistical method=2.2099), Hammersmith and Fulham (HH, statistical method=3.2078), Hillingdon (HH, statistical method=4.8475), Hounslow (HH, statistical method=3.1866), Kensington and Chelsea (HH, statistical method=4.8682), Lambeth (LL, statistical method=2.5397), Lewisham (LL, statistical method=2.0072), Merton (LL, statistical method=2.6264), Newham (LL, statistical method=2.6016), Redbridge (LL, statistical method=2.2720), Richmond upon Thames (HH, statistical method=2.8913), Sutton (LL, statistical method=2.4239), Waltham Forest (LL, statistical method=2.1185), Westminster (HH, statistical method=7.8348)

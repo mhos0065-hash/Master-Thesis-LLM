@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2023_waste
+
+**Predicted:** True
+
+**Detail:** Barking and Dagenham (HH, statistical method=I=8.2918), Barnet (LL, statistical method=I=0.5697), Bexley (HH, statistical method=I=5.2159), Bromley (LL, statistical method=I=0.5505), Camden (LL, statistical method=I=1.0074), Croydon (LL, statistical method=I=0.7723), Ealing (HH, statistical method=I=0.6156), Greenwich (HH, statistical method=I=1.2238), Hackney (LL, statistical method=I=0.7094), Haringey (LL, statistical method=I=1.5308), Havering (HH, statistical method=I=5.7020), Hounslow (HH, 
+
+**Answer line:** Barking and Dagenham (HH, statistical method=I=8.2918), Barnet (LL, statistical method=I=0.5697), Bexley (HH, statistical method=I=5.2159), Bromley (LL, statistical method=I=0.5505), Camden (LL, statistical method=I=1.0074), Croydon (LL, statistical method=I=0.7723), Ealing (HH, statistical method=I=0.6156), Greenwich (HH, statistical method=I=1.2238), Hackney (LL, statistical method=I=0.7094), Haringey (LL, statistical method=I=1.5308), Havering (HH, statistical method=I=5.7020), Hounslow (HH, statistical method=I=0.4706), Islington (LL, statistical method=I=0.6138), Kingston upon Thames (LL, statistical method=I=0.4557), Lambeth (LL, statistical method=I=1.0593), Lewisham (LL, statistical method=I=0.3976), Richmond upon Thames (LL, statistical method=I=0.7432), Southwark (LL, statistical method=I=0.6729), Waltham Forest (LL, statistical method=I=0.5168)

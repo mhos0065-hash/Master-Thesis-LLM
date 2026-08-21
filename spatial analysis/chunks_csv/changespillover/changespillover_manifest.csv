@@ -1,253 +1,316 @@
 chunk_id,dataset,insight_type,modality,csv_path,n_rows,insight_def,ground_truth_present,ground_truth_detail,ground_truth_rule,ground_truth_metric_json,window_start,window_end,window_index,adjacency_path,spatial_granularity,answer_format
-changespillover_2021_2022_no2,"Spatial Change Spillover (NO2, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_no2.csv,33,"I've attached the CHANGE in NO2 for 33 London boroughs between 2021 and 2022 (delta_value = 2022 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+changespillover_2021_2022_no2,"Spatial Change Spillover (NO2, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_no2.csv,33,"I've attached NO2 values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in NO2 between 2021 and 2022 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in NO2 = -0.0566, p = 0.6378","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0566, ""p_value"": 0.6378, ""n_missing_imputed"": 3, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,0,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2022_gas,"Spatial Change Spillover (Gas, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_gas.csv,33,"I've attached the CHANGE in Gas for 33 London boroughs between 2021 and 2022 (delta_value = 2022 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in NO2 = -0.0566, p = 0.6378","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0566, ""p_value"": 0.6378, ""n_missing_imputed"": 3, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,0,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2022_gas,"Spatial Change Spillover (Gas, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_gas.csv,33,"I've attached Gas values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Gas between 2021 and 2022 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Gas = -0.046, p = 0.5653","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.046, ""p_value"": 0.5653, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,1,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2022_energy,"Spatial Change Spillover (Energy, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_energy.csv,33,"I've attached the CHANGE in Energy for 33 London boroughs between 2021 and 2022 (delta_value = 2022 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Gas = -0.046, p = 0.5653","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.046, ""p_value"": 0.5653, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,1,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2022_energy,"Spatial Change Spillover (Energy, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_energy.csv,33,"I've attached Energy values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Energy between 2021 and 2022 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Energy = -0.012, p = 0.3311","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.012, ""p_value"": 0.3311, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,2,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2022_ghg,"Spatial Change Spillover (GHG, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_ghg.csv,33,"I've attached the CHANGE in GHG for 33 London boroughs between 2021 and 2022 (delta_value = 2022 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Energy = -0.012, p = 0.3311","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.012, ""p_value"": 0.3311, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,2,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2022_ghg,"Spatial Change Spillover (GHG, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_ghg.csv,33,"I've attached GHG values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in GHG between 2021 and 2022 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in GHG = -0.012, p = 0.3247","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.012, ""p_value"": 0.3247, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,3,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2022_transport,"Spatial Change Spillover (Transport, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_transport.csv,33,"I've attached the CHANGE in Transport for 33 London boroughs between 2021 and 2022 (delta_value = 2022 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in GHG = -0.012, p = 0.3247","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.012, ""p_value"": 0.3247, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,3,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2022_transport,"Spatial Change Spillover (Transport, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_transport.csv,33,"I've attached Transport values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Transport between 2021 and 2022 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Transport = 0.005, p = 0.3178","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.005, ""p_value"": 0.3178, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,4,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2022_crime,"Spatial Change Spillover (Crime, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_crime.csv,33,"I've attached the CHANGE in Crime for 33 London boroughs between 2021 and 2022 (delta_value = 2022 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Transport = 0.005, p = 0.3178","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.005, ""p_value"": 0.3178, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,4,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2022_crime,"Spatial Change Spillover (Crime, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_crime.csv,33,"I've attached Crime values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Crime between 2021 and 2022 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",True,"CLUSTERED: real Global Moran's I on the 2021->2022 change in Crime = 0.0809, p = 0.0043","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0809, ""p_value"": 0.0043, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,5,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2022_waste,"Spatial Change Spillover (Waste, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_waste.csv,33,"I've attached the CHANGE in Waste for 33 London boroughs between 2021 and 2022 (delta_value = 2022 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",TRUE,"CLUSTERED: real Global Moran's I on the 2021->2022 change in Crime = 0.0809, p = 0.0043","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0809, ""p_value"": 0.0043, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,5,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2022_waste,"Spatial Change Spillover (Waste, 2021-2022)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2022_waste.csv,33,"I've attached Waste values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Waste between 2021 and 2022 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Waste = -0.1375, p = 0.8561","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.1375, ""p_value"": 0.8561, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,6,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2022_2023_no2,"Spatial Change Spillover (NO2, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_no2.csv,33,"I've attached the CHANGE in NO2 for 33 London boroughs between 2022 and 2023 (delta_value = 2023 value minus 2022 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2022 change in Waste = -0.1375, p = 0.8561","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.1375, ""p_value"": 0.8561, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2022""}",2021,2022,6,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2022_2023_no2,"Spatial Change Spillover (NO2, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_no2.csv,33,"I've attached NO2 values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in NO2 between 2022 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in NO2 = -0.0687, p = 0.6538","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0687, ""p_value"": 0.6538, ""n_missing_imputed"": 6, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,7,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2022_2023_gas,"Spatial Change Spillover (Gas, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_gas.csv,33,"I've attached the CHANGE in Gas for 33 London boroughs between 2022 and 2023 (delta_value = 2023 value minus 2022 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in NO2 = -0.0687, p = 0.6538","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0687, ""p_value"": 0.6538, ""n_missing_imputed"": 6, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,7,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2022_2023_gas,"Spatial Change Spillover (Gas, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_gas.csv,33,"I've attached Gas values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Gas between 2022 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in Gas = 0.0727, p = 0.1227","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0727, ""p_value"": 0.1227, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,8,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2022_2023_energy,"Spatial Change Spillover (Energy, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_energy.csv,33,"I've attached the CHANGE in Energy for 33 London boroughs between 2022 and 2023 (delta_value = 2023 value minus 2022 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in Gas = 0.0727, p = 0.1227","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0727, ""p_value"": 0.1227, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,8,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2022_2023_energy,"Spatial Change Spillover (Energy, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_energy.csv,33,"I've attached Energy values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Energy between 2022 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in Energy = -0.128, p = 0.9228","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.128, ""p_value"": 0.9228, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,9,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2022_2023_ghg,"Spatial Change Spillover (GHG, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_ghg.csv,33,"I've attached the CHANGE in GHG for 33 London boroughs between 2022 and 2023 (delta_value = 2023 value minus 2022 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in Energy = -0.128, p = 0.9228","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.128, ""p_value"": 0.9228, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,9,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2022_2023_ghg,"Spatial Change Spillover (GHG, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_ghg.csv,33,"I've attached GHG values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in GHG between 2022 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in GHG = -0.0816, p = 0.9858","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0816, ""p_value"": 0.9858, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,10,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2022_2023_transport,"Spatial Change Spillover (Transport, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_transport.csv,33,"I've attached the CHANGE in Transport for 33 London boroughs between 2022 and 2023 (delta_value = 2023 value minus 2022 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in GHG = -0.0816, p = 0.9858","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0816, ""p_value"": 0.9858, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,10,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2022_2023_transport,"Spatial Change Spillover (Transport, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_transport.csv,33,"I've attached Transport values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Transport between 2022 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in Transport = 0.0043, p = 0.3069","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0043, ""p_value"": 0.3069, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,11,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2022_2023_crime,"Spatial Change Spillover (Crime, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_crime.csv,33,"I've attached the CHANGE in Crime for 33 London boroughs between 2022 and 2023 (delta_value = 2023 value minus 2022 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2022->2023 change in Transport = 0.0043, p = 0.3069","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0043, ""p_value"": 0.3069, ""n_missing_imputed"": 0, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,11,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2022_2023_crime,"Spatial Change Spillover (Crime, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_crime.csv,33,"I've attached Crime values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Crime between 2022 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",True,"CLUSTERED: real Global Moran's I on the 2022->2023 change in Crime = 0.1472, p = 0.0029","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1472, ""p_value"": 0.0029, ""n_missing_imputed"": 1, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,12,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2022_2023_waste,"Spatial Change Spillover (Waste, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_waste.csv,33,"I've attached the CHANGE in Waste for 33 London boroughs between 2022 and 2023 (delta_value = 2023 value minus 2022 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",TRUE,"CLUSTERED: real Global Moran's I on the 2022->2023 change in Crime = 0.1472, p = 0.0029","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1472, ""p_value"": 0.0029, ""n_missing_imputed"": 1, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,12,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2022_2023_waste,"Spatial Change Spillover (Waste, 2022-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2022_2023_waste.csv,33,"I've attached Waste values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Waste between 2022 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",True,"CLUSTERED: real Global Moran's I on the 2022->2023 change in Waste = 0.3036, p = 0.0001","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.3036, ""p_value"": 0.0001, ""n_missing_imputed"": 1, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,13,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2023_no2,"Spatial Change Spillover (NO2, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_no2.csv,33,"I've attached the CHANGE in NO2 for 33 London boroughs between 2021 and 2023 (delta_value = 2023 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",TRUE,"CLUSTERED: real Global Moran's I on the 2022->2023 change in Waste = 0.3036, p = 0.0001","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.3036, ""p_value"": 0.0001, ""n_missing_imputed"": 1, ""year_start"": ""2022"", ""year_end"": ""2023""}",2022,2023,13,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2023_no2,"Spatial Change Spillover (NO2, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_no2.csv,33,"I've attached NO2 values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in NO2 between 2021 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in NO2 = -0.0558, p = 0.5974","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0558, ""p_value"": 0.5974, ""n_missing_imputed"": 5, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,14,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2023_gas,"Spatial Change Spillover (Gas, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_gas.csv,33,"I've attached the CHANGE in Gas for 33 London boroughs between 2021 and 2023 (delta_value = 2023 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in NO2 = -0.0558, p = 0.5974","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.0558, ""p_value"": 0.5974, ""n_missing_imputed"": 5, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,14,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2023_gas,"Spatial Change Spillover (Gas, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_gas.csv,33,"I've attached Gas values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Gas between 2021 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",True,"CLUSTERED: real Global Moran's I on the 2021->2023 change in Gas = 0.1652, p = 0.0152","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1652, ""p_value"": 0.0152, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,15,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2023_energy,"Spatial Change Spillover (Energy, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_energy.csv,33,"I've attached the CHANGE in Energy for 33 London boroughs between 2021 and 2023 (delta_value = 2023 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",TRUE,"CLUSTERED: real Global Moran's I on the 2021->2023 change in Gas = 0.1652, p = 0.0152","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1652, ""p_value"": 0.0152, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,15,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2023_energy,"Spatial Change Spillover (Energy, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_energy.csv,33,"I've attached Energy values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Energy between 2021 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in Energy = 0.0479, p = 0.1591","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0479, ""p_value"": 0.1591, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,16,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2023_ghg,"Spatial Change Spillover (GHG, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_ghg.csv,33,"I've attached the CHANGE in GHG for 33 London boroughs between 2021 and 2023 (delta_value = 2023 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in Energy = 0.0479, p = 0.1591","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.0479, ""p_value"": 0.1591, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,16,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2023_ghg,"Spatial Change Spillover (GHG, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_ghg.csv,33,"I've attached GHG values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in GHG between 2021 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in GHG = -0.1228, p = 0.8699","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.1228, ""p_value"": 0.8699, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,17,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2023_transport,"Spatial Change Spillover (Transport, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_transport.csv,33,"I've attached the CHANGE in Transport for 33 London boroughs between 2021 and 2023 (delta_value = 2023 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in GHG = -0.1228, p = 0.8699","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.1228, ""p_value"": 0.8699, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,17,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2023_transport,"Spatial Change Spillover (Transport, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_transport.csv,33,"I've attached Transport values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Transport between 2021 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",False,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in Transport = -0.021, p = 0.4492","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.021, ""p_value"": 0.4492, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,18,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2023_crime,"Spatial Change Spillover (Crime, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_crime.csv,33,"I've attached the CHANGE in Crime for 33 London boroughs between 2021 and 2023 (delta_value = 2023 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",FALSE,"NOT CLUSTERED: real Global Moran's I on the 2021->2023 change in Transport = -0.021, p = 0.4492","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": -0.021, ""p_value"": 0.4492, ""n_missing_imputed"": 0, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,18,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2023_crime,"Spatial Change Spillover (Crime, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_crime.csv,33,"I've attached Crime values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Crime between 2021 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",True,"CLUSTERED: real Global Moran's I on the 2021->2023 change in Crime = 0.1082, p = 0.0016","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1082, ""p_value"": 0.0016, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,19,chunks_csv/borough_adjacency.csv,global,casual_with_citation
-changespillover_2021_2023_waste,"Spatial Change Spillover (Waste, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_waste.csv,33,"I've attached the CHANGE in Waste for 33 London boroughs between 2021 and 2023 (delta_value = 2023 value minus 2021 value), and a list showing which boroughs are geographic neighbors of each other.
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",TRUE,"CLUSTERED: real Global Moran's I on the 2021->2023 change in Crime = 0.1082, p = 0.0016","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1082, ""p_value"": 0.0016, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,19,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+changespillover_2021_2023_waste,"Spatial Change Spillover (Waste, 2021-2023)",spatial_change_spillover,spatial,chunks_csv/changespillover/changespillover_2021_2023_waste.csv,33,"I've attached Waste values for 33 London boroughs for the years 2021, 2022, and 2023, and a list showing which boroughs are geographic neighbors of each other.
 
 Question: Do boroughs that saw a large CHANGE in Waste between 2021 and 2023 tend to be located near other boroughs that ALSO saw a similarly-sized change in the SAME direction (both increasing, or both decreasing), or does a borough's change show no relationship to its neighbors' changes? This tests whether the CHANGE itself clusters spatially, not just the raw level in any single year.
 
+(Note: the data includes a third year not needed for this question.)
+
 Explain your reasoning based on the data, including the actual computed statistic and its significance. You can use a statistical method such as Global Moran's I, or another appropriate method of your choosing, to support your conclusion.
 
 Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If you test statistical significance via a permutation/randomization test, use at least 500 random shuffles -- fewer permutations can produce an unstable p-value that lands on the wrong side of the 0.05 threshold just by chance, especially when the true effect is only moderate.
 
 End your response with exactly one line, including the computed number(s) you used:
-FINAL ANSWER: CLUSTERED (statistical method = <value>, p = <value>)
+FINAL ANSWER: CLUSTERED (test statistic = <value>, p = <value>)
 or
-FINAL ANSWER: NOT CLUSTERED (statistical method = <value>, p = <value>)",True,"CLUSTERED: real Global Moran's I on the 2021->2023 change in Waste = 0.1743, p = 0.0144","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1743, ""p_value"": 0.0144, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,20,chunks_csv/borough_adjacency.csv,global,casual_with_citation
+FINAL ANSWER: NOT CLUSTERED (test statistic = <value>, p = <value>)
+(test statistic is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)",TRUE,"CLUSTERED: real Global Moran's I on the 2021->2023 change in Waste = 0.1743, p = 0.0144","p_value < 0.05 => CLUSTERED, else NOT CLUSTERED","{""moran_i"": 0.1743, ""p_value"": 0.0144, ""n_missing_imputed"": 1, ""year_start"": ""2021"", ""year_end"": ""2023""}",2021,2023,20,chunks_csv/borough_adjacency.csv,global,casual_with_citation

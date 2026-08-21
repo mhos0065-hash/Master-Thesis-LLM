@@ -23,12 +23,15 @@ from datetime import datetime, timezone
 
 import pandas as pd
 
-from agent_utils import agent_loop, LLM_MODEL
+#from agent_utils import agent_loop, LLM_MODEL # Single turn
+
+from agent_utils_multi_turn import agent_loop, LLM_MODEL # Multi turn
+
 from bivariate_verdict import parse_bivariate_with_citation
 
 MANIFEST_PATH = "chunks_csv/bivariate/bivariate_manifest.csv"
-#RESULTS_CSV = "results/bivariate_results_multi.csv" # For multi turn
-RESULTS_CSV = "bivariate_results.csv" # Single
+RESULTS_CSV = "results/bivariate_results_multi.csv" # For multi turn
+#RESULTS_CSV = "bivariate_results.csv" # Single turn
 FAILED_LOG = "bivariate_failed_runs.log"
 
 SYSTEM_PROMPT = (
@@ -74,16 +77,16 @@ def run_one(chunk_id, meta, model):
     extra_files = {"ADJACENCY_PATH": meta["adjacency_path"]} if meta.get("adjacency_path") else None
 
     # For multi -turn
-    #verdict, final_text, log = agent_loop(
-        #SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
-        #model=model, require_structured_verdict=False,
-        #extra_files=extra_files, max_iterations=6, answer_from_code_output=False)
-
-     #For single -turn
     verdict, final_text, log = agent_loop(
         SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
         model=model, require_structured_verdict=False,
-        extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
+        extra_files=extra_files, max_iterations=6, answer_from_code_output=True)
+
+     #For single -turn
+    #verdict, final_text, log = agent_loop(
+        #SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        #model=model, require_structured_verdict=False,
+        #extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
 
 
     with open(os.path.join(run_dir, "conversation_log.json"), "w", encoding="utf-8") as f:

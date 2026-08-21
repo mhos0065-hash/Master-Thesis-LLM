@@ -1,2 +1,0 @@
-﻿chunk_id,dataset,insight_type,modality,spatial_granularity,model,mode,predicted,ground_truth,has_evidence,n_evidence_items,run_dir,verdict_detail,evidence_text
-moran_global_2021_crime,"Global Moran's I (Crime, 2021)",spatial_correlation,spatial,global,moonshotai/kimi-k2.6,single,True,True,True,2,runs\20260815T085939Z_single_moonshotai-kimi-k2.6_moran_global_2021_crime,"CLUSTERED (statistical method = 0.22701812662152995, p = 0.002997002997002997)","CLUSTERED (statistical method = 0.22701812662152995, p = 0.002997002997002997)"

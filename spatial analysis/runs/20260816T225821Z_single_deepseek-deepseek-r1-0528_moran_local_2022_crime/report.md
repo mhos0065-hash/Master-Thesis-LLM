@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2022_crime
+
+**Predicted:** True
+
+**Detail:** Barking and Dagenham (LL, neighbor_avg=80.6700), Bexley (LL, neighbor_avg=80.7906), Bromley (LL, neighbor_avg=90.7379), Croydon (LL, neighbor_avg=74.9647), Ealing (LL, neighbor_avg=84.5308), Enfield (LL, neighbor_avg=85.5994), Greenwich (LL, neighbor_avg=85.9689), Haringey (HH, neighbor_avg=108.0563), Harrow (LL, neighbor_avg=80.4828), Havering (LL, neighbor_avg=77.1112), Hillingdon (LL, neighbor_avg=73.3652), Hounslow (LL, neighbor_avg=82.8210), Kensington and Chelsea (HH, neighbor_avg=158.6469
+
+**Answer line:** Barking and Dagenham (LL, neighbor_avg=80.6700), Bexley (LL, neighbor_avg=80.7906), Bromley (LL, neighbor_avg=90.7379), Croydon (LL, neighbor_avg=74.9647), Ealing (LL, neighbor_avg=84.5308), Enfield (LL, neighbor_avg=85.5994), Greenwich (LL, neighbor_avg=85.9689), Haringey (HH, neighbor_avg=108.0563), Harrow (LL, neighbor_avg=80.4828), Havering (LL, neighbor_avg=77.1112), Hillingdon (LL, neighbor_avg=73.3652), Hounslow (LL, neighbor_avg=82.8210), Kensington and Chelsea (HH, neighbor_avg=158.6469), Kingston upon Thames (LL, neighbor_avg=64.9630), Lewisham (LL, neighbor_avg=93.2689), Merton (LL, neighbor_avg=78.8210), Newham (LL, neighbor_avg=93.6444), Redbridge (LL, neighbor_avg=85.4170), Richmond upon Thames (LL, neighbor_avg=83.4559), Sutton (LL, neighbor_avg=72.6167), Waltham Forest (LL, neighbor_avg=98.1926)

@@ -21,7 +21,7 @@ import re
 import pandas as pd
 
 RESULTS_CSV = "distance_decay_results.csv"
-OUT_CSV = "distance_decay_scoring_summary.csv"
+OUT_CSV = "Scores/single turn/distance_decay_scoring_summary.csv"
 
 CLASSES = ["negative_significant", "positive_significant", "not_significant"]
 

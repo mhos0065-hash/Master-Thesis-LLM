@@ -1,34 +1,34 @@
-borough,delta_value
-Kingston upon Thames,0.0199
-Croydon,-0.0059
-Bromley,-0.1329
-Hounslow,0.3663
-Ealing,2.4752
-Havering,-2.2537
-Hillingdon,3.8114
-Harrow,-0.1323
-Brent,0.9976
-Barnet,-0.7337
-Lewisham,-0.265
-Greenwich,-0.7796
-Bexley,0.964
-Enfield,-0.1668
-Waltham Forest,-0.1874
-Lambeth,-0.1189
-Redbridge,0.0794
-Sutton,0.5569
-Richmond upon Thames,0.0281
-Merton,0.9844
-Wandsworth,-0.1033
-Hammersmith and Fulham,-0.0316
-Southwark,-0.0178
-Kensington and Chelsea,0.1508
-City of London,1.1581
-Westminster,-0.0017
-Camden,0.0025
-Tower Hamlets,0.0763
-Islington,-0.0848
-Hackney,-0.0071
-Haringey,-0.135
-Newham,-0.6943
-Barking and Dagenham,-0.8422
+borough,Waste_2021,Waste_2022,Waste_2023
+Barking and Dagenham,10.1119,10.9619,9.2697
+Barnet,1.8649,1.0833,1.1312
+Bexley,4.89,5.8229,5.854
+Brent,1.8053,2.4261,2.8029
+Bromley,0.9305,0.8005,0.7976
+Camden,0.0197,0.0237,0.0222
+City of London,5.5214,7.0811,6.6795
+Croydon,0.5318,0.4829,0.5259
+Ealing,1.0386,1.8313,3.5138
+Enfield,5.9655,5.9174,5.7987
+Greenwich,4.6438,4.2715,3.8642
+Hackney,0.0567,0.0532,0.0496
+Hammersmith and Fulham,2.1836,2.0794,2.152
+Haringey,1.096,1.0841,0.961
+Harrow,0.236,0.0943,0.1037
+Havering,10.3866,9.3381,8.1329
+Hillingdon,5.3655,5.618,9.1769
+Hounslow,2.9156,2.8183,3.2819
+Islington,0.7556,0.6673,0.6708
+Kensington and Chelsea,,,
+Kingston upon Thames,0.3384,0.3357,0.3583
+Lambeth,0.2086,0.2841,0.0897
+Lewisham,2.1068,1.8958,1.8418
+Merton,2.7951,2.5764,3.7795
+Newham,4.6602,5.5063,3.9659
+Redbridge,0.1253,0.1294,0.2047
+Richmond upon Thames,0.1261,0.1181,0.1542
+Southwark,0.7387,0.7175,0.7209
+Sutton,2.0741,1.9035,2.631
+Tower Hamlets,0.4606,0.4915,0.5369
+Waltham Forest,0.5016,0.416,0.3142
+Wandsworth,2.1486,2.1232,2.0453
+Westminster,0.0174,0.0137,0.0157

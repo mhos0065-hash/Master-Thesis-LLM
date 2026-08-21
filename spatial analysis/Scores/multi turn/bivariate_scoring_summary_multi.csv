@@ -1,0 +1,9 @@
+mode,model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,f1,correct_number_evidence_filtered,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
+single,deepseek/deepseek-chat-v3-0324,50,0,50,36,0.58,36,14,0.72,0.476,0.564,0.473,27,27,2,0.54,0.333,0.231,0.273
+single,deepseek/deepseek-r1-0528,50,0,50,35,0.54,35,15,0.7,0.443,0.527,0.441,27,27,0,0.54,0.333,0.231,0.273
+single,meta-llama/llama-3.1-8b-instruct,50,10,40,11,0.64,11,29,0.22,0.446,0.309,0.235,7,7,25,0.14,0.448,0.275,0.19
+single,moonshotai/kimi-k2.6,50,0,50,36,0.68,36,14,0.72,0.414,0.422,0.417,31,31,3,0.62,0.655,0.35,0.441
+single,openai/gpt-4o-mini,50,11,39,18,0.56,18,21,0.36,0.4,0.296,0.299,13,13,15,0.26,0.393,0.168,0.23
+single,openai/o3,50,0,50,35,0.64,35,15,0.7,0.437,0.527,0.442,29,29,3,0.58,0.533,0.305,0.376
+single,openai/o4-mini,50,0,50,37,0.6,37,13,0.74,0.49,0.544,0.498,25,25,5,0.5,0.333,0.214,0.26
+single,qwen/qwen3-32b,50,1,49,31,0.7,31,18,0.62,0.365,0.35,0.356,28,28,7,0.56,0.633,0.268,0.328

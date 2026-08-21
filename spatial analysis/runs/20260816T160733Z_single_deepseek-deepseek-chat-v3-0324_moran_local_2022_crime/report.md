@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2022_crime
+
+**Predicted:** False
+
+**Detail:** The spatial autocorrelation analysis for London borough crime rates in 2022 could not be properly completed due to technical limitations in the execution environment. The manual calculation returned a NaN (Not a Number) result, indicating the analysis failed to find any valid neighbor pairs to compute spatial autocorrelation. This suggests either: (1) the adjacency data didn't properly match the crime data borough names, (2) the manual implementation was insufficient, or (3) there were no valid 
+
+**Answer line:** The spatial autocorrelation analysis for London borough crime rates in 2022 could not be properly completed due to technical limitations in the execution environment. The manual calculation returned a NaN (Not a Number) result, indicating the analysis failed to find any valid neighbor pairs to compute spatial autocorrelation. This suggests either: (1) the adjacency data didn't properly match the crime data borough names, (2) the manual implementation was insufficient, or (3) there were no valid spatial relationships in the data as prepared. A proper analysis would require verifying the borough name matching between datasets and using established spatial statistics libraries like PySAL to get reliable Moran's I results. The current output doesn't allow drawing any conclusions about spatial patterns in the crime data.

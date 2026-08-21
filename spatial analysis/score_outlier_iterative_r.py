@@ -20,8 +20,13 @@ Writes: outlier_iterative_r_scoring_summary.csv
 import re
 import pandas as pd
 
-RESULTS_CSV = "outlier_iterative_r_results.csv"
-OUT_CSV = "outlier_iterative_r_scoring_summary.csv"
+# Single turn
+#RESULTS_CSV = "outlier_iterative_r_results.csv"
+#OUT_CSV = "Scores/single turn/outlier_iterative_r_scoring_summary.csv"
+
+# Multi turn
+RESULTS_CSV = "results/outlier_iterative_r_results_multi.csv"
+OUT_CSV = "Scores/multi turn/outlier_iterative_r_scoring_multi_summary.csv"
 
 CLASSES = ["outlier_high", "outlier_low", "not_outlier"]
 

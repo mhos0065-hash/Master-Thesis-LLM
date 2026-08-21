@@ -21,11 +21,15 @@ from datetime import datetime, timezone
 
 import pandas as pd
 
-from agent_utils import agent_loop, LLM_MODEL
+#from agent_utils import agent_loop, LLM_MODEL # Single turn
+
+from agent_utils_multi_turn import agent_loop, LLM_MODEL # Multi turn
+
 from casual_verdict import parse_casual_with_citation
 
 MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest.csv"
-RESULTS_CSV = "changespillover_results.csv"
+RESULTS_CSV = "results/changespillover_results_multi.csv" # Multi turn
+#RESULTS_CSV = "changespillover_results.csv" # Single turn
 FAILED_LOG = "changespillover_failed_runs.log"
 
 SYSTEM_PROMPT = (
@@ -72,10 +76,18 @@ def run_one(chunk_id, meta, model):
 
     extra_files = {"ADJACENCY_PATH": meta["adjacency_path"]} if meta.get("adjacency_path") else None
 
+
+    # multi turn
     verdict, final_text, log = agent_loop(
         SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
         model=model, require_structured_verdict=False,
-        extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
+        extra_files=extra_files, max_iterations=6, answer_from_code_output=True)
+
+    # Single turn
+    #verdict, final_text, log = agent_loop(
+        #SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        #model=model, require_structured_verdict=False,
+        #extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
 
     with open(os.path.join(run_dir, "conversation_log.json"), "w", encoding="utf-8") as f:
         json.dump(log, f, indent=2)

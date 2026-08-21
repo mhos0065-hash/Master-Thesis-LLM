@@ -59,13 +59,13 @@ import re
 import pandas as pd
 
 # for multi turn
-#RESULTS_CSV = "getisord_results_multi.csv"
-#OUT_CSV = "Scores/multi turn/getisord_scoring_summary.csv"
+RESULTS_CSV = "results/getisord_results_multi.csv"
+OUT_CSV = "Scores/multi turn/getisord_scoring_summary.csv"
 
 
 #For single turn
-RESULTS_CSV = "getisord_results.csv"
-OUT_CSV = "Scores/single turn/getisord_scoring_summary.csv"
+#RESULTS_CSV = "getisord_results.csv"
+#OUT_CSV = "Scores/single turn/getisord_scoring_summary.csv"
 
 ALL_BOROUGHS = [
     "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden",

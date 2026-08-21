@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_2023_crime
+
+**Predicted:** True
+
+**Detail:** Croydon (LL, statistical method=0.1312), Greenwich (LL, statistical method=0.0293), Havering (LL, statistical method=0.1475), Ealing (LL, statistical method=0.0791), Haringey (HH, statistical method=0.0125), Waltham Forest (LL, statistical method=0.0228), Lewisham (LL, statistical method=0.0090), Richmond upon Thames (LL, statistical method=0.1444), Kingston upon Thames (LL, statistical method=0.2931), Kensington and Chelsea (HH, statistical method=0.8919), Barking and Dagenham (LL, statistical 
+
+**Answer line:** Croydon (LL, statistical method=0.1312), Greenwich (LL, statistical method=0.0293), Havering (LL, statistical method=0.1475), Ealing (LL, statistical method=0.0791), Haringey (HH, statistical method=0.0125), Waltham Forest (LL, statistical method=0.0228), Lewisham (LL, statistical method=0.0090), Richmond upon Thames (LL, statistical method=0.1444), Kingston upon Thames (LL, statistical method=0.2931), Kensington and Chelsea (HH, statistical method=0.8919), Barking and Dagenham (LL, statistical method=0.0456), Harrow (LL, statistical method=0.2481), Bexley (LL, statistical method=0.1748), Hounslow (LL, statistical method=0.0523), Merton (LL, statistical method=0.2154), Sutton (LL, statistical method=0.3096), Hillingdon (LL, statistical method=0.1596), Bromley (LL, statistical method=0.0745), Redbridge (LL, statistical method=0.0921), Enfield (LL, statistical method=0.0637)
