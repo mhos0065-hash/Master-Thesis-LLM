@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.11264003570745613, p = 0.12987012987012986)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO2 and Crime data into pandas DataFrames and merge them on the borough name so each row has both NO2_value and Crime_value.  \n2. Identify missing values: list boroughs with missing NO2_value or missing Crime_value.  \n3. Drop any boroughs with missing NO2_value or missing Crime_value from both the data and the neighbor list (so that all remaining boroughs have complete data and adjacency information).  \n4. From the filtered neighbor list, build a square spatial weight matrix W (size n\u00d7n, where n is the number of boroughs remaining), with w\u1d62\u2c7c = 1 if borough j is a neighbor of borough i, and 0 otherwise.  \n5. (Optionally) row-standardize W by dividing each row by its row sum so that weights sum to 1 for each borough.  \n6. Standardize both NO2_value and Crime_value across the n boroughs to z-scores (subtract mean, divide by standard deviation).  \n7. Compute the bivariate spatial association statistic L (Lee\u2019s L):\n   a. Numerator: sum over all i,j of w\u1d62\u2c7c \u00d7 z_NO2_i \u00d7 z_Crime_j  \n   b. Denominator: \u221a[sum over i,j of w\u1d62\u2c7c \u00d7 z_NO2_i\u00b2  \u00d7  sum over i,j of w\u1d62\u2c7c \u00d7 z_Crime_i\u00b2]  \n   c. L = Numerator / Denominator  \n8. Perform a permutation test with at least 500 random shuffles of the Crime_value vector among boroughs (keeping NO2 fixed), recomputing L each time to build a null distribution.  \n9. Calculate the p-value as (number of permuted L statistics \u2265 observed L + 1) / (number of permutations + 1) if observed L > 0 (or \u2264 observed L if L < 0), to assess significance at \u03b1 = 0.05.  \n10. Compare the observed L to zero and its p-value:\n    - If L > 0 and p < 0.05, conclude POSITIVE spatial association.  \n    - If L < 0 and p < 0.05, conclude NEGATIVE spatial association.  \n    - Otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv(\"chunks_csv/bivariate/bivariate_2023_no2_crime.csv\")\nadj = pd.read_csv(\"chunks_csv/borough_adjacency.csv\")\n\n# Drop boroughs with missing values in either variable\ndf = df.dropna(subset=[\"NO2_value\", \"Crime_value\"])\nboroughs = df[\"borough\"].tolist()\n\n# Filter adjacency to only include remaining boroughs\nadj = adj[adj[\"borough\"].isin(boroughs) & adj[\"neighbor\"].isin(boroughs)]\n\n# Index mapping\nunique_boroughs = df[\"borough\"].tolist()\nn = len(unique_boroughs)\nidx = {b: i for i, b in enumerate(unique_boroughs)}\n\n# Build weight matrix W (binary adjacency)\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    i = idx[row[\"borough\"]]\n    j = idx[row[\"neighbor\"]]\n    W[i, j] = 1.0\n\n# Row-standardize W\nrow_sums = W.sum(axis=1, keepdims=True)\nW_rs = np.divide(W, row_sums, where=row_sums != 0)\n\n# Standardize the variables (z-scores)\nz_no2 = (df[\"NO2_value\"].values - df[\"NO2_value\"].mean()) / df[\"NO2_value\"].std(ddof=0)\nz_crime = (df[\"Crime_value\"].values - df[\"Crime_value\"].mean()) / df[\"Crime_value\"].std(ddof=0)\n\n# Compute Lee's L statistic\nnumerator = np.sum(W_rs * np.outer(z_no2, z_crime))\ndenominator = n  # because row-standardized W => sum_j w_ij = 1 for each i => denom = sum_i z1_i^2 * sum_j w_ij = sum z1^2 = n; likewise for z2\nL_obs = numerator / denominator\n\n# Permutation test\nnp.random.seed(42)\nn_perm = 1000\nL_perms = np.empty(n_perm)\nfor k in range(n_perm):\n    z_crime_perm = np.random.permutation(z_crime)\n    num_perm = np.sum(W_rs * np.outer(z_no2, z_crime_perm))\n    L_perms[k] = num_perm / denominator\n\n# Calculate p-value\nif L_obs >= 0:\n    p_val = (np.sum(L_perms >= L_obs) + 1) / (n_perm + 1)\nelse:\n    p_val = (np.sum(L_perms <= L_obs) + 1) / (n_perm + 1)\n\n# Determine verdict\nalpha = 0.05\nif p_val < alpha:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Output results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 27\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.11264003570745613, p = 0.12987012987012986)",
+        "data_points_used": 27,
+        "statistic": "0.11264003570745613",
+        "secondary_measures": [
+          "0.12987012987012986"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.11264003570745613, p = 0.12987012987012986)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

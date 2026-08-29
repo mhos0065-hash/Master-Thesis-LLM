@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.10990363759846696, p = 0.212)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Read the CSVs for the borough attribute table (NO2_value, Energy_value, borough name) and the neighbor edge list (each row: borough, neighbor).  \n2. Handle missing data: drop any borough rows where NO2_value is NaN (5 rows), keep all others; Energy_value has no missing values so no action needed there. Record the resulting N for reference.  \n3. Build an N \u00d7 N symmetric binary spatial\u2010weights matrix W where Wij = 1 if borough i appears as a neighbor of borough j in either direction, else 0; set the diagonal to 0.  \n4. Row\u2010standardize W so each row sums to 1; if a borough has no listed neighbors, drop it (and its row/column in W) to avoid divide-by-zero.  \n5. Extract two aligned vectors: x = NO2_value (after NA removal) and y = Energy_value for the same retained boroughs, preserving order that matches W.  \n6. Compute Lee\u2019s L statistic:  \n   a. Center x and y (subtract their respective means) to get x\u2032 and y\u2032.  \n   b. Numerator = \u03a3_i \u03a3_j (Wij \u00d7 x\u2032_i \u00d7 y\u2032_j).  \n   c. Denominator = \u221a[ (\u03a3_i x\u2032_i\u00b2) \u00d7 (\u03a3_j y\u2032_j\u00b2) ].  \n   d. L = Numerator / Denominator.  \n7. Assess significance with a permutation test (\u2265500, e.g., 999): randomly shuffle y among boroughs, recompute L each time, build the null distribution.  \n8. Two-sided p-value = (count of |L_perm| \u2265 |L_obs| +1) / (permutations +1).  \n9. Determine direction: if p < 0.05 and L_obs > 0, conclude POSITIVE; if p < 0.05 and L_obs < 0, conclude NEGATIVE; otherwise NOT SIGNIFICANT.  \n10. Report the observed L and p-value rounded to 3 decimals in the required format.",
+      "coder_result": {
+        "code": "\nimport numpy as np\nimport pandas as pd\n\nATTR_PATH = \"chunks_csv/bivariate/bivariate_2023_no2_energy.csv\"\nADJ_PATH  = \"chunks_csv/borough_adjacency.csv\"\n\n# ------------------------------------------------------------------\n# 1.  Read & clean attribute data\nattrs = pd.read_csv(ATTR_PATH)\nattrs = attrs.dropna(subset=[\"NO2_value\"])            # keep rows that have NO2\nattrs = attrs.reset_index(drop=True)\n\n# ------------------------------------------------------------------\n# 2.  Build symmetric binary adjacency among the retained boroughs\nadj = pd.read_csv(ADJ_PATH)\n\n# keep only edges whose both ends are in the retained attribute table\nkept_nodes = set(attrs[\"borough\"])\nadj = adj[adj[\"borough\"].isin(kept_nodes) & adj[\"neighbor\"].isin(kept_nodes)]\n\n# create index look-up\nidx = {b: i for i, b in enumerate(attrs[\"borough\"])}\nn  = len(attrs)\n\nW = np.zeros((n, n), dtype=float)\nfor r in adj.itertuples(index=False):\n    i, j = idx[r.borough], idx[r.neighbor]\n    W[i, j] = 1\n    W[j, i] = 1\n\n# ------------------------------------------------------------------\n# 3.  Drop any borough that ended up with zero neighbours\nrow_sums = W.sum(axis=1)\nkeep_mask = row_sums > 0\nif not np.all(keep_mask):\n    attrs = attrs[keep_mask].reset_index(drop=True)\n    # rebuild index and W for the filtered list\n    idx = {b: i for i, b in enumerate(attrs[\"borough\"])}\n    n   = len(attrs)\n    W   = np.zeros((n, n), dtype=float)\n    adj = adj[adj[\"borough\"].isin(idx) & adj[\"neighbor\"].isin(idx)]\n    for r in adj.itertuples(index=False):\n        i, j = idx[r.borough], idx[r.neighbor]\n        W[i, j] = 1\n        W[j, i] = 1\n    row_sums = W.sum(axis=1)\n\n# row-standardise\nW = W / row_sums[:, None]\n\n# ------------------------------------------------------------------\n# 4.  Prepare variables\nx = attrs[\"NO2_value\"].to_numpy()\ny = attrs[\"Energy_value\"].to_numpy()\nx_cent = x - x.mean()\ny_cent = y - y.mean()\n\n# ------------------------------------------------------------------\n# 5.  Lee\u2019s L statistic\nnum = np.sum(W * x_cent[:, None] * y_cent[None, :])\nden = np.sqrt(np.sum(x_cent**2) * np.sum(y_cent**2))\nL_obs = num / den\n\n# ------------------------------------------------------------------\n# 6.  Permutation test\nrng = np.random.default_rng(seed=0)\nn_perm = 999\nL_perm = np.empty(n_perm)\nfor k in range(n_perm):\n    y_shuff = rng.permutation(y_cent)          # shuffle the centred y\n    num_s   = np.sum(W * x_cent[:, None] * y_shuff[None, :])\n    L_perm[k] = num_s / den\n\np_two_sided = (np.sum(np.abs(L_perm) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# ------------------------------------------------------------------\n# 7.  Verdict\nalpha = 0.05\nif p_two_sided < alpha:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ------------------------------------------------------------------\n# 8.  Output\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_two_sided})\")\n",
+        "output": "data_points_used = 28\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.10990363759846696, p = 0.212)",
+        "data_points_used": 28,
+        "statistic": "0.10990363759846696",
+        "secondary_measures": [
+          "0.212"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.10990363759846696, p = 0.212)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

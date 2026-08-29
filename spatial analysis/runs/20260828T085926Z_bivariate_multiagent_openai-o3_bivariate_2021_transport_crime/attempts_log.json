@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -6777.0382, p = 0.1413)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Read the three CSVs (Transport, Crime, neighbours) with pandas.  \n2. Merge Transport_value and Crime_value into one DataFrame keyed by borough name.  \n3. Handle the single missing Crime_value by dropping that borough from the analysis and also removing it from every neighbour list so weights remain consistent.  \n4. Build a binary spatial-weights matrix W (N\u00d7N, rows standardized to sum to 1) from the neighbour lists of the remaining boroughs.  \n5. Mean-center both variables:  \n   x = Transport_value \u2013 mean(Transport_value)  \n   y = Crime_value \u2013 mean(Crime_value)  \n6. Compute Lee\u2019s L statistic:  \n        L = (1/\u03a3\u03a3|W|)  * \u03a3_i \u03a3_j W_ij * x_i * y_j  \n   where \u03a3\u03a3|W| is the sum of all absolute W elements (after row-standardization this equals the number of boroughs N).  \n7. Generate a null distribution via 9,999 random permutations of y (Crime) across boroughs, recomputing L each time.  \n8. Obtain the two-sided p-value as the proportion of |L_perm| \u2265 |L_observed|.  \n9. Direction: if L_observed > 0 and p < 0.05 \u2192 POSITIVE; if L_observed < 0 and p < 0.05 \u2192 NEGATIVE; else \u2192 NOT SIGNIFICANT.  \n10. Report the observed L (rounded to 4 decimals) and the p-value (rounded to 4 decimals) in the required format.\n\nMissing values handled by row deletion and corresponding adjustment of neighbour lists before steps 4-9.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# -----------------------------\n# 1. Load data\n# -----------------------------\nTRANSPORT_CRIME_PATH = 'chunks_csv/bivariate/bivariate_2021_transport_crime.csv'\nADJACENCY_PATH       = 'chunks_csv/borough_adjacency.csv'\n\ndf = pd.read_csv(TRANSPORT_CRIME_PATH)\nadj = pd.read_csv(ADJACENCY_PATH)\n\n# -----------------------------\n# 2. Drop boroughs with missing Crime_value\n# -----------------------------\ndf = df.dropna(subset=['Crime_value']).reset_index(drop=True)\n\n# keep only rows in adjacency that involve retained boroughs\nvalid_boroughs = set(df['borough'])\nadj = adj[adj['borough'].isin(valid_boroughs) & adj['neighbor'].isin(valid_boroughs)]\n\n# -----------------------------\n# 3. Build spatial\u2010weights matrix W (row\u2013standardised)\n# -----------------------------\nidx = {b: i for i, b in enumerate(df['borough'])}\nN   = len(df)\n\nW = np.zeros((N, N), dtype=float)\n\n# make the matrix symmetric\nfor _, row in adj.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1\n\n# row-standardise (each row sums to 1; isolated rows stay zero)\nrow_sums = W.sum(axis=1, keepdims=True)\nrow_sums[row_sums == 0] = 1     # avoid division by zero for isolates\nW = W / row_sums\n\n# -----------------------------\n# 4. Mean-centre variables\n# -----------------------------\nx = df['Transport_value'].to_numpy(float)\ny = df['Crime_value'].to_numpy(float)\n\nx_c = x - x.mean()\ny_c = y - y.mean()\n\n# -----------------------------\n# 5. Lee\u2019s L statistic\n#    L = (1/N) * x' W y\n# -----------------------------\nL_obs = (x_c @ W @ y_c) / N\n\n# -----------------------------\n# 6. Permutation test (two-sided)\n# -----------------------------\nrng      = np.random.default_rng(0)\nn_perm   = 9999\n\n# Pre-compute x'W once for efficiency\nv = x_c @ W            # shape (N,)\n\nperm_stats = np.empty(n_perm, dtype=float)\nfor k in range(n_perm):\n    y_perm = rng.permutation(y_c)\n    perm_stats[k] = (v @ y_perm) / N\n\n# two-sided p-value\np_value = (np.sum(np.abs(perm_stats) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# -----------------------------\n# 7. Verdict\n# -----------------------------\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# -----------------------------\n# 8. Output\n# -----------------------------\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.4f}, p = {p_value:.4f})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -6777.0382, p = 0.1413)",
+        "data_points_used": 32,
+        "statistic": "-6777.0382",
+        "secondary_measures": [
+          "0.1413"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -6777.0382, p = 0.1413)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

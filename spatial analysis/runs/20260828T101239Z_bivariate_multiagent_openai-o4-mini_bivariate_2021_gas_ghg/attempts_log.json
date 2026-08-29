@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.009412765005972039, p = 0.966)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level Gas and GHG data into pandas DataFrames and load the neighbor list into an adjacency structure (e.g. a dictionary mapping each borough to its neighbors).  \n2. Verify that Gas_value and GHG_value have no missing entries; if any were present, drop those boroughs from both datasets and from the neighbor list (or impute if preferred, but here no missing values exist).  \n3. Construct a row\u2010standardized spatial weight matrix W (33 \u00d7 33) from the neighbor list, where w\u1d62\u2c7c = 1/ni if j is a neighbor of i (ni = number of neighbors of i), and w\u1d62\u2c7c = 0 otherwise.  \n4. Standardize Gas and GHG values to zero mean and unit variance across the 33 boroughs.  \n5. Compute Lee\u2019s L statistic L_obs = (1/n) x\u1d40 W y, where x is the standardized Gas vector and y is the standardized GHG vector.  \n6. Perform a permutation test with at least 500 random shuffles of the GHG vector: for each shuffle k, permute y to y_k, compute L_k = (1/n) x\u1d40 W y_k, and record the distribution of L_k.  \n7. Calculate the empirical p\u2010value as the proportion of |L_k| \u2265 |L_obs| (two\u2010sided) and determine (a) if p < 0.05 and (b) whether L_obs > 0 (positive association) or L_obs < 0 (negative association), otherwise conclude \u201cnot significant.\u201d",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ngas_ghg_df = pd.read_csv(\"chunks_csv/bivariate/bivariate_2021_gas_ghg.csv\", index_col=\"borough\")\nadj_df = pd.read_csv(\"chunks_csv/borough_adjacency.csv\")\n\n# 2. Check for missing values and drop if any (none expected)\ngas_ghg_df = gas_ghg_df.dropna(subset=[\"Gas_value\", \"GHG_value\"])\nboroughs = gas_ghg_df.index.tolist()\nn = len(boroughs)\n\n# 3. Build row-standardized spatial weights matrix W\nW = np.zeros((n, n), dtype=float)\n# build neighbor mapping\nfor i, b in enumerate(boroughs):\n    neigh = adj_df.loc[adj_df[\"borough\"] == b, \"neighbor\"].tolist()\n    # filter to our list\n    neigh = [nb for nb in neigh if nb in boroughs]\n    ni = len(neigh)\n    if ni > 0:\n        w = 1.0 / ni\n        for nb in neigh:\n            j = boroughs.index(nb)\n            W[i, j] = w\n\n# 4. Standardize Gas and GHG\nx = gas_ghg_df[\"Gas_value\"].values\ny = gas_ghg_df[\"GHG_value\"].values\nx_std = (x - x.mean()) / x.std(ddof=0)\ny_std = (y - y.mean()) / y.std(ddof=0)\n\n# 5. Compute Lee\u2019s L statistic\nL_obs = (1.0 / n) * x_std.dot(W.dot(y_std))\n\n# 6. Permutation test\nnum_permutations = 500\nL_perms = np.zeros(num_permutations)\nrng = np.random.default_rng()\nfor k in range(num_permutations):\n    y_perm = y_std[rng.permutation(n)]\n    L_perms[k] = (1.0 / n) * x_std.dot(W.dot(y_perm))\n\n# 7. Empirical p-value (two\u2010sided)\np_value = np.mean(np.abs(L_perms) >= np.abs(L_obs))\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# 1st required print: number of data points used\ndata_points_used = n\nprint(f\"data_points_used = {data_points_used}\")\n\n# 2nd required print: final answer with test statistic and significance measure\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.009412765005972039, p = 0.966)",
+        "data_points_used": 33,
+        "statistic": "-0.009412765005972039",
+        "secondary_measures": [
+          "0.966"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.009412765005972039, p = 0.966)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

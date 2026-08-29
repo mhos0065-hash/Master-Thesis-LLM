@@ -106,6 +106,9 @@
   }
 ]
 
+
+
+
 (venv) PS D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis> Get-Content "runs\20260818T074952Z_bivariate_openai-o4-mini_bivariate_2022_no2_waste\conversation_log.json"
 [
   {

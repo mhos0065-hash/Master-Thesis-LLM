@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 4.250458182139533, p = 0.125)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Import pandas and numpy; read the three files: Energy, Crime, and the neighbour list.  \n2. Drop the single borough whose Crime_value is missing (and remove any neighbour\u2010pairs that involve it); Energy has no missing values, so no further NA handling is needed.  \n3. Build a symmetric, binary spatial\u2010weights matrix W (33 \u2212 1 = 32 boroughs remain after the drop). Every listed neighbour pair gets weight 1; if A lists B but B does not list A, still assign both W_AB = W_BA = 1. Set all diagonal elements to 0.  \n4. Store x = Energy_value and y = Crime_value as numpy arrays ordered identically to the rows/columns of W. Compute their means (x\u0304, \u0233) and standard deviations (\u03c3_x, \u03c3_y).  \n5. Compute the observed Lee\u2019s bivariate L statistic:  \n   L_obs = (N / W_sum) * \u03a3_i \u03a3_j W_ij (x_i \u2212 x\u0304)(y_j \u2212 \u0233) / (\u03c3_x \u03c3_y)  \n   where N is the number of boroughs (32) and W_sum is the total of all off\u2010diagonal weights.  \n6. Generate a null distribution with 999 random permutations (\u2265500 for stability): hold x fixed, randomly shuffle y each time, recompute L_perm. Store the distribution of L_perm values.  \n7. Calculate a two\u2010sided p-value: p = (count of |L_perm| \u2265 |L_obs| + 1)/(number of permutations + 1).  \n8. Decision rule:  \n   \u2022 If p < 0.05 and L_obs > 0 \u21d2 conclude POSITIVE spatial association.  \n   \u2022 If p < 0.05 and L_obs < 0 \u21d2 conclude NEGATIVE spatial association.  \n   \u2022 Otherwise \u21d2 conclude NOT SIGNIFICANT.  \n9. Report the conclusion and the exact numeric L_obs and p in the required format.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ------------------------------------------------------------------\n# 1. Load data\nenergy_crime_path = \"chunks_csv/bivariate/bivariate_2021_energy_crime.csv\"\nadj_path          = \"chunks_csv/borough_adjacency.csv\"\n\ndf   = pd.read_csv(energy_crime_path)\nadj  = pd.read_csv(adj_path)\n\n# ------------------------------------------------------------------\n# 2. Drop boroughs with missing values in either variable\ndf_clean = df.dropna(subset=[\"Energy_value\", \"Crime_value\"]).reset_index(drop=True)\n\n# keep only adjacency pairs whose both boroughs remain\nvalid_boroughs = set(df_clean[\"borough\"])\nadj_clean = adj[adj[\"borough\"].isin(valid_boroughs) & adj[\"neighbor\"].isin(valid_boroughs)].copy()\n\n# ------------------------------------------------------------------\n# 3. Build symmetric binary spatial-weights matrix W\nboroughs = df_clean[\"borough\"].tolist()\nindex    = {b:i for i,b in enumerate(boroughs)}\nN        = len(boroughs)\n\nW = np.zeros((N, N), dtype=int)\nfor _, row in adj_clean.iterrows():\n    i = index[row[\"borough\"]]\n    j = index[row[\"neighbor\"]]\n    W[i, j] = 1\n    W[j, i] = 1          # ensure symmetry\nnp.fill_diagonal(W, 0)\nW_sum = W.sum()\n\n# ------------------------------------------------------------------\n# 4. Prepare variables\nx = df_clean[\"Energy_value\"].to_numpy(dtype=float)\ny = df_clean[\"Crime_value\"].to_numpy(dtype=float)\n\nx_mean, y_mean = x.mean(), y.mean()\nx_std , y_std  = x.std(ddof=0), y.std(ddof=0)\n\nx_c = x - x_mean          # centered\ny_c = y - y_mean\n\n# ------------------------------------------------------------------\n# 5. Lee's L statistic\nnumerator  = np.dot(x_c, W @ y_c)\nL_obs      = (N / W_sum) * (numerator / (x_std * y_std))\n\n# ------------------------------------------------------------------\n# 6. Permutation test (bivariate: shuffle y)\nn_perm = 999\nrng = np.random.default_rng(seed=0)\nL_perm = np.empty(n_perm)\n\nfor k in range(n_perm):\n    y_perm = rng.permutation(y_c)          # centred permuted y\n    numerator_perm = np.dot(x_c, W @ y_perm)\n    L_perm[k] = (N / W_sum) * (numerator_perm / (x_std * y_std))\n\n# ------------------------------------------------------------------\n# 7. Two-sided p-value\np_val = (np.sum(np.abs(L_perm) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# ------------------------------------------------------------------\n# 8. Decision\nif p_val < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ------------------------------------------------------------------\n# 9. Output\ndata_points_used = N\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 4.250458182139533, p = 0.125)",
+        "data_points_used": 32,
+        "statistic": "4.250458182139533",
+        "secondary_measures": [
+          "0.125"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 4.250458182139533, p = 0.125)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

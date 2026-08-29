@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.10990363759846697, p = 0.19560878243512975)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO\u2082 and Energy data into a single table keyed by borough, and load the borough\u2010neighbor list.  \n2. Handle missing values by dropping any borough rows with missing NO\u2082_value; also remove those boroughs from the neighbor list so W remains aligned.  \n3. Construct a binary spatial weights matrix W (size n\u00d7n) where W\u1d62\u2c7c = 1 if borough j is a listed neighbor of i, else 0; row\u2010standardize W so each row sums to 1.  \n4. Extract vectors X (NO\u2082_value) and Y (Energy_value) for the remaining n boroughs; subtract their respective means to obtain mean\u2010centered variables x and y.  \n5. Compute the observed Lee\u2019s L statistic:  \n   L_obs = [\u03a3\u1d62 \u03a3\u2c7c W\u1d62\u2c7c x\u1d62 y\u2c7c] / sqrt([\u03a3\u1d62 x\u1d62\u00b2]\u00b7[\u03a3\u2c7c y\u2c7c\u00b2]).  \n6. Perform a permutation test with B \u2265 500 iterations:  \n   a. For each iteration b, randomly permute Y among boroughs to get y^b,  \n   b. compute L_b = [\u03a3\u1d62 \u03a3\u2c7c W\u1d62\u2c7c x\u1d62 y^b\u2c7c] / sqrt([\u03a3\u1d62 x\u1d62\u00b2]\u00b7[\u03a3\u2c7c (y^b\u2c7c)\u00b2]).  \n7. Calculate the two\u2010tailed p\u2010value as (1 + number of |L_b| \u2265 |L_obs|) / (B + 1).  \n8. Determine spatial association:  \n   \u2013 If p < 0.05 and L_obs > 0 \u2192 POSITIVE spatial association  \n   \u2013 If p < 0.05 and L_obs < 0 \u2192 NEGATIVE spatial association  \n   \u2013 Otherwise \u2192 NOT SIGNIFICANT",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndata_df = pd.read_csv('chunks_csv/bivariate/bivariate_2023_no2_energy.csv')\nadj_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop boroughs with missing NO2_value\ndata_df_clean = data_df.dropna(subset=['NO2_value'])\nboroughs = data_df_clean['borough'].tolist()\nn = len(boroughs)\n\n# Filter adjacency to remaining boroughs\nadj_clean = adj_df[\n    adj_df['borough'].isin(boroughs) &\n    adj_df['neighbor'].isin(boroughs)\n]\n\n# Build index mapping\nborough_to_idx = {b: i for i, b in enumerate(boroughs)}\n\n# Construct binary weights matrix W\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj_clean.iterrows():\n    i = borough_to_idx[row['borough']]\n    j = borough_to_idx[row['neighbor']]\n    W[i, j] = 1.0\n\n# Row-standardize W\nrow_sums = W.sum(axis=1)\nfor i in range(n):\n    if row_sums[i] > 0:\n        W[i, :] /= row_sums[i]\n\n# Extract and center variables\nX = data_df_clean['NO2_value'].values\nY = data_df_clean['Energy_value'].values\nx = X - X.mean()\ny = Y - Y.mean()\n\n# Compute observed Lee's L\ndenom = np.sqrt((x**2).sum() * (y**2).sum())\nL_obs = x.dot(W.dot(y)) / denom\n\n# Permutation test\nB = 500\nnp.random.seed(0)\nL_perm = np.empty(B)\nfor b in range(B):\n    y_perm = np.random.permutation(y)\n    L_perm[b] = x.dot(W.dot(y_perm)) / denom\n\n# Two\u2010tailed p\u2010value\np = (1 + np.sum(np.abs(L_perm) >= abs(L_obs))) / (B + 1)\n\n# Determine verdict\nif p < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f'data_points_used = {n}')\nprint(f'FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p})')\n",
+        "output": "data_points_used = 28\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.10990363759846697, p = 0.19560878243512975)",
+        "data_points_used": 28,
+        "statistic": "0.10990363759846697",
+        "secondary_measures": [
+          "0.19560878243512975"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.10990363759846697, p = 0.19560878243512975)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

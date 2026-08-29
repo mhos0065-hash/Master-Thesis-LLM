@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic (Lee's L) = -0.14323517554311832, p = 0.02)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Read the three inputs (GHG, Waste, neighbor-list) into pandas DataFrames.  \n2. Handle the single missing Waste_value by dropping that borough from BOTH the variable tables and from the neighbor lists; update every other borough\u2019s neighbor list so the final datasets and weight matrix have the same, complete set of N observations.  \n3. Build an N \u00d7 N binary adjacency matrix W where Wij = 1 if borough i lists borough j as a neighbor (0 otherwise); set Wii = 0.  \n4. Row-standardise W so every non-isolated borough\u2019s row sums to 1 (leave isolated rows as all zeros).  \n5. Compute Lee\u2019s L for bivariate spatial association:  \n   L = \u03a3i \u03a3j Wij (xi \u2212 x\u0304)(yj \u2212 \u0233) / \u221a[ \u03a3i (xi \u2212 x\u0304)\u00b2  *  \u03a3j (yj \u2212 \u0233)\u00b2 ]  \n   where xi = GHG_value for borough i and yj = Waste_value for borough j.  \n6. Determine reference distribution by a conditional permutation test: keep the GHG vector fixed and randomly permute the Waste vector across boroughs 1 000 times (\u2265500 as required), recomputing L each time.  \n7. Derive a two-sided p-value: proportion of permuted L\u2019s whose absolute value \u2265 |observed L|.  \n8. Interpretation:  \n   \u2022 If p < 0.05 and observed L > 0 \u2192 \u201cPOSITIVE\u201d spatial association.  \n   \u2022 If p < 0.05 and observed L < 0 \u2192 \u201cNEGATIVE\u201d spatial association.  \n   \u2022 Otherwise \u2192 \u201cNOT SIGNIFICANT\u201d.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ---------- 1. load data ----------\nghg_waste_path = \"chunks_csv/bivariate/bivariate_2023_ghg_waste.csv\"\nadj_path       = \"chunks_csv/borough_adjacency.csv\"\n\ndf = pd.read_csv(ghg_waste_path)\nadj = pd.read_csv(adj_path)\n\n# ---------- 2. drop the single missing Waste value and synchronise ----------\ndf_complete = df.dropna(subset=[\"Waste_value\"]).reset_index(drop=True)\nvalid_boroughs = set(df_complete[\"borough\"])\n\n# keep only adjacency pairs whose BOTH members survived the drop\nadj_filt = adj[adj[\"borough\"].isin(valid_boroughs) & adj[\"neighbor\"].isin(valid_boroughs)]\n\n# mapping borough name <-> index\nborough_to_idx = {b: i for i, b in enumerate(df_complete[\"borough\"])}\nN = len(df_complete)\n\n# ---------- 3. build symmetric binary adjacency matrix ----------\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj_filt.iterrows():\n    i = borough_to_idx[row[\"borough\"]]\n    j = borough_to_idx[row[\"neighbor\"]]\n    W[i, j] = 1\n    W[j, i] = 1      # guarantee symmetry\n\nnp.fill_diagonal(W, 0)  # no self-neighbors\n\n# ---------- 4. row-standardise ----------\nrow_sums = W.sum(axis=1, keepdims=True)\n# avoid division by zero for isolates\nrow_sums[row_sums == 0] = 1       \nW_rowstd = W / row_sums\n\n# ---------- 5. Lee\u2019s L ----------\nx = df_complete[\"GHG_value\"].to_numpy(dtype=float)\ny = df_complete[\"Waste_value\"].to_numpy(dtype=float)\n\nx_mean = x.mean()\ny_mean = y.mean()\n\nx_centered = x - x_mean\ny_centered = y - y_mean\n\nnum = np.sum(W_rowstd * x_centered[:, None] * y_centered[None, :])\nden = np.sqrt(np.sum(x_centered ** 2) * np.sum(y_centered ** 2))\nL_obs = num / den\n\n# ---------- 6. permutation test ----------\nrng = np.random.default_rng(0)  # reproducible\nn_perm = 1000\nperm_L = np.empty(n_perm)\n\nfor k in range(n_perm):\n    y_perm = rng.permutation(y_centered)\n    num_perm = np.sum(W_rowstd * x_centered[:, None] * y_perm[None, :])\n    perm_L[k] = num_perm / den\n\n# two-sided p-value\np_val = np.mean(np.abs(perm_L) >= abs(L_obs))\n\n# ---------- 7. verdict ----------\nif p_val < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ---------- 8. outputs ----------\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic (Lee's L) = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic (Lee's L) = -0.14323517554311832, p = 0.02)",
+        "data_points_used": 32,
+        "statistic": "-0.14323517554311832",
+        "secondary_measures": [
+          "0.02"
+        ],
+        "final_answer": "NEGATIVE (test statistic (Lee's L) = -0.14323517554311832, p = 0.02)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.10639257913142444, p = 0.17682317682317683)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the GHG and Crime tables and the borough\u2010neighbor list into pandas DataFrames.  \n2. Identify any missing values in GHG_value or Crime_value; since there is one missing Crime_value, drop that borough (and all its neighbor links) from the dataset so that all remaining boroughs have both GHG and Crime.  \n3. Build a binary spatial\u2010weights matrix W (size n\u00d7n for the n remaining boroughs) where Wij = 1 if borough i and j are listed as neighbors, and 0 otherwise.  \n4. Standardize each variable across boroughs: x_i = (GHG_i \u2013 mean(GHG)) / sd(GHG), y_i = (Crime_i \u2013 mean(Crime)) / sd(Crime).  \n5. Compute the observed bivariate spatial statistic (Lee\u2019s L):  \n   L_obs = [\u2211_i \u2211_j W_ij x_i y_j] / [\u2211_i \u2211_j W_ij].  \n6. Perform a permutation test with at least 500 random shuffles of the Crime values among boroughs (keeping GHG and W fixed). For each shuffle k, compute L_k using the same formula.  \n7. Calculate the (two\u2010sided) p\u2010value as the proportion of |L_k| \u2265 |L_obs| across all permutations (plus one in numerator and denominator for stability).  \n8. Interpret: if p < 0.05 and L_obs > 0 \u21d2 POSITIVE spatial association; if p < 0.05 and L_obs < 0 \u21d2 NEGATIVE; otherwise \u21d2 NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# For reproducibility\nnp.random.seed(0)\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_ghg_crime.csv')\ndf_adj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop boroughs with missing GHG or Crime\ndf = df.dropna(subset=['GHG_value', 'Crime_value']).copy()\n\n# List of boroughs to include\nboroughs = sorted(df['borough'].unique())\nn = len(boroughs)\n\n# Filter adjacency to those boroughs\ndf_adj = df_adj[df_adj['borough'].isin(boroughs) & df_adj['neighbor'].isin(boroughs)].copy()\n\n# Map borough names to indices\nidx = {b: i for i, b in enumerate(boroughs)}\n\n# Build binary spatial weights matrix W\nW = np.zeros((n, n), dtype=float)\nfor _, row in df_adj.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1  # ensure symmetry\n\n# Extract and standardize variables\ndf2 = df.set_index('borough').loc[boroughs]\nx = (df2['GHG_value'].values - df2['GHG_value'].mean()) / df2['GHG_value'].std(ddof=0)\ny = (df2['Crime_value'].values - df2['Crime_value'].mean()) / df2['Crime_value'].std(ddof=0)\n\n# Compute observed Lee's L\nW_sum = W.sum()\nL_obs = (x @ W @ y) / W_sum\n\n# Permutation test\nn_perm = 1000\nL_perm = np.zeros(n_perm)\nfor k in range(n_perm):\n    y_perm = np.random.permutation(y)\n    L_perm[k] = (x @ W @ y_perm) / W_sum\n\n# Compute two-sided p-value\np_value = (np.sum(np.abs(L_perm) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# Determine the verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Output results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.10639257913142444, p = 0.17682317682317683)",
+        "data_points_used": 32,
+        "statistic": "0.10639257913142444",
+        "secondary_measures": [
+          "0.17682317682317683"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.10639257913142444, p = 0.17682317682317683)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.10733083554833184, p = 0.254)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO2 and Energy tables and the borough\u2010neighborhood list into pandas DataFrames and merge them on borough name.  \n2. Identify any boroughs with missing NO2 or Energy values; drop these boroughs from all analyses (and from the neighbor list) so that only complete cases remain.  \n3. Build a binary spatial weight matrix W of size n\u00d7n (n = number of remaining boroughs), where W[i,j] = 1 if borough j is listed as a neighbor of borough i, else 0.  \n4. Standardize NO2 and Energy values across boroughs (subtract mean, divide by standard deviation) to obtain x_i and y_i.  \n5. Compute the observed bivariate Lee\u2019s L statistic: L_obs = (\u2211_i \u2211_j W[i,j] x_i y_j) / (\u2211_i \u2211_j W[i,j]).  \n6. Perform a permutation test (N \u2265 500 shuffles): for each permutation, randomly shuffle the y_i values across boroughs, recompute L_perm, and store L_perm.  \n7. Calculate the empirical p\u2010value as the proportion of |L_perm| \u2265 |L_obs| across all permutations.  \n8. Compare L_obs and p to \u03b1 = 0.05: if p < 0.05 and L_obs > 0 declare POSITIVE; if p < 0.05 and L_obs < 0 declare NEGATIVE; otherwise declare NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_no2_energy.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop boroughs with missing NO2 or Energy values\ndf_clean = df.dropna(subset=['NO2_value', 'Energy_value']).reset_index(drop=True)\nboroughs = df_clean['borough'].tolist()\n\n# 3. Filter adjacency to include only complete-case boroughs\nadj_filt = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n\n# Create index mapping for boroughs\nidx = {b: i for i, b in enumerate(boroughs)}\nn = len(boroughs)\n\n# 4. Build binary spatial weight matrix W\nW = np.zeros((n, n), dtype=int)\nfor _, row in adj_filt.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n\n# 5. Standardize NO2 and Energy values\nx = df_clean['NO2_value'].values\ny = df_clean['Energy_value'].values\nx = (x - x.mean()) / x.std(ddof=0)\ny = (y - y.mean()) / y.std(ddof=0)\n\n# 6. Compute observed Lee\u2019s L statistic\nW_sum = W.sum()\nL_obs = (W * (x[:, None] * y[None, :])).sum() / W_sum\n\n# 7. Permutation test\nn_perm = 1000\nrng = np.random.default_rng(42)\nL_perms = np.zeros(n_perm)\nfor k in range(n_perm):\n    y_perm = rng.permutation(y)\n    L_perms[k] = (W * (x[:, None] * y_perm[None, :])).sum() / W_sum\n\n# 8. Calculate two\u2010sided p-value\np_value = np.mean(np.abs(L_perms) >= np.abs(L_obs))\n\n# 9. Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Print results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 28\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.10733083554833184, p = 0.254)",
+        "data_points_used": 28,
+        "statistic": "0.10733083554833184",
+        "secondary_measures": [
+          "0.254"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.10733083554833184, p = 0.254)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

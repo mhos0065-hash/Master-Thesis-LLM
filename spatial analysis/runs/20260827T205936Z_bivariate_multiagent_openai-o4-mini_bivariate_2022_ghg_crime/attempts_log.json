@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.111510, p = 0.213000)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the GHG and Crime data into pandas DataFrames and the adjacency list into an edge list or weights matrix.  \n2. Identify any boroughs with missing GHG or Crime values; if there are only a few (e.g. one), drop those boroughs from all subsequent analyses to avoid bias.  \n3. Construct a spatial weights matrix W (33\u00d733) from the adjacency list, with w\u1d62\u2c7c=1 if boroughs i and j share a border and 0 otherwise; row-standardize each row of W so that its elements sum to 1.  \n4. Standardize the GHG and Crime variables separately by subtracting their means and dividing by their standard deviations.  \n5. Compute the bivariate spatial association statistic (Lee\u2019s L):  \n   a. Numerator = \u03a3\u1d62\u03a3\u2c7c w\u1d62\u2c7c\u00b7z_GHG\u1d62\u00b7z_Crime\u2c7c  \n   b. Denominator = \u221a[(\u03a3\u1d62 z_GHG\u1d62\u00b2)\u00b7(\u03a3\u2c7c z_Crime\u2c7c\u00b2)]  \n   c. L = Numerator / Denominator  \n6. Perform a permutation test with at least 500 random shuffles of the Crime z-scores (keeping GHG fixed), recalculating L each time to build a reference distribution and estimate a two-sided p-value.  \n7. Compare the observed L to the permutation distribution:  \n   \u2013 If observed L>0 and p<0.05, conclude POSITIVE spatial association.  \n   \u2013 If observed L<0 and p<0.05, conclude NEGATIVE spatial association.  \n   \u2013 Otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_ghg_crime.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop missing GHG or Crime values\ndf = df.dropna(subset=['GHG_value', 'Crime_value']).copy()\ndata_points_used = df.shape[0]\n\n# 3. Build list of boroughs and index mapping\nboroughs = sorted(df['borough'].unique())\nidx = {b: i for i, b in enumerate(boroughs)}\nn = len(boroughs)\n\n# 4. Build spatial weights matrix W (binary adjacency)\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    b, nei = row['borough'], row['neighbor']\n    if b in idx and nei in idx:\n        i, j = idx[b], idx[nei]\n        W[i, j] = 1\n        W[j, i] = 1  # ensure symmetry\n\n# Row-standardize W\nrow_sums = W.sum(axis=1)\n# Avoid division by zero\nrow_sums[row_sums == 0] = 1\nW = W / row_sums[:, None]\n\n# 5. Standardize GHG and Crime\ndf2 = df.set_index('borough').loc[boroughs]\nghg = df2['GHG_value'].values\ncrime = df2['Crime_value'].values\n\nz_ghg = (ghg - ghg.mean()) / ghg.std(ddof=0)\nz_crime = (crime - crime.mean()) / crime.std(ddof=0)\n\n# Compute Lee's L\nnumerator = z_ghg @ (W @ z_crime)\ndenominator = np.sqrt((z_ghg**2).sum() * (z_crime**2).sum())\nL_obs = numerator / denominator\n\n# 6. Permutation test\nnp.random.seed(42)\nn_perm = 1000\nperm_L = np.zeros(n_perm)\nfor k in range(n_perm):\n    perm_crime = np.random.permutation(z_crime)\n    num_p = z_ghg @ (W @ perm_crime)\n    perm_L[k] = num_p / denominator\n\n# 7. p-value (two-sided)\np_value = np.mean(np.abs(perm_L) >= abs(L_obs))\n\n# Determine verdict\nif L_obs > 0 and p_value < 0.05:\n    verdict = \"POSITIVE\"\nelif L_obs < 0 and p_value < 0.05:\n    verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Output\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_value:.6f})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.111510, p = 0.213000)",
+        "data_points_used": 32,
+        "statistic": "0.111510",
+        "secondary_measures": [
+          "0.213000"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.111510, p = 0.213000)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

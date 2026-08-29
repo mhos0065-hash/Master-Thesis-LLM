@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.33930376031659426, p = 0.064)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the Energy and Crime data for the 33 London boroughs, ensuring that the data is in a suitable format for analysis.\n\n2. **Handle Missing Values**: Identify the borough with the missing Crime_value. Since there is only one missing value, consider removing this borough from the dataset to maintain the integrity of the analysis.\n\n3. **Create Neighbor Matrix**: Utilize the provided list of geographic neighbors to create a matrix or dictionary that indicates which boroughs are neighbors of each other.\n\n4. **Calculate Mean Values**: For each borough, calculate the mean Energy_value and Crime_value for its neighboring boroughs.\n\n5. **Compute Lee's L Statistic**: Implement Lee's L statistic to assess the spatial correlation between Energy and Crime values. This will involve calculating the observed value of the statistic based on the mean values from the previous step.\n\n6. **Randomization Test**: Conduct a permutation/randomization test with at least 500 shuffles to determine the significance of the observed Lee's L statistic. For each shuffle, randomly assign Crime values to the boroughs while keeping the Energy values fixed, and recalculate the Lee's L statistic.\n\n7. **Calculate p-value**: Compare the observed Lee's L statistic to the distribution of Lee's L statistics obtained from the randomization test to calculate the p-value.\n\n8. **Interpret Results**: Based on the p-value, determine whether the relationship between Energy and Crime values is positive, negative, or not significant.\n\n9. **Prepare Final Output**: Format the final output to include the computed test statistic and p-value, indicating whether the relationship is positive, negative, or not significant.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the datasets\nenergy_crime_data = pd.read_csv('chunks_csv/bivariate/bivariate_2021_energy_crime.csv')\nadjacency_data = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Step 2: Handle Missing Values\n# Remove the borough with the missing Crime_value\nenergy_crime_data = energy_crime_data.dropna(subset=['Crime_value'])\n\n# Step 3: Create Neighbor Matrix\n# Create a dictionary to hold neighbors\nneighbors = {}\nfor _, row in adjacency_data.iterrows():\n    borough = row['borough']\n    neighbor = row['neighbor']\n    if borough not in neighbors:\n        neighbors[borough] = []\n    neighbors[borough].append(neighbor)\n\n# Step 4: Calculate Mean Values for Neighbors\n# Initialize lists to hold mean values\nmean_energy = []\nmean_crime = []\n\nfor borough in energy_crime_data['borough']:\n    if borough in neighbors:\n        neighbor_energy = energy_crime_data[energy_crime_data['borough'].isin(neighbors[borough])]['Energy_value']\n        neighbor_crime = energy_crime_data[energy_crime_data['borough'].isin(neighbors[borough])]['Crime_value']\n        mean_energy.append(neighbor_energy.mean() if not neighbor_energy.empty else 0)\n        mean_crime.append(neighbor_crime.mean() if not neighbor_crime.empty else 0)\n    else:\n        mean_energy.append(0)\n        mean_crime.append(0)\n\n# Add mean values to the dataframe\nenergy_crime_data['mean_neighbor_energy'] = mean_energy\nenergy_crime_data['mean_neighbor_crime'] = mean_crime\n\n# Step 5: Compute Lee's L Statistic\ndef compute_lees_l(energy, crime):\n    return np.corrcoef(energy, crime)[0, 1]\n\nobserved_l = compute_lees_l(energy_crime_data['mean_neighbor_energy'], energy_crime_data['Crime_value'])\n\n# Step 6: Randomization Test\nn_permutations = 500\nrandom_l_values = []\n\nfor _ in range(n_permutations):\n    shuffled_crime = np.random.permutation(energy_crime_data['Crime_value'])\n    random_l = compute_lees_l(energy_crime_data['mean_neighbor_energy'], shuffled_crime)\n    random_l_values.append(random_l)\n\n# Step 7: Calculate p-value\np_value = np.sum(np.array(random_l_values) >= observed_l) / n_permutations\n\n# Step 8: Interpret Results\ndata_points_used = len(energy_crime_data)\nif p_value < 0.05:\n    if observed_l > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Step 9: Prepare Final Output\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_l}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.33930376031659426, p = 0.064)",
+        "data_points_used": 32,
+        "statistic": "0.33930376031659426",
+        "secondary_measures": [
+          "0.064"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.33930376031659426, p = 0.064)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

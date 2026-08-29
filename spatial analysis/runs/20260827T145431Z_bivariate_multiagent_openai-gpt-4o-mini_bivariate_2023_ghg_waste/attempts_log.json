@@ -1,0 +1,48 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.3309952203533636, p = 0.978)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 2,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the GHG and Waste data for the 33 London boroughs, ensuring that both datasets are merged based on borough identifiers.\n\n2. **Identify Neighbors**: Utilize the provided list of geographic neighbors to create a mapping of each borough to its neighboring boroughs.\n\n3. **Calculate Spatial Associations**: For each borough, extract the GHG value and the Waste values of its neighboring boroughs.\n\n4. **Compute Lee's L Statistic**: Implement the calculation of Lee's L statistic to assess the spatial correlation between GHG values and the average Waste values of neighboring boroughs.\n\n5. **Randomization Test**: Conduct a permutation/randomization test with at least 500 shuffles to determine the statistical significance of the observed Lee's L statistic.\n\n6. **Evaluate Results**: Analyze the results of the randomization test to determine the p-value and compare it to the significance level (0.05) to classify the relationship as POSITIVE, NEGATIVE, or NOT SIGNIFICANT.\n\n7. **Report Findings**: Compile the test statistic and p-value into the final answer format, clearly indicating the nature of the spatial association between GHG and Waste.\n\n8. **Handle Missing Values**: Since the data profile indicates no missing values, no additional steps are needed for handling missing data. If any were present, consider imputation or exclusion based on the analysis context.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the GHG and Waste data\ndata_path = 'chunks_csv/bivariate/bivariate_2023_ghg_waste.csv'\nadjacency_path = 'chunks_csv/borough_adjacency.csv'\n\nghg_waste_data = pd.read_csv(data_path)\nadjacency_data = pd.read_csv(adjacency_path)\n\n# Step 1: Prepare the data\n# Merge the GHG and Waste data with the adjacency data\nmerged_data = ghg_waste_data.merge(adjacency_data, on='borough')\n\n# Step 2: Identify neighbors and calculate average Waste for neighbors\n# Create a dictionary to hold the average Waste values for each borough's neighbors\nneighbor_waste_avg = {}\n\nfor borough in merged_data['borough'].unique():\n    neighbors = merged_data[merged_data['borough'] == borough]['neighbor'].values\n    neighbor_waste_values = merged_data[merged_data['borough'].isin(neighbors)]['Waste_value'].values\n    if len(neighbor_waste_values) > 0:\n        neighbor_waste_avg[borough] = np.mean(neighbor_waste_values)\n    else:\n        neighbor_waste_avg[borough] = np.nan\n\n# Step 3: Calculate Lee's L statistic\ndef calculate_lees_L(ghg_values, waste_values):\n    n = len(ghg_values)\n    mean_ghg = np.mean(ghg_values)\n    mean_waste = np.mean(waste_values)\n    L = np.sum((ghg_values - mean_ghg) * (waste_values - mean_waste)) / (n - 1)\n    return L\n\n# Prepare the GHG and average Waste values for Lee's L calculation\nghg_values = merged_data['GHG_value'].values\navg_waste_values = np.array([neighbor_waste_avg[borough] for borough in merged_data['borough']])\n\n# Remove NaN values\nvalid_indices = ~np.isnan(avg_waste_values)\nghg_values = ghg_values[valid_indices]\navg_waste_values = avg_waste_values[valid_indices]\n\n# Calculate the observed Lee's L statistic\nobserved_L = calculate_lees_L(ghg_values, avg_waste_values)\n\n# Step 4: Randomization test\nn_permutations = 500\nrandom_L_stats = []\n\nfor _ in range(n_permutations):\n    np.random.shuffle(avg_waste_values)  # Shuffle the Waste values\n    random_L = calculate_lees_L(ghg_values, avg_waste_values)\n    random_L_stats.append(random_L)\n\n# Step 5: Calculate p-value\nrandom_L_stats = np.array(random_L_stats)\np_value = np.sum(random_L_stats >= observed_L) / n_permutations\n\n# Step 6: Determine significance\ndata_points_used = len(ghg_values)\nif p_value < 0.05:\n    if observed_L > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Step 7: Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_L}, p = {p_value})\")\n",
+        "output": "data_points_used = 138\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -6.432427535991051, p = 1.0)",
+        "data_points_used": 138,
+        "statistic": "-6.432427535991051",
+        "secondary_measures": [
+          "1.0"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -6.432427535991051, p = 1.0)"
+      },
+      "validation_score": 4,
+      "validation_total": 5,
+      "failed_checks": [
+        "The number of data points you reported using (data_points_used) does not match the data's actual completeness -- check your missing-value handling."
+      ]
+    },
+    {
+      "plan_number": 1,
+      "coder_try": 2,
+      "plan": "1. **Data Preparation**: Load the GHG and Waste data for the 33 London boroughs, ensuring that both datasets are merged based on borough identifiers.\n\n2. **Identify Neighbors**: Utilize the provided list of geographic neighbors to create a mapping of each borough to its neighboring boroughs.\n\n3. **Calculate Spatial Associations**: For each borough, extract the GHG value and the Waste values of its neighboring boroughs.\n\n4. **Compute Lee's L Statistic**: Implement the calculation of Lee's L statistic to assess the spatial correlation between GHG values and the average Waste values of neighboring boroughs.\n\n5. **Randomization Test**: Conduct a permutation/randomization test with at least 500 shuffles to determine the statistical significance of the observed Lee's L statistic.\n\n6. **Evaluate Results**: Analyze the results of the randomization test to determine the p-value and compare it to the significance level (0.05) to classify the relationship as POSITIVE, NEGATIVE, or NOT SIGNIFICANT.\n\n7. **Report Findings**: Compile the test statistic and p-value into the final answer format, clearly indicating the nature of the spatial association between GHG and Waste.\n\n8. **Handle Missing Values**: Since the data profile indicates no missing values, no additional steps are needed for handling missing data. If any were present, consider imputation or exclusion based on the analysis context.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the GHG and Waste data\ndata_path = 'chunks_csv/bivariate/bivariate_2023_ghg_waste.csv'\nadjacency_path = 'chunks_csv/borough_adjacency.csv'\n\nghg_waste_df = pd.read_csv(data_path)\nadjacency_df = pd.read_csv(adjacency_path)\n\n# Merge the GHG and Waste data with the adjacency data\n# Create a mapping of boroughs to their neighbors\nneighbors = adjacency_df.groupby('borough')['neighbor'].apply(list).to_dict()\n\n# Calculate the average Waste value for neighboring boroughs\ndef calculate_neighbor_waste(row):\n    borough = row['borough']\n    waste_values = []\n    for neighbor in neighbors.get(borough, []):\n        neighbor_row = ghg_waste_df[ghg_waste_df['borough'] == neighbor]\n        if not neighbor_row.empty:\n            waste_values.append(neighbor_row['Waste_value'].values[0])\n    return np.mean(waste_values) if waste_values else np.nan\n\nghg_waste_df['Neighbor_Waste_Avg'] = ghg_waste_df.apply(calculate_neighbor_waste, axis=1)\n\n# Drop rows with missing values\nghg_waste_df.dropna(inplace=True)\n\n# Number of data points used\ndata_points_used = len(ghg_waste_df)\n\n# Calculate Lee's L statistic\ndef calculate_lees_l(ghg_values, neighbor_waste_avg):\n    return np.corrcoef(ghg_values, neighbor_waste_avg)[0, 1]\n\nobserved_l = calculate_lees_l(ghg_waste_df['GHG_value'], ghg_waste_df['Neighbor_Waste_Avg'])\n\n# Randomization test\nn_permutations = 500\nrandom_l_values = []\n\nfor _ in range(n_permutations):\n    shuffled_waste = np.random.permutation(ghg_waste_df['Neighbor_Waste_Avg'])\n    random_l = calculate_lees_l(ghg_waste_df['GHG_value'], shuffled_waste)\n    random_l_values.append(random_l)\n\n# Calculate p-value\np_value = np.sum(np.array(random_l_values) >= observed_l) / n_permutations\n\n# Determine the verdict\nif p_value < 0.05:\n    if observed_l > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_l}, p = {p_value})\")\n",
+        "output": "data_points_used = 28\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.3309952203533636, p = 0.978)",
+        "data_points_used": 28,
+        "statistic": "-0.3309952203533636",
+        "secondary_measures": [
+          "0.978"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.3309952203533636, p = 0.978)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

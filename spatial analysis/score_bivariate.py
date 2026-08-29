@@ -39,6 +39,12 @@ RESULTS_CSV = "results/bivariate_results_multi.csv"
 SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
 CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
 
+
+# For multi agent
+RESULTS_CSV = "results/multi agent/bivariate_results_multiagent.csv"
+SUMMARY_OUT = "Scores/multi agent/bivariate_scoring_summary_multi_agent.csv"
+CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multi_agent.csv"
+
 CLASSES = ["positive", "negative", "not_significant"]
 
 

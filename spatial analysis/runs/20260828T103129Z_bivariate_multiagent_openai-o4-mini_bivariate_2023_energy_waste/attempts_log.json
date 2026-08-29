@@ -1,0 +1,68 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -0.1433641614002473, p = 0.005)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 2,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level Energy and Waste data into a pandas DataFrame and read in the neighbour\u2010list to define which boroughs are adjacent.  \n2. Identify missing values: note that one borough has a missing Waste_value; drop that borough (and its associated neighbourhood links) from both the data and the weight matrix so that all remaining rows have complete Energy and Waste values.  \n3. Construct a binary spatial weight matrix W (size N\u00d7N, where N is the post\u2010drop row count) from the neighbour\u2010list: Wij = 1 if borough i and j are neighbours, else 0.  \n4. Extract aligned numpy arrays X (Energy) and Y (Waste) of length N, and compute x_i = X_i \u2013 mean(X) and y_i = Y_i \u2013 mean(Y).  \n5. Compute Lee\u2019s L statistic:  \n   a. Numerator = \u03a3_i \u03a3_j W_ij x_i y_j  \n   b. Denominator = sqrt[ (\u03a3_i \u03a3_j W_ij x_i\u00b2) \u00b7 (\u03a3_i \u03a3_j W_ij y_j\u00b2 ) ]  \n   c. L_obs = numerator / denominator  \n6. Perform a permutation test with at least 500 random shuffles of the Y vector: for each shuffle s, compute L_s using the same W and x_i but permuted y_i^(s); record the L_s distribution.  \n7. Compute a two\u2010sided p\u2010value as the proportion of |L_s| \u2265 |L_obs| across all permutations.  \n8. Determine spatial association:  \n   \u2013 If p < 0.05 and L_obs > 0 \u21d2 POSITIVE spatial association  \n   \u2013 If p < 0.05 and L_obs < 0 \u21d2 NEGATIVE spatial association  \n   \u2013 Otherwise \u21d2 NOT SIGNIFICANT",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndata_path = \"chunks_csv/bivariate/bivariate_2023_energy_waste.csv\"\nadj_path = \"chunks_csv/borough_adjacency.csv\"\ndf = pd.read_csv(data_path)\nadj = pd.read_csv(adj_path)\n\n# 2. Drop borough with missing Waste_value\ndf_clean = df.dropna(subset=[\"Waste_value\"]).copy()\n\n# 3. Filter adjacency to only include remaining boroughs\nvalid = set(df_clean[\"borough\"])\nadj_clean = adj[adj[\"borough\"].isin(valid) & adj[\"neighbor\"].isin(valid)].copy()\n\n# 4. Construct spatial weight matrix W\nboroughs = sorted(df_clean[\"borough\"])\nN = len(boroughs)\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj_clean.iterrows():\n    i, j = idx[row[\"borough\"]], idx[row[\"neighbor\"]]\n    W[i, j] = 1\n    W[j, i] = 1  # ensure symmetry\n\n# 5. Extract and center variables\ndf2 = df_clean.set_index(\"borough\").loc[boroughs]\nX = df2[\"Energy_value\"].values\nY = df2[\"Waste_value\"].values\nx = X - X.mean()\ny = Y - Y.mean()\n\n# Compute Lee's L statistic\nnum = np.sum(W * np.outer(x, y))\nden = np.sqrt(np.sum(W * np.outer(x, x)) * np.sum(W * np.outer(y, y)))\nL_obs = num / den\n\n# 6. Permutation test\nnp.random.seed(0)\nn_perm = 1000\nLs = np.zeros(n_perm)\nWx2 = np.sum(W * np.outer(x, x))\nfor k in range(n_perm):\n    y_perm = y[np.random.permutation(N)]\n    num_k = np.sum(W * np.outer(x, y_perm))\n    Wy2_k = np.sum(W * np.outer(y_perm, y_perm))\n    Ls[k] = num_k / np.sqrt(Wx2 * Wy2_k)\n\n# 7. Two-sided p-value\np_value = np.mean(np.abs(Ls) >= abs(L_obs))\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# 1. Number of data points used\nprint(f\"data_points_used = {N}\")\n\n# 2. Final answer\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = nan, p = 0.0)",
+        "data_points_used": 32,
+        "statistic": "nan",
+        "secondary_measures": [
+          "0.0"
+        ],
+        "final_answer": "NEGATIVE (test statistic = nan, p = 0.0)"
+      },
+      "validation_score": 5,
+      "validation_total": 6,
+      "failed_checks": [
+        "Your printed test statistic is not a finite number."
+      ]
+    },
+    {
+      "plan_number": 1,
+      "coder_try": 2,
+      "plan": "1. Load the borough\u2010level Energy and Waste data into a pandas DataFrame and read in the neighbour\u2010list to define which boroughs are adjacent.  \n2. Identify missing values: note that one borough has a missing Waste_value; drop that borough (and its associated neighbourhood links) from both the data and the weight matrix so that all remaining rows have complete Energy and Waste values.  \n3. Construct a binary spatial weight matrix W (size N\u00d7N, where N is the post\u2010drop row count) from the neighbour\u2010list: Wij = 1 if borough i and j are neighbours, else 0.  \n4. Extract aligned numpy arrays X (Energy) and Y (Waste) of length N, and compute x_i = X_i \u2013 mean(X) and y_i = Y_i \u2013 mean(Y).  \n5. Compute Lee\u2019s L statistic:  \n   a. Numerator = \u03a3_i \u03a3_j W_ij x_i y_j  \n   b. Denominator = sqrt[ (\u03a3_i \u03a3_j W_ij x_i\u00b2) \u00b7 (\u03a3_i \u03a3_j W_ij y_j\u00b2 ) ]  \n   c. L_obs = numerator / denominator  \n6. Perform a permutation test with at least 500 random shuffles of the Y vector: for each shuffle s, compute L_s using the same W and x_i but permuted y_i^(s); record the L_s distribution.  \n7. Compute a two\u2010sided p\u2010value as the proportion of |L_s| \u2265 |L_obs| across all permutations.  \n8. Determine spatial association:  \n   \u2013 If p < 0.05 and L_obs > 0 \u21d2 POSITIVE spatial association  \n   \u2013 If p < 0.05 and L_obs < 0 \u21d2 NEGATIVE spatial association  \n   \u2013 Otherwise \u21d2 NOT SIGNIFICANT",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\nenergy_waste = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_waste.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop missing Waste_value\nenergy_waste = energy_waste.dropna(subset=['Waste_value'])\nvalid_boroughs = set(energy_waste.index)\n\n# 3. Filter adjacency to keep only valid boroughs\nadj_filtered = adj[adj['borough'].isin(valid_boroughs) & adj['neighbor'].isin(valid_boroughs)]\n\n# 4. Build list of boroughs and map to indices\nboroughs = sorted(valid_boroughs)\nN = len(boroughs)\nidx = {b: i for i, b in enumerate(boroughs)}\n\n# 5. Construct binary spatial weight matrix W\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj_filtered.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1  # ensure symmetry\n\n# 6. Extract X (Energy) and Y (Waste)\nX = energy_waste.loc[boroughs, 'Energy_value'].values\nY = energy_waste.loc[boroughs, 'Waste_value'].values\n\n# Center the variables\nx = X - X.mean()\ny = Y - Y.mean()\n\n# 7. Compute Lee's L statistic\nnumerator = np.sum(W * np.outer(x, y))\nden_x = np.sum(W * np.outer(x, x))\nden_y = np.sum(W * np.outer(y, y))\ndenominator = np.sqrt(den_x * den_y)\nL_obs = numerator / denominator\n\n# 8. Permutation test\nn_perm = 999\nnp.random.seed(0)\nL_perms = np.zeros(n_perm)\nfor s in range(n_perm):\n    y_perm = np.random.permutation(y)\n    num_s = np.sum(W * np.outer(x, y_perm))\n    L_perms[s] = num_s / denominator\n\n# two-sided p-value\np_val = (np.sum(np.abs(L_perms) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# 9. Determine verdict\nif p_val < 0.05 and L_obs > 0:\n    verdict = 'POSITIVE'\nelif p_val < 0.05 and L_obs < 0:\n    verdict = 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# 10. Print results\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = nan, p = 0.001)",
+        "data_points_used": 32,
+        "statistic": "nan",
+        "secondary_measures": [
+          "0.001"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = nan, p = 0.001)"
+      },
+      "validation_score": 5,
+      "validation_total": 6,
+      "failed_checks": [
+        "Your printed test statistic is not a finite number."
+      ]
+    },
+    {
+      "plan_number": 2,
+      "coder_try": 1,
+      "plan": "1. Load the Energy and Waste datasets into pandas DataFrames and read the borough\u2010neighborhood adjacency list.  \n2. Merge Energy and Waste values on borough name to create a single table; link each borough to its list of neighbors.  \n3. Handle missing Waste_value by dropping any borough with a missing value, and remove it from all neighbor lists.  \n4. After dropping, identify any boroughs that now have zero neighbors; iteratively remove those isolates (and update neighbor lists) until every remaining borough has at least one neighbor.  \n5. Extract aligned arrays X (Energy) and Y (Waste) for the final set of boroughs, ensuring they are in the same order as the adjacency structure.  \n6. Standardize X and Y by subtracting their means and dividing by their standard deviations (verify neither has zero variance).  \n7. Construct a spatial weights matrix W where W[i,j]=1 if j is a neighbor of i, then row-normalize so each row sums to 1.  \n8. Compute the observed Lee\u2019s L statistic: L_obs = (1/n) * \u03a3_i X_i * (\u03a3_j W[i,j] * Y_j).  \n9. Perform a permutation test with at least 500 random shuffles of Y: for each shuffle k, permute Y across boroughs, recompute L_k, and store it.  \n10. Calculate the two-sided p-value as the fraction of permutations where |L_k| \u2265 |L_obs|.  \n11. Determine the spatial association: if p<0.05 and L_obs>0 \u21d2 POSITIVE; if p<0.05 and L_obs<0 \u21d2 NEGATIVE; otherwise \u21d2 NOT SIGNIFICANT.  \n12. Format the final output as:  \n\u2003FINAL ANSWER: [POSITIVE/NEGATIVE/NOT SIGNIFICANT] (test statistic = L_obs, p = p)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_waste.csv')\nadj_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Merge already in df; 3. Drop missing Waste_value\ndf = df.dropna(subset=['Waste_value']).copy()\n\n# 4. Build a symmetric adjacency dict\nadjacency = {}\nfor _, row in adj_df.iterrows():\n    b, n = row['borough'], row['neighbor']\n    adjacency.setdefault(b, set()).add(n)\n    adjacency.setdefault(n, set()).add(b)\n\n# Keep only boroughs present in df\nboroughs_set = set(df['borough'])\nadjacency = {b: {n for n in neighbors if n in boroughs_set} \n             for b, neighbors in adjacency.items() if b in boroughs_set}\n\n# Iteratively remove isolates\nwhile True:\n    isolates = [b for b, neigh in adjacency.items() if len(neigh) == 0]\n    if not isolates:\n        break\n    for b in isolates:\n        del adjacency[b]\n    for b in adjacency:\n        adjacency[b] -= set(isolates)\n    boroughs_set -= set(isolates)\n\n# Final borough list (sorted for consistency)\nboroughs = sorted(adjacency.keys())\nn = len(boroughs)\n\n# Filter df to final boroughs and extract X, Y\ndf_final = df.set_index('borough').loc[boroughs]\nX = df_final['Energy_value'].values\nY = df_final['Waste_value'].values\n\n# 6. Standardize\nX = (X - X.mean()) / X.std(ddof=0)\nY = (Y - Y.mean()) / Y.std(ddof=0)\n\n# 7. Build weights matrix W (row-normalized)\nidx_map = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n))\nfor i, b in enumerate(boroughs):\n    neighs = adjacency[b]\n    for nb in neighs:\n        j = idx_map[nb]\n        W[i, j] = 1\n    row_sum = W[i].sum()\n    if row_sum > 0:\n        W[i] /= row_sum\n\n# 8. Compute observed Lee's L\nL_obs = np.mean(X * (W.dot(Y)))\n\n# 9. Permutation test\nnum_permutations = 1000\nL_perms = np.zeros(num_permutations)\nfor k in range(num_permutations):\n    Y_perm = np.random.permutation(Y)\n    L_perms[k] = np.mean(X * (W.dot(Y_perm)))\n\n# 10. Two-sided p-value\np_value = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# 11. Determine verdict\nif p_value < 0.05 and L_obs > 0:\n    verdict = \"POSITIVE\"\nelif p_value < 0.05 and L_obs < 0:\n    verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# 1. Print data points used\nprint(f\"data_points_used = {n}\")\n\n# 12. Final answer\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = -0.1433641614002473, p = 0.005)",
+        "data_points_used": 32,
+        "statistic": "-0.1433641614002473",
+        "secondary_measures": [
+          "0.005"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -0.1433641614002473, p = 0.005)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

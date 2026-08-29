@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -0.19158658370879955, p = 0.02097902097902098)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Energy and Waste data (33 rows) into pandas, and load the borough\u2010neighbor adjacency list.  \n2. Identify and handle missing values: since there is one missing Waste_value, drop that borough from both the data and the adjacency structure.  \n3. Construct a spatial weights matrix W (33\u00d733 minus one row/column) from the neighbor list, using binary weights (w\u1d62\u2c7c=1 if j is a neighbor of i, else 0) and then row-standardize so each row sums to 1.  \n4. Extract two aligned vectors: x\u1d62 = Energy_value for borough i, and y\u1d62 = Waste_value for borough i (after dropping the missing case).  \n5. Standardize x and y to zero mean and unit variance (z\u2010scores) to ensure comparability.  \n6. Compute the observed Lee\u2019s L statistic: L_obs = (1/\u03a3\u1d62 \u03a3\u2c7c w\u1d62\u2c7c) \u00b7 \u03a3\u1d62 \u03a3\u2c7c w\u1d62\u2c7c \u00b7 x\u1d62 \u00b7 y\u2c7c.  \n7. Perform a permutation test with at least 500 random permutations of the y vector: for each permutation k, shuffle y among boroughs, compute L_k, and build the null distribution of L.  \n8. Calculate the empirical p-value as the proportion of |L_k| \u2265 |L_obs| (for a two-sided test) or (depending on hypothesis) the proportion of L_k \u2265 L_obs for assessing positive spatial association (and similarly for L_k \u2264 L_obs for negative).  \n9. Compare p to \u03b1=0.05: if p<0.05 and L_obs>0 conclude POSITIVE; if p<0.05 and L_obs<0 conclude NEGATIVE; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndata = pd.read_csv('chunks_csv/bivariate/bivariate_2021_energy_waste.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop missing Waste_value\ndata = data.dropna(subset=['Waste_value'])\ndata_points_used = data.shape[0]\n\n# 3. Build binary adjacency matrix for the remaining boroughs\nboroughs = data.index.tolist()\n# Filter adjacency to pairs where both are in our data\nadj = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n# Initialize W\nW_bin = pd.DataFrame(0, index=boroughs, columns=boroughs, dtype=int)\nfor _, row in adj.iterrows():\n    W_bin.loc[row.borough, row.neighbor] = 1\n# Symmetrize (undirected)\nW_bin = ((W_bin + W_bin.T) > 0).astype(int)\n\n# 4. Extract x and y\nx = data['Energy_value']\ny = data['Waste_value']\n\n# 5. Standardize to z-scores\nx = (x - x.mean()) / x.std(ddof=0)\ny = (y - y.mean()) / y.std(ddof=0)\n\n# 6. Compute observed Lee's L\nW = W_bin.values\nsum_w = W.sum()\nL_obs = ( (x.values[:, None] * y.values[None, :] * W).sum() ) / sum_w\n\n# 7. Permutation test\nn_perm = 1000\nL_perms = np.empty(n_perm)\nfor i in range(n_perm):\n    y_perm = np.random.permutation(y.values)\n    L_perms[i] = ( (x.values[:, None] * y_perm[None, :] * W).sum() ) / sum_w\n\n# 8. Compute two-sided p-value\ncount_extreme = np.sum(np.abs(L_perms) >= abs(L_obs))\np_value = (count_extreme + 1) / (n_perm + 1)\n\n# 9. Verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Outputs\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = -0.19158658370879955, p = 0.02097902097902098)",
+        "data_points_used": 32,
+        "statistic": "-0.19158658370879955",
+        "secondary_measures": [
+          "0.02097902097902098"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -0.19158658370879955, p = 0.02097902097902098)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

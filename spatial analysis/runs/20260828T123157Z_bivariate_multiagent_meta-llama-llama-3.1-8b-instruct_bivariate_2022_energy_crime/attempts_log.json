@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -1.0002323097581414, significance measure = 0.001996007984031936)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "Here is a short, numbered plan for answering the question:\n\n1. **Load and prepare data**: Load the Energy and Crime data for London boroughs into a pandas DataFrame. Handle the missing value in the Crime_value column by replacing it with the mean of the Crime_value column, to avoid any potential bias in the analysis.\n2. **Identify neighboring boroughs**: Create a list of neighboring boroughs for each borough, based on the provided list of geographic neighbors.\n3. **Calculate Lee's L statistic**: Use the pandas and numpy libraries to calculate Lee's L statistic for bivariate spatial correlation analysis, which measures the strength and direction of the spatial relationship between Energy and Crime.\n4. **Permutation test**: Perform a permutation test to determine whether the observed Lee's L statistic is statistically significant. Shuffle the Energy values 500 times and recalculate Lee's L statistic for each shuffle. Compare the observed Lee's L statistic to the distribution of Lee's L statistics obtained from the shuffles to determine the p-value.\n5. **Determine significance**: Based on the p-value, determine whether the observed Lee's L statistic is statistically significant, indicating a positive, negative, or not significant spatial relationship between Energy and Crime.\n\nFINAL ANSWER: POSITIVE (test statistic (a real number) = <value>, p = <value>)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the data\ndata = pd.read_csv('chunks_csv/bivariate/bivariate_2022_energy_crime.csv')\nadjacency = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Handle the missing value in the Crime_value column\ndata['Crime_value'] = data['Crime_value'].fillna(data['Crime_value'].mean())\n\n# Identify neighboring boroughs\nadjacency_list = {}\nfor index, row in adjacency.iterrows():\n    if row['borough'] not in adjacency_list:\n        adjacency_list[row['borough']] = []\n    adjacency_list[row['borough']].append(row['neighbor'])\n\n# Calculate Lee's L statistic\ndef lee_l_statistic(data, adjacency_list):\n    energy_values = data['Energy_value']\n    crime_values = data['Crime_value']\n    n = len(data)\n    sum_energy = np.sum(energy_values)\n    sum_crime = np.sum(crime_values)\n    sum_energy_neighbors = 0\n    sum_crime_neighbors = 0\n    for i in range(n):\n        for neighbor in adjacency_list[data.iloc[i]['borough']]:\n            j = data[data['borough'] == neighbor].index[0]\n            sum_energy_neighbors += energy_values[i]\n            sum_crime_neighbors += crime_values[j]\n    numerator = (sum_energy * sum_crime - sum_energy_neighbors * sum_crime_neighbors)\n    denominator = np.sqrt((sum_energy**2 - sum_energy_neighbors**2) * (sum_crime**2 - sum_crime_neighbors**2))\n    return numerator / denominator\n\nlee_l_statistic_value = lee_l_statistic(data, adjacency_list)\n\n# Permutation test\ndef permutation_test(data, adjacency_list, lee_l_statistic_value, n_permutations=500):\n    test_statistics = []\n    for _ in range(n_permutations):\n        energy_values = data['Energy_value'].sample(frac=1).reset_index(drop=True)\n        crime_values = data['Crime_value'].sample(frac=1).reset_index(drop=True)\n        test_statistic = lee_l_statistic(data, adjacency_list)\n        test_statistics.append(test_statistic)\n    test_statistics.sort()\n    p_value = (test_statistics.index(lee_l_statistic_value) + 1) / (n_permutations + 1)\n    return p_value\n\np_value = permutation_test(data, adjacency_list, lee_l_statistic_value)\n\n# Determine significance\nif lee_l_statistic_value > 0:\n    verdict = 'POSITIVE'\nelif lee_l_statistic_value < 0:\n    verdict = 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f'data_points_used = {len(data)}')\nprint(f'FINAL ANSWER: {verdict} (test statistic = {lee_l_statistic_value}, significance measure = {p_value})')\nprint(f'Used lee_l_statistic_value = {lee_l_statistic_value}, p_value = {p_value}')\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NEGATIVE (test statistic = -1.0002323097581414, significance measure = 0.001996007984031936)\nUsed lee_l_statistic_value = -1.0002323097581414, p_value = 0.001996007984031936",
+        "data_points_used": 33,
+        "statistic": "-1.0002323097581414",
+        "secondary_measures": [
+          "0.001996007984031936"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -1.0002323097581414, significance measure = 0.001996007984031936)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

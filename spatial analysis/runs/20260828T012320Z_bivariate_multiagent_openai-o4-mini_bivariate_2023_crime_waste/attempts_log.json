@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.031302, p = 0.079840)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the three input tables into pandas DataFrames: borough names with Crime_value, borough names with Waste_value, and the borough\u2010to\u2010borough neighbor list.  \n2. Merge Crime and Waste tables on borough name to get one DataFrame of length 33, then  \n   a. Identify rows where Crime_value or Waste_value is missing (there are 1 missing in each).  \n   b. Drop any borough with a missing Crime_value or Waste_value (listwise deletion).  \n   c. Also remove those boroughs from the neighbor list so that the adjacency relationships only involve the retained boroughs.  \n3. From the cleaned neighbor list, build a square weight matrix W of size n\u00d7n (n = number of boroughs after deletion), where W[i,j] = 1 if borough i and j are neighbors, else 0. Then row\u2010standardize W so each row sums to 1 (divide each nonzero row entry by its row sum).  \n4. Extract two length\u2010n vectors x and y of Crime_value and Waste_value, and compute their means x\u0304 and \u0233. Form the deviation vectors X = x \u2013 x\u0304 and Y = y \u2013 \u0233.  \n5. Compute the observed bivariate spatial association statistic L_obs (Lee\u2019s L) as:  \n   numerator = \u2211\u208di\u208e \u2211\u208dj\u208e W[i,j] * X[i] * Y[j]  \n   denom = sqrt( \u2211\u208di\u208e X[i]\u00b2  *  \u2211\u208dj\u208e Y[j]\u00b2 )  \n   L_obs = (n / S0) * (numerator / denom), where S0 = sum of all W[i,j] before row\u2010standardization (i.e. total adjacency count).  \n6. Perform a permutation test with at least 500 randomizations:  \n   a. For each permutation k = 1\u2026500, randomly shuffle the entries of Y among boroughs (keeping X fixed).  \n   b. Compute L_k for each shuffled Y using the same formula.  \n   c. Compute a two\u2010sided p\u2010value as (number of |L_k| \u2265 |L_obs| + 1) / (500 + 1).  \n7. Compare p to 0.05:  \n   \u2013 If p < 0.05 and L_obs > 0 \u21d2 conclude \u201cPOSITIVE.\u201d  \n   \u2013 If p < 0.05 and L_obs < 0 \u21d2 conclude \u201cNEGATIVE.\u201d  \n   \u2013 Otherwise \u21d2 conclude \u201cNOT SIGNIFICANT.\u201d",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_crime_waste.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 1. Merge and clean missing values\ndf_clean = df.dropna(subset=['Crime_value', 'Waste_value']).reset_index(drop=True)\ndata_points_used = len(df_clean)\nboroughs = df_clean['borough'].tolist()\n\n# 2. Filter adjacency to retained boroughs\nadj_clean = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)].copy()\n\n# 3. Build weight matrix W_raw (symmetric) and compute S0\nn = data_points_used\nidx = {b: i for i, b in enumerate(boroughs)}\nW_raw = np.zeros((n, n), dtype=float)\nfor _, row in adj_clean.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W_raw[i, j] = 1\n    W_raw[j, i] = 1  # ensure symmetry\n\nS0 = W_raw.sum()\n\n# Row-standardize W_raw to get W\nrow_sums = W_raw.sum(axis=1, keepdims=True)\nW = np.divide(W_raw, row_sums, where=row_sums != 0)\n\n# 4. Extract x, y and compute deviations\nx = df_clean['Crime_value'].values\ny = df_clean['Waste_value'].values\nX = x - x.mean()\nY = y - y.mean()\n\n# 5. Compute observed Lee's L\nnumerator = X @ W @ Y\ndenom = np.sqrt((X**2).sum() * (Y**2).sum())\nL_obs = (n / S0) * (numerator / denom)\n\n# 6. Permutation test\nn_perms = 500\nL_perms = np.zeros(n_perms)\nrng = np.random.default_rng()\nfor k in range(n_perms):\n    Y_perm = rng.permutation(Y)\n    num_k = X @ W @ Y_perm\n    L_perms[k] = (n / S0) * (num_k / denom)\n\np_value = (np.sum(np.abs(L_perms) >= abs(L_obs)) + 1) / (n_perms + 1)\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_value:.6f})\")\n",
+        "output": "data_points_used = 31\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.031302, p = 0.079840)",
+        "data_points_used": 31,
+        "statistic": "-0.031302",
+        "secondary_measures": [
+          "0.079840"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.031302, p = 0.079840)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

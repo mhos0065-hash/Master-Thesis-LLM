@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.09782721880949366, p = 0.05389221556886228)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Transport and Waste data into a pandas DataFrame (33 rows) and the borough\u2010neighbors list into a separate structure.  \n2. Identify and handle missing values: since there is exactly one missing `Waste_value`, drop the corresponding borough from both the data and the neighbor list (so that all remaining rows have both Transport and Waste).  \n3. Construct an N\u00d7N spatial weights matrix W (where N=32 after dropping): set W[i,j]=1 if borough j is listed as a neighbor of i, else 0; then row\u2010standardize each row so that each row sums to 1.  \n4. Mean\u2010center the Transport values x_i and the Waste values y_i over the N boroughs (i.e. subtract each variable\u2019s sample mean).  \n5. Compute the observed bivariate spatial association statistic L_obs (Lee\u2019s L):  \n   a. Numerator = \u03a3_i \u03a3_j W[i,j] \u00b7 (x_i) \u00b7 (y_j)  \n   b. Denominator = sqrt[ (\u03a3_i x_i^2) \u00b7 (\u03a3_j y_j^2) ]  \n   c. L_obs = Numerator / Denominator  \n6. Perform a permutation test with at least 500 random shuffles:  \n   a. For each permutation k, randomly permute the y\u2010vector among boroughs;  \n   b. Recompute L_perm[k] by repeating step 5 with x fixed and y permuted;  \n   c. Collect the {L_perm} distribution.  \n7. Compute a one\u2010tailed p-value according to the sign of L_obs:  \n   \u2013 If L_obs>0, p = (number of L_perm \u2265 L_obs + 1) / (n_permutations + 1).  \n   \u2013 If L_obs<0, p = (number of L_perm \u2264 L_obs + 1) / (n_permutations + 1).  \n8. Compare p to \u03b1=0.05:  \n   \u2013 If p<0.05 and L_obs>0, conclude \u201cPOSITIVE.\u201d  \n   \u2013 If p<0.05 and L_obs<0, conclude \u201cNEGATIVE.\u201d  \n   \u2013 Otherwise conclude \u201cNOT SIGNIFICANT.\u201d",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ntransport_waste_df = pd.read_csv('chunks_csv/bivariate/bivariate_2021_transport_waste.csv')\nadj_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Handle missing values\ntransport_waste_df = transport_waste_df.dropna(subset=['Waste_value'])\ntransport_waste_df = transport_waste_df.set_index('borough')\nboroughs = transport_waste_df.index.tolist()\nN = len(boroughs)\n\n# 3. Build spatial weights matrix W\n#    Filter adjacency to remaining boroughs\nadj_df = adj_df[adj_df['borough'].isin(boroughs) & adj_df['neighbor'].isin(boroughs)]\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj_df.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1.0\n# Row-standardize\nrow_sums = W.sum(axis=1)\nnonzero = row_sums > 0\nW[nonzero, :] = W[nonzero, :] / row_sums[nonzero][:, None]\n\n# 4. Mean-center the variables\nx = transport_waste_df['Transport_value'].values\ny = transport_waste_df['Waste_value'].values\nx = x - x.mean()\ny = y - y.mean()\n\n# 5. Compute Lee's L statistic\nnumerator_obs = x @ (W @ y)\ndenominator = np.sqrt((x**2).sum() * (y**2).sum())\nL_obs = numerator_obs / denominator\n\n# 6. Permutation test\nn_permutations = 500\nL_perms = np.empty(n_permutations)\nrng = np.random.default_rng()\nfor k in range(n_permutations):\n    y_perm = rng.permutation(y)\n    num_perm = x @ (W @ y_perm)\n    L_perms[k] = num_perm / denominator\n\n# 7. One-tailed p-value\nif L_obs > 0:\n    count = np.sum(L_perms >= L_obs)\nelif L_obs < 0:\n    count = np.sum(L_perms <= L_obs)\nelse:\n    count = n_permutations  # worst case\np_value = (count + 1) / (n_permutations + 1)\n\n# 8. Determine verdict\nif p_value < 0.05 and L_obs > 0:\n    verdict = 'POSITIVE'\nelif p_value < 0.05 and L_obs < 0:\n    verdict = 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.09782721880949366, p = 0.05389221556886228)",
+        "data_points_used": 32,
+        "statistic": "-0.09782721880949366",
+        "secondary_measures": [
+          "0.05389221556886228"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.09782721880949366, p = 0.05389221556886228)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

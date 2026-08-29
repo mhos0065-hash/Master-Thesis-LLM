@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.0451, p = 0.5110)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level table (33 rows) that contains Energy_value and Transport_value; verify there are 0 missing values in both columns, so no imputation or row removal is required.  \n2. Load the neighbor list and build a binary spatial-weights matrix W where wij = 1 if borough i lists j as a neighbour (0 otherwise); set diagonal to 0 and row-standardise W so each row sums to 1.  \n3. Centre each variable: E\u2032 = Energy_value \u2013 mean(Energy_value); T\u2032 = Transport_value \u2013 mean(Transport_value).  \n4. Compute Lee\u2019s L statistic for bivariate spatial association:  \n   L = [ \u03a3i \u03a3j wij E\u2032i T\u2032j ] / sqrt[ (\u03a3i E\u2032i\u00b2 / n) * (\u03a3j \u03a3k wjk T\u2032k\u00b2 / n) ], where n = 33.  \n   (This formulation standardises by the sample variances of E\u2032 and the spatially lagged T\u2032.)  \n5. Determine the observed sign: positive L indicates spatial clustering of high-Energy boroughs next to high-Transport boroughs; negative L indicates high next to low clusters.  \n6. Assess significance with a Monte-Carlo permutation test (at least 999 random shuffles of Transport_value across boroughs to ensure stability):  \n   a. For each permutation, randomly permute T\u2032, recompute Lperm.  \n   b. Form the two-sided p-value = proportion of |Lperm| \u2265 |Lobs| (include Lobs in the count).  \n7. Conclude:  \n   \u2022 If p < 0.05 and L > 0 \u2192 report POSITIVE.  \n   \u2022 If p < 0.05 and L < 0 \u2192 report NEGATIVE.  \n   \u2022 Otherwise \u2192 report NOT SIGNIFICANT.  \n8. Return the result in the required single-line format, inserting the observed L (rounded to 3-4 decimals) and p-value (rounded to 3 decimals).",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ------------------------------------------------------------------\n# 1. Load the data\nenergy_transport_path = \"chunks_csv/bivariate/bivariate_2023_energy_transport.csv\"\nadjacency_path        = \"chunks_csv/borough_adjacency.csv\"\n\ndf = pd.read_csv(energy_transport_path)\nadj = pd.read_csv(adjacency_path)\n\n# ------------------------------------------------------------------\n# 2. Remove any rows with missing Energy/Transport\ndf_clean = df.dropna(subset=[\"Energy_value\", \"Transport_value\"]).copy()\nn = len(df_clean)        # data points actually used\nboroughs = df_clean[\"borough\"].tolist()\nindexer  = {b:i for i, b in enumerate(boroughs)}\n\n# ------------------------------------------------------------------\n# 3. Build symmetric binary weight matrix W (row-standardised)\nW = np.zeros((n, n), dtype=float)\n\nfor _, row in adj.iterrows():\n    b1, b2 = row[\"borough\"], row[\"neighbor\"]\n    # Skip any neighbour not present in the main table\n    if b1 in indexer and b2 in indexer:\n        i, j = indexer[b1], indexer[b2]\n        W[i, j] = 1.0\n        W[j, i] = 1.0   # ensure symmetry\n\n# Row-standardise\nrow_sums = W.sum(axis=1, keepdims=True)\nrow_sums[row_sums == 0] = 1    # avoid division by zero for isolates\nW = W / row_sums\n\n# ------------------------------------------------------------------\n# 4. Prepare variables and compute observed Lee\u2019s L\nx = df_clean[\"Energy_value\"].to_numpy(dtype=float)\ny = df_clean[\"Transport_value\"].to_numpy(dtype=float)\n\nx_z = (x - x.mean()) / x.std(ddof=0)\ny_z = (y - y.mean()) / y.std(ddof=0)\n\nspatial_lag_yz = W @ y_z\nL_obs = np.mean(x_z * spatial_lag_yz)      # Lee's L\n\n# ------------------------------------------------------------------\n# 5. Monte-Carlo permutation test (999 permutations)\nrng = np.random.default_rng(seed=42)\nn_perms = 999\nL_perms = np.empty(n_perms)\n\nfor k in range(n_perms):\n    y_perm = rng.permutation(y)\n    y_perm_z = (y_perm - y_perm.mean()) / y_perm.std(ddof=0)\n    spatial_lag_perm = W @ y_perm_z\n    L_perms[k] = np.mean(x_z * spatial_lag_perm)\n\n# two-sided p-value, include observed in the count\np_value = (np.sum(np.abs(L_perms) >= abs(L_obs)) + 1) / (n_perms + 1)\n\n# ------------------------------------------------------------------\n# 6. Verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ------------------------------------------------------------------\n# 7. Output\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.4f}, p = {p_value:.4f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.0451, p = 0.5110)",
+        "data_points_used": 33,
+        "statistic": "-0.0451",
+        "secondary_measures": [
+          "0.5110"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.0451, p = 0.5110)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

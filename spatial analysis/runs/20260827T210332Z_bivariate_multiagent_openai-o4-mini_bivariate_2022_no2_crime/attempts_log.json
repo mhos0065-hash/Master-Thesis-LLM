@@ -1,0 +1,68 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.029255152470834708, p = 0.6826347305389222)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 2,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO2 and Crime data into a pandas DataFrame (indexed by borough) and read the borough\u2010neighbor list into a edges DataFrame or adjacency list.  \n2. Identify missing values in NO2 or Crime: if any borough has a missing value in either variable, drop that borough from both the DataFrame and the adjacency structure (and renormalize the neighbor lists accordingly).  \n3. Construct a spatial weights matrix W (size n\u00d7n) where wij = 1 if borough i and j are neighbors, else 0; optionally row\u2010standardize W so each row sums to 1.  \n4. Compute the means x\u0304 (NO2) and y\u0304 (Crime) and the deviations xi\u2013x\u0304 and yj\u2013y\u0304 for each borough.  \n5. Calculate the observed Lee\u2019s L statistic:  \n   Lobs = [\u03a3i\u03a3j wij\u00b7(xi\u2013x\u0304)\u00b7(yj\u2013y\u0304)] / sqrt([\u03a3i\u03a3j wij\u00b7(xi\u2013x\u0304)\u00b2]\u00b7[\u03a3i\u03a3j wij\u00b7(yj\u2013y\u0304)\u00b2]).  \n6. Perform a permutation test with at least 500 random shuffles of the Crime values across boroughs: for each shuffle k, compute Lk using the same W and NO2 deviations, building a null distribution of L.  \n7. Calculate the p-value as the proportion of |Lk| \u2265 |Lobs| (two\u2010tailed) or as appropriate for a one\u2010sided test if testing directional association.  \n8. Compare p to \u03b1=0.05: if p<0.05 and Lobs>0 then POSITIVE, if p<0.05 and Lobs<0 then NEGATIVE, otherwise NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_no2_crime.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop boroughs with missing NO2 or Crime\ndf_clean = df.dropna(subset=['NO2_value', 'Crime_value'])\nboroughs = df_clean.index.tolist()\n\n# Filter adjacency to remaining boroughs\nadj_clean = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)].copy()\n\n# Create index mapping\nidx = {b: i for i, b in enumerate(boroughs)}\nn = len(boroughs)\n\n# Build weights matrix W\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj_clean.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    if i != j:\n        W[i, j] = 1\n        W[j, i] = 1  # ensure symmetry\n\n# Extract data arrays\nx = df_clean['NO2_value'].values\ny = df_clean['Crime_value'].values\n\n# Deviations from mean\nx_dev = x - x.mean()\ny_dev = y - y.mean()\n\n# Compute observed Lee's L\nnum = x_dev @ (W @ y_dev)\nden_x = x_dev @ (W @ x_dev)\n# denom_y must be computed for original y\nden_y = y_dev @ (W @ y_dev)\nL_obs = num / np.sqrt(den_x * den_y)\n\n# Permutation test\nnp.random.seed(42)\nn_perm = 1000\nL_perms = np.zeros(n_perm)\nfor k in range(n_perm):\n    y_perm = np.random.permutation(y_dev)\n    num_p = x_dev @ (W @ y_perm)\n    den_y_p = y_perm @ (W @ y_perm)\n    L_perms[k] = num_p / np.sqrt(den_x * den_y_p)\n\n# Two\u2010tailed p\u2010value\np_value = (np.sum(np.abs(L_perms) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# Determine verdict\nalpha = 0.05\nif p_value < alpha:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Output results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NEGATIVE (test statistic = nan, p = 0.000999000999000999)",
+        "data_points_used": 30,
+        "statistic": "nan",
+        "secondary_measures": [
+          "0.000999000999000999"
+        ],
+        "final_answer": "NEGATIVE (test statistic = nan, p = 0.000999000999000999)"
+      },
+      "validation_score": 4,
+      "validation_total": 5,
+      "failed_checks": [
+        "Your printed test statistic is not a finite number."
+      ]
+    },
+    {
+      "plan_number": 1,
+      "coder_try": 2,
+      "plan": "1. Load the NO2 and Crime data into a pandas DataFrame (indexed by borough) and read the borough\u2010neighbor list into a edges DataFrame or adjacency list.  \n2. Identify missing values in NO2 or Crime: if any borough has a missing value in either variable, drop that borough from both the DataFrame and the adjacency structure (and renormalize the neighbor lists accordingly).  \n3. Construct a spatial weights matrix W (size n\u00d7n) where wij = 1 if borough i and j are neighbors, else 0; optionally row\u2010standardize W so each row sums to 1.  \n4. Compute the means x\u0304 (NO2) and y\u0304 (Crime) and the deviations xi\u2013x\u0304 and yj\u2013y\u0304 for each borough.  \n5. Calculate the observed Lee\u2019s L statistic:  \n   Lobs = [\u03a3i\u03a3j wij\u00b7(xi\u2013x\u0304)\u00b7(yj\u2013y\u0304)] / sqrt([\u03a3i\u03a3j wij\u00b7(xi\u2013x\u0304)\u00b2]\u00b7[\u03a3i\u03a3j wij\u00b7(yj\u2013y\u0304)\u00b2]).  \n6. Perform a permutation test with at least 500 random shuffles of the Crime values across boroughs: for each shuffle k, compute Lk using the same W and NO2 deviations, building a null distribution of L.  \n7. Calculate the p-value as the proportion of |Lk| \u2265 |Lobs| (two\u2010tailed) or as appropriate for a one\u2010sided test if testing directional association.  \n8. Compare p to \u03b1=0.05: if p<0.05 and Lobs>0 then POSITIVE, if p<0.05 and Lobs<0 then NEGATIVE, otherwise NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_no2_crime.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop boroughs with missing NO2 or Crime\ndf = df.dropna(subset=['NO2_value', 'Crime_value']).set_index('borough')\nboroughs = set(df.index)\n\n# Filter adjacency to only include present boroughs\nadj = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n\n# Build undirected edge set, then directed adjacency pairs\nedges = set(frozenset([row.borough, row.neighbor]) for row in adj.itertuples())\ndirected = [(i, j) for edge in edges for i, j in [(tuple(edge)[0], tuple(edge)[1]), (tuple(edge)[1], tuple(edge)[0])]]\n\n# Map borough to index\nborough_list = sorted(df.index)\nidx = {b: k for k, b in enumerate(borough_list)}\nn = len(borough_list)\n\n# Build weight matrix W\nW = np.zeros((n, n))\nfor i_b, j_b in directed:\n    i, j = idx[i_b], idx[j_b]\n    W[i, j] = 1\n\n# Extract data arrays\nx = df.loc[borough_list, 'NO2_value'].values\ny = df.loc[borough_list, 'Crime_value'].values\n\n# Compute deviations\nx_bar = x.mean()\ny_bar = y.mean()\ndx = x - x_bar\ndy = y - y_bar\n\n# Numerator and denominators for observed Lee's L\nnum_obs = np.sum(W * np.outer(dx, dy))\nden_x = np.sum(W * np.outer(dx, dx))\nden_y = np.sum(W * np.outer(dy, dy))\nL_obs = num_obs / np.sqrt(den_x * den_y)\n\n# Permutation test\nrng = np.random.default_rng(42)\nn_perm = 1000\nL_perm = np.empty(n_perm)\nfor k in range(n_perm):\n    y_perm = rng.permutation(y)\n    dy_perm = y_perm - y_perm.mean()\n    num_k = np.sum(W * np.outer(dx, dy_perm))\n    den_y_k = np.sum(W * np.outer(dy_perm, dy_perm))\n    L_perm[k] = num_k / np.sqrt(den_x * den_y_k)\n\n# Two-tailed p-value\np_value = np.mean(np.abs(L_perm) >= np.abs(L_obs))\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NEGATIVE (test statistic = nan, p = 0.0)",
+        "data_points_used": 30,
+        "statistic": "nan",
+        "secondary_measures": [
+          "0.0"
+        ],
+        "final_answer": "NEGATIVE (test statistic = nan, p = 0.0)"
+      },
+      "validation_score": 4,
+      "validation_total": 5,
+      "failed_checks": [
+        "Your printed test statistic is not a finite number."
+      ]
+    },
+    {
+      "plan_number": 2,
+      "coder_try": 1,
+      "plan": "1. Load the NO2 and Crime data (33 boroughs, with 2 missing values in one variable and 1 in the other) and the borough\u2010neighborhood adjacency list into pandas DataFrames.  \n2. Identify any boroughs with missing NO2 or missing Crime values; perform listwise deletion by dropping those boroughs from both the data and adjacency DataFrames (and thereby from the spatial weights matrix).  \n3. From the cleaned adjacency list, build a square spatial weights matrix W (size n\u00d7n, n \u2264 33), where W_ij = 1 if borough j is a neighbor of borough i, else 0, and then row\u2010standardize each row so that its entries sum to 1.  \n4. Extract aligned numpy arrays x (NO2) and y (Crime) of length n. Compute mean(x), mean(y), std(x), std(y).  \n   \u2022 If std(x)=0 or std(y)=0 (no variance), set L_obs=0, p=1, skip to step 10.  \n5. Center x and y by subtracting their means: x\u2032 = x \u2013 mean(x), y\u2032 = y \u2013 mean(y).  \n6. Compute the observed bivariate Lee\u2019s L:  \n   numerator S = x\u2032\u1d40 W y\u2032  \n   denominator D = sqrt(x\u2032\u1d40 x\u2032) * sqrt(y\u2032\u1d40 y\u2032)  \n   L_obs = S / D  \n7. Conduct a permutation test with at least 500 random shuffles:  \n   for k = 1 \u2026 500:  \n     \u2022 Permute the entries of y\u2032 to get y\u2032_perm  \n     \u2022 Compute L_k = (x\u2032\u1d40 W y\u2032_perm) / D  \n   Collect the 500 permuted L_k values.  \n8. Compute the two\u2010sided p\u2010value as (number of |L_k| \u2265 |L_obs| + 1) / (500 + 1).  \n9. Determine the direction/significance:  \n   \u2022 If p < 0.05 and L_obs > 0 \u2192 POSITIVE  \n   \u2022 If p < 0.05 and L_obs < 0 \u2192 NEGATIVE  \n   \u2022 Otherwise \u2192 NOT SIGNIFICANT  \n10. Report the result with the computed L_obs and p-value.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load the data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_no2_crime.csv')\ndf_adj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop boroughs with missing NO2 or Crime values\ndf_clean = df.dropna(subset=['NO2_value', 'Crime_value']).copy()\nboroughs = df_clean['borough'].tolist()\n\n# Filter adjacency to keep only pairs where both borough and neighbor remain\ndf_adj_clean = df_adj[df_adj['borough'].isin(boroughs) & df_adj['neighbor'].isin(boroughs)].copy()\n\n# 3. Build the spatial weights matrix W (row\u2010standardized)\nn = len(boroughs)\nindex_map = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n))\nfor _, row in df_adj_clean.iterrows():\n    i = index_map[row['borough']]\n    j = index_map[row['neighbor']]\n    W[i, j] = 1\nrow_sums = W.sum(axis=1)\n# Avoid division by zero: only standardize rows with at least one neighbor\nW = np.where(row_sums[:, None] > 0, W / row_sums[:, None], 0)\n\n# 4. Extract and center the data vectors\nx = df_clean['NO2_value'].values\ny = df_clean['Crime_value'].values\nx_mean, y_mean = x.mean(), y.mean()\nx_prime = x - x_mean\ny_prime = y - y_mean\n\n# 5. Compute denominator D and check for zero variance\nD = np.linalg.norm(x_prime) * np.linalg.norm(y_prime)\nif D == 0:\n    L_obs = 0.0\n    p_value = 1.0\nelse:\n    # 6. Observed Lee's L\n    S = x_prime.dot(W.dot(y_prime))\n    L_obs = S / D\n\n    # 7. Permutation test\n    np.random.seed(0)\n    n_perms = 500\n    L_perms = np.empty(n_perms)\n    for k in range(n_perms):\n        y_perm = np.random.permutation(y_prime)\n        L_perms[k] = x_prime.dot(W.dot(y_perm)) / D\n\n    # 8. Two\u2010sided p\u2010value\n    p_value = (np.sum(np.abs(L_perms) >= abs(L_obs)) + 1) / (n_perms + 1)\n\n# 9. Determine significance and direction\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# 10. Print results\ndata_points_used = len(x)\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.029255152470834708, p = 0.6826347305389222)",
+        "data_points_used": 30,
+        "statistic": "-0.029255152470834708",
+        "secondary_measures": [
+          "0.6826347305389222"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.029255152470834708, p = 0.6826347305389222)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.11785046383197484, p = 0.14185814185814186)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the three CSV files (Energy, Crime, Neighbour\u2010list) into separate pandas DataFrames.  \n2. Merge the Energy and Crime tables on the borough name to obtain a single table with both numeric columns.  \n3. Handle missing data: the one borough with a missing Crime_value will be removed from the merged table; drop the same borough\u2019s row and column from the neighbour list before building the weight matrix so matrix dimensions stay consistent. (No other columns have missing values.)  \n4. From the cleaned neighbour list, build an n \u00d7 n binary spatial weight matrix W where w\u1d62\u2c7c = 1 if borough j is listed as a neighbour of borough i, otherwise 0; set the diagonal to 0.  \n5. Row-standardise W (divide each row by its row sum) so every borough\u2019s weights sum to 1; keep rows with no neighbours as all zeros (they will contribute nothing to the statistic).  \n6. Compute variable means \u03bc_E and \u03bc_C and standard deviations \u03c3_E and \u03c3_C across the remaining boroughs.  \n7. Calculate the observed Lee\u2019s L statistic:  \n   L_obs = (1/S\u2080) \u00b7 \u03a3\u1d62 \u03a3\u2c7c w\u1d62\u2c7c (E\u1d62 \u2212 \u03bc_E)(C\u2c7c \u2212 \u03bc_C) / (\u03c3_E \u00b7 \u03c3_C), with S\u2080 = \u03a3\u1d62 \u03a3\u2c7c w\u1d62\u2c7c.  \n8. Perform a permutation test for significance:  \n   a. Fix the Energy vector.  \n   b. Shuffle the Crime values randomly across boroughs 1,000 times (\u2265 500 permutations).  \n   c. For each shuffle k, recompute Lee\u2019s L (L_k) to build the null distribution.  \n9. Compute a two-sided p-value as the proportion of shuffled |L_k| that are \u2265 |L_obs| (add 1 to numerator and denominator for an unbiased estimate).  \n10. Decision rule:  \n    \u2022 If p < 0.05 and L_obs > 0 \u2192 report POSITIVE.  \n    \u2022 If p < 0.05 and L_obs < 0 \u2192 report NEGATIVE.  \n    \u2022 Otherwise \u2192 report NOT SIGNIFICANT.  \n11. Report the result on one line exactly as requested, including the numerical L_obs and p-value.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ------------------------------------------------------------------\n# 1. Load data\nenergy_crime_path = \"chunks_csv/bivariate/bivariate_2022_energy_crime.csv\"\nadjacency_path    = \"chunks_csv/borough_adjacency.csv\"\n\ndf = pd.read_csv(energy_crime_path)\nadj = pd.read_csv(adjacency_path)\n\n# ------------------------------------------------------------------\n# 2. Drop rows with missing Crime_value (there is exactly one)\ndf_clean = df.dropna(subset=[\"Crime_value\"]).reset_index(drop=True)\nn = len(df_clean)\ndata_points_used = n\n\n# ------------------------------------------------------------------\n# 3. Build a lookup of borough -> positional index\nindex_lookup = {bor: i for i, bor in enumerate(df_clean[\"borough\"])}\n\n# ------------------------------------------------------------------\n# 4. Build symmetric binary spatial weight matrix W (n x n)\nW = np.zeros((n, n), dtype=float)\n\nfor _, row in adj.iterrows():\n    b1, b2 = row[\"borough\"], row[\"neighbor\"]\n    if b1 in index_lookup and b2 in index_lookup:\n        i, j = index_lookup[b1], index_lookup[b2]\n        W[i, j] = 1\n        W[j, i] = 1         # ensure symmetry\n\n# Ensure no self-weights\nnp.fill_diagonal(W, 0)\n\n# ------------------------------------------------------------------\n# 5. Pre-compute constants for Lee\u2019s L\nS0 = W.sum()           # total weight (directed; each neighbour pair counted twice)\n\nE = df_clean[\"Energy_value\"].to_numpy(dtype=float)\nC = df_clean[\"Crime_value\"].to_numpy(dtype=float)\n\nmu_E, mu_C = E.mean(), C.mean()\nstd_E, std_C = E.std(ddof=0), C.std(ddof=0)\n\nz_E = (E - mu_E) / std_E          # standardised variables\nz_C = (C - mu_C) / std_C\n\n# ------------------------------------------------------------------\n# 6. Observed Lee\u2019s L statistic\nL_obs = (W * z_E[:, None] * z_C[None, :]).sum() / S0\n\n# ------------------------------------------------------------------\n# 7. Permutation test (shuffle Crime 1000 times)\nrng = np.random.default_rng(seed=0)\nn_perm = 1000\nL_perm = np.empty(n_perm)\n\nfor k in range(n_perm):\n    shuffled = rng.permutation(z_C)\n    L_perm[k] = (W * z_E[:, None] * shuffled[None, :]).sum() / S0\n\n# ------------------------------------------------------------------\n# 8. Two-sided p-value\np_val = (np.sum(np.abs(L_perm) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# ------------------------------------------------------------------\n# 9. Determine direction / significance\nif p_val < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ------------------------------------------------------------------\n# 10. Output\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.11785046383197484, p = 0.14185814185814186)",
+        "data_points_used": 32,
+        "statistic": "0.11785046383197484",
+        "secondary_measures": [
+          "0.14185814185814186"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.11785046383197484, p = 0.14185814185814186)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.063254, p = 0.376000)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO\u2082 and GHG datasets for the 33 London boroughs and the borough\u2010neighbor adjacency list into pandas DataFrames.  \n2. Identify any missing values in the NO\u2082 or GHG columns (there are 2 missing entries in total) and drop any boroughs with missing NO\u2082 or GHG measurements so that all analyses use complete cases.  \n3. From the adjacency list, build a 33\u00d733 binary spatial weights matrix W where W\u1d62\u2c7c = 1 if borough i and borough j are geographic neighbors, 0 otherwise; then row\u2010standardize W so each row sums to 1.  \n4. Extract the complete\u2010case NO\u2082 vector x and GHG vector y, and compute their means x\u0304 and \u0233.  \n5. Compute the numerator of Lee\u2019s L: \u2211\u1d62\u2211\u2c7c (x\u1d62 \u2013 x\u0304)\u00b7W\u1d62\u2c7c\u00b7(y\u2c7c \u2013 \u0233).  \n6. Compute the denominator of Lee\u2019s L: sqrt[ (\u2211\u1d62 (x\u1d62 \u2013 x\u0304)\u00b2) \u00b7 (\u2211\u1d62 (y\u1d62 \u2013 \u0233)\u00b2 ) ].  \n7. Calculate the observed Lee\u2019s L statistic as numerator divided by denominator.  \n8. Conduct a permutation test with at least 500 random shuffles of the GHG vector y (keeping x and W fixed). For each shuffle, recompute Lee\u2019s L to build its null distribution.  \n9. Calculate the p-value as the proportion of permuted Lee\u2019s L values whose magnitude is at least as extreme as the observed Lee\u2019s L.  \n10. Compare the observed Lee\u2019s L and its p-value to \u03b1 = 0.05: if L > 0 and p < 0.05, conclude POSITIVE; if L < 0 and p < 0.05, conclude NEGATIVE; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# reproducibility\nnp.random.seed(42)\n\n# 1. Load datasets\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_no2_ghg.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop missing NO2 or GHG\ndf_clean = df.dropna(subset=['NO2_value', 'GHG_value']).reset_index(drop=True)\nn = df_clean.shape[0]\n\n# 3. Build row-standardized spatial weights matrix W\nboroughs = df_clean['borough'].tolist()\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    b, nb = row['borough'], row['neighbor']\n    if b in idx and nb in idx:\n        i, j = idx[b], idx[nb]\n        W[i, j] = 1\n        W[j, i] = 1  # ensure symmetry\nrow_sums = W.sum(axis=1)\n# avoid division by zero\nfor i, s in enumerate(row_sums):\n    if s > 0:\n        W[i, :] /= s\n\n# 4. Extract vectors and compute means\nx = df_clean['NO2_value'].values\ny = df_clean['GHG_value'].values\nx_bar = x.mean()\ny_bar = y.mean()\nx_c = x - x_bar\ny_c = y - y_bar\n\n# 5\u20137. Compute Lee's L\nnumerator = x_c @ W @ y_c\ndenominator = np.sqrt((x_c**2).sum() * (y_c**2).sum())\nL_obs = numerator / denominator\n\n# 8. Permutation test (500 shuffles)\nperm_count = 500\nperm_L = np.zeros(perm_count)\nfor k in range(perm_count):\n    y_perm = np.random.permutation(y)\n    y_c_perm = y_perm - y_bar  # mean unchanged by permutation\n    num_p = x_c @ W @ y_c_perm\n    perm_L[k] = num_p / denominator\n\n# 9. p-value (two-sided)\np = np.mean(np.abs(perm_L) >= abs(L_obs))\n\n# 10. Conclusion\nif L_obs > 0 and p < 0.05:\n    label = 'POSITIVE'\nelif L_obs < 0 and p < 0.05:\n    label = 'NEGATIVE'\nelse:\n    label = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {label} (test statistic = {L_obs:.6f}, p = {p:.6f})\")\n",
+        "output": "data_points_used = 31\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.063254, p = 0.376000)",
+        "data_points_used": 31,
+        "statistic": "-0.063254",
+        "secondary_measures": [
+          "0.376000"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.063254, p = 0.376000)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

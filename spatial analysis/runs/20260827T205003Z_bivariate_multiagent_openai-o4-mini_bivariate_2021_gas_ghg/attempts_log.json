@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.009413, p = 0.9620)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the two data tables into pandas DataFrames: one with borough Gas and GHG values (33 rows, 0 missing), and one with borough\u2010to\u2010borough adjacency lists.  \n2. Check for missing values in Gas or GHG. Since the profile reports 0 missing, proceed; if any were present, drop those boroughs (and their edges in the adjacency list) from both datasets.  \n3. Build an N\u00d7N adjacency matrix A (N=number of boroughs) where Aij=1 if borough i and j are neighbors, else 0; ensure symmetry and zeros on the diagonal.  \n4. Convert A to a spatial weights matrix W by row\u2010standardizing: Wij = Aij / (sum_j Aij) for each i (if a row sum is zero, leave that row as all zeros).  \n5. Standardize the Gas vector x and the GHG vector y by subtracting their means and dividing by their standard deviations (population or sample, consistently).  \n6. Compute the observed bivariate spatial correlation (Lee\u2019s L) as L_obs = (1/N) * \u03a3_i \u03a3_j Wij * x_i * y_j.  \n7. Perform a permutation test with at least 500 random shuffles:  \n   a. For each permutation k, randomly permute y across borough labels, compute L_k = (1/N) \u03a3_i \u03a3_j Wij * x_i * y_j_permuted.  \n   b. Collect the distribution of L_k over all permutations.  \n8. Compute the p-value as the fraction of |L_k| \u2265 |L_obs| (two\u2010sided test) or, if testing a directional hypothesis, as appropriate one\u2010sided fraction.  \n9. At \u03b1=0.05, conclude POSITIVE if L_obs>0 and p<0.05; NEGATIVE if L_obs<0 and p<0.05; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ngas_ghg = pd.read_csv('chunks_csv/bivariate/bivariate_2021_gas_ghg.csv')\nadjacency = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Check for missing values and drop if any\ngas_ghg = gas_ghg.dropna(subset=['Gas_value', 'GHG_value'])\nboroughs = gas_ghg['borough'].tolist()\n\n# 3. Filter adjacency to those boroughs\nadj = adjacency[\n    adjacency['borough'].isin(boroughs) &\n    adjacency['neighbor'].isin(boroughs)\n].copy()\n\n# 4. Build adjacency matrix A\nN = len(boroughs)\nname_to_idx = {name: i for i, name in enumerate(boroughs)}\nA = np.zeros((N, N), dtype=int)\nfor _, row in adj.iterrows():\n    i = name_to_idx[row['borough']]\n    j = name_to_idx[row['neighbor']]\n    A[i, j] = 1\n    A[j, i] = 1  # ensure symmetry\n\n# 5. Build row-standardized spatial weights matrix W\nrow_sums = A.sum(axis=1)\nW = np.zeros_like(A, dtype=float)\nfor i in range(N):\n    if row_sums[i] > 0:\n        W[i, :] = A[i, :] / row_sums[i]\n\n# 6. Standardize Gas and GHG\nx = gas_ghg['Gas_value'].values\ny = gas_ghg['GHG_value'].values\nx_z = (x - x.mean()) / x.std(ddof=0)\ny_z = (y - y.mean()) / y.std(ddof=0)\n\n# 7. Compute observed bivariate spatial correlation (Lee's L)\nL_obs = (x_z @ W @ y_z) / N\n\n# 8. Permutation test\nnp.random.seed(42)\nn_perms = 1000\nL_perms = np.zeros(n_perms)\nfor k in range(n_perms):\n    y_perm = np.random.permutation(y_z)\n    L_perms[k] = (x_z @ W @ y_perm) / N\n\n# 9. Compute two-sided p-value\np_value = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# 10. Determine verdict\nalpha = 0.05\nif (L_obs > 0) and (p_value < alpha):\n    verdict = 'POSITIVE'\nelif (L_obs < 0) and (p_value < alpha):\n    verdict = 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# 11. Print results\ndata_points_used = N\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_value:.4f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.009413, p = 0.9620)",
+        "data_points_used": 33,
+        "statistic": "-0.009413",
+        "secondary_measures": [
+          "0.9620"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.009413, p = 0.9620)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

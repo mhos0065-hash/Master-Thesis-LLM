@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -2.517777, p = 0.326673)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Read both datasets into pandas DataFrames:  \n   a) one table with columns [borough, Energy_value, Transport_value]  \n   b) one neighbor list with each row giving (borough_i, borough_j). Ensure borough names match exactly in both tables.\n\n2. Build an undirected, binary spatial\u2010weight matrix W (33 \u00d7 33):  \n   \u2022 For every neighbor pair set w_ij = w_ji = 1  \n   \u2022 Set diagonal elements to 0.  \n   \u2022 Do not row-standardise; Lee\u2019s L works with the raw binary weights.\n\n3. Merge Energy and Transport values into a single array X (Energy) and Y (Transport) ordered identically to the rows/columns of W.\n\n4. Handle missing values: the data profile reports none; if any NaNs are encountered unexpectedly, drop those boroughs from X, Y, and the corresponding rows/columns in W before proceeding.\n\n5. Compute Lee\u2019s bivariate spatial association statistic:  \n   \u2022 n = number of boroughs (after any dropping)  \n   \u2022 \u03bc_X = mean(X), \u03bc_Y = mean(Y)  \n   \u2022 S_X = sqrt( \u03a3 (X_i \u2013 \u03bc_X)\u00b2 / n ),   S_Y = sqrt( \u03a3 (Y_i \u2013 \u03bc_Y)\u00b2 / n )  \n   \u2022 L_obs = (n-1) * \u03a3_i \u03a3_j w_ij (X_i \u2013 \u03bc_X)(Y_j \u2013 \u03bc_Y)  / ( S_X \u00b7 S_Y \u00b7 \u03a3_i \u03a3_j w_ij )\n\n6. Assess significance with a permutation test (\u2265 500 shuffles; choose 1 000):  \n   a) Keep Energy fixed.  \n   b) For each permutation k, randomly shuffle the Transport values among boroughs to get Y^k, recompute L^k.  \n   c) Build the null distribution {L^k}.\n\n7. Two-sided p-value = proportion of permutations where |L^k| \u2265 |L_obs|.  \n   \u2022 Decide direction:  \n     \u2013 If L_obs > 0 and p < 0.05 \u21d2 POSITIVE.  \n     \u2013 If L_obs < 0 and p < 0.05 \u21d2 NEGATIVE.  \n     \u2013 Otherwise \u21d2 NOT SIGNIFICANT.\n\n8. Report the observed Lee\u2019s L value (rounded reasonably) and the permutation p-value in the required format.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ------------------------------------------------------------------\n# 1. Load the data\nenergy_transport_path = \"chunks_csv/bivariate/bivariate_2021_energy_transport.csv\"\nadjacency_path        = \"chunks_csv/borough_adjacency.csv\"\n\ndf   = pd.read_csv(energy_transport_path)               # borough, Energy_value, Transport_value\nedges = pd.read_csv(adjacency_path)                     # borough, neighbor\n\n# ------------------------------------------------------------------\n# 2. Re-index boroughs 0 \u2026 n-1  (keeps a tidy mapping everywhere)\nboroughs     = df['borough'].tolist()\nindex_of     = {b:i for i, b in enumerate(boroughs)}\nn            = len(boroughs)\n\n# ------------------------------------------------------------------\n# 3. Build a symmetric binary (0/1) weight matrix W\nW = np.zeros((n, n), dtype=int)\nfor _, row in edges.iterrows():\n    b1, b2 = row['borough'], row['neighbor']\n    if b1 in index_of and b2 in index_of:\n        i, j   = index_of[b1], index_of[b2]\n        W[i, j] = 1\n        W[j, i] = 1             # undirected / symmetric\n\n# ------------------------------------------------------------------\n# 4. Gather X (=Energy) and Y (=Transport)\nX = df['Energy_value'   ].to_numpy()\nY = df['Transport_value'].to_numpy()\n\n# 5. Compute Lee\u2019s L ------------------------------------------------\nmu_X, mu_Y = X.mean(), Y.mean()\nSX         = np.sqrt( ((X - mu_X) ** 2).sum() / n )\nSY         = np.sqrt( ((Y - mu_Y) ** 2).sum() / n )\n\nnumerator  = ((X - mu_X).reshape(-1,1) * W * (Y - mu_Y).reshape(1,-1)).sum()\nL_obs      = (n - 1) * numerator / (SX * SY * W.sum())\n\n# ------------------------------------------------------------------\n# 6. Permutation test (bivariate, keep Energy fixed)  1 000 shuffles\nrng   = np.random.default_rng(seed=0)\nB     = 1000\nL_perm = np.empty(B)\nfor k in range(B):\n    Y_perm = rng.permutation(Y)\n    num_k  = ((X - mu_X).reshape(-1,1) * W * (Y_perm - mu_Y).reshape(1,-1)).sum()\n    L_perm[k] = (n - 1) * num_k / (SX * SY * W.sum())\n\n# Two-sided p-value\np_val = ((np.abs(L_perm) >= abs(L_obs)).sum() + 1) / (B + 1)\n\n# ------------------------------------------------------------------\n# 7. Direction & verdict -------------------------------------------\nif   (L_obs >  0) and (p_val < 0.05): verdict = \"POSITIVE\"\nelif (L_obs <  0) and (p_val < 0.05): verdict = \"NEGATIVE\"\nelse:                                 verdict = \"NOT SIGNIFICANT\"\n\n# ------------------------------------------------------------------\n# 8. Print the required lines\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_val:.6f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -2.517777, p = 0.326673)",
+        "data_points_used": 33,
+        "statistic": "-2.517777",
+        "secondary_measures": [
+          "0.326673"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -2.517777, p = 0.326673)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

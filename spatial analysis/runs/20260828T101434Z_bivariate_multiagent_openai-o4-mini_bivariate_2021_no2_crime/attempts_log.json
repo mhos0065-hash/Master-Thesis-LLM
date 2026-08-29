@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.001348552273960052, p = 0.98)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO\u2082 and Crime data for the 33 boroughs and the adjacency list of geographic neighbors.  \n2. Identify and handle missing values: drop any borough with a missing NO\u2082_value or Crime_value so that both variables are available for every unit in the analysis.  \n3. Construct a binary spatial weights matrix W (size n\u00d7n, where n is the number of non\u2010missing boroughs) from the adjacency list; row\u2010standardize W so that each row sums to 1.  \n4. Standardize (z\u2010score) the NO\u2082 and Crime values across the boroughs to mean 0 and variance 1.  \n5. Compute Lee\u2019s L statistic: L = (1/n) \u00d7 (z_NO\u2082\u1d40 \u00b7 W \u00b7 z_Crime), where z_NO\u2082 and z_Crime are the standardized vectors.  \n6. Perform a permutation test with at least 500 random shuffles: for each shuffle, randomly permute the Crime vector (or NO\u2082 vector) among boroughs, recompute L, and build the null distribution of L.  \n7. Calculate the empirical p-value as the proportion of permuted L\u2019s whose absolute value is at least as large as the observed |L| (for a two\u2010sided test) or whose sign matches the observed L (for a one\u2010sided test, if appropriate).  \n8. Determine significance at \u03b1 = 0.05 and the direction of association (positive L \u21d2 high-NO\u2082 near high-Crime; negative L \u21d2 high-NO\u2082 near low-Crime).",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_no2_crime.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Handle missing values\ndf_clean = df.dropna(subset=['NO2_value', 'Crime_value']).reset_index(drop=True)\ndata_points_used = len(df_clean)\n\n# 3. Construct row\u2010standardized spatial weights matrix W\nboroughs = df_clean['borough'].tolist()\nidx = {b: i for i, b in enumerate(boroughs)}\nn = data_points_used\nW = np.zeros((n, n))\n\n# Build undirected adjacency\nedges = []\nfor _, row in adj.iterrows():\n    b, nbr = row['borough'], row['neighbor']\n    if b in idx and nbr in idx:\n        edges.append((b, nbr))\n        edges.append((nbr, b))\n# Assign weights\nfrom collections import defaultdict\nnbrs = defaultdict(set)\nfor b, nbr in edges:\n    nbrs[b].add(nbr)\nfor b, i in idx.items():\n    neighbors = list(nbrs[b])\n    k = len(neighbors)\n    if k > 0:\n        weight = 1.0 / k\n        for nbr in neighbors:\n            W[i, idx[nbr]] = weight\n\n# 4. Standardize variables\nz_NO2 = (df_clean['NO2_value'] - df_clean['NO2_value'].mean()) / df_clean['NO2_value'].std(ddof=0)\nz_Crime = (df_clean['Crime_value'] - df_clean['Crime_value'].mean()) / df_clean['Crime_value'].std(ddof=0)\nz_NO2 = z_NO2.values\nz_Crime = z_Crime.values\n\n# 5. Compute Lee's L statistic\nL_obs = (1.0 / n) * (z_NO2 @ W @ z_Crime)\n\n# 6. Permutation test\nn_perm = 500\nnp.random.seed(42)\nL_perms = np.zeros(n_perm)\nfor i in range(n_perm):\n    perm_crime = np.random.permutation(z_Crime)\n    L_perms[i] = (1.0 / n) * (z_NO2 @ W @ perm_crime)\n\n# 7. Empirical p-value (two\u2010sided)\np_value = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# 8. Determine significance and direction\nalpha = 0.05\nif p_value < alpha:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.001348552273960052, p = 0.98)",
+        "data_points_used": 30,
+        "statistic": "-0.001348552273960052",
+        "secondary_measures": [
+          "0.98"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.001348552273960052, p = 0.98)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

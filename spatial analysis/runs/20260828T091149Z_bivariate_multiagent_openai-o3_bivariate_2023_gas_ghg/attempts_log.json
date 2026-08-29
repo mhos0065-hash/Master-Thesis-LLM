@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.006855776185392744, p = 0.976)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Read the borough\u2010level file into a pandas DataFrame containing three columns:  borough, Gas_value, GHG_value.  \n2. Read the neighbour list (each borough followed by the boroughs that touch it) and build an n \u00d7 n binary adjacency matrix W where W_ij = 1 if i and j are listed as neighbours, 0 otherwise.  Set the diagonal to 0.  \n3. Row-standardise W so each row sums to 1 (keeps the Lee\u2019s L statistic bounded between \u20131 and +1).  \n4. Center and standardise each variable:  \n   g_i = (Gas_value_i \u2013 mean_G) / std_G,  \n   h_i = (GHG_value_i \u2013 mean_H) / std_H.  \n5. Compute Lee\u2019s L (bivariate spatial association of g with spatially lagged h):  \n      L_obs = (1/n) \u22c5 \u03a3_i \u03a3_j W_ij \u22c5 g_i \u22c5 h_j.  \n6. Significance test (non-parametric):  \n   a. Keep g fixed, randomly permute h 1 000 times (\u2265500 as requested).  \n   b. For each permutation k, recalculate L_k the same way.  \n   c. Two-sided p-value = ( count{|L_k| \u2265 |L_obs|} + 1 ) / ( permutations + 1 ).  \n7. Interpretation:  \n   \u2022 If p < 0.05 and L_obs > 0 \u2192 report POSITIVE.  \n   \u2022 If p < 0.05 and L_obs < 0 \u2192 report NEGATIVE.  \n   \u2022 Otherwise report NOT SIGNIFICANT.  \n8. Missing values: the profile shows none; if any are detected, drop those boroughs from both variables and delete their corresponding rows/columns from W before running steps 3-7.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ------------------------------------------------------------------\n# 1. Load data\nDATA_PATH = \"chunks_csv/bivariate/bivariate_2023_gas_ghg.csv\"\nADJ_PATH  = \"chunks_csv/borough_adjacency.csv\"\n\ndf  = pd.read_csv(DATA_PATH)\nadj = pd.read_csv(ADJ_PATH)\n\n# ------------------------------------------------------------------\n# 2. Drop any rows that have missing Gas or GHG values\ndf = df.dropna(subset=[\"Gas_value\", \"GHG_value\"]).reset_index(drop=True)\nn  = len(df)                              # number of boroughs actually analysed\n\n# ------------------------------------------------------------------\n# 3. Build a (n \u00d7 n) undirected adjacency matrix W\nindex = {b:i for i, b in enumerate(df[\"borough\"])}\nW = np.zeros((n, n), dtype=float)\n\nfor _, row in adj.iterrows():\n    b1, b2 = row[\"borough\"], row[\"neighbor\"]\n    if b1 in index and b2 in index:\n        i, j = index[b1], index[b2]\n        W[i, j] = W[j, i] = 1        # undirected (symmetrical)\n\nnp.fill_diagonal(W, 0)                # make sure diagonal is zero\n\n# Row-standardise: each row sums to 1 (leave rows with zero degree as all zeros)\nrow_sums = W.sum(axis=1, keepdims=True)\nW = np.divide(W, row_sums, out=np.zeros_like(W), where=row_sums!=0)\n\n# ------------------------------------------------------------------\n# 4. Z-score each variable\ng = ((df[\"Gas_value\"] - df[\"Gas_value\"].mean()) / df[\"Gas_value\"].std(ddof=0)).to_numpy()\nh = ((df[\"GHG_value\"] - df[\"GHG_value\"].mean()) / df[\"GHG_value\"].std(ddof=0)).to_numpy()\n\n# ------------------------------------------------------------------\n# 5. Lee\u2019s L statistic\nL_obs = (g @ W @ h) / n               # equivalent to (1/n) \u03a3_i \u03a3_j W_ij g_i h_j\n\n# ------------------------------------------------------------------\n# 6. Permutation test (keep Gas fixed, shuffle GHG)\nrng        = np.random.default_rng(42)\nn_perms    = 999\nperm_stats = np.empty(n_perms)\n\nfor k in range(n_perms):\n    h_perm         = rng.permutation(h)\n    perm_stats[k]  = (g @ W @ h_perm) / n\n\n# Two-sided p-value with +1 correction\np_val = (np.sum(np.abs(perm_stats) >= abs(L_obs)) + 1) / (n_perms + 1)\n\n# ------------------------------------------------------------------\n# 7. Verdict\nif p_val < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ------------------------------------------------------------------\n# 8. Required outputs\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.006855776185392744, p = 0.976)",
+        "data_points_used": 33,
+        "statistic": "-0.006855776185392744",
+        "secondary_measures": [
+          "0.976"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.006855776185392744, p = 0.976)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

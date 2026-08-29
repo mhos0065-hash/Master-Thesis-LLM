@@ -1,0 +1,48 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.07573084975400873, p = 0.3756243756243756)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 2,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the three tables into pandas DataFrames: (a) borough\u2010level Gas data, (b) borough\u2010level Transport data, and (c) the borough\u2010neighborhood adjacency list.  \n2. Merge Gas and Transport DataFrames on borough name to create one table of 33 rows.  \n3. Handle missing values: if any borough has a missing Gas or Transport value, drop that borough from all analyses (since there are zero missing in the real data, this will not remove any rows).  \n4. Build the spatial weights matrix W (33\u00d733) in numpy: W[i,j] = 1 if borough j is listed as a neighbor of borough i, else 0.  \n5. Standardize (z-score) the Gas vector x and Transport vector y across boroughs using numpy (subtract mean, divide by standard deviation).  \n6. Compute Lee\u2019s L statistic: L_obs = (1/\u03a3_i \u03a3_j W[i,j]) \u00b7 \u03a3_i \u03a3_j W[i,j] \u00b7 x_i \u00b7 y_j.  \n7. Conduct a permutation test (using numpy) by randomly shuffling the Transport values among boroughs at least 500 times; for each shuffle compute L_perm; record how many |L_perm| \u2265 |L_obs| to estimate p = (count+1)/(500+1).  \n8. Compare p to \u03b1=0.05: if p<0.05 and L_obs>0 conclude POSITIVE; if p<0.05 and L_obs<0 conclude NEGATIVE; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ngas_transport = pd.read_csv('chunks_csv/bivariate/bivariate_2021_gas_transport.csv')\nadjacency = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Merge Gas and Transport data\ndf = gas_transport.merge(adjacency[['borough']], on='borough', how='inner')\n\n# 3. Handle missing values\ndf = df.dropna(subset=['Gas_value', 'Transport_value'])\nn = df.shape[0]\n\n# 4. Build spatial weights matrix W\nboroughs = df['borough'].values\nindex_map = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\nfor _, row in adjacency.iterrows():\n    i = index_map.get(row['borough'])\n    j = index_map.get(row['neighbor'])\n    if i is not None and j is not None:\n        W[i, j] = 1.0\n\nw_sum = W.sum()\n\n# 5. Standardize Gas and Transport\nx = (df['Gas_value'].values - df['Gas_value'].mean()) / df['Gas_value'].std(ddof=0)\ny = (df['Transport_value'].values - df['Transport_value'].mean()) / df['Transport_value'].std(ddof=0)\n\n# 6. Compute Lee's L statistic\nL_obs = (W * np.outer(x, y)).sum() / w_sum\n\n# 7. Permutation test\nnp.random.seed(0)\nn_perm = 999\ncount = 0\nfor _ in range(n_perm):\n    y_perm = np.random.permutation(y)\n    L_perm = (W * np.outer(x, y_perm)).sum() / w_sum\n    if abs(L_perm) >= abs(L_obs):\n        count += 1\np_value = (count + 1) / (n_perm + 1)\n\n# 8. Determine result\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 164\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.05802563515191171, p = 0.369)",
+        "data_points_used": 164,
+        "statistic": "-0.05802563515191171",
+        "secondary_measures": [
+          "0.369"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.05802563515191171, p = 0.369)"
+      },
+      "validation_score": 4,
+      "validation_total": 5,
+      "failed_checks": [
+        "The number of data points you reported using (data_points_used) does not match the data's actual completeness -- check your missing-value handling."
+      ]
+    },
+    {
+      "plan_number": 1,
+      "coder_try": 2,
+      "plan": "1. Load the three tables into pandas DataFrames: (a) borough\u2010level Gas data, (b) borough\u2010level Transport data, and (c) the borough\u2010neighborhood adjacency list.  \n2. Merge Gas and Transport DataFrames on borough name to create one table of 33 rows.  \n3. Handle missing values: if any borough has a missing Gas or Transport value, drop that borough from all analyses (since there are zero missing in the real data, this will not remove any rows).  \n4. Build the spatial weights matrix W (33\u00d733) in numpy: W[i,j] = 1 if borough j is listed as a neighbor of borough i, else 0.  \n5. Standardize (z-score) the Gas vector x and Transport vector y across boroughs using numpy (subtract mean, divide by standard deviation).  \n6. Compute Lee\u2019s L statistic: L_obs = (1/\u03a3_i \u03a3_j W[i,j]) \u00b7 \u03a3_i \u03a3_j W[i,j] \u00b7 x_i \u00b7 y_j.  \n7. Conduct a permutation test (using numpy) by randomly shuffling the Transport values among boroughs at least 500 times; for each shuffle compute L_perm; record how many |L_perm| \u2265 |L_obs| to estimate p = (count+1)/(500+1).  \n8. Compare p to \u03b1=0.05: if p<0.05 and L_obs>0 conclude POSITIVE; if p<0.05 and L_obs<0 conclude NEGATIVE; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the bivariate data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_gas_transport.csv')\n# Drop any rows with missing Gas or Transport values\ndf = df.dropna(subset=['Gas_value', 'Transport_value'])\n# Count data points used\ndata_points_used = len(df)\n\n# Prepare borough list and index mapping\nboroughs = df['borough'].tolist()\nidx_map = {b: i for i, b in enumerate(boroughs)}\nn = data_points_used\n\n# Load adjacency list\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n# Keep only adjacency pairs where both borough and neighbor are in our data\nadj = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n\n# Build spatial weights matrix W\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    i = idx_map[row['borough']]\n    j = idx_map[row['neighbor']]\n    W[i, j] = 1\nW_sum = W.sum()\n\n# Extract and standardize the variables\nx = df['Gas_value'].values\ny = df['Transport_value'].values\nx = (x - x.mean()) / x.std(ddof=0)\ny = (y - y.mean()) / y.std(ddof=0)\n\n# Compute Lee's L statistic\nL_obs = (W * np.outer(x, y)).sum() / W_sum\n\n# Permutation test\nnp.random.seed(0)\nn_perms = 1000\ncount = 0\nfor _ in range(n_perms):\n    y_perm = np.random.permutation(y)\n    L_perm = (W * np.outer(x, y_perm)).sum() / W_sum\n    if abs(L_perm) >= abs(L_obs):\n        count += 1\np_value = (count + 1) / (n_perms + 1)\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.07573084975400873, p = 0.3756243756243756)",
+        "data_points_used": 33,
+        "statistic": "-0.07573084975400873",
+        "secondary_measures": [
+          "0.3756243756243756"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.07573084975400873, p = 0.3756243756243756)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

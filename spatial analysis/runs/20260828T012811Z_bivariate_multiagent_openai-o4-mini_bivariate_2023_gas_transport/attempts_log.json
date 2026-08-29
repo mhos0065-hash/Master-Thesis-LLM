@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.3348468641032767, p = 0.207)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level Gas and Transport data into pandas Series X and Y, indexed by borough name; load the neighbor list into a dictionary or DataFrame and from it build an N\u00d7N weight matrix W with wij = 1 if borough j is listed as a neighbor of i (and 0 otherwise); ensure W is symmetric (i.e. if i\u2192j then j\u2192i).  \n2. Check X and Y for missing values. If any borough has a missing value in X or Y, drop that borough from X, Y, and the corresponding row and column of W.  \n3. Identify any boroughs with zero total weight (\u2211j wij = 0); drop these \u201cisolated\u201d boroughs from X, Y, and W, since they have no neighbors and contribute nothing to the spatial numerator.  \n4. Compute the means \u03bcX and \u03bcY of the remaining X and Y; form deviation vectors x\u2032 = X \u2212 \u03bcX and y\u2032 = Y \u2212 \u03bcY.  \n5. Compute the bivariate spatial numerator: N_obs = \u2211\u208di,j\u208e wij \u00b7 x\u2032\u1d62 \u00b7 y\u2032\u2c7c.  \n6. Compute the univariate denominators Sx = \u2211\u1d62 x\u2032\u1d62\u00b2 and Sy = \u2211\u2c7c y\u2032\u2c7c\u00b2, then denom = sqrt(Sx \u00b7 Sy).  \n7. Compute the observed Lee\u2019s L statistic: L_obs = N_obs / denom.  \n8. Perform a permutation test with at least 500 randomizations: for each k, permute Y\u2019s values among boroughs to get Y^(k), compute y\u2032^(k) = Y^(k) \u2212 \u03bcY, then compute L^(k) = [\u2211\u208di,j\u208e wij \u00b7 x\u2032\u1d62 \u00b7 y\u2032\u2c7c^(k)] / denom.  \n9. Compute the p-value:  \n   \u2022 If L_obs > 0, p = (1 + number of L^(k) \u2265 L_obs) / (1 + number of permutations);  \n   \u2022 If L_obs < 0, p = (1 + number of L^(k) \u2264 L_obs) / (1 + number of permutations).  \n10. Compare p to \u03b1=0.05:  \n   \u2022 If L_obs>0 and p\u22640.05, conclude a POSITIVE spatial association.  \n   \u2022 If L_obs<0 and p\u22640.05, conclude a NEGATIVE spatial association.  \n   \u2022 Otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# For reproducibility\nnp.random.seed(0)\n\n# Load data\ngas_transport_path = 'chunks_csv/bivariate/bivariate_2023_gas_transport.csv'\nadjacency_path = 'chunks_csv/borough_adjacency.csv'\n\ndf = pd.read_csv(gas_transport_path, index_col='borough')\nadj = pd.read_csv(adjacency_path)\n\n# Build spatial weight matrix W\nboroughs = df.index.tolist()\nW = pd.DataFrame(0, index=boroughs, columns=boroughs, dtype=float)\nfor _, row in adj.iterrows():\n    i = row['borough']\n    j = row['neighbor']\n    if i in W.index and j in W.columns:\n        W.at[i, j] = 1\n# Symmetrize\nW = ((W + W.T) > 0).astype(float)\n\n# Align X and Y\nX = df['Gas_value']\nY = df['Transport_value']\n\n# Drop any missing\nvalid = X.notna() & Y.notna()\nX = X[valid]\nY = Y[valid]\nW = W.loc[valid, valid]\n\n# Drop isolated (no neighbors)\nneighbor_counts = W.sum(axis=1)\nnon_isolated = neighbor_counts > 0\nX = X[non_isolated]\nY = Y[non_isolated]\nW = W.loc[non_isolated, non_isolated]\n\n# Number of data points used\ndata_points_used = len(X)\n\n# Compute deviations\nx = X.values\ny = Y.values\nmu_x = x.mean()\nmu_y = y.mean()\nx_prime = x - mu_x\ny_prime = y - mu_y\n\n# Observed bivariate spatial numerator\n# N_obs = sum_{i,j} w_ij * x'_i * y'_j\nW_mat = W.values\nN_obs = x_prime @ W_mat @ y_prime\n\n# Denominator\nSx = np.sum(x_prime**2)\nSy = np.sum(y_prime**2)\ndenom = np.sqrt(Sx * Sy)\n\n# Lee's L observed\nL_obs = N_obs / denom\n\n# Permutation test\nn_perms = 999\ncount_extreme = 0\nfor _ in range(n_perms):\n    y_perm = np.random.permutation(y)\n    y_perm_prime = y_perm - mu_y\n    L_perm = x_prime @ W_mat @ y_perm_prime / denom\n    if L_obs >= 0:\n        if L_perm >= L_obs:\n            count_extreme += 1\n    else:\n        if L_perm <= L_obs:\n            count_extreme += 1\n\np_value = (1 + count_extreme) / (1 + n_perms)\n\n# Determine verdict\nalpha = 0.05\nif L_obs > 0 and p_value <= alpha:\n    verdict = \"POSITIVE\"\nelif L_obs < 0 and p_value <= alpha:\n    verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.3348468641032767, p = 0.207)",
+        "data_points_used": 33,
+        "statistic": "-0.3348468641032767",
+        "secondary_measures": [
+          "0.207"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.3348468641032767, p = 0.207)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

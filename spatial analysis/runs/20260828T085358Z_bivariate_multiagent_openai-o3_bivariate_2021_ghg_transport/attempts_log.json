@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.053358409508553986, p = 0.384)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the three CSV/JSON files into pandas DataFrames: one with borough\u2010level GHG_value, one with borough\u2010level Transport_value, and one giving the neighbor list (each borough and the boroughs that touch it).\n\n2. Join/merge the GHG and Transport data on borough name to create a single 33-row table; verify that GHG_value and Transport_value have the same 33 non-missing observations reported in the profile.\n\n3. If any additional missing values are discovered (none are expected), drop the affected borough(s) from all three DataFrames so each remaining borough has both variables and a complete neighbor list; record the new row count.\n\n4. Build a binary, symmetric N\u00d7N spatial weight matrix W where w_ij = 1 if borough j appears in borough i\u2019s neighbor list, otherwise 0; set diagonal elements to 0. (If a borough is listed as a neighbor but not reciprocated, make the relation symmetric.)\n\n5. Row-standardize W (divide each row by its row sum) so every borough\u2019s neighbor weights sum to 1; this avoids scale problems in Lee\u2019s L.\n\n6. Standardize both variables to z-scores:  \n   z_GHG = (GHG_value \u2013 mean_GHG) / std_GHG  \n   z_Trans = (Transport_value \u2013 mean_Trans) / std_Trans\n\n7. Compute observed Lee\u2019s L:  \n      L_obs = (1/N) * \u03a3_i ( z_GHG_i * \u03a3_j w_ij * z_Trans_j )  \n   (Equivalent to (z_GHG\u1d40 \u00b7 W \u00b7 z_Trans)/N.)\n\n8. Assess significance by a Monte-Carlo permutation test:  \n   a. Keep z_GHG fixed.  \n   b. For at least 999 (\u2265500) iterations, randomly permute z_Trans across boroughs, recompute L_perm each time, and store the values.  \n   c. Estimate a two-sided p-value: proportion of |L_perm| \u2265 |L_obs| plus 1, divided by (iterations + 1).\n\n9. Decide direction and significance:  \n   \u2022 If p < 0.05 and L_obs > 0 \u2192 POSITIVE spatial association.  \n   \u2022 If p < 0.05 and L_obs < 0 \u2192 NEGATIVE spatial association.  \n   \u2022 Otherwise \u2192 NOT SIGNIFICANT.\n\n10. Report the conclusion exactly as required, including the observed statistic (rounded reasonably) and the permutation p-value on one line prefixed with \u201cFINAL ANSWER:\u201d.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ----------------------------\n# 1. Load data\n# ----------------------------\nDATA_PATH = 'chunks_csv/bivariate/bivariate_2021_ghg_transport.csv'\nADJ_PATH = 'chunks_csv/borough_adjacency.csv'\n\ndf = pd.read_csv(DATA_PATH)                         # 33\u00d73\nadj = pd.read_csv(ADJ_PATH)                         # edge list\n\n# ----------------------------\n# 2. Ensure completeness / merge check\n# ----------------------------\n# (The profile says there are no missing values, but be explicit)\ndf = df.dropna(subset=['GHG_value', 'Transport_value'])\nboroughs = df['borough'].tolist()\nN = len(boroughs)\n\n# ----------------------------\n# 3. Build a symmetric binary weight matrix W\n# ----------------------------\nindex = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((N, N), dtype=float)\n\nfor _, row in adj.iterrows():\n    b1, b2 = row['borough'], row['neighbor']\n    if b1 in index and b2 in index:          # keep edges that are in the 33-borough analytic set\n        i, j = index[b1], index[b2]\n        W[i, j] = 1\n        W[j, i] = 1                          # symmetry\n\n# ----------------------------\n# 4. Row-standardize W (each row sums to 1)\n# ----------------------------\nrow_sums = W.sum(axis=1, keepdims=True)\n# A few rows might sum to 0 (shouldn\u2019t in London, but be safe)\nrow_sums[row_sums == 0] = 1\nW = W / row_sums\n\n# ----------------------------\n# 5. Standardise the two variables (z-scores)\n# ----------------------------\nz_ghg = (df['GHG_value'] - df['GHG_value'].mean()) / df['GHG_value'].std(ddof=0)\nz_tr  = (df['Transport_value'] - df['Transport_value'].mean()) / df['Transport_value'].std(ddof=0)\n\nz_ghg = z_ghg.to_numpy()\nz_tr  = z_tr.to_numpy()\n\n# ----------------------------\n# 6. Observed Lee\u2019s L\n#     L = (1/N) * z_GHG\u1d40 \u00b7 W \u00b7 z_Trans\n# ----------------------------\nL_obs = (z_ghg @ (W @ z_tr)) / N\n\n# ----------------------------\n# 7. Permutation test (Monte-Carlo)\n# ----------------------------\nn_perms = 999\nrng = np.random.default_rng(0)\nperm_stats = np.empty(n_perms)\n\nfor k in range(n_perms):\n    z_tr_perm = rng.permutation(z_tr)\n    perm_stats[k] = (z_ghg @ (W @ z_tr_perm)) / N\n\n# Two-sided p-value with +1 correction\np_value = (np.sum(np.abs(perm_stats) >= abs(L_obs)) + 1) / (n_perms + 1)\n\n# ----------------------------\n# 8. Verdict\n# ----------------------------\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# ----------------------------\n# 9. Print required outputs\n# ----------------------------\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.053358409508553986, p = 0.384)",
+        "data_points_used": 33,
+        "statistic": "-0.053358409508553986",
+        "secondary_measures": [
+          "0.384"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.053358409508553986, p = 0.384)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

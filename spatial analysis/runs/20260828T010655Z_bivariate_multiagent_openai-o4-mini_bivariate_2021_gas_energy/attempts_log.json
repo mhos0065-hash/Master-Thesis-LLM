@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.0091142085458045, p = 0.965)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level Gas and Energy data into a pandas DataFrame and load the neighbor list into a second DataFrame or dictionary.  \n2. Check both datasets for missing values; if any exist, drop those boroughs from both Gas, Energy and neighbor lists (listwise deletion), and document the number dropped.  \n3. Align the two datasets so that each borough appears in the same order in Gas, Energy and in the adjacency structure; ensure the neighbor list includes only boroughs present in the data.  \n4. Construct a binary adjacency matrix W of size n\u00d7n (n=number of boroughs), where Wij=1 if i and j are neighbors, 0 otherwise; set the diagonal to zero.  \n5. Row\u2013standardize W so that each row sums to 1 (divide each nonzero row entry by its row sum).  \n6. Extract arrays x (Gas) and y (Energy), and demean each: x\u2032=x\u2212mean(x), y\u2032=y\u2212mean(y).  \n7. Compute the observed bivariate Lee\u2019s L statistic:  \n   a. Compute the spatial lag of y\u2032: Ly = W\u00b7y\u2032  \n   b. Compute L_obs = (x\u2032 \u00b7 Ly) / sqrt[(x\u2032 \u00b7 x\u2032)\u00b7(y\u2032 \u00b7 y\u2032)]  \n8. Perform a permutation test with at least 500 randomizations:  \n   a. For each permutation, randomly shuffle y among boroughs to get y*_perm  \n   b. Demean y*_perm, compute Ly*_perm = W\u00b7(y*_perm\u2212mean(y*_perm)), then L_perm = (x\u2032 \u00b7 Ly*_perm)/sqrt[(x\u2032\u00b7x\u2032)\u00b7((y*_perm\u2212mean(y*_perm))\u00b7(y*_perm\u2212mean(y*_perm)))]  \n   c. Store each L_perm in an array.  \n9. Calculate a two\u2010sided p\u2010value as the proportion of |L_perm| \u2265 |L_obs|.  \n10. Compare p to \u03b1=0.05:  \n   \u2013 If p<0.05 and L_obs>0, conclude POSITIVE spatial association.  \n   \u2013 If p<0.05 and L_obs<0, conclude NEGATIVE spatial association.  \n   \u2013 Otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf_data = pd.read_csv('chunks_csv/bivariate/bivariate_2021_gas_energy.csv')\ndf_adj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop missing values in gas or energy (none expected)\ndf_data = df_data.dropna(subset=['Gas_value', 'Energy_value']).reset_index(drop=True)\n\n# 3. Filter adjacency to include only boroughs present in df_data\nboroughs = set(df_data['borough'])\ndf_adj = df_adj[df_adj['borough'].isin(boroughs) & df_adj['neighbor'].isin(boroughs)].reset_index(drop=True)\n\n# 4. Unique sorted borough list and mapping\nunique_boroughs = sorted(df_data['borough'])\nn = len(unique_boroughs)\nidx = {b: i for i, b in enumerate(unique_boroughs)}\n\n# 5. Build binary adjacency matrix W\nW = np.zeros((n, n), dtype=float)\nfor _, row in df_adj.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1  # ensure symmetry\nnp.fill_diagonal(W, 0)\n\n# 6. Row-standardize W\nrow_sums = W.sum(axis=1)\nfor i in range(n):\n    if row_sums[i] > 0:\n        W[i, :] /= row_sums[i]\n\n# 7. Extract and demean variables\ndata_indexed = df_data.set_index('borough').loc[unique_boroughs]\nx = data_indexed['Gas_value'].values\ny = data_indexed['Energy_value'].values\nx_prime = x - x.mean()\ny_prime = y - y.mean()\n\n# 8. Compute observed Lee's L\nLy = W.dot(y_prime)\nnum_obs = x_prime.dot(Ly)\nden_obs = np.sqrt(x_prime.dot(x_prime) * y_prime.dot(y_prime))\nL_obs = num_obs / den_obs\n\n# 9. Permutation test\nnp.random.seed(0)\nn_perm = 1000\nxx = x_prime.dot(x_prime)\nL_perms = np.zeros(n_perm)\nfor k in range(n_perm):\n    y_shuff = np.random.permutation(y)\n    y_shuff_prime = y_shuff - y_shuff.mean()\n    Ly_shuff = W.dot(y_shuff_prime)\n    yy = y_shuff_prime.dot(y_shuff_prime)\n    denom = np.sqrt(xx * yy)\n    L_perms[k] = (x_prime.dot(Ly_shuff)) / denom\n\n# 10. Compute two-sided p-value\np_value = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# 11. Determine verdict\nalpha = 0.05\nif p_value < alpha:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# 12. Output results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.0091142085458045, p = 0.965)",
+        "data_points_used": 33,
+        "statistic": "-0.0091142085458045",
+        "secondary_measures": [
+          "0.965"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.0091142085458045, p = 0.965)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

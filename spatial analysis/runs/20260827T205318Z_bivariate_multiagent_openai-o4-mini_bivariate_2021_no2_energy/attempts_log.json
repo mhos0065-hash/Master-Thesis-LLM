@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.0631201587857367, p = 0.387)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO\u2082 and Energy data for all 33 boroughs into a pandas DataFrame, and load the borough\u2010to\u2010borough adjacency list into a second DataFrame.  \n2. Check for missing NO\u2082 or Energy values; perform a complete\u2010case analysis by dropping any borough with missing values in either variable, and note how many boroughs remain.  \n3. From the adjacency list, build a 33\u00d733 spatial weights matrix W where w\u1d62\u2c7c = 1 if borough j is a neighbor of borough i, else 0; then row\u2010standardize W by dividing each row by its row sum.  \n4. Compute z\u2010scores for NO\u2082 and for Energy across the retained boroughs (subtract mean, divide by standard deviation).  \n5. Calculate the observed bivariate Lee\u2019s L statistic:  \n   L_obs = (\u2211\u1d62\u2211\u2c7c w\u1d62\u2c7c\u00b7z_NO\u2082\u1d62\u00b7z_Energy\u2c7c) / (\u2211\u1d62\u2211\u2c7c w\u1d62\u2c7c).  \n6. Conduct a permutation test with at least 500 randomizations (e.g. 999): for each replicate, randomly permute the Energy z\u2010scores across borough labels, recompute L, and record it.  \n7. Compute the two\u2010sided p\u2010value as (number of |L_perm| \u2265 |L_obs| + 1) / (number of permutations + 1).  \n8. Compare p to 0.05: if p<0.05 and L_obs>0 \u21d2 POSITIVE; if p<0.05 and L_obs<0 \u21d2 NEGATIVE; otherwise \u21d2 NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load the data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_no2_energy.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop any boroughs with missing NO2 or Energy values\ndf2 = df.dropna(subset=['NO2_value', 'Energy_value']).reset_index(drop=True)\nN = len(df2)\n\n# 3. Build a row\u2010standardized spatial weights matrix W\nboroughs = df2['borough'].tolist()\nidx = {b: i for i, b in enumerate(boroughs)}\nadj2 = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj2.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1.0\nrow_sums = W.sum(axis=1)\nrow_sums[row_sums == 0] = 1.0  # avoid division by zero for isolates\nW /= row_sums[:, None]\n\n# 4. Compute z\u2010scores for NO2 and Energy (population std)\nz_no2 = (df2['NO2_value'] - df2['NO2_value'].mean()) / df2['NO2_value'].std(ddof=0)\nz_e  = (df2['Energy_value'] - df2['Energy_value'].mean()) / df2['Energy_value'].std(ddof=0)\nz_no2 = z_no2.values\nz_e = z_e.values\n\n# 5. Observed Lee's L\nden = W.sum()\nL_obs = (W * np.outer(z_no2, z_e)).sum() / den\n\n# 6. Permutation test\nnp.random.seed(0)\nperms = 999\nL_perm = np.empty(perms)\nfor m in range(perms):\n    z_e_perm = np.random.permutation(z_e)\n    L_perm[m] = (W * np.outer(z_no2, z_e_perm)).sum() / den\n\n# 7. Two\u2010sided p\u2010value\np = (np.sum(np.abs(L_perm) >= abs(L_obs)) + 1) / (perms + 1)\n\n# 8. Decision\nif p < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p})\")\n",
+        "output": "data_points_used = 31\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.0631201587857367, p = 0.387)",
+        "data_points_used": 31,
+        "statistic": "-0.0631201587857367",
+        "secondary_measures": [
+          "0.387"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.0631201587857367, p = 0.387)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

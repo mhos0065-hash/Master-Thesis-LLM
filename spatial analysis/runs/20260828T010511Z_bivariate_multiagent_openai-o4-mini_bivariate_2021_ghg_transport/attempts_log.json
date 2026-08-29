@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -1.6420130200343148, p = 0.3073852295409182)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the data into pandas DataFrames: one with borough GHG_value and Transport_value indexed by borough name, and one with the neighbor pairs.  \n2. Check for missing values in both GHG and Transport. Since the profile indicates 0 missing, no rows need to be dropped; if there had been missing values, drop any borough with a missing value in either variable.  \n3. Build an N\u00d7N spatial weight matrix W (N=33) where W[i,j]=1 if borough i and borough j are listed as neighbors (0 otherwise), and W[i,i]=0.  \n4. Extract the GHG vector x and Transport vector y, compute their means x\u0304 and \u0233, and center: xi \u2190 xi \u2013 x\u0304, yj \u2190 yj \u2013 \u0233.  \n5. Compute the observed Lee\u2019s L statistic:  \n   numerator = \u03a3i \u03a3j W[i,j] \u00b7 xi \u00b7 yj  \n   denom_x = \u03a3i \u03a3j W[i,j] \u00b7 xi\u00b2  \n   denom_y = \u03a3i \u03a3j W[i,j] \u00b7 yj\u00b2  \n   L_obs = numerator / sqrt(denom_x \u00b7 denom_y)  \n6. Set up a permutation test with at least 500 random shuffles: for each permutation k=1\u2026K, randomly permute the entries of y across boroughs (keeping x and W fixed), recenter the permuted y, and compute L_k using the same formula.  \n7. Assemble the distribution of L_k under the null. Compute a two\u2010sided p\u2010value as the fraction of |L_k| \u2265 |L_obs| (including L_obs in the count if desired).  \n8. Compare p to \u03b1=0.05:  \n   - If p<0.05 and L_obs>0 \u21d2 POSITIVE spatial association  \n   - If p<0.05 and L_obs<0 \u21d2 NEGATIVE spatial association  \n   - Otherwise \u21d2 NOT SIGNIFICANT  \n9. At the end, report:  \n   FINAL ANSWER: [POSITIVE/NEGATIVE/NOT SIGNIFICANT] (test statistic = L_obs, p = p)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_ghg_transport.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop any missing values in GHG or Transport\ndf = df.dropna(subset=['GHG_value', 'Transport_value'])\nboroughs = df['borough'].tolist()\nn = len(boroughs)\n\n# 3. Build spatial weights matrix W\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=int)\n# Keep only adjacency pairs where both boroughs are in our data\nadj_filt = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\nfor _, row in adj_filt.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1  # ensure symmetry\nnp.fill_diagonal(W, 0)\n\n# 4. Extract and center the variables\nx = df.set_index('borough').loc[boroughs, 'GHG_value'].values\ny = df.set_index('borough').loc[boroughs, 'Transport_value'].values\nx_mean = x.mean()\ny_mean = y.mean()\nx_c = x - x_mean\ny_c = y - y_mean\n\n# 5. Compute observed Lee's L\nnum_obs = np.sum(W * np.outer(x_c, y_c))\nden_x = np.sum(W * np.outer(x_c, x_c))\nden_y = np.sum(W * np.outer(y_c, y_c))\nL_obs = num_obs / np.sqrt(den_x * den_y)\n\n# 6. Permutation test\nperms = 500\ncount = 0\nfor _ in range(perms):\n    y_perm = np.random.permutation(y)\n    y_perm_c = y_perm - y_mean\n    num_perm = np.sum(W * np.outer(x_c, y_perm_c))\n    L_perm = num_perm / np.sqrt(den_x * den_y)\n    if abs(L_perm) >= abs(L_obs):\n        count += 1\np_value = (count + 1) / (perms + 1)  # add-one correction\n\n# 7. Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# 8. Print results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -1.6420130200343148, p = 0.3073852295409182)",
+        "data_points_used": 33,
+        "statistic": "-1.6420130200343148",
+        "secondary_measures": [
+          "0.3073852295409182"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -1.6420130200343148, p = 0.3073852295409182)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "POSITIVE (test statistic = 0.00025713012777260895, p = 0.0)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the Gas and GHG data for the London boroughs and the geographic neighbor list into pandas DataFrames.\n\n2. **Merge Data**: Combine the Gas and GHG data with the neighbor information to create a new DataFrame that includes each borough's Gas value and the GHG values of its neighboring boroughs.\n\n3. **Handle Missing Values**: Since there are no missing values in the dataset, proceed without any imputation or removal of rows.\n\n4. **Calculate Mean GHG for Neighbors**: For each borough, calculate the mean GHG value of its neighboring boroughs.\n\n5. **Compute Lee's L Statistic**: Implement the calculation of Lee's L statistic to assess the spatial correlation between Gas values and the mean GHG values of neighboring boroughs.\n\n6. **Perform Randomization Test**: Conduct a permutation/randomization test with at least 500 shuffles to determine the statistical significance of the observed Lee's L statistic.\n\n7. **Calculate p-value**: Compute the p-value based on the distribution of the test statistics obtained from the randomization test.\n\n8. **Interpret Results**: Compare the p-value to the significance level (0.05) to determine if the relationship is positive, negative, or not significant.\n\n9. **Prepare Final Output**: Format the final output to include the type of relationship (POSITIVE, NEGATIVE, or NOT SIGNIFICANT), the test statistic, and the p-value.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the datasets\ngas_ghg_data = pd.read_csv('chunks_csv/bivariate/bivariate_2023_gas_ghg.csv')\nadjacency_data = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Merge the Gas and GHG data with the neighbor information\nmerged_data = gas_ghg_data.merge(adjacency_data, on='borough')\n\n# Calculate mean GHG for neighbors\nmean_ghg = merged_data.groupby('borough')['GHG_value'].mean().reset_index()\nmean_ghg.columns = ['borough', 'mean_GHG']\n\n# Merge the mean GHG back to the original gas data\nfinal_data = gas_ghg_data.merge(mean_ghg, on='borough')\n\n# Calculate Lee's L statistic\ndef calculate_lees_l(gas_values, mean_ghg_values):\n    n = len(gas_values)\n    mean_gas = np.mean(gas_values)\n    mean_ghg = np.mean(mean_ghg_values)\n    \n    # Calculate Lee's L statistic\n    L = np.sum((gas_values - mean_gas) * (mean_ghg_values - mean_ghg)) / np.sum((gas_values - mean_gas) ** 2)\n    return L\n\n# Observed Lee's L statistic\nobserved_L = calculate_lees_l(final_data['Gas_value'].values, final_data['mean_GHG'].values)\n\n# Perform randomization test\nn_permutations = 500\nrandom_L_stats = []\n\nfor _ in range(n_permutations):\n    shuffled_ghg = np.random.permutation(final_data['mean_GHG'].values)\n    random_L = calculate_lees_l(final_data['Gas_value'].values, shuffled_ghg)\n    random_L_stats.append(random_L)\n\n# Calculate p-value\np_value = np.sum(np.array(random_L_stats) >= observed_L) / n_permutations\n\n# Determine the relationship type\nif p_value < 0.05:\n    if observed_L > 0:\n        relationship = \"POSITIVE\"\n    else:\n        relationship = \"NEGATIVE\"\nelse:\n    relationship = \"NOT SIGNIFICANT\"\n\n# Count data points used\ndata_points_used = final_data.shape[0]\n\n# Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {relationship} (test statistic = {observed_L}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: POSITIVE (test statistic = 0.00025713012777260895, p = 0.0)",
+        "data_points_used": 33,
+        "statistic": "0.00025713012777260895",
+        "secondary_measures": [
+          "0.0"
+        ],
+        "final_answer": "POSITIVE (test statistic = 0.00025713012777260895, p = 0.0)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

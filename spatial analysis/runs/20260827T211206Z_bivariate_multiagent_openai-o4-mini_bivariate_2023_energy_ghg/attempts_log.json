@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.007363164007887179, p = 0.968)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level Energy and GHG data into a pandas DataFrame, and load the list of borough\u2010to\u2010borough neighbors into another DataFrame.  \n2. Check both DataFrames for missing values. If any Energy or GHG values are missing for a borough, drop that borough from both the attribute and adjacency tables (since there are 0 missing in the real data, proceed with all 33 boroughs).  \n3. Assign each borough a unique index and construct a square spatial weights matrix W of size 33\u00d733 where Wij = 1 if borough i and j are neighbors, 0 otherwise. Row\u2010standardize W so each row sums to 1.  \n4. Extract the Energy values as vector X and GHG values as vector Y, compute their means \u03bcX and \u03bcY, and form demeaned vectors X\u2032 = X \u2013 \u03bcX and Y\u2032 = Y \u2013 \u03bcY.  \n5. Compute the observed Lee\u2019s L statistic:  \n   numerator Lnum = \u03a3i \u03a3j Wij \u00b7 X\u2032i \u00b7 Y\u2032j  \n   denominator Lden = sqrt[(\u03a3i X\u2032i\u00b2) \u00b7 (\u03a3j Y\u2032j\u00b2)]  \n   Lobs = Lnum / Lden  \n6. Perform a permutation test with at least 500 randomizations: for each permutation k, randomly shuffle the entries of Y to form Y(k), demean to Y\u2032(k), compute L(k) using W and X\u2032 against Y\u2032(k).  \n7. Calculate the p\u2010value as the proportion of |L(k)| \u2265 |Lobs| (two\u2010tailed) across all permutations.  \n8. Determine the spatial association:  \n   \u2013 If p < 0.05 and Lobs > 0, conclude POSITIVE.  \n   \u2013 If p < 0.05 and Lobs < 0, conclude NEGATIVE.  \n   \u2013 Otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_ghg.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop missing values (none in this dataset)\ndf = df.dropna(subset=['Energy_value', 'GHG_value'])\nadj = adj[adj['borough'].isin(df.index) & adj['neighbor'].isin(df.index)]\n\n# 3. Build spatial weights matrix W\nboroughs = df.index.tolist()\nn = len(boroughs)\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n))\nfor _, row in adj.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n# Row\u2010standardize\nrow_sums = W.sum(axis=1)\nW = np.divide(W, row_sums[:, None], where=row_sums[:, None] != 0)\n\n# 4. Extract and demean variables\nX = df['Energy_value'].values\nY = df['GHG_value'].values\nXp = X - X.mean()\nYp = Y - Y.mean()\n\n# 5. Compute observed Lee's L\ndenom = np.sqrt((Xp**2).sum() * (Yp**2).sum())\nL_obs = Xp.dot(W.dot(Yp)) / denom\n\n# 6. Permutation test\nnp.random.seed(0)\nn_perm = 1000\ncount = 0\nfor _ in range(n_perm):\n    Yp_perm = np.random.permutation(Yp)\n    Lk = Xp.dot(W.dot(Yp_perm)) / denom\n    if abs(Lk) >= abs(L_obs):\n        count += 1\np_val = count / n_perm\n\n# 7-8. Determine verdict and print results\nprint(f\"data_points_used = {n}\")\nif p_val < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.007363164007887179, p = 0.968)",
+        "data_points_used": 33,
+        "statistic": "-0.007363164007887179",
+        "secondary_measures": [
+          "0.968"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.007363164007887179, p = 0.968)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

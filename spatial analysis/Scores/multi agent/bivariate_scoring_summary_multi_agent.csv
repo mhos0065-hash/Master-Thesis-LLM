@@ -1,0 +1,6 @@
+mode,model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,f1,correct_number_evidence_filtered,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
+multiagent,deepseek/deepseek-chat-v3-0324,50,0,50,45,1.0,45,5,0.9,0.605,0.613,0.609,45,45,5,0.9,0.605,0.613,0.609
+multiagent,meta-llama/llama-3.1-8b-instruct,50,13,37,15,0.7,15,22,0.3,0.238,0.128,0.167,15,15,20,0.3,0.25,0.128,0.169
+multiagent,openai/gpt-4o-mini,46,0,46,34,1.0,34,12,0.739,0.258,0.315,0.283,34,34,12,0.739,0.258,0.315,0.283
+multiagent,openai/o3,50,0,50,44,1.0,44,6,0.88,0.591,0.604,0.596,44,44,6,0.88,0.591,0.604,0.596
+multiagent,openai/o4-mini,50,0,50,43,1.0,43,7,0.86,0.574,0.624,0.592,43,43,7,0.86,0.574,0.624,0.592

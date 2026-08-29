@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.0037, p = 0.4360)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Read both CSV files into pandas DataFrames.  \n2. Merge them on the common borough identifier so each row has Gas_value and Transport_value.  \n3. Read the neighbor\u2010list file and build a symmetric 0/1 weight matrix W (wij = 1 if i and j are neighbors, 0 otherwise).  \n   \u2022 If a borough has no listed neighbors, give it an all-zero row; these rows will contribute nothing to Lee\u2019s L.  \n4. Row-standardise W so each non-isolated borough\u2019s weights sum to 1 (leave all-zero rows unchanged).  \n5. Missing-value handling: the profile says 0 missing, so no imputation is required; if any were found they would be dropped before analysis.  \n6. Mean-centre the two variables:  \n   x = Gas_value \u2013 mean(Gas_value)  \n   y = Transport_value \u2013 mean(Transport_value)  \n7. Compute Lee\u2019s L:  \n   L_obs = \u03a3_i \u03a3_j w_ij x_i y_j / \u03a3_i x_i\u00b2  \n   (This is the original Lee 2001 cross-form; denominator normalises by total gas variance.)  \n8. Permutation test for significance:  \n   a. For k = 1 \u2026 999 (\u2265500): randomly permute y across boroughs, keep x fixed, recalculate L_k.  \n   b. Build distribution of L_k.  \n   c. Two-sided p-value = (count(|L_k| \u2265 |L_obs|) + 1) / (999 + 1).  \n9. Interpretation:  \n   \u2022 If p < 0.05 and L_obs > 0 \u21d2 POSITIVE spatial association (high-Gas near high-Transport).  \n   \u2022 If p < 0.05 and L_obs < 0 \u21d2 NEGATIVE spatial association (high-Gas near low-Transport).  \n   \u2022 If p \u2265 0.05 \u21d2 NOT SIGNIFICANT.  \n10. Report the observed Lee\u2019s L rounded to, say, 3 decimals and the p-value to 3 decimals in the required format.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ------------------------------------------------------------------\n# 1. Load data\n# ------------------------------------------------------------------\nDATA_PATH = 'chunks_csv/bivariate/bivariate_2021_gas_transport.csv'\nADJACENCY_PATH = 'chunks_csv/borough_adjacency.csv'\n\ndf = pd.read_csv(DATA_PATH)\nadj = pd.read_csv(ADJACENCY_PATH)\n\n# ------------------------------------------------------------------\n# 2. Drop rows with any missing values in either variable\n# ------------------------------------------------------------------\ndf = df.dropna(subset=['Gas_value', 'Transport_value']).reset_index(drop=True)\nn = len(df)                      # number of boroughs used later for shuffles\nprint(f\"data_points_used = {n}\")\n\n# ------------------------------------------------------------------\n# 3. Build a (33 \u00d7 33) neighbourhood weight matrix W\n# ------------------------------------------------------------------\nboroughs = df['borough'].tolist()\nindex_map = {b:i for i, b in enumerate(boroughs)}   # borough name \u2192 numeric index\n\nW = np.zeros((n, n), dtype=float)\n\n# make symmetric neighbour relations\nfor _, row in adj.iterrows():\n    b1, b2 = row['borough'], row['neighbor']\n    if b1 in index_map and b2 in index_map:\n        i, j = index_map[b1], index_map[b2]\n        W[i, j] = 1.0\n        W[j, i] = 1.0\n\n# Row-standardise W (weights of each borough sum to 1, unless it has no neighbours)\nrow_sums = W.sum(axis=1, keepdims=True)\nwith np.errstate(divide='ignore', invalid='ignore'):\n    W = np.where(row_sums == 0, 0, W / row_sums)\n\n# ------------------------------------------------------------------\n# 4. Centre variables\n# ------------------------------------------------------------------\nx = df['Gas_value'].to_numpy()\ny = df['Transport_value'].to_numpy()\n\nx_c = x - x.mean()\ny_c = y - y.mean()\n\n# ------------------------------------------------------------------\n# 5. Function to compute Lee\u2019s L\n# ------------------------------------------------------------------\ndenom = np.sum(x_c ** 2)            # constant across permutations\n\ndef lee_L(y_centered):\n    return (x_c @ (W @ y_centered)) / denom\n\nL_obs = lee_L(y_c)\n\n# ------------------------------------------------------------------\n# 6. Permutation test (999 random shuffles)\n# ------------------------------------------------------------------\nrng = np.random.default_rng(seed=42)\nn_perm = 999\nperm_stats = np.empty(n_perm)\n\nfor k in range(n_perm):\n    y_perm = rng.permutation(y_c)\n    perm_stats[k] = lee_L(y_perm)\n\n# two-sided p-value\np_val = (np.sum(np.abs(perm_stats) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# ------------------------------------------------------------------\n# 7. Interpret the result\n# ------------------------------------------------------------------\nalpha = 0.05\nif p_val < alpha:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ------------------------------------------------------------------\n# 8. Report\n# ------------------------------------------------------------------\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.4f}, p = {p_val:.4f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.0037, p = 0.4360)",
+        "data_points_used": 33,
+        "statistic": "-0.0037",
+        "secondary_measures": [
+          "0.4360"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.0037, p = 0.4360)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

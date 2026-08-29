@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.05312225388459063, p = 0.472)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level Energy and Transport data into pandas DataFrames and read the neighbor\u2010list into a suitable structure.  \n2. Check for missing values in the Energy or Transport columns; if any are found, drop those boroughs from both datasets (since the profile shows 0 missing, no rows will actually be dropped).  \n3. Construct a 33\u00d733 spatial weight matrix W from the neighbor list, using binary adjacency (wij=1 if borough i and j share a border, else 0) and row-standardize each row of W so its weights sum to 1.  \n4. Standardize the Energy and Transport variables (subtract each variable\u2019s mean and divide by its standard deviation) to obtain zero-mean, unit-variance vectors X and Y.  \n5. Compute the observed bivariate spatial association statistic L_obs (Lee\u2019s L) as the sum over all i,j of wij\u00b7Xi\u00b7Yj, divided by n (or the appropriate normalizing constant for Lee\u2019s L).  \n6. Perform a permutation test with at least 500 random shuffles: for each shuffle, randomly permute the borough labels on X (keeping W and Y fixed), recompute L, and record the permuted L values to form a null distribution.  \n7. Calculate the two\u2010sided p-value as the proportion of permuted |L| values at least as extreme as |L_obs|.  \n8. Compare L_obs and the p-value to \u03b1=0.05: if p<0.05 and L_obs>0 \u21d2 POSITIVE; if p<0.05 and L_obs<0 \u21d2 NEGATIVE; otherwise \u21d2 NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_energy_transport.csv')\nadj_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop missing (there are none in this dataset)\ndf = df.dropna(subset=['Energy_value', 'Transport_value'])\nn = df.shape[0]\n\n# 3. Build index mapping and adjacency matrix\nboroughs = df['borough'].tolist()\nindex_map = {b: i for i, b in enumerate(boroughs)}\nA = np.zeros((n, n), dtype=int)\nfor _, row in adj_df.iterrows():\n    b, nb = row['borough'], row['neighbor']\n    if b in index_map and nb in index_map:\n        i, j = index_map[b], index_map[nb]\n        A[i, j] = 1\n# Symmetrize\nA = ((A + A.T) > 0).astype(int)\n# Row-standardize\nrow_sums = A.sum(axis=1, keepdims=True)\nW = np.divide(A, row_sums, where=row_sums != 0)\n\n# 4. Standardize variables\nX = df['Energy_value'].values\nY = df['Transport_value'].values\nX = (X - X.mean()) / X.std(ddof=0)\nY = (Y - Y.mean()) / Y.std(ddof=0)\n\n# 5. Compute observed Lee's L (bivariate Moran-like statistic)\nWy = W.dot(Y)\nL_obs = (X @ Wy) / n\n\n# 6. Permutation test\nnum_perms = 1000\nrng = np.random.default_rng(0)\nL_perms = np.empty(num_perms)\nfor k in range(num_perms):\n    Xp = X[rng.permutation(n)]\n    L_perms[k] = (Xp @ Wy) / n\n\n# 7. Two\u2010sided p\u2010value\np = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# 8. Verdict\nif p < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.05312225388459063, p = 0.472)",
+        "data_points_used": 33,
+        "statistic": "-0.05312225388459063",
+        "secondary_measures": [
+          "0.472"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.05312225388459063, p = 0.472)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

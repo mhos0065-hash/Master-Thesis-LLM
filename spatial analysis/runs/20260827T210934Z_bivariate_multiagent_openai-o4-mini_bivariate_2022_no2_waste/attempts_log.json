@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.2277264208153973, p = 0.2707292707292707)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO2 and Waste data into a pandas DataFrame indexed by borough, and load the neighbor list into a structure mapping each borough to its list of neighbors.  \n2. Merge the NO2 and Waste series so that each borough row has both values; drop any borough with a missing NO2 or Waste value. Remove from the adjacency structure any references to dropped boroughs.  \n3. Build an N\u00d7N binary spatial weights matrix W where W[i,j]=1 if borough j is listed as a neighbor of borough i, and 0 otherwise.  \n4. Standardize NO2 and Waste across the remaining N boroughs by subtracting their means and dividing by their standard deviations, yielding x\u1d62 and y\u1d62.  \n5. Compute the observed Lee\u2019s L statistic:  \n   \u2022 Numerator = \u03a3\u1d62 \u03a3\u2c7c W[i,j]\u00b7x\u1d62\u00b7y\u2c7c  \n   \u2022 Denominator = sqrt( (\u03a3\u1d62 x\u1d62\u00b2) \u00b7 (\u03a3\u2c7c y\u2c7c\u00b2) )  \n   \u2022 L_obs = Numerator / Denominator  \n6. Perform a permutation test with at least 500 random shuffles of the y vector: for each shuffle, permute the y values among boroughs, recompute L_perm, and collect the distribution of L_perm.  \n7. Calculate the one\u2010sided p\u2010value as follows:  \n   \u2022 If L_obs \u2265 0, p = (number of L_perm \u2265 L_obs + 1) / (number of permutations + 1)  \n   \u2022 If L_obs < 0, p = (number of L_perm \u2264 L_obs + 1) / (number of permutations + 1)  \n8. Determine significance at \u03b1=0.05:  \n   \u2022 If p<0.05 and L_obs>0 \u2192 POSITIVE spatial association  \n   \u2022 If p<0.05 and L_obs<0 \u2192 NEGATIVE spatial association  \n   \u2022 Otherwise \u2192 NOT SIGNIFICANT",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndata_path = \"chunks_csv/bivariate/bivariate_2022_no2_waste.csv\"\nadj_path = \"chunks_csv/borough_adjacency.csv\"\n\ndf = pd.read_csv(data_path)\nadj = pd.read_csv(adj_path)\n\n# 2. Merge and drop missing\ndf = df.set_index(\"borough\")\ndf = df.dropna(subset=[\"NO2_value\", \"Waste_value\"])\nboroughs = df.index.tolist()\ndata_points_used = len(boroughs)\n\n# Remove adjacency references to dropped boroughs\nadj = adj[adj[\"borough\"].isin(boroughs) & adj[\"neighbor\"].isin(boroughs)]\n\n# 3. Build W\nidx = {b: i for i, b in enumerate(boroughs)}\nN = data_points_used\nW = np.zeros((N, N), dtype=int)\nfor _, row in adj.iterrows():\n    i = idx[row[\"borough\"]]\n    j = idx[row[\"neighbor\"]]\n    W[i, j] = 1\n\n# 4. Standardize x and y (population std, ddof=0)\nx_raw = df[\"NO2_value\"]\ny_raw = df[\"Waste_value\"]\nx = (x_raw - x_raw.mean()) / x_raw.std(ddof=0)\ny = (y_raw - y_raw.mean()) / y_raw.std(ddof=0)\nx_vals = x.values\ny_vals = y.values\n\n# 5. Compute observed Lee's L\nnumerator = (W * (x_vals[:, None] * y_vals[None, :])).sum()\ndenominator = np.sqrt((x_vals**2).sum() * (y_vals**2).sum())\nL_obs = numerator / denominator\n\n# 6. Permutation test\nnperm = 1000\nrng = np.random.default_rng(0)\nL_perm = np.empty(nperm)\nfor b in range(nperm):\n    y_perm = rng.permutation(y_vals)\n    num_p = (W * (x_vals[:, None] * y_perm[None, :])).sum()\n    L_perm[b] = num_p / denominator\n\n# 7. Compute one\u2010sided p\u2010value\nif L_obs >= 0:\n    p_value = (np.sum(L_perm >= L_obs) + 1) / (nperm + 1)\nelse:\n    p_value = (np.sum(L_perm <= L_obs) + 1) / (nperm + 1)\n\n# 8. Determine verdict\nif p_value < 0.05 and L_obs > 0:\n    verdict = \"POSITIVE\"\nelif p_value < 0.05 and L_obs < 0:\n    verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.2277264208153973, p = 0.2707292707292707)",
+        "data_points_used": 30,
+        "statistic": "-0.2277264208153973",
+        "secondary_measures": [
+          "0.2707292707292707"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.2277264208153973, p = 0.2707292707292707)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

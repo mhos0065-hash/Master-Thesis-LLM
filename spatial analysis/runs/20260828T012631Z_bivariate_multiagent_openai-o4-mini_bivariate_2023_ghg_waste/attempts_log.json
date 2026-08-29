@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -0.143235, p = 0.011976)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the data: read the borough\u2010level GHG and Waste values into a pandas DataFrame, and read the neighbor lists into a suitable structure (e.g. a dict or DataFrame of adjacency pairs).  \n2. Handle missing values: identify any boroughs with missing GHG or Waste. Since there is 1 missing Waste value, drop that borough from the DataFrame and remove it from the neighbor lists so that all remaining boroughs have complete data.  \n3. Build the spatial weights matrix W (n\u00d7n) from the neighbor list: set Wij = 1 if borough i and j are neighbors, 0 otherwise; then row\u2010standardize each row of W so that each row sums to 1.  \n4. Extract aligned numpy arrays x (GHG) and y (Waste) of length n corresponding to the (updated) borough list.  \n5. Center x and y by subtracting their respective means: xc = x \u2212 mean(x), yc = y \u2212 mean(y).  \n6. Compute the observed Lee\u2019s L statistic:  \n   L_obs  =  (xc\u1d40 \u00b7 W \u00b7 yc)  /  sqrt[(xc\u00b2).sum() \u00b7 (yc\u00b2).sum()]  \n7. Conduct a permutation test with at least 500 randomizations:  \n   a. For k in 1\u2026500: randomly permute y among the n boroughs to get y_perm; compute yc_perm = y_perm \u2212 mean(y_perm); compute L_k = (xc\u1d40 \u00b7 W \u00b7 yc_perm) / sqrt[(xc\u00b2).sum() \u00b7 (yc_perm\u00b2).sum()].  \n   b. Collect the {L_k}.  \n8. Compute a two\u2010sided p\u2010value as (number of |L_k| \u2265 |L_obs| + 1)/(number of permutations + 1).  \n9. Interpret the result:  \n   \u2013 If L_obs > 0 and p < 0.05, conclude POSITIVE spatial association.  \n   \u2013 If L_obs < 0 and p < 0.05, conclude NEGATIVE spatial association.  \n   \u2013 Otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load the data\nghg_waste = pd.read_csv(\"chunks_csv/bivariate/bivariate_2023_ghg_waste.csv\")\nadj = pd.read_csv(\"chunks_csv/borough_adjacency.csv\")\n\n# 2. Handle missing values: drop any borough with missing GHG or Waste\ndf = ghg_waste.dropna(subset=['GHG_value', 'Waste_value']).copy()\nboroughs = df['borough'].tolist()\n\n# 3. Build spatial weights matrix W (row-standardized)\n# Filter adjacency to only include remaining boroughs\nadj_filt = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n# Create index mapping\nidx = {b: i for i, b in enumerate(boroughs)}\nn = len(boroughs)\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj_filt.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n# Row-standardize\nrow_sums = W.sum(axis=1, keepdims=True)\n# Avoid division by zero\nrow_sums[row_sums == 0] = 1\nW = W / row_sums\n\n# 4. Extract x and y arrays\nx = df['GHG_value'].values\ny = df['Waste_value'].values\n\n# 5. Center x and y\nxc = x - x.mean()\nyc = y - y.mean()\n\n# 6. Compute observed Lee's L statistic\nnum = xc @ W @ yc\nden = np.sqrt((xc**2).sum() * (yc**2).sum())\nL_obs = num / den\n\n# 7. Permutation test\nnp.random.seed(0)\nn_perm = 500\nL_perms = np.empty(n_perm)\nfor k in range(n_perm):\n    y_perm = np.random.permutation(y)\n    yc_perm = y_perm - y_perm.mean()\n    num_k = xc @ W @ yc_perm\n    den_k = np.sqrt((xc**2).sum() * (yc_perm**2).sum())\n    L_perms[k] = num_k / den_k\n\n# 8. Two-sided p-value\np_value = (np.abs(L_perms) >= abs(L_obs)).sum() + 1\np_value = p_value / (n_perm + 1)\n\n# 9. Determine verdict\nif L_obs > 0 and p_value < 0.05:\n    verdict = \"POSITIVE\"\nelif L_obs < 0 and p_value < 0.05:\n    verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Outputs\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_value:.6f})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = -0.143235, p = 0.011976)",
+        "data_points_used": 32,
+        "statistic": "-0.143235",
+        "secondary_measures": [
+          "0.011976"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -0.143235, p = 0.011976)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

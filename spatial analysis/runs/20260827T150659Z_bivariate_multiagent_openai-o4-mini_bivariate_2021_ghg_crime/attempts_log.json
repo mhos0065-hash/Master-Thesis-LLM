@@ -1,0 +1,48 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.12091240850744835, p = 0.111)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 2,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough-level GHG and Crime data into pandas DataFrames and read the borough\u2010neighbor list into a suitable structure.  \n2. Check for missing values in GHG, Crime or neighbor data; if any exist, either drop boroughs with missing values or impute missing GHG/Crime by the borough\u2010mean before proceeding. (In our case there are none.)  \n3. Extract vectors x (GHG) and y (Crime) of length N=33, and compute their means x\u0304 and \u0233 and standard deviations \u03c3\u2093 and \u03c3\u1d67.  \n4. Construct the spatial weights matrix W of size N\u00d7N by setting w\u1d62\u2c7c=1 if borough j is listed as a neighbor of borough i (0 otherwise). Compute S\u2080=\u03a3\u1d62\u03a3\u2c7cw\u1d62\u2c7c. (Optionally row\u2010standardize W by dividing each row by its sum, but keep track of S\u2080 accordingly.)  \n5. Compute the observed bivariate spatial association statistic (Lee\u2019s L):  \n   L_obs = [1/S\u2080] * \u03a3\u1d62\u03a3\u2c7c w\u1d62\u2c7c (x\u1d62 \u2013 x\u0304)(y\u2c7c \u2013 \u0233) / (\u03c3\u2093 \u03c3\u1d67)  \n6. Perform a permutation test with at least 500 randomizations:  \n   a. For each permutation k=1\u2026K, randomly shuffle the entries of y among the N boroughs to get y^(k).  \n   b. Recompute L^(k) = [1/S\u2080] * \u03a3\u1d62\u03a3\u2c7c w\u1d62\u2c7c (x\u1d62 \u2013 x\u0304)(y\u2c7c^(k) \u2013 \u0233^(k)) / (\u03c3\u2093 \u03c3\u1d67).  \n   c. Store all L^(k).  \n7. Compute the empirical p\u2010value:  \n   \u2013 if L_obs>0, p = (number of L^(k) \u2265 L_obs + 1)/(K+1);  \n   \u2013 if L_obs<0, p = (number of L^(k) \u2264 L_obs + 1)/(K+1);  \n   \u2013 if L_obs\u22480, p two\u2010tailed similarly.  \n8. Compare p to \u03b1=0.05:  \n   \u2013 if p<0.05 and L_obs>0, conclude POSITIVE spatial association;  \n   \u2013 if p<0.05 and L_obs<0, conclude NEGATIVE spatial association;  \n   \u2013 otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_ghg_crime.csv', index_col=0)\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Prepare borough list and mapping\nboroughs = df.index.tolist()\nN = len(boroughs)\nindex_map = {b: i for i, b in enumerate(boroughs)}\n\n# Extract variables\nx = df['GHG_value'].values\ny = df['Crime_value'].values\nx_bar = x.mean()\ny_bar = y.mean()\nsigma_x = np.std(x, ddof=0)\nsigma_y = np.std(y, ddof=0)\n\n# Build spatial weights matrix W\nW = np.zeros((N, N), dtype=int)\nfor _, row in adj.iterrows():\n    i = index_map.get(row['borough'])\n    j = index_map.get(row['neighbor'])\n    if i is not None and j is not None:\n        W[i, j] = 1\n\n# Calculate S0\nS0 = W.sum()\n\n# Compute observed Lee's L\nnum_obs = (x - x_bar) @ W @ (y - y_bar)\nL_obs = num_obs / (S0 * sigma_x * sigma_y)\n\n# Permutation test\nK = 1000\nL_perms = np.zeros(K)\nfor k in range(K):\n    y_perm = np.random.permutation(y)\n    y_perm_bar = y_perm.mean()\n    num_k = (x - x_bar) @ W @ (y_perm - y_perm_bar)\n    sigma_y_k = np.std(y_perm, ddof=0)\n    L_perms[k] = num_k / (S0 * sigma_x * sigma_y_k)\n\n# Compute empirical p-value\nif L_obs > 0:\n    p_value = (np.sum(L_perms >= L_obs) + 1) / (K + 1)\nelif L_obs < 0:\n    p_value = (np.sum(L_perms <= L_obs) + 1) / (K + 1)\nelse:\n    p_value = (np.sum(np.abs(L_perms) >= np.abs(L_obs)) + 1) / (K + 1)\n\n# Determine verdict\nalpha = 0.05\nif p_value < alpha and L_obs > 0:\n    verdict = \"POSITIVE\"\nelif p_value < alpha and L_obs < 0:\n    verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Output results\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = nan, p = 0.000999000999000999)",
+        "data_points_used": 33,
+        "statistic": "nan",
+        "secondary_measures": [
+          "0.000999000999000999"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = nan, p = 0.000999000999000999)"
+      },
+      "validation_score": 4,
+      "validation_total": 5,
+      "failed_checks": [
+        "Your printed test statistic is not a finite number."
+      ]
+    },
+    {
+      "plan_number": 1,
+      "coder_try": 2,
+      "plan": "1. Load the borough-level GHG and Crime data into pandas DataFrames and read the borough\u2010neighbor list into a suitable structure.  \n2. Check for missing values in GHG, Crime or neighbor data; if any exist, either drop boroughs with missing values or impute missing GHG/Crime by the borough\u2010mean before proceeding. (In our case there are none.)  \n3. Extract vectors x (GHG) and y (Crime) of length N=33, and compute their means x\u0304 and \u0233 and standard deviations \u03c3\u2093 and \u03c3\u1d67.  \n4. Construct the spatial weights matrix W of size N\u00d7N by setting w\u1d62\u2c7c=1 if borough j is listed as a neighbor of borough i (0 otherwise). Compute S\u2080=\u03a3\u1d62\u03a3\u2c7cw\u1d62\u2c7c. (Optionally row\u2010standardize W by dividing each row by its sum, but keep track of S\u2080 accordingly.)  \n5. Compute the observed bivariate spatial association statistic (Lee\u2019s L):  \n   L_obs = [1/S\u2080] * \u03a3\u1d62\u03a3\u2c7c w\u1d62\u2c7c (x\u1d62 \u2013 x\u0304)(y\u2c7c \u2013 \u0233) / (\u03c3\u2093 \u03c3\u1d67)  \n6. Perform a permutation test with at least 500 randomizations:  \n   a. For each permutation k=1\u2026K, randomly shuffle the entries of y among the N boroughs to get y^(k).  \n   b. Recompute L^(k) = [1/S\u2080] * \u03a3\u1d62\u03a3\u2c7c w\u1d62\u2c7c (x\u1d62 \u2013 x\u0304)(y\u2c7c^(k) \u2013 \u0233^(k)) / (\u03c3\u2093 \u03c3\u1d67).  \n   c. Store all L^(k).  \n7. Compute the empirical p\u2010value:  \n   \u2013 if L_obs>0, p = (number of L^(k) \u2265 L_obs + 1)/(K+1);  \n   \u2013 if L_obs<0, p = (number of L^(k) \u2264 L_obs + 1)/(K+1);  \n   \u2013 if L_obs\u22480, p two\u2010tailed similarly.  \n8. Compare p to \u03b1=0.05:  \n   \u2013 if p<0.05 and L_obs>0, conclude POSITIVE spatial association;  \n   \u2013 if p<0.05 and L_obs<0, conclude NEGATIVE spatial association;  \n   \u2013 otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndata_df = pd.read_csv('chunks_csv/bivariate/bivariate_2021_ghg_crime.csv')\nadj_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Check for missing values and drop if any (none expected)\ndata_df = data_df.dropna(subset=['GHG_value', 'Crime_value'])\n# We'll also drop any boroughs not in the adjacency list if necessary, but here all match\n\n# 3. Prepare vectors and borough index\nboroughs = sorted(data_df['borough'].unique())\nn = len(boroughs)\nx = data_df.set_index('borough').loc[boroughs, 'GHG_value'].values\ny = data_df.set_index('borough').loc[boroughs, 'Crime_value'].values\n\n# 4. Build weight matrix W\nW = np.zeros((n, n), dtype=float)\nborough_to_idx = {b: i for i, b in enumerate(boroughs)}\nfor _, row in adj_df.iterrows():\n    b, nb = row['borough'], row['neighbor']\n    if b in borough_to_idx and nb in borough_to_idx:\n        i = borough_to_idx[b]\n        j = borough_to_idx[nb]\n        W[i, j] = 1.0\n# total weight\nS0 = W.sum()\n\n# 5. Compute observed Lee's L\nx_bar = x.mean()\ny_bar = y.mean()\nsigma_x = x.std(ddof=0)\nsigma_y = y.std(ddof=0)\nx_dev = x - x_bar\ny_dev = y - y_bar\n\nL_obs = (x_dev @ W @ y_dev) / (sigma_x * sigma_y * S0)\n\n# 6. Permutation test\nK = 999\nL_perms = np.empty(K)\nrng = np.random.default_rng()\nfor k in range(K):\n    y_perm = rng.permutation(y)\n    y_perm_dev = y_perm - y_bar\n    L_perms[k] = (x_dev @ W @ y_perm_dev) / (sigma_x * sigma_y * S0)\n\n# 7. Compute empirical p-value\nif L_obs > 0:\n    p_value = (np.sum(L_perms >= L_obs) + 1) / (K + 1)\nelif L_obs < 0:\n    p_value = (np.sum(L_perms <= L_obs) + 1) / (K + 1)\nelse:\n    p_value = (np.sum(np.abs(L_perms) >= abs(L_obs)) + 1) / (K + 1)\n\n# 8. Determine verdict\nalpha = 0.05\nif p_value < alpha:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Output\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.12091240850744835, p = 0.111)",
+        "data_points_used": 32,
+        "statistic": "0.12091240850744835",
+        "secondary_measures": [
+          "0.111"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.12091240850744835, p = 0.111)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+
+[2026-08-28T11:52:17.966269+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2021_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T11:53:46.802816+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2021_energy
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T11:55:07.263158+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2021_ghg
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T11:56:40.478964+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2021_gas
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T11:57:30.061709+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2021_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T11:58:42.316392+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2021_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T12:00:08.075594+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2021_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T12:01:27.862291+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2022_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T12:02:51.913500+00:00] FAILED: mode=multiagent model=openai/gpt-4o-mini chunk=getisord_2022_energy
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-28T14:05:24.059259+00:00] FAILED: mode=multiagent model=openai/o4-mini chunk=getisord_2021_transport
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 157, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 135, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 95, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
+
+----------------------------------------------------------------------

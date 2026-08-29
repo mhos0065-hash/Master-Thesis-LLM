@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.144123, p = 0.299000)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the GHG, Transport, and borough\u2010neighbors datasets into pandas DataFrames.  \n2. Check for missing values in each variable; since the profile indicates no missing data, proceed, otherwise impute any missing GHG or Transport value by the borough median (or drop that borough if preferred).  \n3. Build a binary spatial weights matrix W (33\u00d733), where Wij = 1 if borough i and borough j are neighbors and 0 otherwise, with Wii = 0; optionally row\u2010standardize W by dividing each row by its sum.  \n4. For each borough i, compute standardized scores z_GHG_i = (GHG_i \u2013 mean(GHG))/sd(GHG) and z_Trans_i = (Transport_i \u2013 mean(Transport))/sd(Transport).  \n5. Calculate the spatial lag of Transport: for each i, lag_Trans_i = \u03a3_j Wij \u00d7 z_Trans_j.  \n6. Compute Lee\u2019s L statistic: L_obs = [\u03a3_i z_GHG_i \u00d7 lag_Trans_i] / sqrt[\u03a3_i z_GHG_i^2 \u00d7 \u03a3_i lag_Trans_i^2].  \n7. Perform a permutation test with at least 500 random shuffles: for each shuffle k, randomly permute the borough labels of the Transport values, recompute z_Trans, lag_Trans, and L_k; collect the distribution of L_k.  \n8. Calculate the two\u2010sided p-value as the proportion of |L_k| \u2265 |L_obs| in the permutation distribution.  \n9. Determine direction: if p < 0.05 and L_obs > 0 then POSITIVE; if p < 0.05 and L_obs < 0 then NEGATIVE; otherwise NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_ghg_transport.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop any missing values\ndf = df[['GHG_value', 'Transport_value']].dropna()\nn = df.shape[0]\n\n# 3. Build spatial weights matrix W (binary, row-standardized)\nboroughs = df.index.to_list()\nidx = {b: i for i, b in enumerate(boroughs)}\nn = len(boroughs)\nW = np.zeros((n, n), dtype=float)\n# fill adjacency\nfor _, row in adj.iterrows():\n    b, nei = row['borough'], row['neighbor']\n    if b in idx and nei in idx:\n        W[idx[b], idx[nei]] = 1\n# symmetrize and zero diagonal\nW = ((W + W.T) > 0).astype(float)\nnp.fill_diagonal(W, 0)\n# row-standardize\nrow_sums = W.sum(axis=1)\n# avoid division by zero\nrow_sums[row_sums == 0] = 1\nW = W / row_sums[:, None]\n\n# 4. Standardize variables\nghg = df['GHG_value'].values\ntrans = df['Transport_value'].values\nz_ghg = (ghg - ghg.mean()) / ghg.std(ddof=0)\nz_trans = (trans - trans.mean()) / trans.std(ddof=0)\n\n# 5. Spatial lag of Transport\nlag_trans = W.dot(z_trans)\n\n# 6. Compute Lee's L statistic\nnum = np.sum(z_ghg * lag_trans)\nden = np.sqrt(np.sum(z_ghg**2) * np.sum(lag_trans**2))\nL_obs = num / den\n\n# 7. Permutation test\nn_perm = 1000\nnp.random.seed(0)\nL_perms = np.zeros(n_perm)\nfor k in range(n_perm):\n    permuted = np.random.permutation(z_trans)\n    lag_p = W.dot(permuted)\n    num_p = np.sum(z_ghg * lag_p)\n    den_p = np.sqrt(np.sum(z_ghg**2) * np.sum(lag_p**2))\n    L_perms[k] = num_p / den_p\n\n# 8. Two-sided p-value\np_value = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# 9. Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_value:.6f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.144123, p = 0.299000)",
+        "data_points_used": 33,
+        "statistic": "-0.144123",
+        "secondary_measures": [
+          "0.299000"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.144123, p = 0.299000)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

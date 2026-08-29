@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 9.598057116114256e-16, p = 0.626)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the NO2 and GHG data for the London boroughs, ensuring that the data is in a suitable format for analysis (e.g., DataFrame).\n\n2. **Handle Missing Values**: Identify the rows with missing NO2 values. Since there are 2 missing values in the NO2 data, remove these rows from the dataset to ensure that the analysis is conducted on complete cases.\n\n3. **Create Neighboring Boroughs List**: Utilize the provided list of geographic neighbors to create a mapping of each borough to its neighbors.\n\n4. **Calculate Spatial Correlation**: For each borough with a valid NO2 value, gather the NO2 value of that borough and the GHG values of its neighboring boroughs.\n\n5. **Compute Lee's L Statistic**: Implement the calculation of Lee's L statistic for the gathered NO2 and GHG values, which will measure the spatial correlation between the two variables.\n\n6. **Perform Permutation Test**: Conduct a permutation/randomization test with at least 500 shuffles to assess the statistical significance of the observed spatial correlation. This will involve randomly shuffling the GHG values among the boroughs and recalculating Lee's L statistic for each shuffle.\n\n7. **Determine Significance**: Compare the observed Lee's L statistic to the distribution of statistics obtained from the permutation test to calculate the p-value.\n\n8. **Interpret Results**: Based on the p-value, determine if the relationship is positive, negative, or not significant, and prepare the final output with the test statistic and p-value.\n\n9. **Output Results**: Format the results according to the specified structure, including the computed test statistic and p-value.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the datasets\ndata_path = 'chunks_csv/bivariate/bivariate_2022_no2_ghg.csv'\nadjacency_path = 'chunks_csv/borough_adjacency.csv'\n\ndata = pd.read_csv(data_path)\nadjacency = pd.read_csv(adjacency_path)\n\n# Step 2: Handle Missing Values\ndata_cleaned = data.dropna(subset=['NO2_value'])\n\n# Step 3: Create Neighboring Boroughs List\nneighbors_dict = adjacency.groupby('borough')['neighbor'].apply(list).to_dict()\n\n# Step 4: Calculate Spatial Correlation\ndef calculate_lees_l(no2_value, ghg_values):\n    mean_ghg = np.mean(ghg_values)\n    return np.sum((ghg_values - mean_ghg) * (no2_value - mean_ghg))\n\nobserved_statistics = []\nfor index, row in data_cleaned.iterrows():\n    borough = row['borough']\n    no2_value = row['NO2_value']\n    if borough in neighbors_dict:\n        neighbor_ghg_values = data[data['borough'].isin(neighbors_dict[borough])]['GHG_value']\n        if not neighbor_ghg_values.empty:\n            l_statistic = calculate_lees_l(no2_value, neighbor_ghg_values)\n            observed_statistics.append(l_statistic)\n\n# Step 5: Perform Permutation Test\nobserved_statistic = np.mean(observed_statistics)\nn_permutations = 500\npermuted_statistics = []\n\nfor _ in range(n_permutations):\n    permuted_ghg_values = np.random.permutation(data['GHG_value'].values)\n    permuted_l_statistics = []\n    for index, row in data_cleaned.iterrows():\n        borough = row['borough']\n        no2_value = row['NO2_value']\n        if borough in neighbors_dict:\n            neighbor_ghg_values = permuted_ghg_values[data['borough'].isin(neighbors_dict[borough])]\n            if neighbor_ghg_values.size > 0:\n                l_statistic = calculate_lees_l(no2_value, neighbor_ghg_values)\n                permuted_l_statistics.append(l_statistic)\n    permuted_statistics.append(np.mean(permuted_l_statistics))\n\n# Step 6: Determine Significance\np_value = np.sum(np.array(permuted_statistics) >= observed_statistic) / n_permutations\n\n# Step 7: Interpret Results\ndata_points_used = len(data_cleaned)\nif p_value < 0.05:\n    if observed_statistic > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Step 8: Output Results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_statistic}, p = {p_value})\")\n",
+        "output": "data_points_used = 31\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 9.598057116114256e-16, p = 0.626)",
+        "data_points_used": 31,
+        "statistic": "9.598057116114256e-16",
+        "secondary_measures": [
+          "0.626"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 9.598057116114256e-16, p = 0.626)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

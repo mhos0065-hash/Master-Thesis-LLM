@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -0.9252690292796518, p = 0.017)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the two numeric series (GHG_value, Waste_value) for the 33 boroughs and the neighbor list that defines a binary spatial\u2010weights matrix W (wij = 1 if boroughs i and j are listed as neighbors, else 0).  \n2. Handle the single missing Waste_value by dropping that borough from BOTH variables and from the corresponding row/column in W, so the analysis is run on the complete-case set only (no imputation).  \n3. Standardize each remaining variable (subtract mean, divide by standard deviation) so Lee\u2019s L is scale-free.  \n4. Compute observed Lee\u2019s L = (\u03a3i\u03a3j wij\u00b7zi\u00b7yj) / (\u03a3i zi\u00b2), where zi is standardized GHG at i and yj is standardized Waste at j.  \n5. Generate at least 999 random permutations (\u2265500 required) of the Waste variable; for each shuffle recalculate Lee\u2019s L to build the reference distribution under the null hypothesis of no spatial association.  \n6. Derive a two-sided p-value as the proportion of permuted statistics whose absolute value is \u2265 |observed L|; include +1 in numerator and denominator to avoid a zero p-value (Monte-Carlo correction).  \n7. Compare p to 0.05:  \n   \u2022 p < 0.05 and L > 0 \u21d2 conclude POSITIVE spatial association.  \n   \u2022 p < 0.05 and L < 0 \u21d2 conclude NEGATIVE spatial association.  \n   \u2022 p \u2265 0.05 \u21d2 conclude NOT SIGNIFICANT.  \n8. Report the decision and the actual observed L and p in the required format:  \n   FINAL ANSWER: POSITIVE/NEGATIVE/NOT SIGNIFICANT (test statistic = <value>, p = <value>)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ------------------------------------------------------------------\n# 1. Load data\n# ------------------------------------------------------------------\nDATA_PATH = 'chunks_csv/bivariate/bivariate_2022_ghg_waste.csv'\nADJ_PATH  = 'chunks_csv/borough_adjacency.csv'\n\ndf   = pd.read_csv(DATA_PATH)\nw_df = pd.read_csv(ADJ_PATH)\n\n# ------------------------------------------------------------------\n# 2. Drop boroughs with a missing value in (either) variable\n# ------------------------------------------------------------------\ndf_complete = df.dropna(subset=['GHG_value', 'Waste_value']).copy()\nboroughs    = df_complete['borough'].tolist()\nn           = len(boroughs)\n\n# ------------------------------------------------------------------\n# 3. Build a binary, symmetric (n\u00d7n) spatial-weights matrix W\n# ------------------------------------------------------------------\nindexer = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\n\nfor _, row in w_df.iterrows():\n    b1, b2 = row['borough'], row['neighbor']\n    if b1 in indexer and b2 in indexer:\n        i, j = indexer[b1], indexer[b2]\n        W[i, j] = 1.0\n        W[j, i] = 1.0            # symmetry\n\n# ------------------------------------------------------------------\n# 4. Standardize the two variables (\u03bc=0, \u03c3=1)\n# ------------------------------------------------------------------\nz = ((df_complete['GHG_value']  - df_complete['GHG_value'].mean())  /\n      df_complete['GHG_value'].std(ddof=0)).to_numpy()\n\ny = ((df_complete['Waste_value']- df_complete['Waste_value'].mean()) /\n      df_complete['Waste_value'].std(ddof=0)).to_numpy()\n\ndenominator = np.dot(z, z)      # \u03a3 z_i\u00b2    (\u2248 n)\n\n# ------------------------------------------------------------------\n# 5. Observed Lee\u2019s L\n# ------------------------------------------------------------------\nL_obs = z @ (W @ y) / denominator     #  z\u1d40 W y / \u03a3 z_i\u00b2\n\n# ------------------------------------------------------------------\n# 6. Permutation test (999 random shuffles of Waste)\n# ------------------------------------------------------------------\nnp.random.seed(0)\nn_perm      = 999\nL_perm      = np.empty(n_perm)\n\nfor k in range(n_perm):\n    y_perm    = np.random.permutation(y)\n    L_perm[k] = z @ (W @ y_perm) / denominator\n\n# Two-sided Monte-Carlo p-value, +1 correction\np_value = (np.sum(np.abs(L_perm) >= abs(L_obs)) + 1) / (n_perm + 1)\n\n# ------------------------------------------------------------------\n# 7. Decision rule\n# ------------------------------------------------------------------\nalpha = 0.05\nif p_value < alpha and L_obs > 0:\n    verdict = 'POSITIVE'\nelif p_value < alpha and L_obs < 0:\n    verdict = 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# ------------------------------------------------------------------\n# 8. Required output\n# ------------------------------------------------------------------\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = -0.9252690292796518, p = 0.017)",
+        "data_points_used": 32,
+        "statistic": "-0.9252690292796518",
+        "secondary_measures": [
+          "0.017"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -0.9252690292796518, p = 0.017)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

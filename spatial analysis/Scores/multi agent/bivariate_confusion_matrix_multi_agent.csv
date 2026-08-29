@@ -1,0 +1,16 @@
+model,mode,true_class,predicted_positive,predicted_negative,predicted_not_significant,n_total
+deepseek/deepseek-chat-v3-0324,multiagent,positive,0,0,2,2
+deepseek/deepseek-chat-v3-0324,multiagent,negative,0,8,1,9
+deepseek/deepseek-chat-v3-0324,multiagent,not_significant,1,1,37,39
+meta-llama/llama-3.1-8b-instruct,multiagent,positive,0,0,1,1
+meta-llama/llama-3.1-8b-instruct,multiagent,negative,4,0,5,9
+meta-llama/llama-3.1-8b-instruct,multiagent,not_significant,9,3,15,27
+openai/gpt-4o-mini,multiagent,positive,0,0,1,1
+openai/gpt-4o-mini,multiagent,negative,0,0,9,9
+openai/gpt-4o-mini,multiagent,not_significant,2,0,34,36
+openai/o3,multiagent,positive,0,2,0,2
+openai/o3,multiagent,negative,0,8,1,9
+openai/o3,multiagent,not_significant,3,0,36,39
+openai/o4-mini,multiagent,positive,0,1,1,2
+openai/o4-mini,multiagent,negative,0,9,0,9
+openai/o4-mini,multiagent,not_significant,3,2,34,39

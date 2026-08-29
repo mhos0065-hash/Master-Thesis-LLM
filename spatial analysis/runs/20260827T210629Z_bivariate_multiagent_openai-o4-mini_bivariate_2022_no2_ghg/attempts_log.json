@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.49395677675940847, p = 0.122)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO\u2082, GHG and neighbor\u2010list files into pandas DataFrames.  \n2. Check for missing values in the NO\u2082 or GHG columns; drop any boroughs with missing values in either variable and remove any neighbor links involving those boroughs.  \n3. Construct a symmetric binary spatial weight matrix W (33\u00d733 minus dropped rows) where W\u1d62\u2c7c = 1 if borough i and j are neighbors, 0 otherwise; row\u2010standardize if desired.  \n4. Compute means x\u0304 and \u0233 of the (cleaned) NO\u2082 vector x and GHG vector y; form deviations x \u2013 x\u0304 and y \u2013 \u0233.  \n5. Calculate the observed Lee\u2019s L statistic:  \n   L_obs = [\u2211\u1d62\u2211\u2c7c W\u1d62\u2c7c\u00b7(x\u1d62\u2013x\u0304)\u00b7(y\u2c7c\u2013\u0233)] / \u221a[\u2211\u1d62(x\u1d62\u2013x\u0304)\u00b2\u00b7\u2211\u2c7c(y\u2c7c\u2013\u0233)\u00b2].  \n6. Perform a permutation test (\u2265 500 randomizations): each iteration randomly shuffle the GHG values across boroughs, recompute L, and record the permuted L values.  \n7. Compute the empirical p-value as the proportion of permuted |L| \u2265 |L_obs| (two-sided).  \n8. Determine the spatial association:  \n   \u2013 If p < 0.05 and L_obs > 0 \u21d2 POSITIVE  \n   \u2013 If p < 0.05 and L_obs < 0 \u21d2 NEGATIVE  \n   \u2013 Otherwise \u21d2 NOT SIGNIFICANT",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# For reproducibility\nnp.random.seed(0)\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_no2_ghg.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop boroughs with missing NO2 or GHG\ndf_clean = df.dropna(subset=['NO2_value', 'GHG_value']).copy()\nvalid = set(df_clean['borough'])\n\n# Filter adjacency to only include valid boroughs\nadj_clean = adj[adj['borough'].isin(valid) & adj['neighbor'].isin(valid)].copy()\n\n# Prepare borough list and index mapping\nboroughs = sorted(valid)\nn = len(boroughs)\nidx = {b: i for i, b in enumerate(boroughs)}\n\n# Build symmetric spatial weights matrix W\nW = np.zeros((n, n), dtype=int)\nfor _, row in adj_clean.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1\n\n# Extract NO2 and GHG vectors in matching order\ndf2 = df_clean.set_index('borough')\nx = df2.loc[boroughs, 'NO2_value'].values\ny = df2.loc[boroughs, 'GHG_value'].values\n\n# Center the variables\nx_mean = x.mean()\ny_mean = y.mean()\ndx = x - x_mean\ndy = y - y_mean\n\n# Compute observed Lee's L statistic\nnum = np.sum(W * np.outer(dx, dy))\nden = np.sqrt(np.sum(dx**2) * np.sum(dy**2))\nL_obs = num / den\n\n# Permutation test\nn_perm = 500\nL_perms = np.zeros(n_perm)\nfor k in range(n_perm):\n    y_shuffled = np.random.permutation(y)\n    dy_s = y_shuffled - y_mean\n    L_perms[k] = np.sum(W * np.outer(dx, dy_s)) / den\n\n# Compute two-sided p-value\np_value = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Output results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 31\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.49395677675940847, p = 0.122)",
+        "data_points_used": 31,
+        "statistic": "-0.49395677675940847",
+        "secondary_measures": [
+          "0.122"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.49395677675940847, p = 0.122)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

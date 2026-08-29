@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.0631, p = 0.386)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the three CSV / sheets: (a) borough NO\u2082 values, (b) borough Energy values, (c) neighbor\u2010list (each borough\u2019s immediate geographic neighbors).  \n2. Merge NO\u2082 and Energy into a single pandas DataFrame keyed on borough name.  \n3. Handle missing data: drop any borough rows where NO\u2082 or Energy is NaN (2 boroughs have missing NO\u2082; all Energy are present). Update the neighbor list accordingly by removing links that involve a dropped borough.  \n4. Build the binary spatial\u2010weights matrix W (N\u00d7N, where N is the count after step 3):  \n   \u2022 W\u1d62\u2c7c = 1 if borough j is a listed neighbor of borough i; else 0.  \n   \u2022 Set diagonal to 0.  \n   \u2022 Row-standardize W so each row sums to 1 (skip rows that would have divided by 0; if a borough loses all neighbors after step 3, remove that borough entirely).  \n5. Compute Lee\u2019s L statistic for bivariate spatial association between vectors x = NO\u2082 and y = Energy:  \n   \u2022 Standardize both series to z-scores (subtract mean, divide by std).  \n   \u2022 Lee\u2019s L = (1/N) \u00b7 \u03a3\u1d62 \u03a3\u2c7c W\u1d62\u2c7c z\u2093\u1d62 z_y\u2c7c.  \n6. Permutation test for significance:  \n   \u2022 Keep NO\u2082 values fixed.  \n   \u2022 Randomly permute Energy values across boroughs 999 times (\u2265500) and recompute L for each shuffle to create the null distribution.  \n   \u2022 p-value = proportion of permuted L values \u2265 observed L (two-sided: use \u2264 or \u2265 depending on sign, then double).  \n7. Interpretation:  \n   \u2022 If p < 0.05 and observed L > 0 \u2192 POSITIVE spatial association.  \n   \u2022 If p < 0.05 and observed L < 0 \u2192 NEGATIVE spatial association.  \n   \u2022 Otherwise \u2192 NOT SIGNIFICANT.  \n8. Report the observed Lee\u2019s L (rounded to 3-4 decimals) and p-value (rounded to 3 decimals) in the required format.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. ------------------------------------------------------------------\n# Load data\ndata_path = \"chunks_csv/bivariate/bivariate_2021_no2_energy.csv\"\nadj_path   = \"chunks_csv/borough_adjacency.csv\"\n\ndf  = pd.read_csv(data_path)\nadj = pd.read_csv(adj_path)\n\n# 2. ------------------------------------------------------------------\n# Drop rows with any missing values in the two variables\ndf = df.dropna(subset=[\"NO2_value\", \"Energy_value\"]).copy()\n\n# 3. ------------------------------------------------------------------\n# Keep only adjacencies where BOTH boroughs are in the cleaned df\nvalid_boroughs = set(df[\"borough\"])\nadj = adj[adj[\"borough\"].isin(valid_boroughs) & adj[\"neighbor\"].isin(valid_boroughs)].copy()\n\n# 4. ------------------------------------------------------------------\n# Build index look-up\nindexer = {b: i for i, b in enumerate(df[\"borough\"])}\nN = len(df)\n\n# Create binary weights matrix\nW = np.zeros((N, N), dtype=float)\nfor b, n in zip(adj[\"borough\"], adj[\"neighbor\"]):\n    i, j = indexer[b], indexer[n]\n    W[i, j] = 1.0\n    W[j, i] = 1.0          # treat as undirected\n\n# Any borough that lost all neighbours?  If so, drop them.\nrow_sums = W.sum(axis=1)\nkeep_mask = row_sums > 0\nif not keep_mask.all():\n    # update W and df if needed\n    keep_idx = np.where(keep_mask)[0]\n    W = W[np.ix_(keep_idx, keep_idx)]\n    df = df.iloc[keep_idx].reset_index(drop=True)\n    # rebuild indexer\n    indexer = {b: i for i, b in enumerate(df[\"borough\"])}\n    N = len(df)\n    row_sums = W.sum(axis=1)\n\n# Row-standardise\nW = W / row_sums[:, None]\n\n# 5. ------------------------------------------------------------------\n# Standardise variables (z-scores)\nx = df[\"NO2_value\"].to_numpy()\ny = df[\"Energy_value\"].to_numpy()\nz_x = (x - x.mean()) / x.std(ddof=0)\nz_y = (y - y.mean()) / y.std(ddof=0)\n\n# Lee's L statistic\ndef lees_L(zx, zy, Wmat):\n    return (1.0 / len(zx)) * zx.dot(Wmat.dot(zy))\n\nobserved_L = lees_L(z_x, z_y, W)\n\n# 6. ------------------------------------------------------------------\n# Permutation test\nnp.random.seed(0)\nn_perm = 999\nperm_Ls = np.empty(n_perm)\nfor k in range(n_perm):\n    zy_perm = np.random.permutation(z_y)\n    perm_Ls[k] = lees_L(z_x, zy_perm, W)\n\n# Two-sided p-value\np_value = (np.abs(perm_Ls) >= abs(observed_L)).mean()\n\n# 7. ------------------------------------------------------------------\n# Verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if observed_L > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# 8. ------------------------------------------------------------------\n# Outputs\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_L:.4f}, p = {p_value:.3f})\")\n",
+        "output": "data_points_used = 31\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.0631, p = 0.386)",
+        "data_points_used": 31,
+        "statistic": "-0.0631",
+        "secondary_measures": [
+          "0.386"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.0631, p = 0.386)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

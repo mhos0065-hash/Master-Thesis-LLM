@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.2535702447578355, p = 0.07907907907907907)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the data  \n   1.1 Read the Energy and Waste tables into pandas DataFrames, keyed by borough name.  \n   1.2 Read the borough-neighbours list into a DataFrame or adjacency list structure.  \n\n2. Handle missing values  \n   2.1 Identify any boroughs with missing Energy or Waste values.  \n   2.2 Drop those boroughs entirely from both the attribute tables and the adjacency list (so that all remaining boroughs have complete paired observations and a consistent neighborhood structure).  \n\n3. Build the spatial weights matrix W  \n   3.1 From the cleaned adjacency list, create a square matrix W (size = number of boroughs) with Wij = 1 if borough i and j are neighbors, else 0.  \n   3.2 Optionally row-standardize W so that each row sums to 1 (i.e. Wij \u2190 Wij / \u2211j Wij).  \n\n4. Prepare the variables  \n   4.1 Extract the Energy vector E and the Waste vector V for the remaining boroughs.  \n   4.2 Compute their means \u03bcE and \u03bcV and centered values e_i = E_i \u2212 \u03bcE, v_i = V_i \u2212 \u03bcV.  \n\n5. Compute the observed bivariate spatial statistic (Lee\u2019s L)  \n   5.1 Numerator: sum over all i,j of W_ij\u00b7e_i\u00b7v_j  \n   5.2 Denominator: sqrt[(\u2211i e_i\u00b2)\u00b7(\u2211i (\u2211j W_ij\u00b7v_j)\u00b2)]  \n   5.3 Observed L = Numerator / Denominator  \n\n6. Perform a permutation test for significance  \n   6.1 Set the number of permutations N \u2265 500.  \n   6.2 For each permutation k = 1\u2026N:  \n       a. Randomly permute the Waste vector V across borough labels to get V^k.  \n       b. Recompute centered v^k_i and the L^k statistic with W and the fixed E vector.  \n   6.3 Compute the empirical p-value as the fraction of |L^k| \u2265 |L_observed| (two-sided), or use one-sided if hypothesis-directed.  \n\n7. Assess the result  \n   7.1 If the p-value < 0.05 and L_observed > 0, conclude POSITIVE spatial association.  \n   7.2 If the p-value < 0.05 and L_observed < 0, conclude NEGATIVE spatial association.  \n   7.3 Otherwise conclude NOT SIGNIFICANT.  \n\n8. Report the outcome  \n   8.1 Present the sign of the association (POSITIVE, NEGATIVE, or NOT SIGNIFICANT), the observed L statistic, and the p-value.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load the data\nenergy_waste = pd.read_csv(\"chunks_csv/bivariate/bivariate_2021_energy_waste.csv\", index_col=\"borough\")\nadj = pd.read_csv(\"chunks_csv/borough_adjacency.csv\")\n\n# 2. Handle missing values\n# 2.1 Drop boroughs with missing Energy or Waste\new = energy_waste.dropna(subset=[\"Energy_value\", \"Waste_value\"]).copy()\n# 2.2 Restrict adjacency to these boroughs\nvalid_boroughs = set(ew.index)\nadj = adj[adj[\"borough\"].isin(valid_boroughs) & adj[\"neighbor\"].isin(valid_boroughs)].copy()\n\n# 3. Build the spatial weights matrix W\n# 3.1 Define ordering of boroughs\nboroughs = sorted(ew.index)\nn = len(boroughs)\nidx = {b: i for i, b in enumerate(boroughs)}\n# initialize adjacency matrix\nW = np.zeros((n, n), dtype=float)\n# fill in neighbors (undirected)\nfor _, row in adj.iterrows():\n    i = idx[row[\"borough\"]]\n    j = idx[row[\"neighbor\"]]\n    W[i, j] = 1\n    W[j, i] = 1  # ensure symmetry\n\n# 3.2 Row-standardize W\nrow_sums = W.sum(axis=1, keepdims=True)\nW = np.divide(W, row_sums, where=(row_sums != 0))\n\n# 4. Prepare the variables\nE = ew.loc[boroughs, \"Energy_value\"].values\nV = ew.loc[boroughs, \"Waste_value\"].values\ne = E - E.mean()\n\n# 5. Compute the observed Lee's L statistic\n# Numerator: e^T W v_centered\nv = V - V.mean()\nnumerator_obs = e @ (W @ v)\n# Denominator: sqrt( (e'e) * sum_i ( (W v)_i )^2 )\ndenom_obs = np.sqrt((e @ e) * ((W @ v) @ (W @ v)))\nL_obs = numerator_obs / denom_obs\n\n# 6. Permutation test\nN = 999\ncount = 0\nfor _ in range(N):\n    V_perm = np.random.permutation(V)\n    v_perm = V_perm - V_perm.mean()\n    num_k = e @ (W @ v_perm)\n    denom_k = np.sqrt((e @ e) * ((W @ v_perm) @ (W @ v_perm)))\n    L_k = num_k / denom_k\n    if abs(L_k) >= abs(L_obs):\n        count += 1\np_value = count / N\n\n# 7. Assess the result\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# 8. Report the outcome\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.2535702447578355, p = 0.07907907907907907)",
+        "data_points_used": 32,
+        "statistic": "-0.2535702447578355",
+        "secondary_measures": [
+          "0.07907907907907907"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.2535702447578355, p = 0.07907907907907907)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

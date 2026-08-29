@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.048111215665224784, p = 0.514)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level table (columns: borough, NO2_value, Waste_value) and the neighbor list into pandas DataFrames / dictionaries.\n\n2. Missing-value handling  \n   \u2022 Identify any boroughs where NO2_value or Waste_value is NaN (2 for NO2, 1 for Waste according to the profile).  \n   \u2022 Drop those boroughs entirely from both the data table and the neighbor list.  \n   \u2022 After the drop, rebuild the neighbor lists so that no remaining borough references a removed one.  \n   \u2022 Record the new sample size n.\n\n3. Build an n \u00d7 n binary spatial\u2010weights matrix W: w_ij = 1 if borough j is listed as a neighbor of borough i, else 0; set the diagonal to 0. Make W symmetric by OR-ing W and W\u1d40. Store the total weight S = \u03a3_i \u03a3_j w_ij.\n\n4. Compute descriptive statistics: mean_x = mean(NO2), mean_y = mean(Waste); center the vectors x and y by subtracting their respective means.\n\n5. Calculate the observed Lee\u2019s L statistic  \n   L_obs = (n / S) * [\u03a3_i \u03a3_j w_ij \u00b7 (x_i \u2013 mean_x) \u00b7 (y_j \u2013 mean_y)] \u00f7 [\u221a\u03a3_i(x_i \u2013 mean_x)\u00b2 \u00b7 \u221a\u03a3_j(y_j \u2013 mean_y)\u00b2].\n\n6. Permutation test for significance  \n   a. Fix x (NO2).  \n   b. Generate at least 999 (\u2265500 as required) random permutations of y (Waste).  \n   c. For each permutation k, compute L_k using the same formula.  \n   d. Two-tailed p-value = [(count of |L_k| \u2265 |L_obs|) + 1] / (permutations + 1).\n\n7. Interpretation rules  \n   \u2022 If p < 0.05 and L_obs > 0 \u2192 report POSITIVE.  \n   \u2022 If p < 0.05 and L_obs < 0 \u2192 report NEGATIVE.  \n   \u2022 Otherwise report NOT SIGNIFICANT.\n\n8. Report wording  \n   End with the prescribed single line:  \n   FINAL ANSWER: POSITIVE/NEGATIVE/NOT SIGNIFICANT (test statistic = <L_obs>, p = <p-value>)",
+      "coder_result": {
+        "code": "\nimport numpy as np\nimport pandas as pd\n\n# ------------------ 1. Load data ------------------\nDATA_PATH        = \"chunks_csv/bivariate/bivariate_2022_no2_waste.csv\"\nADJACENCY_PATH   = \"chunks_csv/borough_adjacency.csv\"\n\ndf = pd.read_csv(DATA_PATH)                 # borough, NO2_value, Waste_value\nadj = pd.read_csv(ADJACENCY_PATH)           # borough, neighbor\n\n# ------------------ 2. Drop boroughs with any NA ------------------\ndf = df.dropna(subset=[\"NO2_value\", \"Waste_value\"]).reset_index(drop=True)\nkept_boroughs = set(df[\"borough\"])\n\n# ------------------ 3. Keep only valid edges ------------------\nadj = adj[adj[\"borough\"].isin(kept_boroughs) & adj[\"neighbor\"].isin(kept_boroughs)]\n\n# ------------------ 4. Build symmetric binary weight matrix ------------------\nidx = {b: i for i, b in enumerate(df[\"borough\"])}\nn   = len(idx)\nW   = np.zeros((n, n), dtype=int)\n\nfor _, row in adj.iterrows():\n    i, j = idx[row[\"borough\"]], idx[row[\"neighbor\"]]\n    W[i, j] = 1\n    W[j, i] = 1           # ensure symmetry\n\n# Any borough left without neighbours?  Remove them (and matching rows/cols) --\nisolated = np.where(W.sum(axis=1) == 0)[0]\nif isolated.size:\n    keep_mask = np.ones(n, dtype=bool)\n    keep_mask[isolated] = False\n    W       = W[keep_mask][:, keep_mask]\n    df      = df.iloc[keep_mask].reset_index(drop=True)\n    idx     = {b: i for i, b in enumerate(df[\"borough\"])}\n    n       = len(idx)\n\n# ------------------ 5. Prepare vectors ------------------\nx = df[\"NO2_value\"].to_numpy(dtype=float)\ny = df[\"Waste_value\"].to_numpy(dtype=float)\n\nx_cent = x - x.mean()\ny_cent = y - y.mean()\n\nS = W.sum()                       # \u03a3_i \u03a3_j w_ij\nnum = x_cent @ (W @ y_cent)       # x' * W * y\nden = np.sqrt((x_cent**2).sum()) * np.sqrt((y_cent**2).sum())\nL_obs = (n / S) * (num / den)\n\n# ------------------ 6. Permutation test ------------------\nnp.random.seed(0)\nperm_n = 999\nperm_stats = np.empty(perm_n)\nfor k in range(perm_n):\n    y_perm = np.random.permutation(y_cent)\n    perm_stats[k] = (n / S) * ((x_cent @ (W @ y_perm)) / den)\n\np_val = ( (np.abs(perm_stats) >= abs(L_obs)).sum() + 1 ) / (perm_n + 1)\n\n# ------------------ 7. Interpretation ------------------\nif p_val < 0.05 and L_obs > 0:\n    verdict = \"POSITIVE\"\nelif p_val < 0.05 and L_obs < 0:\n    verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ------------------ 8. Print outputs ------------------\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.048111215665224784, p = 0.514)",
+        "data_points_used": 30,
+        "statistic": "-0.048111215665224784",
+        "secondary_measures": [
+          "0.514"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.048111215665224784, p = 0.514)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

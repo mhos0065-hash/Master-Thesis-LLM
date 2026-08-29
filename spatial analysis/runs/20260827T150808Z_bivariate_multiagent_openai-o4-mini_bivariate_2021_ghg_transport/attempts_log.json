@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.3918, p = 0.3440)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the two tables into pandas DataFrames: one with borough names and their GHG and Transport values, and one listing each borough\u2019s neighbors.  \n2. Check for missing values in the GHG or Transport columns; if any are found, drop the corresponding boroughs (or, if preferred, impute using the borough\u2019s mean among its neighbors) to ensure complete pairs for analysis.  \n3. From the neighbor list, build a 33\u00d733 binary spatial weight matrix W (wij = 1 if i and j are neighbors, 0 otherwise), and row-standardize it if desired.  \n4. Compute the mean of GHG (\u03bcGHG) and Transport (\u03bcT) across all boroughs; form centered variables z_i = GHG_i\u2212\u03bcGHG and x_i = T_i\u2212\u03bcT.  \n5. Calculate the observed bivariate Moran\u2019s I (Lee\u2019s L) as:  \n   L_obs = [\u03a3_i \u03a3_j w_ij z_i x_j] / \u221a([\u03a3_i z_i\u00b2] [\u03a3_j x_j\u00b2])  \n6. Perform a permutation test with at least 500 randomizations: for each permutation k, randomly shuffle the Transport values across borough labels, recompute L_k, and store it.  \n7. Compute the p-value as the proportion of |L_k| \u2265 |L_obs| (two-tailed), or if testing directionally, as the fraction of L_k \u2265 L_obs (for positive) or L_k \u2264 L_obs (for negative).  \n8. Compare p to \u03b1 = 0.05; if p<0.05 and L_obs>0, conclude POSITIVE; if p<0.05 and L_obs<0, conclude NEGATIVE; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_ghg_transport.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop missing values\ndf = df.dropna(subset=['GHG_value', 'Transport_value'])\nboroughs = df.index.tolist()\nN = len(boroughs)\n\n# Map boroughs to indices\nidx = {b: i for i, b in enumerate(boroughs)}\n\n# Build adjacency matrix\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj.iterrows():\n    b, n = row['borough'], row['neighbor']\n    if b in idx and n in idx:\n        i, j = idx[b], idx[n]\n        W[i, j] = 1\n        W[j, i] = 1  # ensure symmetry\n\n# Variables\nghg = df['GHG_value'].values\ntrans = df['Transport_value'].values\n# Center\nz = ghg - ghg.mean()\nx = trans - trans.mean()\n\n# Observed Lee's L\nnum = np.sum(W * np.outer(z, x))\nden = np.sqrt(np.sum(z**2) * np.sum(x**2))\nL_obs = num / den\n\n# Permutation test\nnp.random.seed(0)\nn_perm = 1000\nLs = np.zeros(n_perm)\nfor k in range(n_perm):\n    x_perm = np.random.permutation(x)\n    num_k = np.sum(W * np.outer(z, x_perm))\n    Ls[k] = num_k / den\n\n# Two-tailed p-value\np_value = np.mean(np.abs(Ls) >= abs(L_obs))\n\n# Determine verdict\nalpha = 0.05\nif p_value < alpha:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Outputs\nprint(f\"data_points_used = {N}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.4f}, p = {p_value:.4f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.3918, p = 0.3440)",
+        "data_points_used": 33,
+        "statistic": "-0.3918",
+        "secondary_measures": [
+          "0.3440"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.3918, p = 0.3440)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

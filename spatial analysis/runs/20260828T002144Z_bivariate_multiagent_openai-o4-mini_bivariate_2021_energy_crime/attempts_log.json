@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.14005469733531034, p = 0.12287712287712288)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Energy and Crime datasets into pandas DataFrames and read in the list of borough\u2010neighbor pairs.  \n2. Merge Energy_value and Crime_value by borough into a single DataFrame.  \n3. Handle missing values: since there is 1 missing Crime_value, drop that borough from all subsequent analyses (listwise deletion).  \n4. From the neighbor\u2010pair list, build an N\u00d7N adjacency matrix W (N\u2009=\u2009number of boroughs after dropping), with Wij\u2009=\u20091 if i and j are neighbors, 0 otherwise, and ensure symmetry.  \n5. Row\u2010standardize W so each row sums to 1 (to weight each borough\u2019s neighbors equally).  \n6. Compute x\u2009=\u2009Energy_value and y\u2009=\u2009Crime_value vectors, subtract their respective means to get x\u2032 and y\u2032.  \n7. Calculate the observed Lee\u2019s L statistic: L_obs = (x\u2032\u1d40\u2009W\u2009y\u2032)\u2009/\u2009sqrt((x\u2032\u1d40\u2009x\u2032)\u2009\u00b7\u2009(y\u2032\u1d40\u2009y\u2032)).  \n8. Perform a permutation test with at least 500 random shuffles of y\u2032: for each shuffle, permute y\u2032 across boroughs, recompute L_perm, and record its value.  \n9. Compute the two\u2010sided p-value as (number of |L_perm| \u2265 |L_obs|\u2009+\u20091)\u2009/\u2009(number of permutations\u2009+\u20091).  \n10. Determine spatial association: if p\u2009<\u20090.05 and L_obs\u2009>\u20090 then POSITIVE; if p\u2009<\u20090.05 and L_obs\u2009<\u20090 then NEGATIVE; otherwise NOT SIGNIFICANT. Then report in the form:  \n\u2003FINAL ANSWER: [POSITIVE\u2009/\u2009NEGATIVE\u2009/\u2009NOT SIGNIFICANT] (test statistic = <L_obs>, p = <p>)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2021_energy_crime.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop the borough with missing Crime_value\ndf = df.dropna(subset=['Crime_value']).reset_index(drop=True)\ndata_points_used = len(df)\n\n# 3. Build index mapping\nboroughs = df['borough'].tolist()\nidx = {b: i for i, b in enumerate(boroughs)}\n\n# 4. Build adjacency matrix W\nN = data_points_used\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj.iterrows():\n    b, n = row['borough'], row['neighbor']\n    if b in idx and n in idx:\n        i, j = idx[b], idx[n]\n        W[i, j] = 1\n        W[j, i] = 1\n\n# 5. Row\u2010standardize W\nrow_sums = W.sum(axis=1)\nW = W / row_sums[:, None]\n\n# 6. Extract and center variables\nx = df['Energy_value'].values\ny = df['Crime_value'].values\nx_cent = x - x.mean()\ny_cent = y - y.mean()\n\n# 7. Compute observed Lee's L\ndenom = np.sqrt((x_cent @ x_cent) * (y_cent @ y_cent))\nL_obs = (x_cent @ (W @ y_cent)) / denom\n\n# 8. Permutation test\nnp.random.seed(42)\nn_perm = 1000\ncount = 0\nfor _ in range(n_perm):\n    y_perm = np.random.permutation(y_cent)\n    L_perm = (x_cent @ (W @ y_perm)) / denom\n    if abs(L_perm) >= abs(L_obs):\n        count += 1\np_value = (count + 1) / (n_perm + 1)\n\n# 9. Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# 10. Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.14005469733531034, p = 0.12287712287712288)",
+        "data_points_used": 32,
+        "statistic": "0.14005469733531034",
+        "secondary_measures": [
+          "0.12287712287712288"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.14005469733531034, p = 0.12287712287712288)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

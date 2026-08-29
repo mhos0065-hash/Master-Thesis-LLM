@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.096638, p = 0.132000)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Transport and Waste data into a pandas DataFrame and load the borough\u2010neighbor list into a suitable structure.  \n2. Identify missing values: note that Waste_value has 1 missing entry; drop the corresponding borough from both the DataFrame and the adjacency list.  \n3. From the cleaned neighbor list, build a symmetric spatial weights matrix W (shape 32\u00d732) and row\u2010standardize it so each row sums to 1.  \n4. Standardize Transport_value and Waste_value to z\u2010scores across the 32 boroughs.  \n5. Compute Lee\u2019s L statistic L_obs = (1/n)\u00b7z_T\u1d40 \u00b7 W \u00b7 z_W, where z_T and z_W are the standardized Transport and Waste vectors and n=32.  \n6. Perform a permutation test with at least 500 random shuffles: for each shuffle, randomly permute Waste_value across boroughs, recompute L, and store the result to form a null distribution.  \n7. Calculate the p-value as the proportion of permuted |L| values \u2265 |L_obs|.  \n8. Conclude POSITIVE if L_obs>0 and p<0.05; NEGATIVE if L_obs<0 and p<0.05; otherwise NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_transport_waste.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop borough with missing Waste_value\nmissing_boroughs = df.loc[df['Waste_value'].isna(), 'borough'].tolist()\ndf = df.dropna(subset=['Waste_value']).reset_index(drop=True)\nadj = adj[~adj['borough'].isin(missing_boroughs) & ~adj['neighbor'].isin(missing_boroughs)].reset_index(drop=True)\n\n# Prepare borough list and index mapping\nboroughs = df['borough'].tolist()\nn = len(boroughs)\nidx = {b: i for i, b in enumerate(boroughs)}\n\n# Build symmetric adjacency matrix\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    b, nb = row['borough'], row['neighbor']\n    i, j = idx[b], idx[nb]\n    W[i, j] = 1\n    W[j, i] = 1\n\n# Row-standardize W\nrow_sums = W.sum(axis=1)\nW = np.divide(W, row_sums[:, None], where=row_sums[:, None] != 0)\n\n# Standardize variables to z-scores\ndf = df.set_index('borough')\nz_T = (df['Transport_value'] - df['Transport_value'].mean()) / df['Transport_value'].std(ddof=0)\nz_W = (df['Waste_value'] - df['Waste_value'].mean()) / df['Waste_value'].std(ddof=0)\nz_T_arr = z_T.reindex(boroughs).values\nz_W_arr = z_W.reindex(boroughs).values\n\n# Compute Lee's L statistic\nL_obs = (1/n) * z_T_arr @ W @ z_W_arr\n\n# Permutation test\nn_perms = 500\nrng = np.random.default_rng(42)\nL_perms = np.zeros(n_perms)\nfor k in range(n_perms):\n    perm = rng.permutation(n)\n    L_perms[k] = (1/n) * z_T_arr @ W @ z_W_arr[perm]\n\n# p-value\np_value = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Output results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_value:.6f})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.096638, p = 0.132000)",
+        "data_points_used": 32,
+        "statistic": "-0.096638",
+        "secondary_measures": [
+          "0.132000"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.096638, p = 0.132000)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

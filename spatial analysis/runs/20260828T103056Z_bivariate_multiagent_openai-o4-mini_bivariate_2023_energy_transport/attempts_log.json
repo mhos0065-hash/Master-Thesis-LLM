@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.336552, p = 0.4276)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Energy and Transport data into a pandas DataFrame and load the borough\u2010neighbor list into a suitable structure.  \n2. Check for missing values in Energy_value and Transport_value. If any are found, drop those boroughs from both datasets (pairwise deletion) so that analyses use only complete cases.  \n3. Construct a spatial weights matrix W of size 33\u00d733, where Wij=1 if borough j is a listed neighbor of borough i, and Wij=0 otherwise.  \n4. (Optional) Row\u2010standardize W by dividing each row by its sum, if desired for comparability of weights.  \n5. Extract vectors X (Energy_value) and Y (Transport_value) aligned to the same borough order used in W.  \n6. Compute the means x\u0304 and \u0233 of X and Y, then form the centered variables xi\u2032=xi\u2212x\u0304 and yj\u2032=yj\u2212\u0233.  \n7. Calculate the numerator N = \u2211i \u2211j Wij\u00b7xi\u2032\u00b7yj\u2032.  \n8. Calculate Sxx = \u2211i xi\u2032\u00b2 and Syy = \u2211j yj\u2032\u00b2, then compute Lee\u2019s L = N / sqrt(Sxx\u00b7Syy).  \n9. Perform at least 500 random permutations of Y: for each permutation, shuffle the entries of Y across borough labels, recompute Lee\u2019s L*, and record it.  \n10. Compute the p\u2010value as the fraction of |L*| \u2265 |L| over all permutations.  \n11. Compare p\u2010value to \u03b1=0.05 and use the sign of the observed L to decide whether the spatial association is POSITIVE, NEGATIVE, or NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_transport.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop any missing values\ndf = df[['Energy_value', 'Transport_value']].dropna()\ndata_points_used = len(df)\n\n# 3. Construct spatial weights matrix W\nboroughs = list(df.index)\nn = len(boroughs)\nindex_map = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    i = index_map.get(row['borough'])\n    j = index_map.get(row['neighbor'])\n    if i is not None and j is not None:\n        W[i, j] = 1.0\n\n# 5. Extract variables\nX = df['Energy_value'].values\nY = df['Transport_value'].values\n\n# 6. Center the variables\nx = X - X.mean()\ny = Y - Y.mean()\n\n# 7. Compute numerator N\nN = x.dot(W.dot(y))\n\n# 8. Compute Sxx, Syy and Lee's L\nSxx = np.sum(x**2)\nSyy = np.sum(y**2)\nL = N / np.sqrt(Sxx * Syy)\n\n# 9. Permutation test\nn_perm = 1000\nrng = np.random.default_rng(0)\nL_perms = np.empty(n_perm)\nfor k in range(n_perm):\n    y_perm = rng.permutation(y)\n    N_perm = x.dot(W.dot(y_perm))\n    L_perms[k] = N_perm / np.sqrt(Sxx * Syy)\n\n# 10. Compute two\u2010sided p\u2010value\np = (np.sum(np.abs(L_perms) >= abs(L)) + 1) / (n_perm + 1)\n\n# 11. Determine verdict\nif p < 0.05:\n    verdict = 'POSITIVE' if L > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L:.6f}, p = {p:.4f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.336552, p = 0.4276)",
+        "data_points_used": 33,
+        "statistic": "-0.336552",
+        "secondary_measures": [
+          "0.4276"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.336552, p = 0.4276)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

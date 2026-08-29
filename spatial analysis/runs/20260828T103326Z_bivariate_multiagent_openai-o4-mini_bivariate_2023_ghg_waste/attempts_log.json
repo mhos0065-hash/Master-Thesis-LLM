@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -0.14323517554311832, p = 0.016)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level GHG and Waste data into pandas DataFrames, and load the borough adjacency list into a DataFrame or dict of neighbor sets.  \n2. Identify and handle missing values: since there is 1 missing Waste_value, drop that borough entirely from both GHG and Waste arrays and from the adjacency list (pairwise deletion).  \n3. Construct the spatial weights matrix W (33\u00d733 with the dropped borough removed): for each pair i,j set w\u1d62\u2c7c=1 if i and j are neighbors, otherwise 0; leave diagonal zero.  \n4. Optionally row\u2010standardize W (i.e. divide each row by its sum) or use binary weights, but use the same convention in permutations.  \n5. Center the variables: compute x\u1d62 = GHG\u1d62 \u2013 mean(GHG) and y\u1d62 = Waste\u1d62 \u2013 mean(Waste).  \n6. Compute the observed bivariate Lee\u2019s L statistic:  \n   L_obs = [\u2211\u1d62 \u2211\u2c7c w\u1d62\u2c7c\u2009x\u1d62\u2009y\u2c7c] / sqrt([\u2211\u1d62 x\u1d62\u00b2]\u2009[\u2211\u2c7c y\u2c7c\u00b2]).  \n7. Perform a permutation test (N \u2265 500): for each permutation k, randomly shuffle the Waste values across borough indices, recompute L_k with the same x\u1d62 and W, and store L_k.  \n8. Calculate the empirical p-value as the proportion of |L_k| \u2265 |L_obs| (two\u2010sided test).  \n9. Determine significance at \u03b1=0.05:  \n   \u2013 If p<0.05 and L_obs>0 \u2192 POSITIVE spatial association.  \n   \u2013 If p<0.05 and L_obs<0 \u2192 NEGATIVE spatial association.  \n   \u2013 Otherwise \u2192 NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\nghg_waste = pd.read_csv(\"chunks_csv/bivariate/bivariate_2023_ghg_waste.csv\")\nadj = pd.read_csv(\"chunks_csv/borough_adjacency.csv\")\n\n# 2. Drop borough with missing Waste_value\ngw = ghg_waste.dropna(subset=[\"Waste_value\"]).reset_index(drop=True)\nvalid = set(gw[\"borough\"])\nn = gw.shape[0]\n\n# 3. Filter adjacency to valid boroughs and neighbors\nadj_filt = adj[adj[\"borough\"].isin(valid) & adj[\"neighbor\"].isin(valid)].copy()\n\n# 4. Build symmetric neighbor pairs\npairs = set()\nfor _, row in adj_filt.iterrows():\n    b, nb = row[\"borough\"], row[\"neighbor\"]\n    pairs.add((b, nb))\n    pairs.add((nb, b))\n\n# 5. Map boroughs to indices\nboroughs = list(gw[\"borough\"])\nidx = {b: i for i, b in enumerate(boroughs)}\n\n# 6. Build weight matrix W (binary), then row-standardize\nW = np.zeros((n, n), float)\nfor b, nb in pairs:\n    i, j = idx[b], idx[nb]\n    W[i, j] = 1.0\n# row-standardize\nrow_sums = W.sum(axis=1, keepdims=True)\nW = W / row_sums\n\n# 7. Center variables\nx = gw[\"GHG_value\"].values\ny = gw[\"Waste_value\"].values\nx_cent = x - x.mean()\ny_cent = y - y.mean()\n\n# 8. Compute observed Lee's L\nnum = x_cent @ W @ y_cent\nden = np.sqrt((x_cent @ x_cent) * (y_cent @ y_cent))\nL_obs = num / den\n\n# 9. Permutation test\nB = 500\nL_perms = np.zeros(B)\nfor k in range(B):\n    y_p = np.random.permutation(y_cent)\n    L_perms[k] = (x_cent @ W @ y_p) / den\n\np_val = np.mean(np.abs(L_perms) >= np.abs(L_obs))\n\n# 10. Determine verdict\nif p_val < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = -0.14323517554311832, p = 0.016)",
+        "data_points_used": 32,
+        "statistic": "-0.14323517554311832",
+        "secondary_measures": [
+          "0.016"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -0.14323517554311832, p = 0.016)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

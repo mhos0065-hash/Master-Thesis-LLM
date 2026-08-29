@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.002427, p = 0.966000)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Read the three CSV/TSV files (NO2 values, Crime values, neighbour list) into pandas DataFrames.  \n2. Merge the NO2 and Crime tables on borough name to obtain one table with columns [borough, NO2_value, Crime_value].  \n3. Handle missing data: drop any borough that has a missing value in NO2_value or Crime_value (list-wise deletion). Record the remaining borough list.  \n4. From the neighbour file, keep only neighbour pairs in which both boroughs survived the missing-value deletion.  \n5. Build an n \u00d7 n binary spatial\u2010weights matrix W where W[i,j] = 1 if borough i is listed as a neighbour of borough j, else 0 (set W[i,i] = 0). Compute S\u2080 = \u03a3\u2081 \u03a3\u2c7c W[i,j] for later use.  \n6. Compute Lee\u2019s L statistic:  \n   a. Let x = NO2 values, y = Crime values, x\u0304 and \u0233 their means.  \n   b. Numerator N = \u03a3\u1d62 \u03a3\u2c7c W[i,j] (x\u1d62 \u2212 x\u0304)(y\u2c7c \u2212 \u0233).  \n   c. Denominator D = sqrt[ \u03a3\u1d62(x\u1d62 \u2212 x\u0304)\u00b2 * \u03a3\u2c7c(y\u2c7c \u2212 \u0233)\u00b2 ].  \n   d. L = ((n \u2212 1)/S\u2080) * N / D.  \n7. Assess significance with a permutation test (n_perms = 999; \u2265500 minimum):  \n   \u2022 Keep NO2 fixed; randomly shuffle Crime values among boroughs each permutation, recompute L.  \n   \u2022 Build the empirical permutation distribution of L.  \n   \u2022 Two-sided p-value = ((#|L_perm| \u2265 |L_obs|) + 1)/(n_perms + 1).  \n8. Decision rule:  \n   \u2022 If p < 0.05 and L_obs > 0 \u2192 report \u201cPOSITIVE\u201d.  \n   \u2022 If p < 0.05 and L_obs < 0 \u2192 report \u201cNEGATIVE\u201d.  \n   \u2022 Otherwise \u2192 report \u201cNOT SIGNIFICANT\u201d.  \n9. Report the observed Lee\u2019s L and p-value rounded to three decimal places in the required one-line format.  \n\nMissing-value policy: rows (boroughs) with any NA in either variable are removed before steps 4\u20139; all subsequent calculations and permutations use this reduced, complete-data set only.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# ----------------------------\n# 1. Load data\n# ----------------------------\nDATA_PATH = \"chunks_csv/bivariate/bivariate_2022_no2_crime.csv\"\nADJ_PATH  = \"chunks_csv/borough_adjacency.csv\"\n\ndf = pd.read_csv(DATA_PATH)              # columns: borough, NO2_value, Crime_value\nadj = pd.read_csv(ADJ_PATH)              # columns: borough, neighbor\n\n# ----------------------------\n# 2. Drop rows with any NA\n# ----------------------------\ndf_clean = df.dropna(subset=[\"NO2_value\", \"Crime_value\"]).reset_index(drop=True)\nboroughs = df_clean[\"borough\"].tolist()\nn = len(boroughs)\n\n# Keep only adjacency pairs where both ends survive the NA-removal\nadj_clean = adj[adj[\"borough\"].isin(boroughs) & adj[\"neighbor\"].isin(boroughs)]\n\n# ----------------------------\n# 3. Build spatial-weights matrix W (binary, symmetric, zero diagonal)\n# ----------------------------\nindex = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\n\nfor _, row in adj_clean.iterrows():\n    i = index[row[\"borough\"]]\n    j = index[row[\"neighbor\"]]\n    W[i, j] = 1          # directed edge as listed\n    W[j, i] = 1          # symmetrize\n\nnp.fill_diagonal(W, 0)\nS0 = W.sum()\n\n# ----------------------------\n# 4. Prepare variables\n# ----------------------------\nx = df_clean[\"NO2_value\"].to_numpy(dtype=float)\ny = df_clean[\"Crime_value\"].to_numpy(dtype=float)\nx_mean = x.mean()\ny_mean = y.mean()\n\n# ----------------------------\n# 5. Lee\u2019s L statistic\n# ----------------------------\nnum = ((x - x_mean)[:, None] * (y - y_mean)[None, :]) * W\nN_stat = num.sum()\nD_stat = np.sqrt(((x - x_mean) ** 2).sum() * ((y - y_mean) ** 2).sum())\nL_obs = ((n - 1) / S0) * N_stat / D_stat\n\n# ----------------------------\n# 6. Permutation test (999 permutations)\n# ----------------------------\nrng = np.random.default_rng(seed=0)\nperm_L = []\nn_perms = 999\n\nfor _ in range(n_perms):\n    y_perm = rng.permutation(y)\n    num_perm = ((x - x_mean)[:, None] * (y_perm - y_mean)[None, :]) * W\n    N_perm = num_perm.sum()\n    L_perm = ((n - 1) / S0) * N_perm / D_stat\n    perm_L.append(L_perm)\n\nperm_L = np.array(perm_L)\n\n# two-sided p-value\np_val = (np.sum(np.abs(perm_L) >= abs(L_obs)) + 1) / (n_perms + 1)\n\n# ----------------------------\n# 7. Determine direction & significance\n# ----------------------------\nif p_val < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# ----------------------------\n# 8. Print results\n# ----------------------------\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {p_val:.6f})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.002427, p = 0.966000)",
+        "data_points_used": 30,
+        "statistic": "0.002427",
+        "secondary_measures": [
+          "0.966000"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.002427, p = 0.966000)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

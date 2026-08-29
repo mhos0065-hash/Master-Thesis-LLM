@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 9.864140497750128, p = 0.128)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Import the three CSV/JSON files (GHG values, Crime values, neighbor list) into pandas DataFrames.  \n2. Merge GHG and Crime data on borough name so each row contains GHG_i, Crime_i, and an index i.  \n3. Handle the one missing Crime value: drop that borough from the merged table and also remove any neighbor\u2010list references to it so weight calculations remain consistent. (No other variables have missing values.)  \n4. Build an n \u00d7 n binary spatial\u2010weights matrix W where w_ij = 1 if borough j is listed as a geographic neighbor of borough i, else 0. Set all diagonal elements to 0, then row-standardize W so every row sums to 1.  \n5. Compute the observed Lee\u2019s L statistic:  \n   a. Let x = GHG vector, y = Crime vector (after step 3).  \n   b. Center each: x\u0303 = x \u2013 mean(x), \u1ef9 = y \u2013 mean(y).  \n   c. L_obs = (1/\u03a3\u03a3w_ij) \u00b7 \u03a3_i \u03a3_j w_ij \u00b7 x\u0303_i \u00b7 \u1ef9_j.  \n6. Generate a null distribution via permutation:  \n   a. Fix GHG values.  \n   b. For at least 999 (\u2265 500) iterations, randomly permute Crime values among boroughs, recompute Lee\u2019s L each time, and store the result.  \n7. Calculate a two-sided p-value: proportion of permuted L\u2019s whose absolute value \u2265 |L_obs|.  \n8. Decision rule (\u03b1 = 0.05):  \n   \u2022 If p < 0.05 and L_obs > 0 \u21d2 report POSITIVE.  \n   \u2022 If p < 0.05 and L_obs < 0 \u21d2 report NEGATIVE.  \n   \u2022 Otherwise \u21d2 report NOT SIGNIFICANT.  \n9. Provide the exact numerical L_obs and p in the required format:  \n   FINAL ANSWER: POSITIVE/NEGATIVE/NOT SIGNIFICANT (test statistic = <value>, p = <value>)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# -----------------------------\n# 1. Load data\n# -----------------------------\nGHG_CRIME_PATH = 'chunks_csv/bivariate/bivariate_2023_ghg_crime.csv'\nADJ_PATH       = 'chunks_csv/borough_adjacency.csv'\n\ndf = pd.read_csv(GHG_CRIME_PATH)\nadj = pd.read_csv(ADJ_PATH)\n\n# -----------------------------\n# 2. Merge / clean (drop NA in Crime)\n# -----------------------------\ndf_clean = df.dropna(subset=['Crime_value']).reset_index(drop=True)\nboroughs = df_clean['borough'].tolist()   # order we will keep\n\n# record number of usable observations\nn = len(df_clean)\n\n# -----------------------------\n# 3. Build symmetric binary weight matrix W (n x n, row/col order = boroughs)\n# -----------------------------\n# keep only adjacency pairs where both boroughs are in the cleaned sample\nadj_filtered = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n\n# create a set of undirected edges\nedges = set()\nfor _, row in adj_filtered.iterrows():\n    i, j = row['borough'], row['neighbor']\n    edges.add( (i, j) )\n    edges.add( (j, i) )   # ensure symmetry\n\n# map borough name to index\nindex = {b:i for i, b in enumerate(boroughs)}\n\n# initialise W\nW = np.zeros((n, n), dtype=int)\nfor (i_boro, j_boro) in edges:\n    i, j = index[i_boro], index[j_boro]\n    if i != j:\n        W[i, j] = 1\n\n# total weight (denominator)\nW_sum = W.sum()\n\n# -----------------------------\n# 4. Prepare variable vectors\n# -----------------------------\nx = df_clean['GHG_value'].to_numpy()\ny = df_clean['Crime_value'].to_numpy()\n\nx_cent = x - x.mean()\ny_cent = y - y.mean()\n\n# -----------------------------\n# 5. Observed Lee's L statistic\n# -----------------------------\nL_obs = (x_cent @ W @ y_cent) / W_sum\n\n# -----------------------------\n# 6. Permutation test (1999 perms)\n# -----------------------------\nrng = np.random.default_rng(0)\nn_perm = 1999\nL_perms = np.empty(n_perm)\n\nfor k in range(n_perm):\n    y_perm = rng.permutation(y_cent)\n    L_perms[k] = (x_cent @ W @ y_perm) / W_sum\n\n# two-sided p-value (add-one rule)\np_value = ( (np.abs(L_perms) >= abs(L_obs)).sum() + 1 ) / (n_perm + 1)\n\n# -----------------------------\n# 7. Verdict\n# -----------------------------\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# -----------------------------\n# 8. Print outputs\n# -----------------------------\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 9.864140497750128, p = 0.128)",
+        "data_points_used": 32,
+        "statistic": "9.864140497750128",
+        "secondary_measures": [
+          "0.128"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 9.864140497750128, p = 0.128)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

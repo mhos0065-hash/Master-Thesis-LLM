@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -0.13644042347027785, p = 0.012)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the GHG and Waste data for the 33 London boroughs into pandas DataFrames, and load the borough-neighbor list into a suitable structure.  \n2. Check both datasets for missing values. If any borough has a missing GHG or Waste value, drop that borough (and its links in the neighbor list) from all analyses.  \n3. Build a 33\u00d733 adjacency matrix W from the neighbor list, where W[i,j]=1 if borough i and j are neighbors, else 0.  \n4. Row-normalize W so that each row sums to 1 (i.e. W_ij \u2190 W_ij / \u03a3_j W_ij).  \n5. Extract GHG values as vector x and Waste values as vector y, aligned to the same borough ordering.  \n6. Center x and y by subtracting their respective means (no further scaling needed for Lee\u2019s L).  \n7. Compute the observed Lee\u2019s L statistic: L_obs = (x\u1d40 W y) / sqrt((x\u1d40 x)(y\u1d40 y)).  \n8. Conduct a permutation test with at least 500 random shuffles of y (keeping x and W fixed), computing L_k for each shuffle to form a null distribution.  \n9. Calculate the p-value as the proportion of |L_k| \u2265 |L_obs| over all permutations (two-tailed test).  \n10. Determine the sign of L_obs and compare the p-value to \u03b1=0.05 to classify the spatial association as POSITIVE, NEGATIVE, or NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport numpy as np\nimport pandas as pd\n\n# 1. Load data\ndata_path = 'chunks_csv/bivariate/bivariate_2021_ghg_waste.csv'\nadj_path = 'chunks_csv/borough_adjacency.csv'\ndf = pd.read_csv(data_path)\nadj = pd.read_csv(adj_path)\n\n# 2. Drop any missing values\ndf = df.dropna(subset=['GHG_value', 'Waste_value'])\nboroughs = df['borough'].tolist()\nn = len(boroughs)\n\n# 3. Build adjacency matrix W (un-normalized)\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    i = idx.get(row['borough'])\n    j = idx.get(row['neighbor'])\n    if i is not None and j is not None and i != j:\n        W[i, j] = 1\n        W[j, i] = 1  # ensure symmetry\n\n# 4. Row-normalize W\nrow_sums = W.sum(axis=1, keepdims=True)\n# avoid division by zero\nrow_sums[row_sums == 0] = 1\nW = W / row_sums\n\n# 5. Extract and align x and y\nx = df['GHG_value'].values.astype(float)\ny = df['Waste_value'].values.astype(float)\n\n# 6. Center x and y\nx = x - x.mean()\ny = y - y.mean()\n\n# 7. Compute observed Lee's L\nnumerator = x.dot(W.dot(y))\ndenominator = np.sqrt(x.dot(x) * y.dot(y))\nL_obs = numerator / denominator\n\n# 8. Permutation test\nnp.random.seed(42)\nn_perm = 1000\ncount_extreme = 0\nfor _ in range(n_perm):\n    y_perm = np.random.permutation(y)\n    L_perm = x.dot(W.dot(y_perm)) / denominator\n    if abs(L_perm) >= abs(L_obs):\n        count_extreme += 1\n\n# 9. p-value (two-tailed)\np_value = count_extreme / n_perm\n\n# 10. Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Outputs\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = -0.13644042347027785, p = 0.012)",
+        "data_points_used": 32,
+        "statistic": "-0.13644042347027785",
+        "secondary_measures": [
+          "0.012"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -0.13644042347027785, p = 0.012)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

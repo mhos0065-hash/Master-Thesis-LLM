@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.007363164007887188, p = 0.25574425574425574)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough-level Energy and GHG data into pandas DataFrames and load the neighbor\u2010list into a structure (e.g. dict mapping each borough to its list of neighbors).  \n2. Check for missing values in Energy or GHG. If any exist, drop those boroughs (and their neighbor relations) from both variables before proceeding.  \n3. Construct a spatial weights matrix W of size 33\u00d733 (or reduced size if rows were dropped), where w\u1d62\u2c7c=1 if j is a geographic neighbor of i, else 0.  \n4. Row\u2010standardize W so that each row sums to 1 (i.e. divide each nonzero w\u1d62\u2c7c by the number of neighbors of i).  \n5. Extract the Energy and GHG series as numeric vectors x and y of matching length.  \n6. Mean\u2010center both vectors (x\u0303 = x \u2013 mean(x), \u1e8f = y \u2013 mean(y)).  \n7. Compute the observed bivariate spatial association statistic L_obs = x\u0303\u1d40\u2009W\u2009\u1e8f / sqrt[(x\u0303\u1d40\u2009x\u0303)\u2009(\u1e8f\u1d40\u2009\u1e8f)] (Lee\u2019s L).  \n8. For a permutation test with at least 500 replicates:  \n   a. Repeat 500+ times: randomly permute the entries of y to get y*; compute y\u0303* = y* \u2013 mean(y*); compute L* = x\u0303\u1d40\u2009W\u2009y\u0303* / sqrt[(x\u0303\u1d40\u2009x\u0303)\u2009(\u1ef9*\u1d40\u2009\u1ef9*)].  \n9. From the permutation distribution of L*, compute two one\u2010sided p\u2010values:  \n   p_pos = (number of L* \u2265 L_obs + 1) / (N_perm + 1)  \n   p_neg = (number of L* \u2264 L_obs + 1) / (N_perm + 1)  \n10. Decide: if p_pos < 0.05 conclude POSITIVE; else if p_neg < 0.05 conclude NEGATIVE; otherwise conclude NOT SIGNIFICANT.  \n11. Report the sign of the relationship, the observed L_obs, and the corresponding p\u2010value in the format:  \n   FINAL ANSWER: [POSITIVE/NEGATIVE/NOT SIGNIFICANT] (test statistic = L_obs, p = p)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_ghg.csv', index_col='borough')\ndf.index = df.index.str.strip()\ndf_adj = pd.read_csv('chunks_csv/borough_adjacency.csv')\ndf_adj['borough'] = df_adj['borough'].str.strip()\ndf_adj['neighbor'] = df_adj['neighbor'].str.strip()\n\n# 2. Drop any boroughs with missing Energy or GHG\ndf = df.dropna(subset=['Energy_value', 'GHG_value'])\nboroughs = df.index.tolist()\nn = len(boroughs)\n\n# 3. Filter adjacency to those boroughs\ndf_adj = df_adj[df_adj['borough'].isin(boroughs) & df_adj['neighbor'].isin(boroughs)]\n\n# 4. Build spatial weights matrix W (n x n) with row-standardization\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\nfor _, row in df_adj.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1.0\n# row-standardize\nrow_sums = W.sum(axis=1)\nfor i in range(n):\n    if row_sums[i] > 0:\n        W[i, :] /= row_sums[i]\n\n# 5. Extract and mean-center vectors x and y\nx = df['Energy_value'].values\ny = df['GHG_value'].values\nx_tilde = x - x.mean()\ny_tilde = y - y.mean()\n\n# 6. Compute observed Lee's L\nnum_obs = x_tilde @ W @ y_tilde\nden = np.sqrt((x_tilde @ x_tilde) * (y_tilde @ y_tilde))\nL_obs = num_obs / den\n\n# 7. Permutation test\nnp.random.seed(42)\nn_perm = 1000\nL_stars = np.empty(n_perm)\nfor k in range(n_perm):\n    y_perm = np.random.permutation(y)\n    y_perm_tilde = y_perm - y_perm.mean()\n    L_stars[k] = (x_tilde @ W @ y_perm_tilde) / den\n\n# 8. Compute one-sided p-values\np_pos = (np.sum(L_stars >= L_obs) + 1) / (n_perm + 1)\np_neg = (np.sum(L_stars <= L_obs) + 1) / (n_perm + 1)\n\n# 9. Decide on verdict\nif p_pos < 0.05:\n    verdict = \"POSITIVE\"\n    p_val = p_pos\nelif p_neg < 0.05:\n    verdict = \"NEGATIVE\"\n    p_val = p_neg\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n    p_val = min(p_pos, p_neg)\n\n# 10. Print results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_val})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.007363164007887188, p = 0.25574425574425574)",
+        "data_points_used": 33,
+        "statistic": "-0.007363164007887188",
+        "secondary_measures": [
+          "0.25574425574425574"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.007363164007887188, p = 0.25574425574425574)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -2.9998444290478165e-06, p = 0.228)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the Gas and GHG data for the London boroughs and the list of neighboring boroughs.\n\n2. **Data Cleaning**: Confirm that there are no missing values in the Gas and GHG datasets. Since the data profile indicates 0 missing values for both variables, no imputation or removal of missing values is necessary.\n\n3. **Define Spatial Relationships**: Create a mapping of each borough to its neighboring boroughs based on the provided list.\n\n4. **Calculate Mean Values**: For each borough, calculate the mean Gas and GHG values of its neighboring boroughs.\n\n5. **Formulate Hypotheses**: \n   - Null Hypothesis (H0): There is no significant spatial association between Gas and GHG values in neighboring boroughs.\n   - Alternative Hypothesis (H1): There is a significant spatial association (either positive or negative) between Gas and GHG values in neighboring boroughs.\n\n6. **Compute Lee's L Statistic**: Calculate Lee's L statistic for the relationship between the Gas values of each borough and the mean GHG values of its neighbors.\n\n7. **Permutation Test**: Conduct a permutation/randomization test with at least 500 random shuffles to assess the statistical significance of the observed Lee's L statistic.\n\n8. **Determine p-value**: Calculate the p-value from the permutation test to evaluate the significance of the relationship.\n\n9. **Interpret Results**: Based on the p-value, determine whether to reject or fail to reject the null hypothesis, and classify the relationship as positive, negative, or not significant.\n\n10. **Report Findings**: Prepare the final answer statement including the computed test statistic and p-value.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the datasets\ngas_ghg_data = pd.read_csv('chunks_csv/bivariate/bivariate_2023_gas_ghg.csv')\nadjacency_data = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Data Cleaning: Confirm no missing values\nassert gas_ghg_data.isnull().sum().sum() == 0\nassert adjacency_data.isnull().sum().sum() == 0\n\n# Define Spatial Relationships\nneighbors = adjacency_data.groupby('borough')['neighbor'].apply(list).to_dict()\n\n# Calculate Mean Values of GHG for each borough's neighbors\nmean_ghg_neighbors = {}\nfor borough, neighbor_list in neighbors.items():\n    mean_ghg_neighbors[borough] = gas_ghg_data.loc[gas_ghg_data['borough'].isin(neighbor_list), 'GHG_value'].mean()\n\n# Add mean GHG values to the original DataFrame\ngas_ghg_data['mean_GHG_neighbors'] = gas_ghg_data['borough'].map(mean_ghg_neighbors)\n\n# Compute Lee's L Statistic\ndef compute_lees_l(gas_values, mean_ghg_values):\n    n = len(gas_values)\n    mean_gas = np.mean(gas_values)\n    mean_ghg = np.mean(mean_ghg_values)\n    covariance = np.cov(gas_values, mean_ghg_values)[0][1]\n    variance_gas = np.var(gas_values)\n    variance_ghg = np.var(mean_ghg_values)\n    return (covariance / (variance_gas * variance_ghg)) * n\n\n# Observed Lee's L statistic\nobserved_l = compute_lees_l(gas_ghg_data['Gas_value'], gas_ghg_data['mean_GHG_neighbors'])\n\n# Permutation Test\nn_permutations = 500\npermuted_ls = []\nfor _ in range(n_permutations):\n    permuted_ghg = np.random.permutation(gas_ghg_data['mean_GHG_neighbors'])\n    permuted_l = compute_lees_l(gas_ghg_data['Gas_value'], permuted_ghg)\n    permuted_ls.append(permuted_l)\n\n# Calculate p-value\npermuted_ls = np.array(permuted_ls)\np_value = np.sum(permuted_ls >= observed_l) / n_permutations\n\n# Determine significance\ndata_points_used = len(gas_ghg_data)\nif p_value < 0.05:\n    if observed_l > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_l}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -2.9998444290478165e-06, p = 0.228)",
+        "data_points_used": 33,
+        "statistic": "-2.9998444290478165e-06",
+        "secondary_measures": [
+          "0.228"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -2.9998444290478165e-06, p = 0.228)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

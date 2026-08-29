@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.01011668088144784, p = 0.742)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the borough\u2010level Gas_value and Energy_value into pandas DataFrames, and load the borough adjacency list into a DataFrame or dictionary.  \n2. Check both Gas_value and Energy_value for missing entries. If any exist, drop the corresponding borough(s) from both variables and from the adjacency list (or, alternatively, impute with the overall mean); otherwise proceed.  \n3. Construct a square spatial weights matrix W (size 33\u00d733) with W\u1d62\u2c7c = 1 if boroughs i and j are listed as neighbors and 0 otherwise, setting diagonal entries to 0.  \n4. Row-standardize W by dividing each row by its row sum, yielding \u0174.  \n5. Extract the Gas and Energy series as vectors G and E (aligned by borough), and compute their means \u03bc_G and \u03bc_E.  \n6. Center both variables: g\u1d62 = G\u1d62 \u2212 \u03bc_G, e\u1d62 = E\u1d62 \u2212 \u03bc_E.  \n7. Compute the spatial lag of Energy: for each i, \u2113\u1d62 = \u2211\u2c7c \u0174\u1d62\u2c7c \u00b7 e\u2c7c.  \n8. Compute the observed bivariate spatial statistic L_obs = (\u2211\u1d62 g\u1d62\u00b7\u2113\u1d62) / \u2211\u1d62 g\u1d62\u00b2 (this is equivalent to Lee\u2019s L for Gas vs. Energy).  \n9. Perform a permutation test with at least 500 replications: for each replication k, randomly permute the e vector among boroughs to get e^(k), compute \u2113^(k)=\u0174\u00b7e^(k), then L^(k) = (\u2211 g\u00b7\u2113^(k))/\u2211 g\u00b2.  \n10. Build the null distribution of L^(k) and calculate the empirical p-value as the proportion of replications with L^(k) \u2265 L_obs if L_obs > 0 (or \u2264 L_obs if L_obs < 0).  \n11. Conclude POSITIVE if L_obs > 0 and p < 0.05, NEGATIVE if L_obs < 0 and p < 0.05, otherwise NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# For reproducibility\nnp.random.seed(0)\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_gas_energy.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop any missing (if any)\ndf = df.dropna(subset=['Gas_value', 'Energy_value'])\n# Keep only adjacency pairs where both borough and neighbor are in df\nadj = adj[adj['borough'].isin(df['borough']) & adj['neighbor'].isin(df['borough'])]\n\n# 3. Build spatial weights matrix W\nboroughs = df['borough'].tolist()\nn = len(boroughs)\nidx = {b: i for i, b in enumerate(boroughs)}\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1  # ensure symmetry\nnp.fill_diagonal(W, 0)\n\n# 4. Row\u2010standardize W\nrow_sums = W.sum(axis=1)\nW_std = np.zeros_like(W)\nnonzero = row_sums > 0\nW_std[nonzero] = W[nonzero] / row_sums[nonzero][:, None]\n\n# 5. Extract vectors G and E\ndf_indexed = df.set_index('borough').loc[boroughs]\nG = df_indexed['Gas_value'].values\nE = df_indexed['Energy_value'].values\n\n# 6. Center the variables\ng = G - G.mean()\ne = E - E.mean()\n\n# 7. Spatial lag of e\nl = W_std.dot(e)\n\n# 8. Observed Lee's L (bivariate)\nL_obs = (g * l).sum() / (g**2).sum()\n\n# 9. Permutation test\nn_perm = 1000\nL_perm = np.zeros(n_perm)\nfor k in range(n_perm):\n    e_perm = np.random.permutation(e)\n    l_perm = W_std.dot(e_perm)\n    L_perm[k] = (g * l_perm).sum() / (g**2).sum()\n\n# 10. Compute empirical p\u2010value\nif L_obs >= 0:\n    p_value = np.mean(L_perm >= L_obs)\nelse:\n    p_value = np.mean(L_perm <= L_obs)\n\n# 11. Verdict\nalpha = 0.05\nif L_obs > 0 and p_value < alpha:\n    verdict = 'POSITIVE'\nelif L_obs < 0 and p_value < alpha:\n    verdict = 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Outputs\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.01011668088144784, p = 0.742)",
+        "data_points_used": 33,
+        "statistic": "-0.01011668088144784",
+        "secondary_measures": [
+          "0.742"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.01011668088144784, p = 0.742)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

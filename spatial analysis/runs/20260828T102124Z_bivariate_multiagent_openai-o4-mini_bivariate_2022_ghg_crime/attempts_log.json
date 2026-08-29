@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.11151004159780838, p = 0.146)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the GHG and Crime data into a pandas DataFrame and load the borough\u2010adjacency list into a suitable structure (e.g. dictionary mapping each borough to its list of neighbors).  \n2. Identify any missing values in the Crime_value column (there is one). Explicitly drop the borough with the missing Crime_value from both the DataFrame and from all adjacency lists, so that all remaining boroughs have complete GHG and Crime values and valid neighbor links.  \n3. Construct a spatial weights matrix W of size n\u00d7n (where n is the number of boroughs after dropping). For each pair (i,j), set w\u1d62\u2c7c = 1 if borough j is listed as a neighbor of borough i, otherwise 0.  \n4. Row\u2010standardize W so that each row sums to 1 (divide each w\u1d62\u2c7c by the sum of row i).  \n5. Let X be the vector of GHG values and Y be the vector of Crime values for the n boroughs. Compute means \u03bc\u2093 and \u03bc\u1d67, then define z\u2093\u1d62 = X\u1d62\u2013\u03bc\u2093 and z\u1d67\u1d62 = Y\u1d62\u2013\u03bc\u1d67 for each borough i.  \n6. Compute the observed Lee\u2019s L statistic:  \n   numerator L\u2092 = \u2211\u1d62 \u2211\u2c7c w\u1d62\u2c7c \u00b7 z\u2093\u1d62 \u00b7 z\u1d67\u2c7c  \n   denominator D = \u221a[(\u2211\u1d62 z\u2093\u1d62\u00b2)\u00b7(\u2211\u2c7c z\u1d67\u2c7c\u00b2)]  \n   observed L = L\u2092 / D  \n7. Perform a permutation test with at least 500 random shuffles:  \n   a. For each of k = 1\u2026K permutations (K\u2265500), randomly permute the entries of Y among boroughs to get Y*; compute z\u1d67* and then L* using the same W and X.  \n   b. Record the distribution of L* under the null.  \n8. Calculate the p\u2010value as the proportion of permuted L* values that are as extreme as the observed L in the relevant tail (positive tail if L>0, negative tail if L<0).  \n9. Compare p to \u03b1 = 0.05. If p<0.05 and L>0, conclude \u201cPOSITIVE\u201d; if p<0.05 and L<0, conclude \u201cNEGATIVE\u201d; otherwise conclude \u201cNOT SIGNIFICANT.\u201d  \n10. Report the final line in the required format, plugging in the computed observed L and p\u00ad-value.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndata_path = \"chunks_csv/bivariate/bivariate_2022_ghg_crime.csv\"\nadj_path = \"chunks_csv/borough_adjacency.csv\"\ndf = pd.read_csv(data_path)\nadj = pd.read_csv(adj_path)\n\n# Drop borough with missing Crime_value\ndf = df.dropna(subset=[\"Crime_value\"]).copy()\nboroughs = df[\"borough\"].tolist()\nborough_set = set(boroughs)\n\n# Build adjacency dict for remaining boroughs\nadj_dict = {b: [] for b in boroughs}\nfor _, row in adj.iterrows():\n    b, neigh = row[\"borough\"], row[\"neighbor\"]\n    if b in borough_set and neigh in borough_set:\n        adj_dict[b].append(neigh)\n\n# Index map\nn = len(boroughs)\nindex = {b: i for i, b in enumerate(boroughs)}\n\n# Build spatial weights matrix W\nW = np.zeros((n, n))\nfor b, neighs in adj_dict.items():\n    i = index[b]\n    for nb in neighs:\n        j = index[nb]\n        W[i, j] = 1\n# Row-standardize\nrow_sums = W.sum(axis=1)\nfor i in range(n):\n    if row_sums[i] > 0:\n        W[i, :] /= row_sums[i]\n\n# Prepare data vectors\ndf = df.set_index(\"borough\")\nX = df.loc[boroughs, \"GHG_value\"].values\nY = df.loc[boroughs, \"Crime_value\"].values\n\n# Demean\nmu_x, mu_y = X.mean(), Y.mean()\nz_x = X - mu_x\nz_y = Y - mu_y\n\n# Compute observed Lee's L\nnumer = z_x @ W @ z_y\ndenom = np.sqrt((z_x**2).sum() * (z_y**2).sum())\nL_obs = numer / denom\n\n# Permutation test\nK = 500\nL_perm = np.zeros(K)\nfor k in range(K):\n    Y_star = np.random.permutation(Y)\n    z_y_star = Y_star - mu_y\n    L_perm[k] = (z_x @ W @ z_y_star) / denom\n\n# Compute p-value\nif L_obs > 0:\n    p = np.mean(L_perm >= L_obs)\nelse:\n    p = np.mean(L_perm <= L_obs)\n\n# Determine verdict\nalpha = 0.05\nif p < alpha:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Output results\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.11151004159780838, p = 0.146)",
+        "data_points_used": 32,
+        "statistic": "0.11151004159780838",
+        "secondary_measures": [
+          "0.146"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.11151004159780838, p = 0.146)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

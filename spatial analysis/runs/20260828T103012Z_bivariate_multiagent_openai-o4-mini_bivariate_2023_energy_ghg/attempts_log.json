@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.007363164007887179, p = 0.968)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Energy and GHG data into a pandas DataFrame keyed by borough, and load the borough\u2010neighbor list into a structure from which you can build an adjacency matrix.  \n2. Check for missing values in Energy or GHG. If any exist, drop those boroughs from both the data and the adjacency structure (alternatively, impute missing values using the variable\u2019s median before analysis).  \n3. Construct a spatial weight matrix W (33\u00d733) where W[i,j]=1 if borough j is a neighbor of borough i, 0 otherwise; then row\u2010standardize W so that each row sums to one.  \n4. Center the Energy and GHG variables by subtracting their respective means to obtain x\u1d62 and y\u1d62.  \n5. Compute Lee\u2019s L statistic:  \n   \u2022 Numerator = \u03a3\u1d62 \u03a3\u2c7c W[i,j]\u00b7x\u1d62\u00b7y\u2c7c  \n   \u2022 Denominator = \u221a[ (\u03a3\u1d62 x\u1d62\u00b2) \u00b7 (\u03a3\u2c7c y\u2c7c\u00b2) ]  \n   \u2022 L_obs = Numerator / Denominator  \n6. Perform a permutation test with at least 500 randomizations: for each permutation k, shuffle the y values across boroughs, recompute L_k using the original x and shuffled y, and store L_k.  \n7. Calculate the p\u2010value as the proportion of |L_k| \u2265 |L_obs| over all permutations (two\u2010sided test).  \n8. Compare p to \u03b1=0.05:  \n   \u2022 If p<0.05 and L_obs>0 \u21d2 POSITIVE spatial association  \n   \u2022 If p<0.05 and L_obs<0 \u21d2 NEGATIVE spatial association  \n   \u2022 Otherwise \u21d2 NOT SIGNIFICANT  \n9. Report the observed test statistic and p\u2010value in the required format.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_ghg.csv')\nadj_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop any missing values\ndf = df.dropna(subset=['Energy_value', 'GHG_value'])\ndata_points_used = len(df)\n\n# Filter adjacency to those boroughs present in our data\nboroughs = df['borough'].tolist()\nadj_df = adj_df[adj_df['borough'].isin(boroughs) & adj_df['neighbor'].isin(boroughs)].drop_duplicates()\n\n# Create index mapping for boroughs\nidx = {borough: i for i, borough in enumerate(boroughs)}\nn = data_points_used\n\n# Build the spatial weight matrix W (row\u2010standardized)\nW = np.zeros((n, n), dtype=float)\nfor _, row in adj_df.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1\nrow_sums = W.sum(axis=1)\nnonzero = row_sums > 0\nW[nonzero] = W[nonzero] / row_sums[nonzero][:, None]\n\n# Center the variables\nx = df['Energy_value'].values\ny = df['GHG_value'].values\nx = x - x.mean()\ny = y - y.mean()\n\n# Compute Lee's L statistic\nnumerator = x @ (W @ y)\ndenominator = np.sqrt((x**2).sum() * (y**2).sum())\nL_obs = numerator / denominator\n\n# Permutation test\nnp.random.seed(0)\nnperm = 1000\nL_perms = np.empty(nperm)\nfor k in range(nperm):\n    y_perm = np.random.permutation(y)\n    L_perms[k] = (x @ (W @ y_perm)) / denominator\n\np_value = np.mean(np.abs(L_perms) >= np.abs(L_obs))\n\n# Determine the verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Output results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.007363164007887179, p = 0.968)",
+        "data_points_used": 33,
+        "statistic": "-0.007363164007887179",
+        "secondary_measures": [
+          "0.968"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.007363164007887179, p = 0.968)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

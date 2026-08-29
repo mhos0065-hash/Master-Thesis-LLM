@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 1.3149637151376348, p = 0.416)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the NO2 and Crime data for the 33 London boroughs, ensuring both datasets are merged correctly based on borough identifiers.\n\n2. **Neighbor Identification**: Utilize the provided list of geographic neighbors to create a mapping of each borough to its neighboring boroughs.\n\n3. **Data Structuring**: Create a new DataFrame that includes each borough, its NO2 levels, and the average Crime levels of its neighboring boroughs.\n\n4. **Handling Missing Values**: Since the data profile indicates no missing values, no additional handling is required. If there were missing values, consider using imputation methods (e.g., mean or median imputation) or excluding those boroughs from the analysis.\n\n5. **Statistical Analysis**: Calculate Lee's L statistic for bivariate spatial correlation between NO2 levels in each borough and the average Crime levels of its neighboring boroughs.\n\n6. **Permutation Test**: Conduct a permutation/randomization test with at least 500 random shuffles to assess the significance of the observed relationship between NO2 and Crime.\n\n7. **Result Interpretation**: Analyze the test statistic and p-value obtained from the permutation test to determine if the relationship is positive, negative, or not significant.\n\n8. **Final Reporting**: Prepare the final answer statement summarizing the test statistic and p-value, indicating whether the relationship is positive, negative, or not significant.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the datasets\ndata_path = 'chunks_csv/bivariate/bivariate_2021_no2_crime.csv'\nadjacency_path = 'chunks_csv/borough_adjacency.csv'\n\n# Read the data\ndata = pd.read_csv(data_path)\nadjacency = pd.read_csv(adjacency_path)\n\n# Merge the datasets on borough\nmerged_data = pd.merge(data, adjacency, on='borough')\n\n# Create a mapping of boroughs to their neighbors\nneighbor_map = merged_data.groupby('borough')['neighbor'].apply(list).to_dict()\n\n# Calculate the average Crime_value for each borough's neighbors\ndef average_neighbor_crime(borough):\n    neighbors = neighbor_map.get(borough, [])\n    if not neighbors:\n        return np.nan\n    return data.loc[data['borough'].isin(neighbors), 'Crime_value'].mean()\n\n# Create a new DataFrame with average neighbor crime values\ndata['avg_neighbor_crime'] = data['borough'].apply(average_neighbor_crime)\n\n# Drop rows with missing values\nfinal_data = data.dropna(subset=['NO2_value', 'avg_neighbor_crime'])\n\n# Number of data points used\ndata_points_used = final_data.shape[0]\n\n# Calculate Lee's L statistic\ndef lee_l_statistic(no2_values, crime_values):\n    mean_no2 = np.mean(no2_values)\n    mean_crime = np.mean(crime_values)\n    return np.sum((no2_values - mean_no2) * (crime_values - mean_crime)) / (len(no2_values) - 1)\n\nobserved_statistic = lee_l_statistic(final_data['NO2_value'], final_data['avg_neighbor_crime'])\n\n# Permutation test\nn_permutations = 500\npermuted_statistics = []\n\nfor _ in range(n_permutations):\n    permuted_crime = np.random.permutation(final_data['avg_neighbor_crime'])\n    permuted_statistic = lee_l_statistic(final_data['NO2_value'], permuted_crime)\n    permuted_statistics.append(permuted_statistic)\n\n# Calculate p-value\np_value = np.sum(np.array(permuted_statistics) >= observed_statistic) / n_permutations\n\n# Determine the verdict\nif p_value < 0.05:\n    if observed_statistic > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_statistic}, p = {p_value})\")\n",
+        "output": "data_points_used = 31\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 1.3149637151376348, p = 0.416)",
+        "data_points_used": 31,
+        "statistic": "1.3149637151376348",
+        "secondary_measures": [
+          "0.416"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 1.3149637151376348, p = 0.416)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

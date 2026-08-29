@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.3014339292089505, p = 0.99)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the Energy and Waste data for the 33 London boroughs, ensuring that both datasets are properly aligned by borough names.\n\n2. **Neighbor Identification**: Utilize the provided list of geographic neighbors to create a mapping of each borough to its neighboring boroughs.\n\n3. **Data Structuring**: Create a new DataFrame that includes each borough, its Energy value, and the average Waste value of its neighboring boroughs. This will allow for a direct comparison of Energy in one borough to Waste in its neighbors.\n\n4. **Statistical Analysis Setup**: Define the hypothesis for the analysis:\n   - Null Hypothesis (H0): There is no significant spatial association between Energy and Waste.\n   - Alternative Hypothesis (H1): There is a significant spatial association between Energy and Waste.\n\n5. **Calculate Lee's L Statistic**: Implement the calculation of Lee's L statistic for the Energy and average Waste values of neighboring boroughs.\n\n6. **Permutation Test**: Conduct a permutation/randomization test with at least 500 random shuffles to assess the significance of the observed Lee's L statistic. For each shuffle, randomly assign Waste values to the boroughs and recalculate Lee's L statistic.\n\n7. **P-value Calculation**: Determine the p-value by comparing the observed Lee's L statistic to the distribution of Lee's L statistics obtained from the permutation test.\n\n8. **Significance Assessment**: Compare the p-value to the significance level (0.05) to determine whether to reject the null hypothesis.\n\n9. **Result Compilation**: Compile the results, including the test statistic and p-value, and prepare the final output statement based on the significance assessment.\n\n10. **Output**: Format the final answer according to the specified structure, indicating whether the relationship is POSITIVE, NEGATIVE, or NOT SIGNIFICANT based on the analysis results. \n\nNote: Since the data profile indicates no missing values, no additional handling for missing values is necessary.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the datasets\nenergy_waste_df = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_waste.csv')\nadjacency_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Step 2: Create a mapping of each borough to its neighboring boroughs\nneighbors = adjacency_df.groupby('borough')['neighbor'].apply(list).to_dict()\n\n# Step 3: Create a new DataFrame with Energy and average Waste of neighbors\ndef average_waste_of_neighbors(borough):\n    if borough in neighbors:\n        neighbor_waste_values = energy_waste_df[energy_waste_df['borough'].isin(neighbors[borough])]['Waste_value']\n        return neighbor_waste_values.mean() if not neighbor_waste_values.empty else np.nan\n    return np.nan\n\nenergy_waste_df['avg_neighbor_waste'] = energy_waste_df['borough'].apply(average_waste_of_neighbors)\n\n# Step 4: Define the hypothesis\n# H0: No significant spatial association between Energy and Waste\n# H1: Significant spatial association between Energy and Waste\n\n# Step 5: Calculate Lee's L Statistic\ndef calculate_lees_L(energy_values, waste_values):\n    n = len(energy_values)\n    if n == 0:\n        return np.nan\n    return np.sum((energy_values - np.mean(energy_values)) * (waste_values - np.mean(waste_values))) / (n * np.std(energy_values) * np.std(waste_values))\n\n# Observed Lee's L statistic\nobserved_L = calculate_lees_L(energy_waste_df['Energy_value'], energy_waste_df['avg_neighbor_waste'])\n\n# Step 6: Permutation test\nn_permutations = 500\npermuted_L_statistics = []\n\nfor _ in range(n_permutations):\n    permuted_waste_values = np.random.permutation(energy_waste_df['avg_neighbor_waste'].dropna().values)\n    permuted_L = calculate_lees_L(energy_waste_df['Energy_value'], permuted_waste_values)\n    permuted_L_statistics.append(permuted_L)\n\n# Step 7: P-value calculation\np_value = np.sum(np.array(permuted_L_statistics) >= observed_L) / n_permutations\n\n# Step 8: Significance assessment\ndata_points_used = energy_waste_df['avg_neighbor_waste'].notna().sum()\nif p_value < 0.05:\n    if observed_L > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Step 9: Output the results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_L}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.3014339292089505, p = 0.99)",
+        "data_points_used": 33,
+        "statistic": "-0.3014339292089505",
+        "secondary_measures": [
+          "0.99"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.3014339292089505, p = 0.99)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

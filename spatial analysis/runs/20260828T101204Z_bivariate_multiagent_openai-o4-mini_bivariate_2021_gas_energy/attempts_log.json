@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.0091142085458045, p = 0.965)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Gas and Energy datasets for the 33 London boroughs into pandas DataFrames, and also load or construct the borough\u2010neighbor adjacency list.  \n2. Check both DataFrames for missing values. If any are found, remove the corresponding borough rows from both datasets (since there are none expected, this should have no effect).  \n3. Create a spatial weights matrix W (33\u00d733) from the adjacency list, with Wij = 1 if borough i and borough j are neighbors, and 0 otherwise.  \n4. Extract the Gas_value vector x and Energy_value vector y, and row\u2010standardize W so each row sums to 1.  \n5. Compute the observed bivariate spatial correlation (Lee\u2019s L) as:  \n   L = (x\u1d40 W y) / sqrt( (x\u1d40 x) (y\u1d40 y) )  \n   after mean\u2010centering x and y.  \n6. Conduct a permutation test with at least 500 random shuffles:  \n   a. For each shuffle k, randomly permute y among boroughs to get y_k.  \n   b. Compute L_k = (x\u1d40 W y_k) / sqrt((x\u1d40 x)(y_k\u1d40 y_k)).  \n7. Calculate a two\u2010sided p\u2010value as the proportion of |L_k| \u2265 |L| across all permutations.  \n8. Compare p to \u03b1 = 0.05:  \n   \u2013 If p<0.05 and L>0 \u21d2 positive spatial association.  \n   \u2013 If p<0.05 and L<0 \u21d2 negative spatial association.  \n   \u2013 Otherwise \u21d2 not significant.  \n9. Prepare the FINAL ANSWER line in the form:  \n   FINAL ANSWER: [POSITIVE/NEGATIVE/NOT SIGNIFICANT] (test statistic = <L>, p = <p>)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# For reproducibility\nnp.random.seed(0)\n\n# 1. Load data\ngas_energy_df = pd.read_csv('chunks_csv/bivariate/bivariate_2021_gas_energy.csv', index_col='borough')\nadjacency_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop any missing values (none expected)\ngas_energy_df = gas_energy_df.dropna()\ndata_points_used = gas_energy_df.shape[0]\n\n# List of boroughs\nboroughs = gas_energy_df.index.tolist()\nn = len(boroughs)\nborough_set = set(boroughs)\n\n# 3. Build adjacency dict (undirected)\nadj = {b: set() for b in boroughs}\nfor _, row in adjacency_df.iterrows():\n    i, j = row['borough'], row['neighbor']\n    if i in borough_set and j in borough_set:\n        adj[i].add(j)\n        adj[j].add(i)\n\n# 4. Build spatial weights matrix W (n x n) and row-standardize\nW = np.zeros((n, n), dtype=float)\nfor i, b in enumerate(boroughs):\n    neighbors = adj[b]\n    for nbr in neighbors:\n        j = boroughs.index(nbr)\n        W[i, j] = 1.0\n# Row sums\nrow_sums = W.sum(axis=1)\nW_row_std = W.copy()\nfor i in range(n):\n    if row_sums[i] > 0:\n        W_row_std[i, :] /= row_sums[i]\n\n# 5. Extract and mean-center variables\nx = gas_energy_df['Gas_value'].values\ny = gas_energy_df['Energy_value'].values\nx_centered = x - x.mean()\ny_centered = y - y.mean()\n\n# Compute observed Lee's L\nnumerator = x_centered.T @ (W_row_std @ y_centered)\ndenominator = np.sqrt((x_centered.T @ x_centered) * (y_centered.T @ y_centered))\nL_obs = numerator / denominator\n\n# 6. Permutation test\nn_perms = 1000\nL_perms = np.zeros(n_perms)\nfor k in range(n_perms):\n    y_perm = y_centered[np.random.permutation(n)]\n    L_perms[k] = (x_centered.T @ (W_row_std @ y_perm)) / denominator\n\n# 7. Two-sided p-value\np_value = np.mean(np.abs(L_perms) >= np.abs(L_obs))\n\n# 8. Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# 9. Output results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.0091142085458045, p = 0.965)",
+        "data_points_used": 33,
+        "statistic": "-0.0091142085458045",
+        "secondary_measures": [
+          "0.965"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.0091142085458045, p = 0.965)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

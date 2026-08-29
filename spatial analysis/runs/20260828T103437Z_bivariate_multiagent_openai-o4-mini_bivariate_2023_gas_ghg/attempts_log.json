@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.0068557761853927385, p = 0.979)",
+  "validation_score": 6,
+  "validation_total": 6,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Gas and GHG data into a pandas DataFrame and load the borough adjacency list into a structure (e.g. a dict of neighbor lists).  \n2. Check for missing values in Gas_value or GHG_value; if any exist, exclude those boroughs from both the statistic and the adjacency structure (i.e. listwise deletion), since imputing could bias the spatial correlation.  \n3. Construct a spatial weights matrix W of size 33\u00d733 where Wij = 1 if borough i and borough j are neighbors, 0 otherwise; row\u2010standardize W so each row sums to 1.  \n4. Compute the global means \u03bcGas and \u03bcGHG and the deviations xi = Gas_i\u2013\u03bcGas, yj = GHG_j\u2013\u03bcGHG.  \n5. Calculate the observed Lee\u2019s L statistic: Lobs = [\u2211i\u2211j Wij (xi yj)] / \u221a([\u2211i xi\u00b2][\u2211j yj\u00b2]).  \n6. Perform a permutation test with at least 500 random shuffles: for each shuffle k, randomly permute the GHG values across boroughs, recompute Lk using the same W and the original Gas deviations, and store Lk.  \n7. Estimate the p-value as the proportion of |Lk| \u2265 |Lobs| across all permutations.  \n8. Determine the sign of Lobs: if p < 0.05 and Lobs > 0 declare POSITIVE spatial association; if p < 0.05 and Lobs < 0 declare NEGATIVE; otherwise declare NOT SIGNIFICANT.  \n9. Report the result in the form  \n\u2003FINAL ANSWER: [POSITIVE/NEGATIVE/NOT SIGNIFICANT] (test statistic = Lobs, p = p-value)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2023_gas_ghg.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Exclude missing values\ndf = df.dropna(subset=['Gas_value', 'GHG_value']).set_index('borough')\nboroughs = df.index.tolist()\ndata_points_used = len(boroughs)\n\n# 3. Build spatial weights matrix W\nidx = {b: i for i, b in enumerate(boroughs)}\nn = data_points_used\nW = np.zeros((n, n), dtype=float)\nadj_filt = adj[adj['borough'].isin(idx) & adj['neighbor'].isin(idx)]\nfor row in adj_filt.itertuples(index=False):\n    i, j = idx[row.borough], idx[row.neighbor]\n    W[i, j] = 1\n    W[j, i] = 1\n# Row\u2010standardize\nrow_sums = W.sum(axis=1, keepdims=True)\nW = np.divide(W, row_sums, where=row_sums != 0)\n\n# 4. Compute deviations\nx = df['Gas_value'].values\ny = df['GHG_value'].values\nmean_x, mean_y = x.mean(), y.mean()\nx_dev = x - mean_x\ny_dev = y - mean_y\n\n# 5. Observed Lee's L\ndenom = np.sqrt((x_dev**2).sum() * (y_dev**2).sum())\nLobs = x_dev.dot(W.dot(y_dev)) / denom\n\n# 6. Permutation test\nnperm = 1000\nrng = np.random.default_rng(0)\nLperms = np.empty(nperm)\nfor k in range(nperm):\n    y_perm = rng.permutation(y)\n    y_dev_perm = y_perm - mean_y\n    Lperms[k] = x_dev.dot(W.dot(y_dev_perm)) / denom\n\n# 7. P\u2010value\np_value = np.mean(np.abs(Lperms) >= np.abs(Lobs))\n\n# 8. Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if Lobs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# 9. Print results\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {Lobs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.0068557761853927385, p = 0.979)",
+        "data_points_used": 33,
+        "statistic": "-0.0068557761853927385",
+        "secondary_measures": [
+          "0.979"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.0068557761853927385, p = 0.979)"
+      },
+      "validation_score": 6,
+      "validation_total": 6,
+      "failed_checks": []
+    }
+  ]
+}

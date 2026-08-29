@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.07007775131174832, p = 0.452)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the NO2 and Waste datasets (33 boroughs) and the borough\u2010neighbor adjacency list into pandas.  \n2. Identify boroughs with missing NO2 or Waste values; drop any borough with a missing value in either variable, and remove it from the adjacency list (so W is defined only on complete cases).  \n3. Build the binary spatial weight matrix W (size n\u00d7n) from the cleaned adjacency: W_ij = 1 if i and j are neighbors, else 0; then row\u2010standardize W so each row sums to 1.  \n4. Compute the observed bivariate spatial statistic (Lee\u2019s L):  \n   \u2013 Let x_i = NO2_i, y_i = Waste_i, \u03bc_x and \u03bc_y their means.  \n   \u2013 Numerator = \u03a3_i \u03a3_j W_ij (x_i\u2013\u03bc_x)(y_j\u2013\u03bc_y).  \n   \u2013 Denominator = sqrt[ \u03a3_i (x_i\u2013\u03bc_x)\u00b2  \u00b7  \u03a3_j (y_j\u2013\u03bc_y)\u00b2 ].  \n   \u2013 L_obs = Numerator / Denominator.  \n5. Conduct a permutation test with at least 500 random shuffles of the Waste values across boroughs (keeping NO2 fixed): for each shuffle k, compute L_k as above to build the null distribution.  \n6. Calculate the two\u2010sided p-value as the fraction of |L_k| \u2265 |L_obs| over all permutations.  \n7. Compare p to \u03b1 = 0.05:  \n   \u2013 If p < 0.05 and L_obs > 0, conclude a POSITIVE spatial association.  \n   \u2013 If p < 0.05 and L_obs < 0, conclude a NEGATIVE spatial association.  \n   \u2013 Otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport numpy as np\nimport pandas as pd\n\n# For reproducibility\nnp.random.seed(0)\n\n# Load data\ndf = pd.read_csv('chunks_csv/bivariate/bivariate_2022_no2_waste.csv', index_col='borough')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop boroughs with missing NO2 or Waste values\ndf_clean = df.dropna(subset=['NO2_value', 'Waste_value'])\nboroughs = df_clean.index.tolist()\nn = len(boroughs)\n\n# Filter adjacency to complete-case boroughs\nadj_clean = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)].copy()\n\n# Map borough names to indices\nname_to_idx = {name: idx for idx, name in enumerate(boroughs)}\n\n# Build symmetric adjacency matrix\nW = np.zeros((n, n))\nfor _, row in adj_clean.iterrows():\n    i = name_to_idx[row['borough']]\n    j = name_to_idx[row['neighbor']]\n    W[i, j] = 1\n    W[j, i] = 1\n\n# Row-standardize W\nrow_sums = W.sum(axis=1)\nfor i in range(n):\n    if row_sums[i] > 0:\n        W[i, :] /= row_sums[i]\n\n# Extract variables\nx = df_clean.loc[boroughs, 'NO2_value'].values\ny = df_clean.loc[boroughs, 'Waste_value'].values\n\n# Demean\nx_demean = x - x.mean()\ny_demean = y - y.mean()\n\n# Compute Lee's L statistic\nnumerator = x_demean @ (W @ y_demean)\ndenominator = np.sqrt((x_demean**2).sum() * (y_demean**2).sum())\nL_obs = numerator / denominator\n\n# Permutation test\nnum_perm = 500\nnull_L = np.empty(num_perm)\nfor k in range(num_perm):\n    perm = np.random.permutation(n)\n    y_perm = y_demean[perm]\n    num_k = x_demean @ (W @ y_perm)\n    null_L[k] = num_k / denominator\n\np_value = (np.abs(null_L) >= abs(L_obs)).sum() / num_perm\n\n# Determine verdict\nif p_value < 0.05:\n    verdict = 'POSITIVE' if L_obs > 0 else 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 30\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.07007775131174832, p = 0.452)",
+        "data_points_used": 30,
+        "statistic": "-0.07007775131174832",
+        "secondary_measures": [
+          "0.452"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.07007775131174832, p = 0.452)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

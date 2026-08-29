@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.007838001568885871, p = 0.972)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the Gas and Energy data into a pandas DataFrame keyed by borough name, and load the borough\u2010neighbor list into a separate structure.  \n2. Merge the two datasets on borough name to ensure alignment; if any borough has a missing Gas or Energy value, drop that borough from the analysis.  \n3. From the neighbor list, build an N\u00d7N spatial weight matrix W (where N=number of boroughs), setting W_ij=1 if i and j are neighbors (0 otherwise), then row-standardize W so each row sums to 1.  \n4. Compute the mean and standard deviation of Gas and, separately, of Energy across boroughs; transform each borough\u2019s Gas and Energy to z\u2010scores.  \n5. Calculate the observed bivariate spatial statistic (Lee\u2019s L) as L_obs = (z_gas\u1d40 W z_energy) / sum(W).  \n6. Conduct a permutation test with at least 500 randomizations: for each permutation k, randomly shuffle the Energy z\u2010scores among boroughs, compute L_k = (z_gas\u1d40 W z_energy_perm) / sum(W), and store L_k.  \n7. Compute the p-value as the fraction of |L_k| \u2265 |L_obs| over all permutations.  \n8. Compare L_obs and its p-value to \u03b1=0.05: if p<0.05 and L_obs>0 conclude POSITIVE; if p<0.05 and L_obs<0 conclude NEGATIVE; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Set random seed for reproducibility\nnp.random.seed(0)\n\n# Load data\ngas_energy = pd.read_csv('chunks_csv/bivariate/bivariate_2022_gas_energy.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Drop any missing values\ndf = gas_energy.dropna(subset=['Gas_value', 'Energy_value']).copy()\ndata_points_used = len(df)\n\n# Borough list and index mapping\nboroughs = df['borough'].tolist()\nindex = {b: i for i, b in enumerate(boroughs)}\nN = len(boroughs)\n\n# Build adjacency matrix\nW = np.zeros((N, N), dtype=float)\nfor _, row in adj.iterrows():\n    i = row['borough']\n    j = row['neighbor']\n    if i in index and j in index:\n        W[index[i], index[j]] = 1\n# Symmetrize\nW = np.maximum(W, W.T)\n# Row-standardize\nrow_sums = W.sum(axis=1, keepdims=True)\n# Avoid division by zero\nrow_sums[row_sums == 0] = 1\nW_std = W / row_sums\nsumW = W_std.sum()\n\n# Compute z-scores\nz_gas = (df['Gas_value'] - df['Gas_value'].mean()) / df['Gas_value'].std(ddof=0)\nz_energy = (df['Energy_value'] - df['Energy_value'].mean()) / df['Energy_value'].std(ddof=0)\nz_gas = z_gas.values\nz_energy = z_energy.values\n\n# Observed Lee's L\nL_obs = (z_gas @ W_std @ z_energy) / sumW\n\n# Permutation test\nn_perm = 500\nL_perms = np.zeros(n_perm)\nfor k in range(n_perm):\n    perm_energy = np.random.permutation(z_energy)\n    L_perms[k] = (z_gas @ W_std @ perm_energy) / sumW\n\n# p-value\np = np.mean(np.abs(L_perms) >= abs(L_obs))\n\n# Determine verdict\nif p < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Output\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.007838001568885871, p = 0.972)",
+        "data_points_used": 33,
+        "statistic": "-0.007838001568885871",
+        "secondary_measures": [
+          "0.972"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.007838001568885871, p = 0.972)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

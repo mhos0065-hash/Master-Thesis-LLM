@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = 0.0, p = 1.0)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. **Data Preparation**: Load the Energy and GHG data for the London boroughs, ensuring that the data is in a suitable format for analysis (e.g., DataFrame).\n\n2. **Identify Neighbors**: Use the provided list of geographic neighbors to create a mapping of each borough to its neighboring boroughs.\n\n3. **Merge Data**: For each borough, create a new DataFrame that includes its Energy value and the GHG values of its neighboring boroughs.\n\n4. **Calculate Mean GHG for Neighbors**: For each borough, calculate the mean GHG value of its neighboring boroughs.\n\n5. **Formulate Hypotheses**: Define the null hypothesis (H0: No significant spatial association between Energy and GHG) and the alternative hypothesis (H1: Significant spatial association exists).\n\n6. **Compute Lee's L Statistic**: Calculate Lee's L statistic for the relationship between Energy values and the mean GHG values of neighboring boroughs.\n\n7. **Permutation Test**: Conduct a permutation/randomization test with at least 500 shuffles to assess the statistical significance of the observed Lee's L statistic.\n\n8. **Calculate p-value**: Determine the p-value from the permutation test to evaluate the significance of the relationship.\n\n9. **Interpret Results**: Based on the p-value, decide whether to reject the null hypothesis and classify the relationship as POSITIVE, NEGATIVE, or NOT SIGNIFICANT.\n\n10. **Report Findings**: Prepare the final output with the test statistic and p-value, formatted according to the specified requirements.\n\n**Missing Values Handling**: Since there are 0 missing values in the dataset, no additional handling for missing values is necessary.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# Load the Energy and GHG data\nenergy_ghg_data = pd.read_csv('chunks_csv/bivariate/bivariate_2023_energy_ghg.csv')\nadjacency_data = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Step 2: Identify Neighbors\n# Create a mapping of each borough to its neighboring boroughs\nneighbors_dict = adjacency_data.groupby('borough')['neighbor'].apply(list).to_dict()\n\n# Step 3: Merge Data\n# Create a new DataFrame that includes Energy value and GHG values of neighboring boroughs\ndef mean_neighbor_ghg(borough):\n    neighbor_boroughs = neighbors_dict.get(borough, [])\n    if not neighbor_boroughs:\n        return np.nan\n    return energy_ghg_data.loc[energy_ghg_data['borough'].isin(neighbor_boroughs), 'GHG_value'].mean()\n\nenergy_ghg_data['mean_neighbor_GHG'] = energy_ghg_data['borough'].apply(mean_neighbor_ghg)\n\n# Step 4: Calculate Mean GHG for Neighbors\n# Drop any boroughs that do not have neighbors\nenergy_ghg_data = energy_ghg_data.dropna(subset=['mean_neighbor_GHG'])\n\n# Step 5: Formulate Hypotheses\n# H0: No significant spatial association between Energy and GHG\n# H1: Significant spatial association exists\n\n# Step 6: Compute Lee's L Statistic\ndef compute_lees_l(energy, mean_ghg):\n    n = len(energy)\n    mean_energy = np.mean(energy)\n    mean_ghg = np.mean(mean_ghg)\n    numerator = np.sum((energy - mean_energy) * (mean_ghg - mean_ghg))\n    denominator = np.sum((energy - mean_energy) ** 2)\n    return numerator / denominator if denominator != 0 else 0\n\nobserved_l = compute_lees_l(energy_ghg_data['Energy_value'], energy_ghg_data['mean_neighbor_GHG'])\n\n# Step 7: Permutation Test\nn_permutations = 500\npermuted_ls = []\n\nfor _ in range(n_permutations):\n    permuted_ghg = np.random.permutation(energy_ghg_data['mean_neighbor_GHG'])\n    permuted_l = compute_lees_l(energy_ghg_data['Energy_value'], permuted_ghg)\n    permuted_ls.append(permuted_l)\n\n# Step 8: Calculate p-value\npermuted_ls = np.array(permuted_ls)\np_value = np.sum(permuted_ls >= observed_l) / n_permutations\n\n# Step 9: Interpret Results\ndata_points_used = len(energy_ghg_data)\nif p_value < 0.05:\n    if observed_l > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Step 10: Report Findings\nprint(f\"data_points_used = {data_points_used}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_l}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = 0.0, p = 1.0)",
+        "data_points_used": 33,
+        "statistic": "0.0",
+        "secondary_measures": [
+          "1.0"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = 0.0, p = 1.0)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

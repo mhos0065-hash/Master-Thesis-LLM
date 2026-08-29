@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.012301137764365292, p = 0.9461077844311377)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the two data tables into pandas DataFrames: one with borough\u2010level Energy and GHG values, and one listing each borough\u2019s geographic neighbors.  \n2. Check both Energy and GHG columns for missing values; if any are found, drop those boroughs from both the attribute DataFrame and from the neighbor list to keep dimensions consistent (updating the adjacency accordingly).  \n3. Construct a binary spatial weights matrix W (33\u00d733) from the neighbor list, with w\u1d62\u2c7c = 1 if borough j is a neighbor of i, else 0; row\u2010standardize W so each row sums to 1.  \n4. Standardize the Energy vector X and the GHG vector Y by subtracting their means and dividing by their standard deviations.  \n5. Compute the observed bivariate spatial association statistic (Lee\u2019s L): L_obs = (X\u1d40\u2009W\u2009Y) / sqrt[(X\u1d40\u2009X)(Y\u1d40\u2009Y)].  \n6. Perform a permutation test with at least 500 random shuffles of the GHG values (Y): for each shuffle k, permute Y, compute L_k = (X\u1d40\u2009W\u2009Y_perm) / sqrt[(X\u1d40\u2009X)(Y_perm\u1d40\u2009Y_perm)].  \n7. Calculate the empirical two\u2010sided p\u2010value as p = (number of |L_k| \u2265 |L_obs| + 1) \u00f7 (number of permutations + 1).  \n8. If p < 0.05, conclude the association is significant and report POSITIVE if L_obs > 0 or NEGATIVE if L_obs < 0; otherwise conclude NOT SIGNIFICANT.",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# 1. Load data\nattr_df = pd.read_csv(\"chunks_csv/bivariate/bivariate_2022_energy_ghg.csv\")\nadj_df = pd.read_csv(\"chunks_csv/borough_adjacency.csv\")\n\n# 2. Drop boroughs with missing values\nattr_df = attr_df.dropna(subset=['Energy_value','GHG_value']).reset_index(drop=True)\nboroughs = attr_df['borough'].tolist()\nn = len(boroughs)\n\n# Filter adjacency to kept boroughs\nadj_df = adj_df[adj_df['borough'].isin(boroughs) & adj_df['neighbor'].isin(boroughs)]\n\n# Symmetrize adjacency\nrev = adj_df.rename(columns={'borough':'neighbor','neighbor':'borough'})\nadj_full = pd.concat([adj_df, rev], ignore_index=True).drop_duplicates().reset_index(drop=True)\n\n# 3. Build row-standardized spatial weights matrix W\nidx = {b:i for i,b in enumerate(boroughs)}\nW = np.zeros((n,n), dtype=float)\nfor _, row in adj_full.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1.0\n# row-standardize\nrow_sums = W.sum(axis=1, keepdims=True)\n# avoid division by zero\nrow_sums[row_sums == 0] = 1.0\nW = W / row_sums\n\n# 4. Standardize X and Y\nX = attr_df['Energy_value'].values\nY = attr_df['GHG_value'].values\nX = (X - X.mean()) / X.std()\nY = (Y - Y.mean()) / Y.std()\n\n# 5. Compute observed Lee's L\nnum = X @ W @ Y\nden = np.sqrt((X @ X) * (Y @ Y))\nL_obs = num / den\n\n# 6. Permutation test\nn_perms = 500\nrng = np.random.default_rng(seed=0)\nLs = np.empty(n_perms)\nfor k in range(n_perms):\n    Y_perm = Y[rng.permutation(n)]\n    Ls[k] = (X @ W @ Y_perm) / np.sqrt((X @ X) * (Y_perm @ Y_perm))\n\n# 7. Two-sided p-value\ncount = np.sum(np.abs(Ls) >= abs(L_obs))\np_value = (count + 1) / (n_perms + 1)\n\n# 8. Determine verdict\nif p_value < 0.05:\n    verdict = \"POSITIVE\" if L_obs > 0 else \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\n# Outputs\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs}, p = {p_value})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.012301137764365292, p = 0.9461077844311377)",
+        "data_points_used": 33,
+        "statistic": "-0.012301137764365292",
+        "secondary_measures": [
+          "0.9461077844311377"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.012301137764365292, p = 0.9461077844311377)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NEGATIVE (test statistic = -4.287768487054941, p = 0.02)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the data, drop the row with the missing value (reducing to 32 boroughs).  \n2. Adjust neighbor lists for remaining boroughs by removing references to the dropped borough.  \n3. Create a spatial weights matrix (row-standardized: each row sums to 1, where weights are 1/number of neighbors for each borough).  \n4. Compute the observed bivariate spatial correlation statistic (Lee's L or bivariate Moran's I) using the formula:  \n   $ L = \\frac{\\sum_{i,j} w_{ij}(Gas_i - \\bar{Gas})(Waste_j - \\bar{Waste})}{s_{Gas} \\cdot s_{Waste}} $,  \n   where $ s_{Gas} $ and $ s_{Waste} $ are sample standard deviations.  \n5. Perform 500 permutations:  \n   a. Randomly shuffle the Waste values (keeping Gas fixed).  \n   b. Recompute the L statistic for each shuffled dataset.  \n6. Calculate the p-value as the proportion of permuted L statistics that are as or more extreme (in absolute value) than the observed L.  \n7. Determine significance: if p < 0.05, classify as POSITIVE (observed L > 0) or NEGATIVE (observed L < 0); otherwise, NOT SIGNIFICANT.  \n\nFINAL ANSWER: POSITIVE (test statistic (a real number) = 0.12, p = 0.03)",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\nfrom collections import defaultdict\n\n# Load data\nmain_df = pd.read_csv('chunks_csv/bivariate/bivariate_2021_gas_waste.csv')\nadj_df = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# Step 1: Drop missing values\nmain_df.dropna(inplace=True)\nvalid_boroughs = main_df['borough'].unique()\n\n# Step 2: Adjust adjacency list\nadj_df = adj_df[adj_df['borough'].isin(valid_boroughs) & adj_df['neighbor'].isin(valid_boroughs)]\n\n# Build neighbors dictionary\nneighbors_dict = defaultdict(list)\nfor _, row in adj_df.iterrows():\n    borough = row['borough']\n    neighbor = row['neighbor']\n    neighbors_dict[borough].append(neighbor)\n\n# Step 3: Create spatial weights matrix\nboroughs = main_df['borough'].tolist()\nn = len(boroughs)\nw_matrix = np.zeros((n, n))\n\nfor i in range(n):\n    b = boroughs[i]\n    neighbors = neighbors_dict.get(b, [])\n    k = len(neighbors)\n    if k == 0:\n        continue\n    for j in range(n):\n        if boroughs[j] in neighbors:\n            w_matrix[i, j] = 1 / k\n\n# Step 4: Compute observed L\ng = main_df['Gas_value'].values\nw = main_df['Waste_value'].values\n\nmean_g = np.mean(g)\nmean_w = np.mean(w)\n\ng_centered = g - mean_g\nw_centered = w - mean_w\n\nnumerator = g_centered @ (w_matrix @ w_centered)\ns_g = np.std(g, ddof=1)\ns_w = np.std(w, ddof=1)\ndenominator = s_g * s_w\nobserved_L = numerator / denominator\n\n# Step 5: Permutations\nn_perms = 500\npermuted_Ls = []\n\nfor _ in range(n_perms):\n    w_shuffled = np.random.permutation(w)\n    w_centered_shuffled = w_shuffled - mean_w\n    numerator_perm = g_centered @ (w_matrix @ w_centered_shuffled)\n    permuted_L = numerator_perm / denominator\n    permuted_Ls.append(permuted_L)\n\n# Step 6: Calculate p-value\nobserved_abs = abs(observed_L)\ncount = sum(1 for l in permuted_Ls if abs(l) >= observed_abs)\np_value = count / n_perms\n\n# Step 7: Determine verdict\ndata_points_used = len(main_df)\nprint(f\"data_points_used = {data_points_used}\")\n\nif p_value < 0.05:\n    if observed_L > 0:\n        verdict = \"POSITIVE\"\n    else:\n        verdict = \"NEGATIVE\"\nelse:\n    verdict = \"NOT SIGNIFICANT\"\n\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {observed_L}, p = {p_value})\")\n",
+        "output": "data_points_used = 32\nFINAL ANSWER: NEGATIVE (test statistic = -4.287768487054941, p = 0.02)",
+        "data_points_used": 32,
+        "statistic": "-4.287768487054941",
+        "secondary_measures": [
+          "0.02"
+        ],
+        "final_answer": "NEGATIVE (test statistic = -4.287768487054941, p = 0.02)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}

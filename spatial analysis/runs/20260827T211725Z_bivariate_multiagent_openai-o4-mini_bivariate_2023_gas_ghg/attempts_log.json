@@ -1,0 +1,28 @@
+{
+  "status": "accepted",
+  "final_answer": "NOT SIGNIFICANT (test statistic = -0.006856, p = 0.749000)",
+  "validation_score": 5,
+  "validation_total": 5,
+  "plan_attempts_used": 1,
+  "coder_tries_used": 1,
+  "attempts": [
+    {
+      "plan_number": 1,
+      "coder_try": 1,
+      "plan": "1. Load the data into pandas DataFrames: one for borough Gas values, one for borough GHG values, and one for borough adjacency (edges or neighbor list).  \n2. Check for missing values in Gas, GHG, or adjacency data. If any exist, drop the corresponding borough(s) from both variable vectors and from the adjacency list so that all remaining boroughs have complete Gas, GHG, and neighbor\u2010relation information.  \n3. Align the borough order across the Gas series, the GHG series, and the adjacency list so that each index corresponds to the same borough in all structures.  \n4. Compute standardized z-scores for Gas and for GHG across boroughs (subtract mean, divide by standard deviation).  \n5. Build a spatial weight matrix W (size 33\u00d733) from the adjacency list: w\u1d62\u2c7c=1 if borough j is a neighbor of i, else 0; then row-standardize W so that each row sums to 1.  \n6. Compute the observed Lee\u2019s L statistic:  \n   a. Numerator = \u2211\u1d62 \u2211\u2c7c w\u1d62\u2c7c \u00b7 z_Gas(i) \u00b7 z_GHG(j)  \n   b. Denominator = \u221a[ (\u2211\u1d62 z_Gas(i)\u00b2) \u00b7 (\u2211\u2c7c z_GHG(j)\u00b2) ]  \n   c. L_obs = Numerator / Denominator  \n7. Perform a permutation test with at least 500 randomizations:  \n   a. For each permutation k, randomly shuffle the borough labels of the GHG z-scores (or Gas z-scores), recompute L_k using the shuffled values and the fixed W.  \n   b. Record the distribution of L_k across all permutations.  \n8. Compute the empirical p-value as the fraction of |L_k| \u2265 |L_obs| (two\u2010tailed), or, if testing directional association, the fraction of L_k \u2265 L_obs for positive association (or \u2264 L_obs for negative).  \n9. Determine significance at \u03b1=0.05 and the sign of spatial association:  \n   \u2013 If p<0.05 and L_obs>0 \u2192 POSITIVE  \n   \u2013 If p<0.05 and L_obs<0 \u2192 NEGATIVE  \n   \u2013 Else \u2192 NOT SIGNIFICANT",
+      "coder_result": {
+        "code": "\nimport pandas as pd\nimport numpy as np\n\n# For reproducibility\nnp.random.seed(0)\n\n# 1. Load the data\ngasghg = pd.read_csv('chunks_csv/bivariate/bivariate_2023_gas_ghg.csv')\nadj = pd.read_csv('chunks_csv/borough_adjacency.csv')\n\n# 2. Drop any missing values in Gas or GHG\ngasghg = gasghg.dropna(subset=['Gas_value', 'GHG_value'])\n\n# 3. Ensure adjacency only includes boroughs present in the gasghg data\nboroughs = set(gasghg['borough'])\nadj = adj[adj['borough'].isin(boroughs) & adj['neighbor'].isin(boroughs)]\n\n# 3b. Symmetrize adjacency (undirected)\nadj_rev = adj.rename(columns={'borough': 'neighbor', 'neighbor': 'borough'})\nedges = pd.concat([adj[['borough','neighbor']], adj_rev[['borough','neighbor']]], ignore_index=True).drop_duplicates()\n\n# Final list of boroughs\nnodes = sorted(boroughs)\nn = len(nodes)\n\n# Mapping borough to index\nidx = {b: i for i, b in enumerate(nodes)}\n\n# 5. Build weight matrix W (binary adjacency), then row-standardize\nW = np.zeros((n, n), dtype=float)\nfor _, row in edges.iterrows():\n    i = idx[row['borough']]\n    j = idx[row['neighbor']]\n    W[i, j] = 1.0\n# row-standardize\nrow_sums = W.sum(axis=1)\n# avoid division by zero\nnonzero = row_sums > 0\nW[nonzero] = W[nonzero] / row_sums[nonzero, None]\n\n# 4. Compute z-scores for Gas and GHG\ngasghg = gasghg.set_index('borough').loc[nodes]\nzGas = (gasghg['Gas_value'] - gasghg['Gas_value'].mean()) / gasghg['Gas_value'].std(ddof=0)\nzGHG = (gasghg['GHG_value'] - gasghg['GHG_value'].mean()) / gasghg['GHG_value'].std(ddof=0)\nzGas = zGas.values\nzGHG = zGHG.values\n\n# 6. Compute observed Lee's L\ndenom = np.sqrt((zGas**2).sum() * (zGHG**2).sum())\nnum_obs = zGas.dot(W.dot(zGHG))\nL_obs = num_obs / denom\n\n# 7. Permutation test\nnperm = 1000\nL_perms = np.zeros(nperm)\nfor k in range(nperm):\n    zGHG_perm = zGHG[np.random.permutation(n)]\n    L_perms[k] = zGas.dot(W.dot(zGHG_perm)) / denom\n\n# 8. Compute one-tailed p-value depending on sign of L_obs\nif L_obs >= 0:\n    pval = np.mean(L_perms >= L_obs)\nelse:\n    pval = np.mean(L_perms <= L_obs)\n\n# 9. Determine verdict\nalpha = 0.05\nif pval < alpha and L_obs > 0:\n    verdict = 'POSITIVE'\nelif pval < alpha and L_obs < 0:\n    verdict = 'NEGATIVE'\nelse:\n    verdict = 'NOT SIGNIFICANT'\n\n# Output\nprint(f\"data_points_used = {n}\")\nprint(f\"FINAL ANSWER: {verdict} (test statistic = {L_obs:.6f}, p = {pval:.6f})\")\n",
+        "output": "data_points_used = 33\nFINAL ANSWER: NOT SIGNIFICANT (test statistic = -0.006856, p = 0.749000)",
+        "data_points_used": 33,
+        "statistic": "-0.006856",
+        "secondary_measures": [
+          "0.749000"
+        ],
+        "final_answer": "NOT SIGNIFICANT (test statistic = -0.006856, p = 0.749000)"
+      },
+      "validation_score": 5,
+      "validation_total": 5,
+      "failed_checks": []
+    }
+  ]
+}
