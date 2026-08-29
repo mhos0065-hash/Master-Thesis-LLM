@@ -27,23 +27,26 @@ import re
 import pandas as pd
 
 from bivariate_verdict import _has_self_admitted_non_computation
+from formula_invariance_check import check_shift_invariant
+from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
+
+MANIFEST_PATH = "chunks_csv/bivariate/bivariate_manifest.csv"
 
 # For single turn
 #RESULTS_CSV = "bivariate_results.csv"
 #SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
 #CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 
-
 # For multi turn
-RESULTS_CSV = "results/bivariate_results_multi.csv"
-SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
-CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
-
+#RESULTS_CSV = "results/single agent/bivariate_results_multi.csv"
+#SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
+#CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
 
 # For multi agent
 RESULTS_CSV = "results/multi agent/bivariate_results_multiagent.csv"
-SUMMARY_OUT = "Scores/multi agent/bivariate_scoring_summary_multi_agent.csv"
-CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multi_agent.csv"
+SUMMARY_OUT = "Scores/multi agent/bivariate_scoring_summary_multiagent.csv"
+CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multiagent.csv"
+
 
 CLASSES = ["positive", "negative", "not_significant"]
 
@@ -77,10 +80,80 @@ def _has_real_test_statistic(evidence_text, full_text=None):
         return False  # e.g. a method name like "Lee's L" left in place of a number
 
 
+def _extract_raw_statistic(evidence_text):
+    """Same extraction logic as _has_real_test_statistic, isolated so the
+    raw value can also be passed into the shift-invariance re-check."""
+    if not isinstance(evidence_text, str):
+        return None
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    return match.group(1).strip() if match else None
+
+
+def _extract_p_value(evidence_text):
+    """Extracts the SECOND '=...' value in the answer line -- the p-value
+    / significance measure, which always comes after the primary test
+    statistic in this task's required format. Returns None if there is
+    no second value (some correct answers omit a secondary measure)."""
+    if not isinstance(evidence_text, str):
+        return None
+    matches = re.findall(r"=\s*([^,)]+)[,)]", evidence_text)
+    return matches[1].strip() if len(matches) >= 2 else None
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
-    df["has_evidence_bool"] = df.apply(
+    manifest = pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
+
+    df["has_real_statistic_bool"] = df.apply(
         lambda r: _has_real_test_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
+
+    total_checkable = int(df["has_real_statistic_bool"].sum())
+    print(f"Running shift-invariance re-checks on {total_checkable} row(s) with a real statistic "
+          f"(this re-executes each row's saved code, so it's the slow part)...", flush=True)
+    _progress = {"n": 0}
+
+    def _shift_check(row):
+        if not row["has_real_statistic_bool"]:
+            return None  # already disqualified -- no need to also re-run the code
+        _progress["n"] += 1
+        print(f"  [{_progress['n']}/{total_checkable}] {row['model']} | {row['chunk_id']}", flush=True)
+        if row["chunk_id"] not in manifest.index:
+            return None
+        m = manifest.loc[row["chunk_id"]]
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        return check_shift_invariant(
+            row["run_dir"], m["csv_path"], m.get("adjacency_path"), raw_stat)
+
+    df["shift_invariant"] = df.apply(_shift_check, axis=1)
+    print("Shift-invariance re-checks complete.\n", flush=True)
+
+    def _plausibility_check(row):
+        if not row["has_real_statistic_bool"]:
+            return True  # already disqualified elsewhere -- avoid double-penalizing
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        raw_p = _extract_p_value(row["evidence_text"])
+        if not magnitude_plausible(raw_stat):
+            return False
+        if not bounded_probability(raw_p):
+            return False
+        claims_significance = row["predicted"] in ("positive", "negative")
+        if row["predicted"] in ("positive", "negative", "not_significant"):
+            if not verdict_p_consistent(claims_significance, raw_p):
+                return False
+        return True
+
+    df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
+
+    # Evidence requires ALL of: a real, non-fabricated number; the
+    # formula behaving correctly under a constant shift (where the
+    # re-check was conclusive); AND the statistic/p-value being
+    # plausible and internally consistent with the stated verdict.
+    df["has_evidence_bool"] = (
+        df["has_real_statistic_bool"]
+        & (df["shift_invariant"] != False)
+        & df["statistic_plausible"]
+    )
+
     df["ambiguous"] = df["predicted"].isna() | (~df["predicted"].isin(CLASSES))
     df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])
     df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]

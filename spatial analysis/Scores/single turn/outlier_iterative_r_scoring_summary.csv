@@ -1,7 +1,7 @@
 mode,model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,f1,correct_number_evidence_filtered,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
 single,deepseek/deepseek-chat-v3-0324,50,7,43,36,0.84,36,7,0.72,0.91,0.674,0.74,35,35,7,0.7,0.907,0.657,0.731
 single,deepseek/deepseek-r1-0528,50,6,44,40,0.88,40,4,0.8,0.944,0.881,0.897,40,40,4,0.8,0.944,0.881,0.897
-single,meta-llama/llama-3.1-8b-instruct,50,28,22,9,0.4,9,13,0.18,0.348,0.121,0.179,9,9,10,0.18,0.422,0.121,0.188
+single,meta-llama/llama-3.1-8b-instruct,50,28,22,9,0.38,9,13,0.18,0.348,0.121,0.179,9,9,9,0.18,0.422,0.121,0.188
 single,moonshotai/kimi-k2.6,50,0,50,47,1.0,47,3,0.94,0.957,0.964,0.958,47,47,3,0.94,0.957,0.964,0.958
 single,openai/gpt-4,50,15,35,29,0.7,29,6,0.58,0.574,0.407,0.47,29,29,6,0.58,0.574,0.407,0.47
 single,openai/gpt-4o-mini,50,1,49,43,0.98,43,6,0.86,0.914,0.907,0.907,43,43,6,0.86,0.914,0.907,0.907

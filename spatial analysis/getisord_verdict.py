@@ -76,11 +76,13 @@ def extract_hot_cold_boroughs(text):
             continue
         direction = match.group(1).lower()
         segment = match.group(0)
-        # matches ANY label word(s) before '=', not just literal "Gi*" -- the
-        # manifest may ask for "z-score", "Gi*", or another statistic name
-        # depending on which method the model chose; the label itself doesn't
-        # matter, only that a real number follows an '=' sign
-        num_match = re.search(r"[A-Za-z*\-\s]+=\s*(" + NUMBER_PATTERN + r")", segment)
+        # Generic: match the first "<any label>=<number>" pattern in the
+        # segment, regardless of what the label is called (Gi*, z_score,
+        # LISA_I, etc.) -- a model using a different local spatial
+        # statistic than Getis-Ord specifically should not have its real,
+        # computed number silently treated as missing just because it
+        # used a different, equally valid label.
+        num_match = re.search(r"[A-Za-z_][A-Za-z0-9_ \-*]*?\s*=\s*(" + NUMBER_PATTERN + r")", segment)
         z_value = float(num_match.group(1)) if num_match else None
         found[borough] = (direction, z_value)
     return found

@@ -34,10 +34,11 @@ Writes: getisord_scoring_summary.csv
 import re
 import pandas as pd
 
-# for multi turn
-#RESULTS_CSV = "getisord_results_multi.csv"
-#OUT_CSV = "Scores/multi turn/getisord_scoring_summary.csv"
+from statistic_plausibility import magnitude_plausible, gi_threshold_consistent
 
+# for multi turn
+#RESULTS_CSV = "results/single agent/getisord_results_multi.csv"
+#OUT_CSV = "Scores/multi turn/getisord_scoring_summary.csv"
 
 #For single turn
 #RESULTS_CSV = "getisord_results.csv"
@@ -46,6 +47,7 @@ import pandas as pd
 #For multi agent
 RESULTS_CSV = "results/multi agent/getisord_results_multiagent.csv"
 OUT_CSV = "Scores/multi agent/getisord_scoring_summary.csv"
+
 
 ALL_BOROUGHS = [
     "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden",
@@ -94,6 +96,26 @@ def parse_borough_string(s):
     return result
 
 
+def parse_borough_values(s):
+    """Separate from parse_borough_string() (which only keeps direction,
+    used for correctness comparison) -- returns {borough: float_value}
+    for the plausibility check, which needs the actual magnitude."""
+    if not isinstance(s, str) or s.strip() in ("(none)", "none", ""):
+        return {}
+    result = {}
+    for entry in s.split(";"):
+        entry = entry.strip()
+        if not entry:
+            continue
+        parts = entry.split(":")
+        if len(parts) >= 3:
+            try:
+                result[parts[0].strip()] = float(parts[2].strip())
+            except ValueError:
+                pass
+    return result
+
+
 def _chunk_has_real_evidence(row):
     """A chunk counts as evidenced only if at least one cited number is a
     real, finite value AND the model didn't admit elsewhere that its
@@ -112,6 +134,36 @@ def _chunk_has_real_evidence(row):
     return False
 
 
+def _chunk_partial_accuracy(pred_set, truth_set, is_failed_chunk=False):
+    """Jaccard-based PARTIAL-CREDIT accuracy for a single chunk:
+    |intersection| / |union|. Standard, citable multi-label metric --
+    Godbole & Sarawagi (2004), "Discriminative Methods for
+    Multi-labeled Classification", define example-based accuracy for
+    multi-label tasks exactly this way. Unlike simple recall
+    (TP/real_total), this also penalizes false positives: a model that
+    flags every borough would score poorly here, not perfectly, since
+    the union grows with every wrong extra guess.
+
+    An ambiguous/implausible chunk (is_failed_chunk=True) always scores
+    0.0 here, same principle as correct_number -- it never receives
+    credit just because its forced-empty prediction happens to coincide
+    with an empty ground truth.
+
+    Genuinely correct empty predictions (both sets empty, and the chunk
+    was NOT a failure) score 1.0 -- a real, deliberate "no significant
+    boroughs" match. A false "none" against a non-empty truth scores
+    0.0, matching the existing empty-truth convention."""
+    if is_failed_chunk:
+        return 0.0
+    if not truth_set and not pred_set:
+        return 1.0
+    union = pred_set | truth_set
+    if not union:
+        return 1.0
+    intersection = pred_set & truth_set
+    return len(intersection) / len(union)
+
+
 def run():
     df = pd.read_csv(RESULTS_CSV)
     rows = []
@@ -125,6 +177,7 @@ def run():
 
         tp = fp = fn = tn = 0
         tp_ef = fp_ef = fn_ef = tn_ef = 0
+        partial_accuracies, partial_accuracies_ef = [], []
 
         for _, r in g.iterrows():
             pred_str = r.get("predicted_boroughs")
@@ -141,7 +194,15 @@ def run():
 
             raw_entries = [e.strip() for e in str(pred_str).split(";") if e.strip()] if not is_empty else []
             has_duplicates = len(raw_entries) > len(pred)
-            is_implausible_chunk = len(pred) > IMPLAUSIBLE_THRESHOLD or has_duplicates
+
+            pred_values = parse_borough_values(pred_str)
+            has_implausible_value = any(not magnitude_plausible(v) for v in pred_values.values())
+            has_inconsistent_threshold = any(not gi_threshold_consistent(v) for v in pred_values.values())
+
+            is_implausible_chunk = (
+                len(pred) > IMPLAUSIBLE_THRESHOLD or has_duplicates
+                or has_implausible_value or has_inconsistent_threshold
+            )
 
             has_real_evidence = _chunk_has_real_evidence(r)
             # A correct "none" verdict has no number to cite by construction --
@@ -185,6 +246,13 @@ def run():
                     tn += 1
                     tn_ef += 1
 
+            is_failed_chunk = is_ambiguous_chunk or is_implausible_chunk
+            pred_set = set(pred_effective.keys())
+            truth_set = set(truth.keys())
+            partial_accuracies.append(_chunk_partial_accuracy(pred_set, truth_set, is_failed_chunk))
+            pred_set_ef = pred_set if has_real_evidence else set()
+            partial_accuracies_ef.append(_chunk_partial_accuracy(pred_set_ef, truth_set, is_failed_chunk))
+
         non_ambiguous = n - n_ambiguous
         pct_with_evidence = round(evidence_weighted_sum / n, 3) if n else 0.0
 
@@ -204,6 +272,9 @@ def run():
         f1_ef = round(2 * precision_ef * recall_ef / (precision_ef + recall_ef), 3) \
             if (precision_ef + recall_ef) > 0 else 0.0
 
+        partial_accuracy = round(sum(partial_accuracies) / n, 3) if n else 0.0
+        partial_accuracy_ef = round(sum(partial_accuracies_ef) / n, 3) if n else 0.0
+
         rows.append({
             "mode": mode, "model": model, "n": n, "n_ambiguous": n_ambiguous,
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
@@ -216,6 +287,8 @@ def run():
             "precision_evidence_filtered": precision_ef,
             "recall_evidence_filtered": recall_ef,
             "f1_evidence_filtered": f1_ef,
+            "partial_accuracy": partial_accuracy,
+            "partial_accuracy_evidence_filtered": partial_accuracy_ef,
         })
 
     out = pd.DataFrame(rows).sort_values(["mode", "model"]).reset_index(drop=True)
@@ -223,7 +296,8 @@ def run():
                "pct_with_evidence", "tp", "fp", "accuracy", "precision", "recall", "f1",
                "correct_number_evidence_filtered", "tp_evidence_filtered", "fp_evidence_filtered",
                "accuracy_evidence_filtered", "precision_evidence_filtered",
-               "recall_evidence_filtered", "f1_evidence_filtered"]]
+               "recall_evidence_filtered", "f1_evidence_filtered",
+               "partial_accuracy", "partial_accuracy_evidence_filtered"]]
     out.to_csv(OUT_CSV, index=False)
 
     print(out.to_string(index=False))

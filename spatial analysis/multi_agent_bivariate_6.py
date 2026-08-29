@@ -38,8 +38,8 @@ from multi_agent_utils_6 import multi_agent_loop
 from bivariate_verdict import parse_bivariate_with_citation
 
 MANIFEST_PATH = "chunks_csv/bivariate/bivariate_manifest.csv"
-RESULTS_CSV = "bivariate_results_multiagent.csv"
-FAILED_LOG = "bivariate_multiagent_failed_runs.log"
+RESULTS_CSV = "results/multi agent/bivariate_results_multiagent.csv"
+FAILED_LOG = "logs/multi agent/bivariate_multiagent_failed_runs.log"
 
 
 def load_manifest():

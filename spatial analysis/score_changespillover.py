@@ -23,11 +23,17 @@ Writes: changespillover_scoring_summary.csv
 import re
 import pandas as pd
 
-#Multi
-RESULTS_CSV = "results/changespillover_results_multi.csv"
-OUT_CSV = "Scores/multi turn/changespillover_scoring_summary.csv"
+from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
 
-#Single
+#Multi agent
+RESULTS_CSV = "results/multi agent/changespillover_results_multiagent.csv"
+OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
+
+#Multi turn
+#RESULTS_CSV = "results/single agent/changespillover_results_multi.csv"
+#OUT_CSV = "Scores/multi turn/changespillover_scoring_summary_multi.csv"
+
+#Single turn
 #RESULTS_CSV = "changespillover_results.csv"
 #OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
 
@@ -71,13 +77,46 @@ def _has_real_statistic(evidence_text, full_text=None):
         return False
 
 
+def _extract_raw_statistic(evidence_text):
+    if not isinstance(evidence_text, str):
+        return None
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    return match.group(1).strip() if match else None
+
+
+def _extract_p_value(evidence_text):
+    """Second '=...' value -- the p-value, which always follows the
+    primary Moran's I statistic in this task's required format."""
+    if not isinstance(evidence_text, str):
+        return None
+    matches = re.findall(r"=\s*([^,)]+)[,)]", evidence_text)
+    return matches[1].strip() if len(matches) >= 2 else None
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
     df["predicted_bool"] = df["predicted"].map({"True": True, "False": False, True: True, False: False})
     df["ground_truth_bool"] = df["ground_truth_present"].astype(bool)
     df["ambiguous"] = df["predicted_bool"].isna()
-    df["has_evidence_bool"] = df.apply(
+    df["has_real_statistic_bool"] = df.apply(
         lambda r: _has_real_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
+
+    def _plausibility_check(row):
+        if not row["has_real_statistic_bool"]:
+            return True  # already disqualified elsewhere -- avoid double-penalizing
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        raw_p = _extract_p_value(row["evidence_text"])
+        if not magnitude_plausible(raw_stat):
+            return False
+        if not bounded_probability(raw_p):
+            return False
+        if not pd.isna(row["predicted_bool"]):
+            if not verdict_p_consistent(bool(row["predicted_bool"]), raw_p):
+                return False
+        return True
+
+    df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
+    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
     df["correct"] = (~df["ambiguous"]) & (df["predicted_bool"] == df["ground_truth_bool"])
     df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
     return df

@@ -1,0 +1,136 @@
+
+[2026-08-29T14:14:54.715067+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_crime_tower_hamlets
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-29T14:15:59.720132+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_crime_westminster
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-29T14:16:52.585784+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_energy_barnet
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-29T14:17:38.981503+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_energy_bexley
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-29T14:18:49.953062+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_energy_city_of_london
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-29T14:20:18.115896+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_energy_hammersmith_and_fulham
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-29T14:22:05.463662+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_ghg_city_of_london
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-08-29T14:23:21.786078+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=outlierr_2021_gas_city_of_london
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 117, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 95, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_outlier_iterative_r.py", line 58, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/outlier_iterative_r_results_multiagent.csv'
+
+----------------------------------------------------------------------

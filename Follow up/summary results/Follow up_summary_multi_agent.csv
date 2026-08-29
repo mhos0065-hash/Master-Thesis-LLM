@@ -29,41 +29,41 @@ qwen/qwen3-32b,,,,,,,,,,,
 ,,,Without filtering based on correct evidence,,,,,,,,
 ,,,,,,,,,,,
 model,N Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP,FP,accuracy,precision,recall,F1
-deepseek/deepseek-chat-v3-0324,,,,,,,,,,,
-deepseek/deepseek-r1-0528,,,,,,,,,,,
-meta-llama/llama-3.1-8b-instruct,,,,,,,,,,,
-moonshotai/kimi-k2.6,,,,,,,,,,,
-openai/gpt-4o-mini,,,,,,,,,,,
-openai/o3,,,,,,,,,,,
-openai/o4-mini,,,,,,,,,,,
-qwen/qwen3-32b,,,,,,,,,,,
+deepseek/deepseek-chat-v3-0324,50,0,50,45,1,45,5,0.9,0.605,0.613,0.609
+deepseek/deepseek-r1-0528,50,0,50,47,1,47,3,0.94,0.606,0.658,0.629
+meta-llama/llama-3.1-8b-instruct,50,2,48,19,0.54,19,29,0.38,0.253,0.162,0.198
+moonshotai/kimi-k2.6,50,0,50,44,1,44,6,0.88,0.634,0.575,0.6
+openai/gpt-4o-mini,50,1,49,35,0.92,35,14,0.7,0.259,0.299,0.278
+openai/o3,50,0,50,44,0.94,44,6,0.88,0.591,0.604,0.596
+openai/o4-mini,50,0,50,43,1,43,7,0.86,0.574,0.624,0.592
+qwen/qwen3-32b,50,0,50,42,0.72,42,8,0.84,0.591,0.558,0.574
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,After filtering based on correct evidence,,,,,,,,
 ,,,,,,,,,,,
 model,N_Query,Reply_ambiguous,non_ambiguous,correct_predicted_Evidence,pct_with_evidence,TP_Evidence,FP_Evidence,accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
-deepseek/deepseek-chat-v3-0324,,,,,,,,,,,
-deepseek/deepseek-r1-0528,,,,,,,,,,,
-meta-llama/llama-3.1-8b-instruct,,,,,,,,,,,
-moonshotai/kimi-k2.6,,,,,,,,,,,
-openai/gpt-4o-mini,,,,,,,,,,,
-openai/o3,,,,,,,,,,,
-openai/o4-mini,,,,,,,,,,,
-qwen/qwen3-32b,,,,,,,,,,,
+deepseek/deepseek-chat-v3-0324,50,0,50,45,1,45,5,0.9,0.605,0.613,0.609
+deepseek/deepseek-r1-0528,50,0,50,47,1,47,3,0.94,0.606,0.658,0.629
+meta-llama/llama-3.1-8b-instruct,50,2,48,12,0.54,12,15,0.24,0.267,0.103,0.148
+moonshotai/kimi-k2.6,50,0,50,44,1,44,6,0.88,0.634,0.575,0.6
+openai/gpt-4o-mini,50,1,49,34,0.92,34,12,0.68,0.264,0.291,0.276
+openai/o3,50,0,50,41,0.94,41,6,0.82,0.574,0.521,0.546
+openai/o4-mini,50,0,50,43,1,43,7,0.86,0.574,0.624,0.592
+qwen/qwen3-32b,50,0,50,28,0.72,28,8,0.56,0.552,0.353,0.429
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,3. GetISord (Hotspot detection),,,,,,,,
 ,,,Without filtering based on correct evidence,,,,,,,,
 ,,,,,,,,,,,
 model,N Query,Reply_ambiguous,non_ambiguous,correct_predicted,pct_with_evidence,TP_Borough,FP_Borough,accuracy (Partial),precision,recall,F1
-deepseek/deepseek-chat-v3-0324,21,0,21,13,0.857,55,0,0.619,1,0.809,0.894
-deepseek/deepseek-r1-0528,21,0,21,16,0.952,63,0,0.762,1,0.926,0.962
-meta-llama/llama-3.1-8b-instruct,21,4,17,0,0.476,9,6,0,0.6,0.132,0.216
+deepseek/deepseek-chat-v3-0324,21,0,21,13,0.857,55,0,0.779,1,0.809,0.894
+deepseek/deepseek-r1-0528,21,0,21,16,0.952,63,0,0.914,1,0.926,0.962
+meta-llama/llama-3.1-8b-instruct,17,0,17,0,0.588,9,6,0.136,0.6,0.155,0.246
 moonshotai/kimi-k2.6,21,0,21,20,0.952,67,0,0.952,1,0.985,0.992
-openai/gpt-4o-mini,21,3,18,0,0.619,24,16,0,0.6,0.353,0.444
-openai/o3,21,0,21,17,0.952,60,1,0.81,0.984,0.882,0.93
-openai/o4-mini,21,0,21,17,0.905,58,1,0.81,0.983,0.853,0.913
-qwen/qwen3-32b,21,0,21,9,0.905,39,1,0.429,0.975,0.574,0.723
+openai/gpt-4o-mini,18,0,18,0,0.722,24,16,0.243,0.6,0.353,0.444
+openai/o3,21,0,21,17,0.952,60,1,0.876,0.984,0.882,0.93
+openai/o4-mini,21,0,21,17,0.905,58,1,0.848,0.983,0.853,0.913
+qwen/qwen3-32b,21,0,21,9,0.905,39,1,0.61,0.975,0.574,0.723
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
@@ -73,14 +73,14 @@ model,N Query,Reply_ambiguous,non_ambiguous,"correct_predicted_
 Evidence",pct_with_evidence,"TP_Evidence_
 Borough level","FP_Evidence_
 Borough level",accuracy_Evidence,precision_Evidence,recall_Evidence,F1_Evidence
-deepseek/deepseek-chat-v3-0324,21,0,21,13,0.857,55,0,0.619,1,0.809,0.894
-deepseek/deepseek-r1-0528,21,0,21,16,0.952,63,0,0.762,1,0.926,0.962
-meta-llama/llama-3.1-8b-instruct,21,4,17,0,0.476,9,6,0,0.6,0.132,0.216
+deepseek/deepseek-chat-v3-0324,21,0,21,13,0.857,55,0,0.779,1,0.809,0.894
+deepseek/deepseek-r1-0528,21,0,21,16,0.952,63,0,0.914,1,0.926,0.962
+meta-llama/llama-3.1-8b-instruct,17,0,17,0,0.588,9,6,0.136,0.6,0.155,0.246
 moonshotai/kimi-k2.6,21,0,21,20,0.952,67,0,0.952,1,0.985,0.992
-openai/gpt-4o-mini,21,3,18,0,0.619,24,16,0,0.6,0.353,0.444
-openai/o3,21,0,21,17,0.952,60,1,0.81,0.984,0.882,0.93
-openai/o4-mini,21,0,21,17,0.905,58,1,0.81,0.983,0.853,0.913
-qwen/qwen3-32b,21,0,21,9,0.905,39,1,0.429,0.975,0.574,0.723
+openai/gpt-4o-mini,18,0,18,0,0.722,24,16,0.243,0.6,0.353,0.444
+openai/o3,21,0,21,17,0.952,60,1,0.876,0.984,0.882,0.93
+openai/o4-mini,21,0,21,17,0.905,58,1,0.848,0.983,0.853,0.913
+qwen/qwen3-32b,21,0,21,9,0.905,39,1,0.61,0.975,0.574,0.723
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
@@ -147,24 +147,24 @@ model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp_evidence_f
 ,,,Without filtering based on correct evidence,,,,,,,,
 ,,,,,,,,,,,
 model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,F1
-deepseek/deepseek-chat-v3-0324,,,,,,,,,,,
-deepseek/deepseek-r1-0528,,,,,,,,,,,
-meta-llama/llama-3.1-8b-instruct,,,,,,,,,,,
-moonshotai/kimi-k2.6,,,,,,,,,,,
-openai/gpt-4o-mini,,,,,,,,,,,
-openai/o3,,,,,,,,,,,
-openai/o4-mini,,,,,,,,,,,
-qwen/qwen3-32b,,,,,,,,,,,
+deepseek/deepseek-chat-v3-0324,21,0,21,19,0.952,4,0,0.905,0.941,0.833,0.869
+deepseek/deepseek-r1-0528,21,0,21,21,1,6,0,1,1,1,1
+meta-llama/llama-3.1-8b-instruct,21,5,16,11,0.524,2,2,0.524,0.625,0.467,0.533
+moonshotai/kimi-k2.6,21,0,21,20,0.952,5,0,0.952,0.969,0.917,0.938
+openai/gpt-4o-mini,21,0,21,16,0.952,3,2,0.762,0.706,0.683,0.692
+openai/o3,21,0,21,18,0.952,3,0,0.857,0.917,0.75,0.788
+openai/o4-mini,21,0,21,21,1,6,0,1,1,1,1
+qwen/qwen3-32b,21,0,21,19,1,5,1,0.905,0.883,0.883,0.883
 ,,,,,,,,,,,
 ,,,,,,,,,,,
 ,,,After filtering based on correct evidence,,,,,,,,
 ,,,,,,,,,,,
 model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
-deepseek/deepseek-chat-v3-0324,,,,,,,,,,,
-deepseek/deepseek-r1-0528,,,,,,,,,,,
-meta-llama/llama-3.1-8b-instruct,,,,,,,,,,,
-moonshotai/kimi-k2.6,,,,,,,,,,,
-openai/gpt-4o-mini,,,,,,,,,,,
-openai/o3,,,,,,,,,,,
-openai/o4-mini,,,,,,,,,,,
-qwen/qwen3-32b,,,,,,,,,,,
+deepseek/deepseek-chat-v3-0324,21,0,21,18,0.952,4,0,0.857,0.941,0.833,0.869
+deepseek/deepseek-r1-0528,21,0,21,21,1,6,0,1,1,1,1
+meta-llama/llama-3.1-8b-instruct,21,5,16,7,0.524,1,1,0.333,0.625,0.383,0.458
+moonshotai/kimi-k2.6,21,0,21,19,0.952,5,0,0.905,0.969,0.917,0.938
+openai/gpt-4o-mini,21,0,21,16,0.952,3,1,0.762,0.781,0.683,0.719
+openai/o3,21,0,21,17,0.952,3,0,0.81,0.917,0.75,0.788
+openai/o4-mini,21,0,21,21,1,6,0,1,1,1,1
+qwen/qwen3-32b,21,0,21,19,1,5,1,0.905,0.883,0.883,0.883

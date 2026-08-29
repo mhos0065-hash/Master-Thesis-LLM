@@ -24,8 +24,14 @@ Writes: scoring_summary.csv
 import re
 import pandas as pd
 
+from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
+
+# Multi agent 
+#RESULTS_CSV = "results/multi agent/results_spatial_multi.csv"
+#OUT_CSV = "Scores/multi agent/scoring_spatial_summary.csv"
+
 # Multi turn
-RESULTS_CSV = "results/results_spatial_multi.csv"
+RESULTS_CSV = "results/single agent/results_spatial_multi.csv"
 OUT_CSV = "Scores/multi turn/scoring_spatial_summary.csv"
 
 # Single turn
@@ -62,12 +68,77 @@ def parse_bool(v):
     return None
 
 
+def _extract_raw_statistic(evidence_text):
+    """First '=...' value -- for GLOBAL rows, this is the primary
+    Moran's I statistic."""
+    if not isinstance(evidence_text, str):
+        return None
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    return match.group(1).strip() if match else None
+
+
+def _extract_p_value(evidence_text):
+    """Second '=...' value -- for GLOBAL rows only, the p-value that
+    always follows the primary statistic in that format. NEVER call
+    this for LOCAL rows -- their second '=...' is a different
+    borough's own value, not a p-value at all."""
+    if not isinstance(evidence_text, str):
+        return None
+    matches = re.findall(r"=\s*([^,)]+)[,)]", evidence_text)
+    return matches[1].strip() if len(matches) >= 2 else None
+
+
+def _extract_local_values(evidence_text):
+    """LOCAL rows list multiple boroughs, each with its own '=...'
+    value -- e.g. 'Camden (HH, I=1.2), Brent (LL, I=-0.3)'. Returns
+    every value found, for a per-borough magnitude check. Unlike
+    GLOBAL rows, there is no p-value anywhere in this format."""
+    if not isinstance(evidence_text, str):
+        return []
+    vals = []
+    for raw in re.findall(r"=\s*([^,)]+)[,)]", evidence_text):
+        try:
+            f = float(raw.strip())
+            if f == f and abs(f) != float("inf"):
+                vals.append(f)
+        except ValueError:
+            continue
+    return vals
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
     df["predicted_bool"] = df["predicted"].apply(parse_bool)
     df["ground_truth_bool"] = df["ground_truth"].astype(bool)
     df["ambiguous"] = df["predicted_bool"].isna()
-    df["has_evidence_bool"] = df["evidence_text"].apply(_has_real_statistic)
+    df["has_real_statistic_bool"] = df["evidence_text"].apply(_has_real_statistic)
+
+    def _plausibility_check(row):
+        if not row["has_real_statistic_bool"]:
+            return True  # already disqualified elsewhere -- avoid double-penalizing
+
+        is_local = str(row.get("spatial_granularity", "")).strip().lower() == "local"
+
+        if is_local:
+            # No p-value field exists in this format at all -- only a
+            # per-borough magnitude check applies.
+            values = _extract_local_values(row["evidence_text"])
+            return all(magnitude_plausible(v) for v in values)
+        else:
+            # GLOBAL: same 'statistic, p-value' structure as changespillover.
+            raw_stat = _extract_raw_statistic(row["evidence_text"])
+            raw_p = _extract_p_value(row["evidence_text"])
+            if not magnitude_plausible(raw_stat):
+                return False
+            if not bounded_probability(raw_p):
+                return False
+            if not pd.isna(row["predicted_bool"]):
+                if not verdict_p_consistent(bool(row["predicted_bool"]), raw_p):
+                    return False
+            return True
+
+    df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
+    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
     df["correct"] = (~df["ambiguous"]) & (df["predicted_bool"] == df["ground_truth_bool"])
     df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
     return df

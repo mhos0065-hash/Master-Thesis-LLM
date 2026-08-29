@@ -20,13 +20,19 @@ Writes: outlier_iterative_r_scoring_summary.csv
 import re
 import pandas as pd
 
-# Single turn
-#RESULTS_CSV = "outlier_iterative_r_results.csv"
-#OUT_CSV = "Scores/single turn/outlier_iterative_r_scoring_summary.csv"
+from statistic_plausibility import magnitude_plausible
 
-# Multi turn
-RESULTS_CSV = "results/outlier_iterative_r_results_multi.csv"
-OUT_CSV = "Scores/multi turn/outlier_iterative_r_scoring_multi_summary.csv"
+# Multi agent
+#RESULTS_CSV = "results/multi agent/outlier_iterative_r_results_multiagent.csv"
+#OUT_CSV = "Scores/multi agent/outlier_iterative_r_scoring_summary_multiagent.csv"
+
+# Single turn
+RESULTS_CSV = "outlier_iterative_r_results.csv"
+OUT_CSV = "Scores/single turn/outlier_iterative_r_scoring_summary.csv"
+
+# Multi turn 
+#RESULTS_CSV = "results/single agent/outlier_iterative_r_results_multi.csv"
+#OUT_CSV = "Scores/multi turn/outlier_iterative_r_scoring_summary_multi.csv"
 
 CLASSES = ["outlier_high", "outlier_low", "not_outlier"]
 
@@ -70,10 +76,21 @@ def _has_real_statistic(evidence_text, full_text=None):
         return False
 
 
+def _extract_raw_statistic(evidence_text):
+    if not isinstance(evidence_text, str):
+        return None
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    return match.group(1).strip() if match else None
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
-    df["has_evidence_bool"] = df.apply(
+    df["has_real_statistic_bool"] = df.apply(
         lambda r: _has_real_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
+    df["statistic_plausible"] = df.apply(
+        lambda r: magnitude_plausible(_extract_raw_statistic(r["evidence_text"]))
+        if r["has_real_statistic_bool"] else True, axis=1)
+    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
     df["ambiguous"] = df["predicted"].isna() | (~df["predicted"].isin(CLASSES))
     df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])
     df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
