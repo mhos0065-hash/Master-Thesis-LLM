@@ -1,0 +1,210 @@
+## =============================================================================
+## generate_figures.R
+##
+## Reads the three "Follow_up_summary_*.csv" result files (single-agent
+## single-turn, single-agent multi-turn, multi-agent) and produces one
+## bar-chart figure per task (6 figures total). Each figure compares
+## accuracy_evidence_filtered and f1_evidence_filtered ("After filtering
+## based on correct evidence" block) across the 3 methods, for every model.
+##
+## Usage:
+##   Rscript generate_figures.R
+##
+## Requirements: ggplot2, dplyr, tidyr  (install.packages(c("ggplot2","dplyr","tidyr")))
+## =============================================================================
+
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(tidyr)
+  library(ggplot2)
+})
+
+## ---- 0. CONFIG --------------------------------------------------------------
+
+# Folder containing the 3 input CSVs (edit if needed)
+# Point R at the folder containing the script and the 3 CSVs
+setwd("D:/Australia/Monash/Semester 4/Research stream/Master Thesis/Master-Thesis-LLM/Follow up/summary results")
+
+getwd()
+list.files(pattern = "\\.csv$", ignore.case = TRUE)
+
+# Folder containing the 3 input CSVs (relative to the working dir set above)
+input_dir <- "."
+
+# Folder where the 6 PNG figures will be saved
+output_dir <- "output_figures"
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+
+# Map: file name -> friendly method label
+files <- c(
+  "Follow up_summary_single agent_single_shot.csv" = "Single-Agent Single-Turn",
+  "Follow up_summary_single agent_multi_shot.csv"   = "Single-Agent Multi-Turn",
+  "Follow up_summary_multi_agent.csv"               = "Multi-Agent"
+)
+
+# Canonical task names, in the order the 6 blocks appear in every file
+task_names <- c(
+  "1" = "Spatial correlation detection",
+  "2" = "Cross-variable clustering detection",
+  "3" = "Spatial hotspot detection",
+  "4" = "Outlier detection",
+  "5" = "Spatial interaction detection",
+  "6" = "Spatiotemporal change clustering detection"
+)
+
+# Fixed model order (consistent across all 3 files) - keeps bars in the same
+# order across figures/methods
+model_order <- c(
+  "deepseek/deepseek-chat-v3-0324",
+  "deepseek/deepseek-r1-0528",
+  "meta-llama/llama-3.1-8b-instruct",
+  "moonshotai/kimi-k2.6",
+  "openai/gpt-4o-mini",
+  "openai/o3",
+  "openai/o4-mini",
+  "qwen/qwen3-32b"
+)
+
+method_order <- c("Single-Agent Single-Turn", "Single-Agent Multi-Turn", "Multi-Agent")
+
+## ---- 1. PARSER ---------------------------------------------------------------
+## The CSVs are "report style": task titles + two labelled sub-tables
+## ("Without filtering..." and "After filtering based on correct evidence...")
+## live inside one sheet, with blank separator rows in between. Column
+## headers differ slightly in wording across tasks/files, but position is
+## always fixed once you reach a data table:
+##   V1 = model, V9 = accuracy_evidence_filtered, V12 = f1_evidence_filtered
+
+parse_after_filtering_tables <- function(path, method_label) {
+
+  raw <- read.csv(
+    path, header = FALSE, colClasses = "character",
+    fill = TRUE, quote = "\"", na.strings = NULL,
+    stringsAsFactors = FALSE, blank.lines.skip = FALSE,
+    encoding = "UTF-8"
+  )
+
+  trim <- function(x) trimws(gsub("\t", " ", x, fixed = TRUE))
+
+  v4 <- trim(raw[[4]])
+  v1 <- trim(raw[[1]])
+
+  # Locate the start of each of the 6 task blocks: a row whose 4th column
+  # starts with "1." ... "6."
+  section_start <- grepl("^[1-6]\\.", v4)
+  section_rows  <- which(section_start)
+  section_num   <- substring(v4[section_rows], 1, 1)
+
+  # Guard: keep only the first occurrence of each digit 1-6, in file order
+  keep <- !duplicated(section_num)
+  section_rows <- section_rows[keep]
+  section_num  <- section_num[keep]
+
+  section_end <- c(section_rows[-1] - 1, nrow(raw))
+
+  out <- list()
+
+  for (i in seq_along(section_rows)) {
+
+    r0 <- section_rows[i]
+    r1 <- section_end[i]
+    block <- raw[r0:r1, , drop = FALSE]
+    b4 <- trim(block[[4]])
+    b1 <- trim(block[[1]])
+
+    # find "After filtering based on correct evidence" marker
+    af_idx <- which(b4 == "After filtering based on correct evidence")
+    if (length(af_idx) == 0) next
+    af_idx <- af_idx[1]
+
+    # find the "model" header row after the marker
+    hdr_candidates <- which(b1 == "model" & seq_len(nrow(block)) > af_idx)
+    if (length(hdr_candidates) == 0) next
+    hdr_idx <- hdr_candidates[1]
+
+    # data rows: everything after header until first fully-blank row (V1=="")
+    j <- hdr_idx + 1
+    data_rows <- integer(0)
+    while (j <= nrow(block) && b1[j] != "") {
+      data_rows <- c(data_rows, j)
+      j <- j + 1
+    }
+    if (length(data_rows) == 0) next
+
+    sub <- block[data_rows, , drop = FALSE]
+    task_id <- section_num[i]
+
+    df <- data.frame(
+      task     = task_names[[task_id]],
+      task_num = as.integer(task_id),
+      method   = method_label,
+      model    = trim(sub[[1]]),
+      accuracy = suppressWarnings(as.numeric(trim(sub[[9]]))),
+      f1       = suppressWarnings(as.numeric(trim(sub[[12]]))),
+      stringsAsFactors = FALSE
+    )
+
+    # keep only rows that are actually one of our known models
+    df <- df[df$model %in% model_order, ]
+    out[[task_id]] <- df
+  }
+
+  bind_rows(out)
+}
+
+## ---- 2. READ + COMBINE ALL 3 FILES -------------------------------------------
+
+all_data <- bind_rows(lapply(names(files), function(fname) {
+  path <- file.path(input_dir, fname)
+  parse_after_filtering_tables(path, files[[fname]])
+}))
+
+all_data$method <- factor(all_data$method, levels = method_order)
+all_data$model  <- factor(all_data$model, levels = model_order)
+
+## ---- 3. PLOT: ONE FIGURE PER TASK --------------------------------------------
+
+make_task_figure <- function(task_label, task_num) {
+
+  d <- all_data %>%
+    filter(task == task_label) %>%
+    pivot_longer(cols = c(accuracy, f1),
+                 names_to = "metric", values_to = "value") %>%
+    mutate(metric = recode(metric,
+                            accuracy = "Accuracy (evidence-filtered)",
+                            f1       = "F1 (evidence-filtered)"))
+
+  p <- ggplot(d, aes(x = model, y = value, fill = method)) +
+    geom_col(position = position_dodge(width = 0.75), width = 0.7,
+             na.rm = TRUE) +
+    facet_wrap(~metric, ncol = 1) +
+    scale_fill_manual(values = c(
+      "Single-Agent Single-Turn" = "#4C72B0",
+      "Single-Agent Multi-Turn"  = "#DD8452",
+      "Multi-Agent"              = "#55A868"
+    ), drop = FALSE) +
+    coord_cartesian(ylim = c(0, 1)) +
+    labs(
+      title = sprintf("Task %d: %s", task_num, task_label),
+      subtitle = "Accuracy & F1 after filtering on correct evidence, by method",
+      x = NULL, y = "Score", fill = "Method"
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      axis.text.x = element_text(angle = 40, hjust = 1),
+      legend.position = "bottom",
+      plot.title = element_text(face = "bold"),
+      strip.text = element_text(face = "bold")
+    )
+
+  fname <- sprintf("%02d_%s.png", task_num,
+                    gsub("[^A-Za-z0-9]+", "_", task_label))
+  ggsave(file.path(output_dir, fname), plot = p,
+         width = 9, height = 7, dpi = 200)
+
+  message("Saved: ", file.path(output_dir, fname))
+}
+
+invisible(Map(make_task_figure, task_names, as.integer(names(task_names))))
+
+message("\nAll figures written to: ", normalizePath(output_dir))

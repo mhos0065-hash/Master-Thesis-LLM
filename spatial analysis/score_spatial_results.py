@@ -27,12 +27,12 @@ import pandas as pd
 from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
 
 # Multi agent 
-#RESULTS_CSV = "results/multi agent/results_spatial_multi.csv"
-#OUT_CSV = "Scores/multi agent/scoring_spatial_summary.csv"
+RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent.csv"
+OUT_CSV = "Scores/multi agent/scoring_spatial_summary.csv"
 
 # Multi turn
-RESULTS_CSV = "results/single agent/results_spatial_multi.csv"
-OUT_CSV = "Scores/multi turn/scoring_spatial_summary.csv"
+#ESULTS_CSV = "results/single agent/results_spatial_multi.csv"
+#OUT_CSV = "Scores/multi turn/scoring_spatial_summary.csv"
 
 # Single turn
 #RESULTS_CSV = "results.csv"

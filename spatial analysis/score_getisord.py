@@ -36,18 +36,18 @@ import pandas as pd
 
 from statistic_plausibility import magnitude_plausible, gi_threshold_consistent
 
+# for multi agent
+RESULTS_CSV = "results/multi agent/getisord_results_multiagent.csv"
+OUT_CSV = "Scores/multi agent/getisord_scoring_summary_multiagent.csv"
+
 # for multi turn
 #RESULTS_CSV = "results/single agent/getisord_results_multi.csv"
 #OUT_CSV = "Scores/multi turn/getisord_scoring_summary.csv"
 
+
 #For single turn
 #RESULTS_CSV = "getisord_results.csv"
 #OUT_CSV = "Scores/single turn/getisord_scoring_summary.csv"
-
-#For multi agent
-RESULTS_CSV = "results/multi agent/getisord_results_multiagent.csv"
-OUT_CSV = "Scores/multi agent/getisord_scoring_summary.csv"
-
 
 ALL_BOROUGHS = [
     "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden",
@@ -114,6 +114,27 @@ def parse_borough_values(s):
             except ValueError:
                 pass
     return result
+
+
+def parse_borough_labels(evidence_text):
+    """Extracts {borough_name: label} from the raw evidence_text (e.g.
+    "Brent (HOT, Gi*=2.01, gi_value=2.01)" -> {"Brent": "Gi*"}) --
+    needed because predicted_boroughs never carries the model's own
+    label at all, only a clean "name:direction:value" format. Takes the
+    FIRST label found per borough (the model's own stated choice), not
+    any redundant "gi_value=" duplicate some rows also carry alongside
+    it. Returns {} if evidence_text isn't in the expected list format
+    (e.g. it's "none") -- callers must handle a missing entry."""
+    if not isinstance(evidence_text, str):
+        return {}
+    labels = {}
+    for entry in re.findall(r"([A-Za-z ]+?)\s*\(([^)]*)\)", evidence_text):
+        borough_name, inner = entry
+        borough_name = borough_name.strip()
+        match = re.search(r"([A-Za-z_\-\s\*]*)=", inner)
+        if match and borough_name not in labels:
+            labels[borough_name] = match.group(1).strip()
+    return labels
 
 
 def _chunk_has_real_evidence(row):
@@ -196,8 +217,12 @@ def run():
             has_duplicates = len(raw_entries) > len(pred)
 
             pred_values = parse_borough_values(pred_str)
+            borough_labels = parse_borough_labels(r.get("evidence_text"))
             has_implausible_value = any(not magnitude_plausible(v) for v in pred_values.values())
-            has_inconsistent_threshold = any(not gi_threshold_consistent(v) for v in pred_values.values())
+            has_inconsistent_threshold = any(
+                not gi_threshold_consistent(v, label=borough_labels.get(borough))
+                for borough, v in pred_values.items()
+            )
 
             is_implausible_chunk = (
                 len(pred) > IMPLAUSIBLE_THRESHOLD or has_duplicates

@@ -1,0 +1,9 @@
+mode,model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,f1,correct_number_evidence_filtered,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered
+multiagent,deepseek/deepseek-chat-v3-0324,74,1,73,58,0.649,26,5,0.784,0.8,0.784,0.787,43,21,3,0.581,0.818,0.716,0.749
+multiagent,deepseek/deepseek-r1-0528,74,0,74,65,0.838,35,7,0.878,0.885,0.878,0.878,56,32,6,0.757,0.89,0.838,0.861
+multiagent,meta-llama/llama-3.1-8b-instruct,74,16,58,28,0.203,16,18,0.378,0.485,0.378,0.422,10,8,5,0.135,0.558,0.27,0.357
+multiagent,moonshotai/kimi-k2.6,74,0,74,65,0.824,30,2,0.878,0.885,0.878,0.878,55,28,2,0.743,0.883,0.851,0.861
+multiagent,openai/gpt-4o-mini,74,3,71,41,0.405,13,7,0.554,0.6,0.554,0.546,26,8,3,0.351,0.638,0.486,0.485
+multiagent,openai/o3,74,1,73,63,0.581,27,0,0.851,0.891,0.851,0.856,40,25,0,0.541,0.891,0.824,0.837
+multiagent,openai/o4-mini,74,0,74,68,0.797,33,2,0.919,0.92,0.919,0.919,57,33,2,0.77,0.92,0.919,0.919
+multiagent,qwen/qwen3-32b,74,0,74,48,0.378,22,11,0.649,0.65,0.649,0.648,22,16,6,0.297,0.681,0.568,0.605

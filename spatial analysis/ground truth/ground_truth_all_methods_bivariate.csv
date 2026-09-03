@@ -1,0 +1,201 @@
+"chunk_id","method","gt_stat","gt_p","gt_significant"
+"bivariate_2021_energy_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_energy_crime","Lee's L",0.0973,0.072,FALSE
+"bivariate_2021_energy_crime","Moran's I (X only, ref.)",-0.0117513388443594,1,FALSE
+"bivariate_2021_energy_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_energy_ghg","Bivariate / Cross Moran's I",-0.0120601200634095,0.963,FALSE
+"bivariate_2021_energy_ghg","Lee's L",0.196,0.992,FALSE
+"bivariate_2021_energy_ghg","Moran's I (X only, ref.)",-0.0117513388443594,1,FALSE
+"bivariate_2021_energy_ghg","Pearson correlation",0.999976559586615,0.001,TRUE
+"bivariate_2021_energy_transport","Bivariate / Cross Moran's I",-0.0531222538845906,0.419,FALSE
+"bivariate_2021_energy_transport","Lee's L",0.1441,0.582,FALSE
+"bivariate_2021_energy_transport","Moran's I (X only, ref.)",-0.0117513388443594,1,FALSE
+"bivariate_2021_energy_transport","Pearson correlation",0.900248939587737,0.002,TRUE
+"bivariate_2021_energy_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_energy_waste","Lee's L",-0.0358,0.012,TRUE
+"bivariate_2021_energy_waste","Moran's I (X only, ref.)",-0.0117513388443594,1,FALSE
+"bivariate_2021_energy_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_gas_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_gas_crime","Lee's L",0.1003,0.068,FALSE
+"bivariate_2021_gas_crime","Moran's I (X only, ref.)",-0.00722917703965649,1,FALSE
+"bivariate_2021_gas_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_gas_energy","Bivariate / Cross Moran's I",-0.0091142085458045,0.98,FALSE
+"bivariate_2021_gas_energy","Lee's L",0.198,0.902,FALSE
+"bivariate_2021_gas_energy","Moran's I (X only, ref.)",-0.00722917703965649,1,FALSE
+"bivariate_2021_gas_energy","Pearson correlation",0.998893472462962,0.001,TRUE
+"bivariate_2021_gas_ghg","Bivariate / Cross Moran's I",-0.00941276500597203,0.963,FALSE
+"bivariate_2021_gas_ghg","Lee's L",0.1975,0.922,FALSE
+"bivariate_2021_gas_ghg","Moran's I (X only, ref.)",-0.00722917703965649,1,FALSE
+"bivariate_2021_gas_ghg","Pearson correlation",0.998729343345645,0.001,TRUE
+"bivariate_2021_gas_transport","Bivariate / Cross Moran's I",-0.0498611338134227,0.405,FALSE
+"bivariate_2021_gas_transport","Lee's L",0.1441,0.6,FALSE
+"bivariate_2021_gas_transport","Moran's I (X only, ref.)",-0.00722917703965649,1,FALSE
+"bivariate_2021_gas_transport","Pearson correlation",0.888883395535274,0.001,TRUE
+"bivariate_2021_gas_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_gas_waste","Lee's L",-0.039,0.018,TRUE
+"bivariate_2021_gas_waste","Moran's I (X only, ref.)",-0.00722917703965649,1,FALSE
+"bivariate_2021_gas_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_ghg_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_ghg_crime","Lee's L",0.0967,0.056,FALSE
+"bivariate_2021_ghg_crime","Moran's I (X only, ref.)",-0.0125676908490177,1,FALSE
+"bivariate_2021_ghg_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_ghg_transport","Bivariate / Cross Moran's I",-0.053358409508554,0.387,FALSE
+"bivariate_2021_ghg_transport","Lee's L",0.1441,0.558,FALSE
+"bivariate_2021_ghg_transport","Moran's I (X only, ref.)",-0.0125676908490177,1,FALSE
+"bivariate_2021_ghg_transport","Pearson correlation",0.9024774408986,0.005,TRUE
+"bivariate_2021_ghg_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_ghg_waste","Lee's L",-0.0347,0.018,TRUE
+"bivariate_2021_ghg_waste","Moran's I (X only, ref.)",-0.0125676908490177,1,FALSE
+"bivariate_2021_ghg_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_no2_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_no2_crime","Lee's L",0.0418,0.326,FALSE
+"bivariate_2021_no2_crime","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2021_no2_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_no2_energy","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_no2_energy","Lee's L",0.0064,0.892,FALSE
+"bivariate_2021_no2_energy","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2021_no2_energy","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_no2_ghg","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_no2_ghg","Lee's L",0.0068,0.906,FALSE
+"bivariate_2021_no2_ghg","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2021_no2_ghg","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_no2_transport","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_no2_transport","Lee's L",0.0332,0.49,FALSE
+"bivariate_2021_no2_transport","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2021_no2_transport","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_transport_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_transport_crime","Lee's L",0.0462,0.222,FALSE
+"bivariate_2021_transport_crime","Moran's I (X only, ref.)",-0.0813271261983777,1,FALSE
+"bivariate_2021_transport_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2021_transport_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2021_transport_waste","Lee's L",0.008,0.036,TRUE
+"bivariate_2021_transport_waste","Moran's I (X only, ref.)",-0.0813271261983777,1,FALSE
+"bivariate_2021_transport_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_energy_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_energy_crime","Lee's L",0.0789,0.118,FALSE
+"bivariate_2022_energy_crime","Moran's I (X only, ref.)",-0.0120304867198876,1,FALSE
+"bivariate_2022_energy_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_energy_ghg","Bivariate / Cross Moran's I",-0.0123011377643653,0.952,FALSE
+"bivariate_2022_energy_ghg","Lee's L",0.1955,0.946,FALSE
+"bivariate_2022_energy_ghg","Moran's I (X only, ref.)",-0.0120304867198876,1,FALSE
+"bivariate_2022_energy_ghg","Pearson correlation",0.999973417691253,0.001,TRUE
+"bivariate_2022_energy_transport","Bivariate / Cross Moran's I",-0.0520311013992981,0.43,FALSE
+"bivariate_2022_energy_transport","Lee's L",0.1364,0.53,FALSE
+"bivariate_2022_energy_transport","Moran's I (X only, ref.)",-0.0120304867198876,1,FALSE
+"bivariate_2022_energy_transport","Pearson correlation",0.868630326848245,0.001,TRUE
+"bivariate_2022_energy_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_energy_waste","Lee's L",-0.0174,0.01,TRUE
+"bivariate_2022_energy_waste","Moran's I (X only, ref.)",-0.0120304867198876,1,FALSE
+"bivariate_2022_energy_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_gas_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_gas_crime","Lee's L",0.0826,0.126,FALSE
+"bivariate_2022_gas_crime","Moran's I (X only, ref.)",-0.00500617492603522,1,FALSE
+"bivariate_2022_gas_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_gas_energy","Bivariate / Cross Moran's I",-0.00783800156888588,0.973,FALSE
+"bivariate_2022_gas_energy","Lee's L",0.1982,0.93,FALSE
+"bivariate_2022_gas_energy","Moran's I (X only, ref.)",-0.00500617492603522,1,FALSE
+"bivariate_2022_gas_energy","Pearson correlation",0.998455974078824,0.001,TRUE
+"bivariate_2022_gas_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_gas_waste","Lee's L",-0.0199,0.018,TRUE
+"bivariate_2022_gas_waste","Moran's I (X only, ref.)",-0.00500617492603522,1,FALSE
+"bivariate_2022_gas_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_ghg_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_ghg_crime","Lee's L",0.0784,0.178,FALSE
+"bivariate_2022_ghg_crime","Moran's I (X only, ref.)",-0.012774057291967,1,FALSE
+"bivariate_2022_ghg_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_ghg_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_ghg_waste","Lee's L",-0.0166,0.016,TRUE
+"bivariate_2022_ghg_waste","Moran's I (X only, ref.)",-0.012774057291967,1,FALSE
+"bivariate_2022_ghg_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_no2_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_no2_crime","Lee's L",0.0279,0.62,FALSE
+"bivariate_2022_no2_crime","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2022_no2_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_no2_energy","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_no2_energy","Lee's L",-0.0087,0.262,FALSE
+"bivariate_2022_no2_energy","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2022_no2_energy","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_no2_gas","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_no2_gas","Lee's L",-0.0062,0.258,FALSE
+"bivariate_2022_no2_gas","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2022_no2_gas","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_no2_ghg","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_no2_ghg","Lee's L",-0.0086,0.262,FALSE
+"bivariate_2022_no2_ghg","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2022_no2_ghg","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_no2_transport","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_no2_transport","Lee's L",0.0181,0.56,FALSE
+"bivariate_2022_no2_transport","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2022_no2_transport","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_no2_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_no2_waste","Lee's L",0.033,0.512,FALSE
+"bivariate_2022_no2_waste","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2022_no2_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2022_transport_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2022_transport_waste","Lee's L",0.0216,0.064,FALSE
+"bivariate_2022_transport_waste","Moran's I (X only, ref.)",-0.0711521785078758,1,FALSE
+"bivariate_2022_transport_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_crime_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_crime_waste","Lee's L",-0.0936,0.192,FALSE
+"bivariate_2023_crime_waste","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2023_crime_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_energy_ghg","Bivariate / Cross Moran's I",-0.00736316400788719,0.966,FALSE
+"bivariate_2023_energy_ghg","Lee's L",0.1965,0.992,FALSE
+"bivariate_2023_energy_ghg","Moran's I (X only, ref.)",-0.00875596307448956,1,FALSE
+"bivariate_2023_energy_ghg","Pearson correlation",0.999901511245682,0.001,TRUE
+"bivariate_2023_energy_transport","Bivariate / Cross Moran's I",-0.0451181730939364,0.493,FALSE
+"bivariate_2023_energy_transport","Lee's L",0.1442,0.57,FALSE
+"bivariate_2023_energy_transport","Moran's I (X only, ref.)",-0.00875596307448956,1,FALSE
+"bivariate_2023_energy_transport","Pearson correlation",0.887695624062986,0.002,TRUE
+"bivariate_2023_energy_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_energy_waste","Lee's L",-0.0296,0.006,TRUE
+"bivariate_2023_energy_waste","Moran's I (X only, ref.)",-0.00875596307448956,1,FALSE
+"bivariate_2023_energy_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_gas_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_gas_crime","Lee's L",0.0784,0.13,FALSE
+"bivariate_2023_gas_crime","Moran's I (X only, ref.)",-0.00881912611890694,1,FALSE
+"bivariate_2023_gas_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_gas_ghg","Bivariate / Cross Moran's I",-0.00685577618539273,0.969,FALSE
+"bivariate_2023_gas_ghg","Lee's L",0.1978,0.87,FALSE
+"bivariate_2023_gas_ghg","Moran's I (X only, ref.)",-0.00881912611890694,1,FALSE
+"bivariate_2023_gas_ghg","Pearson correlation",0.997608589434087,0.001,TRUE
+"bivariate_2023_gas_transport","Bivariate / Cross Moran's I",-0.0437039541372877,0.53,FALSE
+"bivariate_2023_gas_transport","Lee's L",0.1425,0.608,FALSE
+"bivariate_2023_gas_transport","Moran's I (X only, ref.)",-0.00881912611890694,1,FALSE
+"bivariate_2023_gas_transport","Pearson correlation",0.866116350749721,0.009,TRUE
+"bivariate_2023_gas_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_gas_waste","Lee's L",-0.0322,0.012,TRUE
+"bivariate_2023_gas_waste","Moran's I (X only, ref.)",-0.00881912611890694,1,FALSE
+"bivariate_2023_gas_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_ghg_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_ghg_crime","Lee's L",0.0781,0.18,FALSE
+"bivariate_2023_ghg_crime","Moran's I (X only, ref.)",-0.00541887104159032,1,FALSE
+"bivariate_2023_ghg_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_ghg_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_ghg_waste","Lee's L",-0.0292,0.006,TRUE
+"bivariate_2023_ghg_waste","Moran's I (X only, ref.)",-0.00541887104159032,1,FALSE
+"bivariate_2023_ghg_waste","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_no2_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_no2_crime","Lee's L",0.0908,0.616,FALSE
+"bivariate_2023_no2_crime","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2023_no2_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_no2_energy","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_no2_energy","Lee's L",0.1037,0.778,FALSE
+"bivariate_2023_no2_energy","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2023_no2_energy","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_no2_gas","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_no2_gas","Lee's L",0.105,0.712,FALSE
+"bivariate_2023_no2_gas","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2023_no2_gas","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_no2_transport","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_no2_transport","Lee's L",0.062,0.752,FALSE
+"bivariate_2023_no2_transport","Moran's I (X only, ref.)",NA,NA,FALSE
+"bivariate_2023_no2_transport","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_transport_crime","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_transport_crime","Lee's L",0.0288,0.386,FALSE
+"bivariate_2023_transport_crime","Moran's I (X only, ref.)",-0.0708979130506248,1,FALSE
+"bivariate_2023_transport_crime","Pearson correlation",NA,NA,FALSE
+"bivariate_2023_transport_waste","Bivariate / Cross Moran's I",NA,NA,FALSE
+"bivariate_2023_transport_waste","Lee's L",0.0253,0.018,TRUE
+"bivariate_2023_transport_waste","Moran's I (X only, ref.)",-0.0708979130506248,1,FALSE
+"bivariate_2023_transport_waste","Pearson correlation",NA,NA,FALSE

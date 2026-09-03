@@ -23,12 +23,12 @@ import pandas as pd
 from statistic_plausibility import magnitude_plausible
 
 # Multi agent
-#RESULTS_CSV = "results/multi agent/outlier_iterative_r_results_multiagent.csv"
-#OUT_CSV = "Scores/multi agent/outlier_iterative_r_scoring_summary_multiagent.csv"
+RESULTS_CSV = "results/multi agent/outlier_iterative_r_results_multiagent.csv"
+OUT_CSV = "Scores/multi agent/outlier_iterative_r_scoring_summary_multiagent.csv"
 
 # Single turn
-RESULTS_CSV = "outlier_iterative_r_results.csv"
-OUT_CSV = "Scores/single turn/outlier_iterative_r_scoring_summary.csv"
+#RESULTS_CSV = "outlier_iterative_r_results.csv"
+#OUT_CSV = "Scores/single turn/outlier_iterative_r_scoring_summary.csv"
 
 # Multi turn 
 #RESULTS_CSV = "results/single agent/outlier_iterative_r_results_multi.csv"
@@ -83,13 +83,145 @@ def _extract_raw_statistic(evidence_text):
     return match.group(1).strip() if match else None
 
 
+def _to_float(raw):
+    if raw is None:
+        return None
+    try:
+        f = float(str(raw).strip())
+        return f if (f == f and abs(f) != float("inf")) else None
+    except ValueError:
+        return None
+
+
+def verdict_z_consistent(predicted, evidence_text, threshold=1.96, alpha=0.05):
+    """A verdict must be justified by the model's OWN reported value --
+    but ONLY when we can be confident what kind of value it is, based
+    on its own label, not just its magnitude.
+
+    Two real issues found and fixed here (both discovered via direct
+    inspection of real evidence_text this session):
+
+    1. A value in [0,1] is now treated as a p-value ONLY if its own
+       label says so (e.g. "p =", "p_value =", "significance ="). A
+       genuinely small, correctly labeled z-score near zero (e.g.
+       "z = 0.031", outlierr_2023_crime_hillingdon, seen identically
+       from both gpt-4o-mini and deepseek-r1-0528) was previously
+       misread as a "significant p-value" purely because 0.031 < 0.05
+       -- a false positive with nothing to do with the model's actual
+       reasoning.
+
+    2. The 1.96 threshold is now applied ONLY when the label confidently
+       claims to be a standard z-score equivalent (z, z-score,
+       standardized/std residual). The task's own prompt explicitly
+       permits other methods ("z is just an example label -- if your
+       method produces a different statistic, use its name instead"),
+       and labels actually observed this session include t, R, M, r,
+       robust_z, iterative_r -- a t-statistic has a different critical
+       value depending on degrees of freedom, robust_z is often
+       MAD-scaled rather than standard-normal, and R/M/r are ambiguous.
+       Applying 1.96 uniformly to all of these would risk false
+       positives the same way issue #1 did. For any label outside the
+       confident z-score set, this check is skipped (returns True) --
+       trading recall for precision, since a false accusation is worse
+       than a missed one when this feeds a supervisor-facing analysis.
+
+    Also checks sign consistency: outlier_high requires a positive
+    value, outlier_low requires a negative one -- inherent to what
+    those verdicts mean, not an invented rule.
+
+    If no real number is present at all, this check is skipped
+    (already disqualified elsewhere by the has_real_statistic check)."""
+    import re as _re
+
+    match = _re.search(r"([A-Za-z_\-\s]*)=\s*([^,)]+)[,)]", str(evidence_text))
+    if not match:
+        return True
+    label = match.group(1).strip().lower()
+    raw_value = match.group(2).strip()
+
+    f = _to_float(raw_value)
+    if f is None:
+        return True
+
+    Z_SCORE_LABELS = {"z", "z-score", "z_score", "standardized residual",
+                       "standardized_residual", "std residual", "std_residual"}
+    P_VALUE_LABELS = {"p", "p-value", "p_value", "significance", "significance measure"}
+
+    is_confident_z = label in Z_SCORE_LABELS
+    is_confident_p = label in P_VALUE_LABELS
+
+    if not is_confident_z and not is_confident_p:
+        return True  # unrecognized/ambiguous statistic (t, R, M, r, robust_z, etc.) -- skip, don't guess
+
+    if is_confident_p:
+        is_significant = abs(f) < alpha
+        direction_positive = None  # a p-value alone carries no direction
+    else:
+        is_significant = abs(f) >= threshold
+        direction_positive = f > 0
+
+    if predicted == "not_outlier":
+        return not is_significant
+    if predicted == "outlier_high":
+        if not is_significant:
+            return False
+        return direction_positive is None or direction_positive is True
+    if predicted == "outlier_low":
+        if not is_significant:
+            return False
+        return direction_positive is None or direction_positive is False
+    return True  # ambiguous/unrecognized verdict -- handled elsewhere
+
+
+def outlier_magnitude_plausible(raw_value, threshold=12.0):
+    """Task-specific magnitude check for the Iterative-R outlier task,
+    tighter than the generic magnitude_plausible() (which uses a
+    method-agnostic 1000 cutoff, far too loose to be useful here).
+
+    Threshold is grounded directly in this task's own real ground truth,
+    not chosen to produce any particular scoring outcome: the maximum
+    |ground_truth_z_score| across all 50 chunks in
+    outlier_iterative_r_manifest.csv is 5.5441 (outlierr_2023_gas_city_of_london).
+    12.0 is a generous ~2x margin above that observed maximum -- same
+    "generous 2x margin above real max" principle already used for
+    Getis-Ord's IMPLAUSIBLE_THRESHOLD=10 in score_getisord.py, applied
+    consistently here rather than invented fresh.
+
+    Motivation: direct inspection of real conversation logs this session
+    (openai/gpt-4o-mini, single-turn, outlierr_2021_energy_city_of_london)
+    showed a genuine, real pandas computation -- no fabrication -- that
+    omitted the masking-bias correction the prompt explicitly asks for,
+    producing z=30.41 against a ground truth of 5.5435. The verdict
+    (OUTLIER-HIGH) was directionally correct and so counted as fully
+    correct and evidenced under the prior scorer, despite the magnitude
+    being off by more than 5x. This check does not penalize direction
+    (already scored by `correct`); it only withholds evidence credit
+    when the model's own cited number is implausibly large for this
+    specific task, regardless of which mode or model produced it."""
+    f = _to_float(raw_value)
+    if f is None:
+        return True
+    return abs(f) <= threshold
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
     df["has_real_statistic_bool"] = df.apply(
         lambda r: _has_real_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
-    df["statistic_plausible"] = df.apply(
-        lambda r: magnitude_plausible(_extract_raw_statistic(r["evidence_text"]))
-        if r["has_real_statistic_bool"] else True, axis=1)
+
+    def _plausibility_check(row):
+        if not row["has_real_statistic_bool"]:
+            return True  # already disqualified elsewhere -- avoid double-penalizing
+        raw = _extract_raw_statistic(row["evidence_text"])
+        if not magnitude_plausible(raw):
+            return False
+        if not outlier_magnitude_plausible(raw):
+            return False
+        if not verdict_z_consistent(row["predicted"], row["evidence_text"]):
+            return False
+        return True
+
+    df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
     df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
     df["ambiguous"] = df["predicted"].isna() | (~df["predicted"].isin(CLASSES))
     df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])

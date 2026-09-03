@@ -285,7 +285,17 @@ def run_validator(coder_result, code_text, profile, dataset_path, extra_files, r
     dpu_ok = False
     if dpu is not None and row_count is not None:
         expected_min = row_count - max_missing
-        dpu_ok = dpu <= row_count and (max_missing == 0 or dpu <= expected_min + 1)
+        if is_no_result_answer:
+            # A "nothing significant anywhere" conclusion should only be
+            # trusted if the model examined (at minimum) the full usable
+            # dataset -- not an arbitrary subset. Same missing-data
+            # tolerance as the general case below, but now a floor
+            # requirement rather than only a ceiling: closes the
+            # low-effort shortcut of reporting a suspiciously small
+            # data_points_used while claiming a global "none" result.
+            dpu_ok = expected_min <= dpu <= row_count
+        else:
+            dpu_ok = dpu <= row_count and (max_missing == 0 or dpu <= expected_min + 1)
     elif dpu is not None and row_count is None:
         dpu_ok = True  # profiler gave nothing to check against -- don't penalize the coder
     checks.append(("data_points_reconciliation", dpu_ok))
@@ -380,7 +390,8 @@ def multi_agent_loop(question, dataset_path, run_dir, model, extra_files=None,
         prior_planner_feedback = combined_feedback
 
     # all plans exhausted -- return the best-scoring attempt, honestly tagged
-    best = max(attempts, key=lambda a: a["validation_score"])
+    non_empty_attempts = [a for a in attempts if (a["coder_result"].get("final_answer") or "").strip()]
+    best = max(non_empty_attempts or attempts, key=lambda a: a["validation_score"])
     return {
         "status": "best_effort", "final_answer": best["coder_result"].get("final_answer"),
         "validation_score": best["validation_score"], "validation_total": best["validation_total"],

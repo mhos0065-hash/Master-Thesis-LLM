@@ -7,19 +7,85 @@ check, since there are 3 classes and "wrong" can mean different things
 (predicting positive when it's actually negative is a different mistake
 than predicting not_significant).
 
+VERDICT correctness (positive/negative/not_significant) is now judged
+PER ROW against the ground truth for the SPECIFIC statistical method
+that row actually used (from ground_truth_all_methods.csv), not always
+against Lee's L. If a row used Pearson correlation, it's scored against
+what Pearson correlation actually says about that chunk -- not against
+Lee's L, which is a different (if related) statistic. This separates
+"did the model execute/interpret its own chosen method correctly" from
+"did the model choose the right method for a spatial question", which
+were previously conflated by always scoring against Lee's L.
+
+If a row's method has no computed ground truth (e.g. Geary's C, join
+count, LISA, Mantel, Spearman/Kendall, chi-square, t-test, regression,
+z-test, or a bare "permutation test" label -- see METHOD_NAME_MAP),
+it FALLS BACK to the manifest's Lee's L-derived ground truth, since
+that's the only ground truth guaranteed to exist for every chunk. Which
+source was used for each row is recorded in `ground_truth_source`
+("method_specific" vs "manifest_fallback") so this is fully auditable,
+not silent.
+
+A secondary, INFORMATIONAL-ONLY column `correct_vs_manifest` is also
+kept: this always scores against Lee's L regardless of method, i.e. "did
+the model answer the officially-posed question correctly". This is a
+different, also-legitimate question from the primary `correct` column
+and both are reported separately rather than merged.
+
+NEW in this version: a value-verification layer. For rows that are
+(a) verdict-correct (against whichever ground truth source was used)
+AND (b) have real evidence (a genuine, non-fabricated statistic), we
+additionally check whether the model's reported NUMBER is close enough
+to the ground-truth value it was scored against. This catches the case
+where a model gets the right VERDICT (possibly by luck, or from a
+qualitatively-right-but-numerically-broken calculation) while reporting
+a statistic value that doesn't actually match what its own chosen
+method should produce.
+
+TOLERANCE is now METHOD-SPECIFIC and ABSOLUTE, not a flat relative
+percentage (see METHOD_TOLERANCE below). This was empirically derived,
+not guessed: a simulation (spatial data on a 33-node Delaunay-
+triangulated network, structurally comparable to the real London
+borough adjacency graph, 3000 trials varying true correlation and
+spatial-autocorrelation strength) measured how much Lee's L and
+Cross-Moran's I actually differ between two legitimate weight-matrix
+conventions (row-standardized vs. binary weights) on the SAME data.
+
+Key finding: RELATIVE tolerance is the wrong metric for these
+statistics -- because they're often close to zero, relative error
+blows up meaninglessly (e.g. 0.01 vs 0.02 is "100% relative
+difference" but a trivial absolute gap). Absolute differences were far
+more stable:
+    Lee's L:          median abs diff = 0.012, p90 = 0.033, p95 = 0.044
+    Cross-Moran's I:  median abs diff = 0.012, p90 = 0.031, p95 = 0.037
+An absolute tolerance of 0.05 covers roughly the 95th percentile of
+legitimate convention-driven variation observed in simulation, while
+remaining far tighter than the multi-hundred to multi-billion-magnitude
+gaps actually seen in broken runs. This simulation only varied
+row-standardized vs. binary weights -- real implementations could also
+differ in neighbor definition (queen vs. rook, distance-based), so 0.05
+is a reasonable, evidence-based default rather than a proven upper
+bound; re-running the simulation with the actual borough adjacency
+structure (rather than a synthetic stand-in) would tighten this further
+if you want a fully data-specific number.
+
+Pearson correlation keeps a much tighter tolerance (0.01) since it has
+no such convention-driven ambiguity -- cor(x,y) is cor(x,y); the small
+window is a floating-point safety margin, not an expected range.
+
 Produces THREE outputs:
   1. bivariate_scoring_summary.csv  -- per-model accuracy + per-class
-     precision/recall/F1 (one-vs-rest) + macro-F1, BOTH raw and
-     evidence-filtered (same "was it actually grounded in a real
-     citation" logic as the original task's evidence-filtered scoring).
+     precision/recall/F1 (one-vs-rest) + macro-F1, raw AND
+     evidence-filtered, PLUS the new value-verification metrics.
   2. bivariate_confusion_matrix.csv -- per-model 3x3 confusion matrix
-     (rows = real ground truth, columns = what the model predicted),
-     so you can see exactly WHICH mistakes each model tends to make.
+     (rows = real ground truth, columns = what the model predicted).
   3. Printed summary to console.
 
 Usage:
     python score_bivariate.py
-Reads:  bivariate_results.csv
+Reads:  <mode>_results_with_method.csv (must include a
+        `statistical_method` column -- see attach_statistical_method.py),
+        bivariate_manifest.csv, ground_truth_all_methods.csv
 Writes: bivariate_scoring_summary.csv, bivariate_confusion_matrix.csv
 """
 
@@ -31,24 +97,50 @@ from formula_invariance_check import check_shift_invariant
 from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
 
 MANIFEST_PATH = "chunks_csv/bivariate/bivariate_manifest.csv"
+GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_bivariate.csv"
 
 # For single turn
-#RESULTS_CSV = "bivariate_results.csv"
-#SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
-#CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
+RESULTS_CSV = "bivariate_results_with_method.csv"
+SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
+CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 
 # For multi turn
-#RESULTS_CSV = "results/single agent/bivariate_results_multi.csv"
+#RESULTS_CSV = "results/single agent/bivariate_results_multi_with_method.csv"
 #SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
 #CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
 
 # For multi agent
-RESULTS_CSV = "results/multi agent/bivariate_results_multiagent.csv"
-SUMMARY_OUT = "Scores/multi agent/bivariate_scoring_summary_multiagent.csv"
-CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multiagent.csv"
+#RESULTS_CSV = "results/multi agent/bivariate_results_multiagent_with_method.csv"
+#SUMMARY_OUT = "Scores/multi agent/bivariate_scoring_summary_multiagent.csv"
+#CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multiagent.csv"
 
 
 CLASSES = ["positive", "negative", "not_significant"]
+
+# Maps the free-text labels produced by attach_statistical_method.py's
+# keyword scan onto the (fewer) method names that actually have a
+# computed ground truth in ground_truth_all_methods.csv. Anything not
+# listed here (Geary's C, join count, LISA, Getis-Ord, Mantel, Spearman,
+# Kendall, chi-square, t-test, regression, permutation/Monte Carlo as a
+# bare label, z-test, "none") has NO ground truth to check the value
+# against -- those rows fall through to "unverifiable", not "wrong".
+METHOD_NAME_MAP = {
+    "Lee's L": "Lee's L",
+    "Bivariate / Cross Moran's I": "Bivariate / Cross Moran's I",
+    "Moran's I": "Moran's I (X only, ref.)",
+    "Pearson correlation": "Pearson correlation",
+    "Generic Pearson (np.corrcoef)": "Pearson correlation",
+}
+
+# Method-specific, ABSOLUTE tolerances. See the module docstring's
+# TOLERANCE section for the simulation these are derived from.
+METHOD_TOLERANCE = {
+    "Lee's L": 0.05,
+    "Bivariate / Cross Moran's I": 0.05,
+    "Moran's I (X only, ref.)": 0.05,
+    "Pearson correlation": 0.01,
+}
+DEFAULT_TOLERANCE = 0.05  # fallback for any method not listed above
 
 
 def _has_real_test_statistic(evidence_text, full_text=None):
@@ -82,7 +174,8 @@ def _has_real_test_statistic(evidence_text, full_text=None):
 
 def _extract_raw_statistic(evidence_text):
     """Same extraction logic as _has_real_test_statistic, isolated so the
-    raw value can also be passed into the shift-invariance re-check."""
+    raw value can also be passed into the shift-invariance re-check and
+    the method-specific ground-truth value comparison."""
     if not isinstance(evidence_text, str):
         return None
     match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
@@ -100,9 +193,97 @@ def _extract_p_value(evidence_text):
     return matches[1].strip() if len(matches) >= 2 else None
 
 
+def value_within_tolerance(model_val, gt_val, normalized_method):
+    """Compares a model's reported statistic against the ground-truth
+    value for the SAME method, using a method-specific ABSOLUTE
+    tolerance (see METHOD_TOLERANCE / module docstring for how these
+    were derived). Returns True/False, or None if either value isn't a
+    usable number (can't be checked, not the same as "wrong")."""
+    try:
+        m = float(model_val)
+        g = float(gt_val)
+    except (TypeError, ValueError):
+        return None
+    if m != m or g != g:  # NaN
+        return None
+    if abs(m) == float("inf") or abs(g) == float("inf"):
+        return None
+    tol = METHOD_TOLERANCE.get(normalized_method, DEFAULT_TOLERANCE)
+    return abs(m - g) <= tol
+
+
+def load_ground_truth_methods():
+    """Loads ground_truth_all_methods.csv into a {(chunk_id, method): row}
+    lookup dict for fast per-row access."""
+    gt = pd.read_csv(GROUND_TRUTH_METHODS_PATH)
+    table = {}
+    for _, r in gt.iterrows():
+        table[(r["chunk_id"], r["method"])] = {
+            "gt_stat": r["gt_stat"],
+            "gt_p": r["gt_p"],
+            "gt_significant": bool(r["gt_significant"]),
+        }
+    return table
+
+
+def _direction_from_stat(stat, significant):
+    """Same rule the manifest itself uses: direction is the sign of the
+    statistic, but ONLY when the result is significant; otherwise the
+    verdict is not_significant regardless of sign. Applied uniformly to
+    every method so the derivation is consistent across the table."""
+    try:
+        s = float(stat)
+    except (TypeError, ValueError):
+        return "not_significant"
+    if not significant or s != s:  # not significant, or stat is NaN
+        return "not_significant"
+    return "positive" if s > 0 else "negative"
+
+
+def _resolve_ground_truth(row, gt_methods, manifest):
+    """Returns the ground-truth entry to score THIS row against: the
+    entry for the specific method it used, if we have one computed;
+    otherwise falls back to the manifest's Lee's L-derived ground truth
+    (the only ground truth guaranteed to exist for every chunk). Returns
+    None only if the chunk_id itself isn't found anywhere."""
+    normalized_method = METHOD_NAME_MAP.get(row.get("statistical_method"))
+    if normalized_method is not None:
+        gt = gt_methods.get((row["chunk_id"], normalized_method))
+        if gt is not None:
+            return {
+                "direction": _direction_from_stat(gt["gt_stat"], gt["gt_significant"]),
+                "stat": gt["gt_stat"],
+                "p": gt["gt_p"],
+                "significant": gt["gt_significant"],
+                "source": "method_specific",
+                "method": normalized_method,
+            }
+
+    if row["chunk_id"] in manifest.index:
+        m = manifest.loc[row["chunk_id"]]
+        return {
+            "direction": m["ground_truth_direction"],
+            "stat": m["ground_truth_lee_l"],
+            "p": m["ground_truth_p_value"],
+            "significant": str(m["ground_truth_is_significant"]).strip().upper() == "TRUE",
+            "source": "manifest_fallback",
+            "method": "Lee's L",
+        }
+
+    return None
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
     manifest = pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
+    gt_methods = load_ground_truth_methods()
+
+    if "statistical_method" not in df.columns:
+        raise ValueError(
+            f"'{RESULTS_CSV}' has no `statistical_method` column. "
+            "Run attach_statistical_method.py first and point RESULTS_CSV "
+            "at its '_with_method' output."
+        )
 
     df["has_real_statistic_bool"] = df.apply(
         lambda r: _has_real_test_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
@@ -154,9 +335,51 @@ def load():
         & df["statistic_plausible"]
     )
 
+    # --- Resolve which ground truth each row is scored against --------
+    resolved = df.apply(lambda r: _resolve_ground_truth(r, gt_methods, manifest), axis=1)
+    df["gt_direction_used"] = resolved.apply(lambda d: d["direction"] if d else None)
+    df["gt_stat_used"] = resolved.apply(lambda d: d["stat"] if d else None)
+    df["gt_method_used"] = resolved.apply(lambda d: d["method"] if d else None)
+    df["ground_truth_source"] = resolved.apply(lambda d: d["source"] if d else "missing")
+
     df["ambiguous"] = df["predicted"].isna() | (~df["predicted"].isin(CLASSES))
-    df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])
+
+    # PRIMARY: scored against the method the row actually used (with the
+    # manifest_fallback above for methods we have no ground truth for).
+    df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["gt_direction_used"])
     df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
+
+    # SECONDARY / informational only: "did it answer the officially-posed
+    # question correctly", always against Lee's L regardless of method.
+    # Deliberately NOT used for accuracy/F1/confusion-matrix below -- a
+    # separate, clearly-labeled column so the two questions aren't merged.
+    df["correct_vs_manifest"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])
+
+    # --- Value verification -----------------------------------------
+    # Only checked for rows that are already verdict-correct (against
+    # whichever ground truth source was used above) AND evidenced.
+    def _value_check(row):
+        if not (row["correct"] and row["has_evidence_bool"]):
+            return None
+        if row["gt_stat_used"] is None:
+            return None
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        return value_within_tolerance(raw_stat, row["gt_stat_used"], row["gt_method_used"])
+
+    df["value_verified"] = df.apply(_value_check, axis=1)
+    # value_verified is True / False / None(=unverifiable: no ground
+    # truth exists for that method, so we can't confirm OR deny it)
+    df["value_verifiable"] = df["value_verified"].notna()
+    df["value_matched"] = df["value_verified"] == True  # noqa: E712
+
+    # Strict: an unverifiable value does NOT count as fully verified.
+    df["fully_verified_strict"] = df["correct"] & df["has_evidence_bool"] & df["value_matched"]
+    # Lenient: an unverifiable value doesn't count AGAINST the row either
+    # -- only an actual value MISMATCH downgrades it.
+    df["fully_verified_lenient"] = (
+        df["correct"] & df["has_evidence_bool"] & (df["value_verified"] != False)  # noqa: E712
+    )
+
     return df
 
 
@@ -169,8 +392,12 @@ def per_class_metrics(g, use_evidence_filter):
     g is the FULL group (including ambiguous rows) -- an ambiguous row
     never matches any real class (so it can't be a TP or FP), but it DOES
     count as a false negative for whatever the true class was, the same
-    treatment as evidence-filtering's '__unevidenced__' substitution."""
-    y_true = g["ground_truth_direction"]
+    treatment as evidence-filtering's '__unevidenced__' substitution.
+
+    Uses `gt_direction_used` (per-row, method-matched ground truth, with
+    manifest fallback) to stay consistent with the primary `correct`
+    column -- NOT the always-Lee's-L `ground_truth_direction` column."""
+    y_true = g["gt_direction_used"]
 
     def effective_pred(r):
         if r["ambiguous"]:
@@ -214,7 +441,8 @@ def per_class_metrics(g, use_evidence_filter):
 
 
 def confusion_matrix(g_clear, model, mode):
-    y_true = g_clear["ground_truth_direction"]
+    # gt_direction_used, not ground_truth_direction -- see per_class_metrics
+    y_true = g_clear["gt_direction_used"]
     y_pred = g_clear["predicted"]
     rows = []
     for true_cls in CLASSES:
@@ -262,6 +490,31 @@ def run():
         tp_ef = sum(per_class_ef[c]["tp"] for c in CLASSES)
         fp_ef = sum(per_class_ef[c]["fp"] for c in CLASSES)
 
+        # --- NEW: value-verification stats -------------------------
+        # denominator = rows eligible for value-checking at all
+        # (verdict-correct AND evidenced)
+        n_value_checkable = correct_number_ef
+        n_value_verifiable = int(g["value_verifiable"].sum())
+        n_value_matched = int(g["value_matched"].sum())
+        n_value_no_ground_truth = n_value_checkable - n_value_verifiable
+
+        pct_value_matched_of_verifiable = (
+            round(n_value_matched / n_value_verifiable, 3) if n_value_verifiable > 0 else None
+        )
+
+        accuracy_fully_verified_strict = round(int(g["fully_verified_strict"].sum()) / n, 3)
+        accuracy_fully_verified_lenient = round(int(g["fully_verified_lenient"].sum()) / n, 3)
+
+        # transparency: how much of this model's score rests on
+        # method-specific ground truth vs. the Lee's L fallback
+        n_method_specific_gt = int((g["ground_truth_source"] == "method_specific").sum())
+        n_manifest_fallback_gt = int((g["ground_truth_source"] == "manifest_fallback").sum())
+
+        # informational: accuracy against the officially-posed question
+        # (Lee's L) regardless of which method the row used -- separate
+        # from the primary, method-matched `accuracy` above
+        accuracy_vs_manifest = round(int(g["correct_vs_manifest"].sum()) / n, 3)
+
         row = {
             "mode": mode, "model": model, "n": n, "n_ambiguous": n_ambiguous,
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
@@ -274,6 +527,19 @@ def run():
             "precision_evidence_filtered": precision_ef,
             "recall_evidence_filtered": recall_ef,
             "f1_evidence_filtered": f1_ef,
+            # value-verification layer (only meaningful on top of
+            # verdict-correct + evidenced rows)
+            "n_value_checkable": n_value_checkable,
+            "n_value_has_ground_truth": n_value_verifiable,
+            "n_value_no_ground_truth_for_method": n_value_no_ground_truth,
+            "n_value_matched": n_value_matched,
+            "pct_value_matched_of_verifiable": pct_value_matched_of_verifiable,
+            "accuracy_fully_verified_strict": accuracy_fully_verified_strict,
+            "accuracy_fully_verified_lenient": accuracy_fully_verified_lenient,
+            # transparency / secondary metrics
+            "n_method_specific_gt": n_method_specific_gt,
+            "n_manifest_fallback_gt": n_manifest_fallback_gt,
+            "accuracy_vs_manifest_lee_l": accuracy_vs_manifest,
         }
 
         summary_rows.append(row)
@@ -288,10 +554,12 @@ def run():
     print(f"Saved: {SUMMARY_OUT} ({len(summary)} rows)")
     print(f"Saved: {CONFUSION_OUT} ({len(confusion)} rows)\n")
 
-    print("=== Summary (raw vs evidence-filtered macro-F1) ===")
-    print(summary[["model", "n_ambiguous", "tp", "fp", "accuracy", "precision", "recall", "f1",
-                    "tp_evidence_filtered", "fp_evidence_filtered",
-                    "accuracy_evidence_filtered", "f1_evidence_filtered"]]
+    print("=== Summary (raw vs evidence-filtered vs value-verified) ===")
+    print(summary[["model", "n_ambiguous", "accuracy", "f1",
+                    "accuracy_evidence_filtered", "f1_evidence_filtered",
+                    "n_value_checkable", "n_value_has_ground_truth", "n_value_matched",
+                    "pct_value_matched_of_verifiable",
+                    "accuracy_fully_verified_strict", "accuracy_fully_verified_lenient"]]
           .to_string(index=False))
 
 

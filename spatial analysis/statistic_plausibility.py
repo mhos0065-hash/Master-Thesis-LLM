@@ -75,20 +75,44 @@ def verdict_p_consistent(claims_significance, p_value, alpha=ALPHA):
     return (p < alpha) if claims_significance else (p >= alpha)
 
 
-def gi_threshold_consistent(gi_value, threshold=GI_THRESHOLD, alpha=ALPHA):
+def gi_threshold_consistent(gi_value, label=None, threshold=GI_THRESHOLD, alpha=ALPHA):
     """For Getis-Ord specifically: a borough labeled HOT/COLD must be
     justified by its OWN reported value, under whichever interpretation
     that value's magnitude is consistent with -- since the task's own
     prompt states '|z| > 1.96' conditionally ("IF your method produces a
     z-score"), an alternative, permutation-based method could
     legitimately report a p-value instead (always in [0,1]).
-      - Value in [0,1]: treated as a p-value -- HOT/COLD requires p < 0.05,
-        same alpha every other task's prompt already uses.
-      - Value outside [0,1]: treated as a z-score -- HOT/COLD requires
-        |z| >= 1.96, exactly as this task's own prompt states."""
+
+    Now label-aware, same principle as the outlier task's
+    verdict_z_consistent() fix: a value in [0,1] is only treated as a
+    p-value if its OWN label confirms it (p, p-value, p_value,
+    significance). Without this, a genuinely small but real Gi* value
+    (e.g. Gi*=0.03, which would be a clearly implausible, non-significant
+    hotspot claim) could be misread as "p=0.03, significant" and
+    incorrectly pass -- the same class of bug found and fixed in
+    score_outlier_iterative_r.py's verdict_z_consistent(), just in the
+    opposite direction (a false pass here vs. a false flag there).
+
+    Gi* is mathematically a z-score by construction (unlike the outlier
+    task's genuinely varied methods), so unlike verdict_z_consistent(),
+    the 1.96 threshold is NOT restricted to a confident label set --
+    only the p-value interpretation requires label confirmation.
+
+    If no label is available (existing callers, or the label couldn't
+    be matched to this borough), falls back to the prior magnitude-only
+    heuristic rather than breaking -- a real limitation worth noting,
+    not silently hidden."""
     f = _to_float(gi_value)
     if f is None:
         return True
+
+    P_VALUE_LABELS = {"p", "p-value", "p_value", "significance", "significance measure"}
+    label_confirms_p = label is not None and str(label).strip().lower() in P_VALUE_LABELS
+
     if 0.0 <= abs(f) <= 1.0:
+        if label is not None and not label_confirms_p:
+            # label is known and does NOT say p-value -- treat as a
+            # genuinely small (and therefore implausible) z-score/Gi*
+            return abs(f) >= threshold
         return abs(f) < alpha
     return abs(f) >= threshold

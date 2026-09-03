@@ -1,0 +1,85 @@
+
+[2026-09-01T06:56:15.984845+00:00] FAILED: mode=multiagent model=qwen/qwen3-32b chunk=cyclehire_local_selfcontainmentindex_w001
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 118, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 96, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 59, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/spatial_correlation_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-09-01T13:05:54.437165+00:00] FAILED: mode=multiagent model=qwen/qwen3-32b chunk=cyclehire_local_selfcontainmentindex_w001
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 118, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 96, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 59, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/spatial_correlation_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-09-01T13:06:11.404134+00:00] FAILED: mode=multiagent model=moonshotai/kimi-k2.6 chunk=moran_local_2021_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 118, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 96, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 59, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/spatial_correlation_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-09-01T13:09:35.677344+00:00] FAILED: mode=multiagent model=moonshotai/kimi-k2.6 chunk=moran_global_2021_no2
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 118, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 96, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 59, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/spatial_correlation_results_multiagent.csv'
+
+----------------------------------------------------------------------
+
+[2026-09-02T23:45:49.045799+00:00] FAILED: mode=multiagent model=meta-llama/llama-3.1-8b-instruct chunk=moran_global_2021_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 118, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 96, in run_one
+    append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  has_evidence, len(cited_numbers), run_dir, ma_result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 59, in append_result
+    with open(RESULTS_CSV, "a", newline="", encoding=encoding) as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'results/multi agent/spatial_correlation_results_multiagent.csv'
+
+----------------------------------------------------------------------
