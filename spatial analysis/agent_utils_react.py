@@ -208,13 +208,59 @@ def agent_loop_react(system_prompt, user_prompt, dataset_path, run_dir, model=No
                 # invalid JSON from a printed answer -- fall through to
                 # the normal "continue" path below and let the model retry
 
+            is_last_iteration = (i == max_iterations - 1)
+            if (is_last_iteration and not prose_final_answer and observation_final_answer is None
+                    and "[STDERR]" not in feedback):
+                # Last chance, no next turn coming: the model computed
+                # something real (code ran cleanly, no crash) but never
+                # once wrote the literal FINAL ANSWER marker anywhere --
+                # confirmed real failure mode (seen directly in this
+                # project's own logs: a model can compute a fully
+                # correct result and just print it plain, e.g.
+                # print(final_output_str) instead of
+                # print("FINAL ANSWER:", final_output_str), then loop
+                # re-verifying the same result instead of adding the
+                # label). Fall back to the last non-empty printed line,
+                # same principle as agent_utils.py's
+                # _extract_final_answer_from_output() -- still exclusively
+                # real, executed output, never the model's own prose.
+                cleaned = re.sub(r"^Observation \d+:\s*", "", feedback, flags=re.MULTILINE)
+                NO_OUTPUT_PLACEHOLDER = "(code ran with no output"
+                content_lines = [l.strip() for l in cleaned.splitlines()
+                                  if l.strip() and NO_OUTPUT_PLACEHOLDER not in l]
+                if content_lines:
+                    # Use the FULL cleaned output, not just the last line --
+                    # a model that prints a multi-row DataFrame (e.g. one row
+                    # per hot/cold borough) has its result spread across
+                    # several lines; taking only the last line silently drops
+                    # every other finding. Confirmed necessary from a real
+                    # run: print(hot_cold_spots[[...]]) produced several
+                    # borough rows, and the old last-line-only fallback
+                    # discarded all but one.
+                    final_text = "\n".join(content_lines)
+                    if not require_structured_verdict:
+                        return None, final_text, log, fidelity_record
+                    verdict, err = parse_verdict(final_text)
+                    if verdict is not None:
+                        return verdict, final_text, log, fidelity_record
+
             if prose_final_answer:
                 msg = (f"{feedback}\n\nYour previous message included a FINAL ANSWER before you "
                        f"had seen the real Observation, which is not valid ReAct format. Now that "
                        f"you have the real result above, give a new Thought and either take another "
                        f"Action or give your FINAL ANSWER based on THIS Observation.")
             else:
-                msg = f"{feedback}\n\nContinue with your next Thought."
+                is_second_to_last_iteration = (i == max_iterations - 2)
+                if is_second_to_last_iteration:
+                    msg = (f"{feedback}\n\nYou have ONE turn remaining after this one. If you have "
+                           f"enough evidence, give a final Thought and your FINAL ANSWER on your "
+                           f"next reply -- do not continue exploring past that point. IMPORTANT: "
+                           f"format your FINAL ANSWER exactly as specified in the ORIGINAL "
+                           f"instructions above (the required output format given at the very "
+                           f"start of this task) -- do not just print a raw table or DataFrame; "
+                           f"write it out as the specific text format that was requested.")
+                else:
+                    msg = f"{feedback}\n\nContinue with your next Thought."
             messages.append({"role": "user", "content": msg})
             log.append({"role": "user", "content": msg})
             continue

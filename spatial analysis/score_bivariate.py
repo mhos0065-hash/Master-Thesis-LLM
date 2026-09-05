@@ -106,13 +106,17 @@ CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 
 # For multi turn
 #RESULTS_CSV = "results/single agent/bivariate_results_multi_with_method.csv"
-#SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
-#CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
+##CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
 
 # For multi agent
 #RESULTS_CSV = "results/multi agent/bivariate_results_multiagent_with_method.csv"
 #SUMMARY_OUT = "Scores/multi agent/bivariate_scoring_summary_multiagent.csv"
 #CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multiagent.csv"
+
+# For ReAct agent
+#RESULTS_CSV = "ReAct/bivariate_results_react.csv"
+#SUMMARY_OUT = "Scores/ReAct/bivariate_scoring_summary_ReAct.csv"
+#CONFUSION_OUT = "Scores/ReAct/bivariate_confusion_matrix_ReAct.csv"
 
 
 CLASSES = ["positive", "negative", "not_significant"]

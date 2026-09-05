@@ -1,0 +1,251 @@
+"chunk_id","method","gt_direction","gt_z","gt_significant"
+"outlierr_2021_crime_tower_hamlets","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",0.2522,FALSE
+"outlierr_2021_crime_tower_hamlets","Local Moran's I / LISA","not_outlier",0.524701143631322,FALSE
+"outlierr_2021_crime_tower_hamlets","Neighbor mean/std z-score (non-regression)","not_outlier",0.50793198903076,FALSE
+"outlierr_2021_crime_tower_hamlets","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",0.595605410988331,FALSE
+"outlierr_2021_crime_tower_hamlets","Single-pass OLS regression (no masking correction)","not_outlier",0.218492902376556,FALSE
+"outlierr_2021_crime_westminster","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",4.784,TRUE
+"outlierr_2021_crime_westminster","Local Moran's I / LISA","not_outlier",2.08189900713394,TRUE
+"outlierr_2021_crime_westminster","Neighbor mean/std z-score (non-regression)","outlier_high",5.89870266727617,TRUE
+"outlierr_2021_crime_westminster","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",8.25505947342114,TRUE
+"outlierr_2021_crime_westminster","Single-pass OLS regression (no masking correction)","outlier_high",4.77334468719634,TRUE
+"outlierr_2021_energy_barnet","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.1676,FALSE
+"outlierr_2021_energy_barnet","Local Moran's I / LISA","not_outlier",0.436841174213412,FALSE
+"outlierr_2021_energy_barnet","Neighbor mean/std z-score (non-regression)","not_outlier",-0.0889022771610602,FALSE
+"outlierr_2021_energy_barnet","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",0.294645230780922,FALSE
+"outlierr_2021_energy_barnet","Single-pass OLS regression (no masking correction)","not_outlier",-0.198192244859247,FALSE
+"outlierr_2021_energy_bexley","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.1492,FALSE
+"outlierr_2021_energy_bexley","Local Moran's I / LISA","not_outlier",0.446737544669045,FALSE
+"outlierr_2021_energy_bexley","Neighbor mean/std z-score (non-regression)","not_outlier",0.930958545153806,FALSE
+"outlierr_2021_energy_bexley","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",0.63633691036317,FALSE
+"outlierr_2021_energy_bexley","Single-pass OLS regression (no masking correction)","not_outlier",-0.184093200281026,FALSE
+"outlierr_2021_energy_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5435,TRUE
+"outlierr_2021_energy_city_of_london","Local Moran's I / LISA","not_outlier",1.83186232372666,FALSE
+"outlierr_2021_energy_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",30.4100747500156,TRUE
+"outlierr_2021_energy_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",116.4590103623,TRUE
+"outlierr_2021_energy_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.54067354656178,TRUE
+"outlierr_2021_energy_hammersmith_and_fulham","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.1369,FALSE
+"outlierr_2021_energy_hammersmith_and_fulham","Local Moran's I / LISA","not_outlier",0.435123546151783,FALSE
+"outlierr_2021_energy_hammersmith_and_fulham","Neighbor mean/std z-score (non-regression)","not_outlier",0.0647081544360152,FALSE
+"outlierr_2021_energy_hammersmith_and_fulham","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",0.93813388857223,FALSE
+"outlierr_2021_energy_hammersmith_and_fulham","Single-pass OLS regression (no masking correction)","not_outlier",-0.164689122787702,FALSE
+"outlierr_2021_gas_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5408,TRUE
+"outlierr_2021_gas_city_of_london","Local Moran's I / LISA","outlier_high",2.03212890792105,TRUE
+"outlierr_2021_gas_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",26.8789649560389,TRUE
+"outlierr_2021_gas_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",143.346751781341,TRUE
+"outlierr_2021_gas_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.53800732163459,TRUE
+"outlierr_2021_ghg_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5429,TRUE
+"outlierr_2021_ghg_city_of_london","Local Moran's I / LISA","not_outlier",1.78414443918998,FALSE
+"outlierr_2021_ghg_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",30.3826662579741,TRUE
+"outlierr_2021_ghg_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",105.788571439501,TRUE
+"outlierr_2021_ghg_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.54013657373929,TRUE
+"outlierr_2021_no2_brent","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.7343,TRUE
+"outlierr_2021_no2_brent","Local Moran's I / LISA","not_outlier",0.450527073548481,FALSE
+"outlierr_2021_no2_brent","Neighbor mean/std z-score (non-regression)","outlier_high",5.75498403799343,TRUE
+"outlierr_2021_no2_brent","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",4.02249416639495,TRUE
+"outlierr_2021_no2_brent","Single-pass OLS regression (no masking correction)","outlier_high",2.733797550886,TRUE
+"outlierr_2021_no2_enfield","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.334,FALSE
+"outlierr_2021_no2_enfield","Local Moran's I / LISA","not_outlier",0.733801425666861,FALSE
+"outlierr_2021_no2_enfield","Neighbor mean/std z-score (non-regression)","not_outlier",0.247301599241744,FALSE
+"outlierr_2021_no2_enfield","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.315707331298668,FALSE
+"outlierr_2021_no2_enfield","Single-pass OLS regression (no masking correction)","not_outlier",-0.345317563460561,FALSE
+"outlierr_2021_no2_merton","Iterative-R (Lu, Chen & Kou 2003)","outlier_low",-2.287,TRUE
+"outlierr_2021_no2_merton","Local Moran's I / LISA","not_outlier",0.190165572007333,FALSE
+"outlierr_2021_no2_merton","Neighbor mean/std z-score (non-regression)","outlier_low",-2.09624456515724,TRUE
+"outlierr_2021_no2_merton","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_low",-3.13343512327306,TRUE
+"outlierr_2021_no2_merton","Single-pass OLS regression (no masking correction)","outlier_low",-2.28622700874513,TRUE
+"outlierr_2021_no2_newham","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.4014,TRUE
+"outlierr_2021_no2_newham","Local Moran's I / LISA","not_outlier",0.008691833573338,FALSE
+"outlierr_2021_no2_newham","Neighbor mean/std z-score (non-regression)","outlier_high",3.35368555245384,TRUE
+"outlierr_2021_no2_newham","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",3.55780548949468,TRUE
+"outlierr_2021_no2_newham","Single-pass OLS regression (no masking correction)","outlier_high",2.40064134626261,TRUE
+"outlierr_2021_transport_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",4.9141,TRUE
+"outlierr_2021_transport_city_of_london","Local Moran's I / LISA","not_outlier",-1.28566550021041,FALSE
+"outlierr_2021_transport_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",18.4635784514299,TRUE
+"outlierr_2021_transport_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",24.2218203412877,TRUE
+"outlierr_2021_transport_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",4.89464767226804,TRUE
+"outlierr_2021_transport_harrow","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.3597,FALSE
+"outlierr_2021_transport_harrow","Local Moran's I / LISA","not_outlier",-0.773636592504355,FALSE
+"outlierr_2021_transport_harrow","Neighbor mean/std z-score (non-regression)","not_outlier",-0.798494905737765,FALSE
+"outlierr_2021_transport_harrow","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.520430172216162,FALSE
+"outlierr_2021_transport_harrow","Single-pass OLS regression (no masking correction)","not_outlier",-0.208109789220278,FALSE
+"outlierr_2021_waste_barking_and_dagenham","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.8569,TRUE
+"outlierr_2021_waste_barking_and_dagenham","Local Moran's I / LISA","not_outlier",2.86678176781254,TRUE
+"outlierr_2021_waste_barking_and_dagenham","Neighbor mean/std z-score (non-regression)","not_outlier",1.42030099708255,FALSE
+"outlierr_2021_waste_barking_and_dagenham","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",3.10319903951539,TRUE
+"outlierr_2021_waste_barking_and_dagenham","Single-pass OLS regression (no masking correction)","outlier_high",2.50581788015072,TRUE
+"outlierr_2021_waste_havering","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.9587,TRUE
+"outlierr_2021_waste_havering","Local Moran's I / LISA","not_outlier",2.25613091156171,TRUE
+"outlierr_2021_waste_havering","Neighbor mean/std z-score (non-regression)","not_outlier",1.06990049290677,FALSE
+"outlierr_2021_waste_havering","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",3.20685226142621,TRUE
+"outlierr_2021_waste_havering","Single-pass OLS regression (no masking correction)","outlier_high",2.60490615002563,TRUE
+"outlierr_2022_crime_westminster","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.1793,TRUE
+"outlierr_2022_crime_westminster","Local Moran's I / LISA","not_outlier",2.40679454783487,TRUE
+"outlierr_2022_crime_westminster","Neighbor mean/std z-score (non-regression)","outlier_high",7.2882829372933,TRUE
+"outlierr_2022_crime_westminster","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",14.7685901005708,TRUE
+"outlierr_2022_crime_westminster","Single-pass OLS regression (no masking correction)","outlier_high",5.17339656039165,TRUE
+"outlierr_2022_energy_bromley","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.1844,FALSE
+"outlierr_2022_energy_bromley","Local Moran's I / LISA","not_outlier",0.602603628010613,FALSE
+"outlierr_2022_energy_bromley","Neighbor mean/std z-score (non-regression)","not_outlier",0.479896595572879,FALSE
+"outlierr_2022_energy_bromley","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.0293398443015236,FALSE
+"outlierr_2022_energy_bromley","Single-pass OLS regression (no masking correction)","not_outlier",-0.221321221037912,FALSE
+"outlierr_2022_energy_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5411,TRUE
+"outlierr_2022_energy_city_of_london","Local Moran's I / LISA","not_outlier",1.74030020434191,FALSE
+"outlierr_2022_energy_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",30.4248095865458,TRUE
+"outlierr_2022_energy_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",123.34889494535,TRUE
+"outlierr_2022_energy_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.53828701364591,TRUE
+"outlierr_2022_gas_bromley","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.2058,FALSE
+"outlierr_2022_gas_bromley","Local Moran's I / LISA","not_outlier",0.573853072347751,FALSE
+"outlierr_2022_gas_bromley","Neighbor mean/std z-score (non-regression)","not_outlier",-0.486808973625878,FALSE
+"outlierr_2022_gas_bromley","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.581091846029328,FALSE
+"outlierr_2022_gas_bromley","Single-pass OLS regression (no masking correction)","not_outlier",-0.237679918501548,FALSE
+"outlierr_2022_gas_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5397,TRUE
+"outlierr_2022_gas_city_of_london","Local Moran's I / LISA","outlier_high",2.12816684693952,TRUE
+"outlierr_2022_gas_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",26.8982290495736,TRUE
+"outlierr_2022_gas_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",109.273946158056,TRUE
+"outlierr_2022_gas_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.53692359399919,TRUE
+"outlierr_2022_gas_kingston_upon_thames","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.19,FALSE
+"outlierr_2022_gas_kingston_upon_thames","Local Moran's I / LISA","not_outlier",0.474715084498864,FALSE
+"outlierr_2022_gas_kingston_upon_thames","Neighbor mean/std z-score (non-regression)","not_outlier",0.376665539651712,FALSE
+"outlierr_2022_gas_kingston_upon_thames","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.293175318959033,FALSE
+"outlierr_2022_gas_kingston_upon_thames","Single-pass OLS regression (no masking correction)","not_outlier",-0.22327034791238,FALSE
+"outlierr_2022_gas_newham","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.04,FALSE
+"outlierr_2022_gas_newham","Local Moran's I / LISA","not_outlier",0.646407637292688,FALSE
+"outlierr_2022_gas_newham","Neighbor mean/std z-score (non-regression)","outlier_high",3.3484978163895,TRUE
+"outlierr_2022_gas_newham","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",2.54524862412746,TRUE
+"outlierr_2022_gas_newham","Single-pass OLS regression (no masking correction)","not_outlier",-0.0748956708699297,FALSE
+"outlierr_2022_ghg_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5402,TRUE
+"outlierr_2022_ghg_city_of_london","Local Moran's I / LISA","not_outlier",1.68427493904681,FALSE
+"outlierr_2022_ghg_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",30.5309789938691,TRUE
+"outlierr_2022_ghg_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",116.851470292196,TRUE
+"outlierr_2022_ghg_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.53734919432645,TRUE
+"outlierr_2022_no2_enfield","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",4.2142,TRUE
+"outlierr_2022_no2_enfield","Local Moran's I / LISA","not_outlier",-0.99026317590871,FALSE
+"outlierr_2022_no2_enfield","Neighbor mean/std z-score (non-regression)","outlier_high",8.8161847611079,TRUE
+"outlierr_2022_no2_enfield","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",6.67648921245287,TRUE
+"outlierr_2022_no2_enfield","Single-pass OLS regression (no masking correction)","outlier_high",4.17568900028084,TRUE
+"outlierr_2022_no2_hounslow","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",0.1648,FALSE
+"outlierr_2022_no2_hounslow","Local Moran's I / LISA","not_outlier",-0.314241221186642,FALSE
+"outlierr_2022_no2_hounslow","Neighbor mean/std z-score (non-regression)","outlier_high",2.2597528256093,TRUE
+"outlierr_2022_no2_hounslow","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",0.422032133945305,FALSE
+"outlierr_2022_no2_hounslow","Single-pass OLS regression (no masking correction)","not_outlier",0.127178675336778,FALSE
+"outlierr_2022_no2_sutton","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.2008,FALSE
+"outlierr_2022_no2_sutton","Local Moran's I / LISA","not_outlier",0.758756069309064,FALSE
+"outlierr_2022_no2_sutton","Neighbor mean/std z-score (non-regression)","not_outlier",0.236492209590717,FALSE
+"outlierr_2022_no2_sutton","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.184863166468807,FALSE
+"outlierr_2022_no2_sutton","Single-pass OLS regression (no masking correction)","not_outlier",-0.348115423007899,FALSE
+"outlierr_2022_transport_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",4.6965,TRUE
+"outlierr_2022_transport_city_of_london","Local Moran's I / LISA","not_outlier",-1.13928808837486,FALSE
+"outlierr_2022_transport_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",19.30682950642,TRUE
+"outlierr_2022_transport_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",20.6570627667565,TRUE
+"outlierr_2022_transport_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",4.66956552282954,TRUE
+"outlierr_2022_transport_hillingdon","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.4226,TRUE
+"outlierr_2022_transport_hillingdon","Local Moran's I / LISA","not_outlier",-0.00210466228150763,FALSE
+"outlierr_2022_transport_hillingdon","Neighbor mean/std z-score (non-regression)","outlier_high",6.07279980231975,TRUE
+"outlierr_2022_transport_hillingdon","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",11.1842501140412,TRUE
+"outlierr_2022_transport_hillingdon","Single-pass OLS regression (no masking correction)","outlier_high",2.42309991672123,TRUE
+"outlierr_2022_transport_wandsworth","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.4638,FALSE
+"outlierr_2022_transport_wandsworth","Local Moran's I / LISA","not_outlier",0.618019810291185,FALSE
+"outlierr_2022_transport_wandsworth","Neighbor mean/std z-score (non-regression)","not_outlier",-1.2119210957074,FALSE
+"outlierr_2022_transport_wandsworth","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.949426290326359,FALSE
+"outlierr_2022_transport_wandsworth","Single-pass OLS regression (no masking correction)","not_outlier",-0.557269722547336,FALSE
+"outlierr_2022_waste_barking_and_dagenham","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.684,TRUE
+"outlierr_2022_waste_barking_and_dagenham","Local Moran's I / LISA","not_outlier",2.82461922790204,TRUE
+"outlierr_2022_waste_barking_and_dagenham","Neighbor mean/std z-score (non-regression)","not_outlier",1.79336308262668,FALSE
+"outlierr_2022_waste_barking_and_dagenham","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",3.88171246997854,TRUE
+"outlierr_2022_waste_barking_and_dagenham","Single-pass OLS regression (no masking correction)","outlier_high",2.72545969148397,TRUE
+"outlierr_2022_waste_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.0988,TRUE
+"outlierr_2022_waste_city_of_london","Local Moran's I / LISA","outlier_high",-2.17907402745623,TRUE
+"outlierr_2022_waste_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",22.0843238475559,TRUE
+"outlierr_2022_waste_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",3.14001236201405,TRUE
+"outlierr_2022_waste_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",2.24564651364583,TRUE
+"outlierr_2022_waste_havering","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",1.9663,TRUE
+"outlierr_2022_waste_havering","Local Moran's I / LISA","not_outlier",2.37930956658391,TRUE
+"outlierr_2022_waste_havering","Neighbor mean/std z-score (non-regression)","not_outlier",0.682837488038537,FALSE
+"outlierr_2022_waste_havering","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",2.88455047306298,TRUE
+"outlierr_2022_waste_havering","Single-pass OLS regression (no masking correction)","outlier_high",2.00439693912169,TRUE
+"outlierr_2022_waste_tower_hamlets","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.8864,FALSE
+"outlierr_2022_waste_tower_hamlets","Local Moran's I / LISA","not_outlier",-0.69029263546487,FALSE
+"outlierr_2022_waste_tower_hamlets","Neighbor mean/std z-score (non-regression)","not_outlier",-0.985703810855486,FALSE
+"outlierr_2022_waste_tower_hamlets","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-1.01241655588031,FALSE
+"outlierr_2022_waste_tower_hamlets","Single-pass OLS regression (no masking correction)","not_outlier",-0.921185569200537,FALSE
+"outlierr_2023_crime_greenwich","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.0185,FALSE
+"outlierr_2023_crime_greenwich","Local Moran's I / LISA","not_outlier",0.564584708847695,FALSE
+"outlierr_2023_crime_greenwich","Neighbor mean/std z-score (non-regression)","not_outlier",0.203893884161723,FALSE
+"outlierr_2023_crime_greenwich","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",0.376397320355082,FALSE
+"outlierr_2023_crime_greenwich","Single-pass OLS regression (no masking correction)","not_outlier",0.0252862260329314,FALSE
+"outlierr_2023_crime_hillingdon","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.1741,FALSE
+"outlierr_2023_crime_hillingdon","Local Moran's I / LISA","not_outlier",0.742387171992828,FALSE
+"outlierr_2023_crime_hillingdon","Neighbor mean/std z-score (non-regression)","not_outlier",-0.0388446456872704,FALSE
+"outlierr_2023_crime_hillingdon","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.059467380997889,FALSE
+"outlierr_2023_crime_hillingdon","Single-pass OLS regression (no masking correction)","not_outlier",-0.0916946710843036,FALSE
+"outlierr_2023_crime_richmond_upon_thames","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.5722,FALSE
+"outlierr_2023_crime_richmond_upon_thames","Local Moran's I / LISA","not_outlier",0.514305077226483,FALSE
+"outlierr_2023_crime_richmond_upon_thames","Neighbor mean/std z-score (non-regression)","not_outlier",-1.46331600214105,FALSE
+"outlierr_2023_crime_richmond_upon_thames","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-1.18029947925685,FALSE
+"outlierr_2023_crime_richmond_upon_thames","Single-pass OLS regression (no masking correction)","not_outlier",-0.5297002836845,FALSE
+"outlierr_2023_crime_westminster","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.2217,TRUE
+"outlierr_2023_crime_westminster","Local Moran's I / LISA","not_outlier",2.59338100554627,TRUE
+"outlierr_2023_crime_westminster","Neighbor mean/std z-score (non-regression)","outlier_high",7.53968067573176,TRUE
+"outlierr_2023_crime_westminster","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",15.1044536605547,TRUE
+"outlierr_2023_crime_westminster","Single-pass OLS regression (no masking correction)","outlier_high",5.2158745535449,TRUE
+"outlierr_2023_energy_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5367,TRUE
+"outlierr_2023_energy_city_of_london","Local Moran's I / LISA","not_outlier",1.81715664189901,FALSE
+"outlierr_2023_energy_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",29.1969123443744,TRUE
+"outlierr_2023_energy_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",108.391516923829,TRUE
+"outlierr_2023_energy_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.53383980790881,TRUE
+"outlierr_2023_gas_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5441,TRUE
+"outlierr_2023_gas_city_of_london","Local Moran's I / LISA","outlier_high",2.07772857886251,TRUE
+"outlierr_2023_gas_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",29.194757033866,TRUE
+"outlierr_2023_gas_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",112.108836290637,TRUE
+"outlierr_2023_gas_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.54125965995473,TRUE
+"outlierr_2023_gas_hounslow","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.1416,FALSE
+"outlierr_2023_gas_hounslow","Local Moran's I / LISA","not_outlier",0.3788733763004,FALSE
+"outlierr_2023_gas_hounslow","Neighbor mean/std z-score (non-regression)","not_outlier",0.539992831224067,FALSE
+"outlierr_2023_gas_hounslow","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",0.674743567276289,FALSE
+"outlierr_2023_gas_hounslow","Single-pass OLS regression (no masking correction)","not_outlier",-0.170971058848457,FALSE
+"outlierr_2023_ghg_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",5.5325,TRUE
+"outlierr_2023_ghg_city_of_london","Local Moran's I / LISA","not_outlier",1.86220752040311,FALSE
+"outlierr_2023_ghg_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",28.7403680556296,TRUE
+"outlierr_2023_ghg_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",81.0646811050594,TRUE
+"outlierr_2023_ghg_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",5.52973409904153,TRUE
+"outlierr_2023_no2_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.4631,TRUE
+"outlierr_2023_no2_city_of_london","Local Moran's I / LISA","not_outlier",1.61956373590418,FALSE
+"outlierr_2023_no2_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",2.47338846304356,TRUE
+"outlierr_2023_no2_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",3.11542780792012,TRUE
+"outlierr_2023_no2_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",2.44812881043653,TRUE
+"outlierr_2023_no2_kingston_upon_thames","Iterative-R (Lu, Chen & Kou 2003)","outlier_low",-2.1414,TRUE
+"outlierr_2023_no2_kingston_upon_thames","Local Moran's I / LISA","not_outlier",-0.13656274779203,FALSE
+"outlierr_2023_no2_kingston_upon_thames","Neighbor mean/std z-score (non-regression)","outlier_low",-2.62924266470683,TRUE
+"outlierr_2023_no2_kingston_upon_thames","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_low",-2.78884787623333,TRUE
+"outlierr_2023_no2_kingston_upon_thames","Single-pass OLS regression (no masking correction)","outlier_low",-2.15956596075721,TRUE
+"outlierr_2023_no2_merton","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",1.5194,FALSE
+"outlierr_2023_no2_merton","Local Moran's I / LISA","not_outlier",-1.07843849690048,FALSE
+"outlierr_2023_no2_merton","Neighbor mean/std z-score (non-regression)","not_outlier",1.8257999539017,FALSE
+"outlierr_2023_no2_merton","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",1.93361051096022,FALSE
+"outlierr_2023_no2_merton","Single-pass OLS regression (no masking correction)","not_outlier",1.6286002788534,FALSE
+"outlierr_2023_transport_city_of_london","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",4.8045,TRUE
+"outlierr_2023_transport_city_of_london","Local Moran's I / LISA","not_outlier",-0.99102451279616,FALSE
+"outlierr_2023_transport_city_of_london","Neighbor mean/std z-score (non-regression)","outlier_high",25.6998983048458,TRUE
+"outlierr_2023_transport_city_of_london","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",29.0032822391034,TRUE
+"outlierr_2023_transport_city_of_london","Single-pass OLS regression (no masking correction)","outlier_high",4.78345932302579,TRUE
+"outlierr_2023_transport_hillingdon","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.3595,TRUE
+"outlierr_2023_transport_hillingdon","Local Moran's I / LISA","not_outlier",-0.0815045688889078,FALSE
+"outlierr_2023_transport_hillingdon","Neighbor mean/std z-score (non-regression)","outlier_high",5.6797404907102,TRUE
+"outlierr_2023_transport_hillingdon","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",14.991333250875,TRUE
+"outlierr_2023_transport_hillingdon","Single-pass OLS regression (no masking correction)","outlier_high",2.34365320966622,TRUE
+"outlierr_2023_waste_barking_and_dagenham","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.318,TRUE
+"outlierr_2023_waste_barking_and_dagenham","Local Moran's I / LISA","not_outlier",2.01049242802742,TRUE
+"outlierr_2023_waste_barking_and_dagenham","Neighbor mean/std z-score (non-regression)","not_outlier",1.66575450112071,FALSE
+"outlierr_2023_waste_barking_and_dagenham","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",2.38387610967534,TRUE
+"outlierr_2023_waste_barking_and_dagenham","Single-pass OLS regression (no masking correction)","outlier_high",2.25421895181716,TRUE
+"outlierr_2023_waste_hillingdon","Iterative-R (Lu, Chen & Kou 2003)","outlier_high",2.4777,TRUE
+"outlierr_2023_waste_hillingdon","Local Moran's I / LISA","not_outlier",-0.0276245945889505,FALSE
+"outlierr_2023_waste_hillingdon","Neighbor mean/std z-score (non-regression)","outlier_high",3.60925017763908,TRUE
+"outlierr_2023_waste_hillingdon","Robust regression (Huber/RANSAC/Theil-Sen)","outlier_high",2.68057513524592,TRUE
+"outlierr_2023_waste_hillingdon","Single-pass OLS regression (no masking correction)","outlier_high",2.50438432250321,TRUE
+"outlierr_2023_waste_richmond_upon_thames","Iterative-R (Lu, Chen & Kou 2003)","not_outlier",-0.8413,FALSE
+"outlierr_2023_waste_richmond_upon_thames","Local Moran's I / LISA","not_outlier",0.512584597008197,FALSE
+"outlierr_2023_waste_richmond_upon_thames","Neighbor mean/std z-score (non-regression)","not_outlier",-1.49791133263597,FALSE
+"outlierr_2023_waste_richmond_upon_thames","Robust regression (Huber/RANSAC/Theil-Sen)","not_outlier",-0.719120343241862,FALSE
+"outlierr_2023_waste_richmond_upon_thames","Single-pass OLS regression (no masking correction)","not_outlier",-0.806332159157275,FALSE

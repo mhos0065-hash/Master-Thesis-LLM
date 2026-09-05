@@ -1,0 +1,10 @@
+model,mode,true_class,predicted_positive,predicted_negative,predicted_not_significant,n_total
+deepseek/deepseek-chat-v3-0324,react,positive,0,0,1,1
+deepseek/deepseek-chat-v3-0324,react,negative,0,4,3,7
+deepseek/deepseek-chat-v3-0324,react,not_significant,4,0,29,33
+deepseek/deepseek-r1-0528,react,positive,0,1,0,1
+deepseek/deepseek-r1-0528,react,negative,0,6,0,6
+deepseek/deepseek-r1-0528,react,not_significant,3,1,26,30
+openai/gpt-4o-mini,react,positive,0,0,1,1
+openai/gpt-4o-mini,react,negative,0,0,4,4
+openai/gpt-4o-mini,react,not_significant,4,2,16,22

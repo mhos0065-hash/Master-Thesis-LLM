@@ -6,14 +6,76 @@ Scores the iterative-r spatial outlier task's 3-way classification
 structure used for bivariate, distance-decay, and the original Moran's I
 task, so all tables are directly comparable.
 
-Evidence check: same principle as score_bivariate.py / score_distance_decay.py
--- a chunk only counts as evidenced if at least one REAL, finite,
-non-placeholder number is cited (not nan, not a method name, not a
-self-admitted "please replace this" fabrication).
+Evidence check (UNCHANGED from the previous version of this script --
+these are real fixes to real bugs found by inspecting actual logs, not
+new logic):
+  - `verdict_z_consistent`: a claimed verdict must be justified by the
+    model's OWN reported value, but a value is only treated as a
+    z-score or p-value when its OWN label says so (not guessed from
+    magnitude). This fixed a real false positive where "z = 0.031" was
+    misread as a significant p-value purely because 0.031 < 0.05.
+  - `outlier_magnitude_plausible`: a task-specific magnitude ceiling
+    (12.0), set at ~2x the real maximum |ground_truth_z_score| observed
+    across the 50-chunk manifest (5.5441). This caught a real case
+    (gpt-4o-mini, outlierr_2021_energy_city_of_london) where genuine,
+    non-fabricated code omitted the masking-bias correction the prompt
+    asks for, producing z=30.41 against a true value of 5.54 -- a
+    directionally-correct but numerically nonsensical answer that the
+    prior (pre-this-script) scorer had been crediting as fully correct.
+
+VERDICT correctness is resolved PER ROW against the ground truth for
+the SPECIFIC method that row used (from
+ground_truth_all_methods_outlierr.csv: Single-pass OLS regression,
+Robust regression, Neighbor mean/std z-score, or Local Moran's I/LISA),
+falling back to the manifest's official Iterative-R-derived ground
+truth (already present in the `ground_truth_direction` column) only
+when the row's method has no computed ground truth. `n_method_specific_gt`
+records how many chunks per model used a method-matched comparison vs.
+the fallback.
+
+A per-chunk VALUE-verification layer: for chunks that are verdict-
+correct AND evidenced, the reported z-value is compared against the
+RESOLVED ground truth's value using a METHOD-SPECIFIC ABSOLUTE
+tolerance (not relative -- same principle used for the getisord task):
+    Iterative-R, Single-pass regression, Robust regression:  0.1
+    Neighbor mean/std z-score:                                0.05
+    Local Moran's I / LISA:                                   1.5
+The regression-based tolerance (0.1) is empirically derived: a
+simulation compared standardized vs. leverage-adjusted (studentized)
+residual z-scores on the SAME synthetic regression fits (33-node
+network, 3000 trials) -- the two legitimate ways to turn a residual
+into a z-score differ by a median of 0.017, p95 of 0.073; 0.1 covers
+that with a small safety margin. Neighbor mean/std gets a tighter 0.05
+since that formula (a plain mean/sd comparison) has no such fitting-
+choice ambiguity. Local Moran's I reuses the tolerance derived for the
+getisord task (same statistic, same analytic-vs-permutation variance-
+estimation ambiguity). `accuracy_fully_verified` is the fraction of
+chunks passing ALL THREE bars: correct verdict, real evidence, AND a
+number that actually matches its claimed method.
+
+NEW -- SHIFT-INVARIANCE RE-EXECUTION (the same mechanism used in
+score_bivariate.py, added here so `accuracy_evidence_filtered` and
+`f1_evidence_filtered` are process-based metrics, not just a stricter
+outcome check): every method this task scores (Iterative-R, single-pass
+OLS, robust regression, the neighbor mean/std z-score, and Local
+Moran's I) is invariant to a constant additive shift applied to every
+borough's value -- regression residuals are shift-invariant (shifting Y
+just shifts the intercept), and a z-score built from deviations around
+a mean is shift-invariant by construction. For each chunk with a real
+cited number, the model's OWN saved code is re-executed on a SHIFTED
+copy of the input data, and the recomputed statistic is compared
+against the original. This interrogates the code itself, not just the
+number it happened to output once -- a genuine process check layered
+on top of the existing outcome (verdict-matching) check.
+`has_evidence_bool` now additionally requires this re-check to NOT have
+returned a confirmed failure (True or inconclusive both pass; only a
+confirmed False disqualifies), same tri-state handling as bivariate.
 
 Usage:
     python score_outlier_iterative_r.py
-Reads:  outlier_iterative_r_results.csv
+Reads:  <mode>_results_with_method.csv (must include `statistical_method`
+        -- see attach_statistical_method_outlierr.py),
+        ground_truth_all_methods_outlierr.csv, outlier_iterative_r_manifest.csv
 Writes: outlier_iterative_r_scoring_summary.csv
 """
 
@@ -21,20 +83,52 @@ import re
 import pandas as pd
 
 from statistic_plausibility import magnitude_plausible
+from formula_invariance_check import check_shift_invariant
+
+GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_outlierr.csv"
+MANIFEST_PATH = "chunks_csv/outlier/routlier_iterative_r_manifest.csv"  # must have csv_path / adjacency_path per chunk_id
 
 # Multi agent
-RESULTS_CSV = "results/multi agent/outlier_iterative_r_results_multiagent.csv"
+RESULTS_CSV = "results/multi agent/outlier_iterative_r_results_multiagent_with_method.csv"
 OUT_CSV = "Scores/multi agent/outlier_iterative_r_scoring_summary_multiagent.csv"
 
 # Single turn
-#RESULTS_CSV = "outlier_iterative_r_results.csv"
+#RESULTS_CSV = "outlier_iterative_r_results_with_method.csv"
 #OUT_CSV = "Scores/single turn/outlier_iterative_r_scoring_summary.csv"
 
-# Multi turn 
-#RESULTS_CSV = "results/single agent/outlier_iterative_r_results_multi.csv"
+# Multi turn
+#RESULTS_CSV = "results/single agent/outlier_iterative_r_results_multi_with_method.csv"
 #OUT_CSV = "Scores/multi turn/outlier_iterative_r_scoring_summary_multi.csv"
 
+#ReAct multi turn
+#RESULTS_CSV = "ReAct/outlier_iterative_r_results_react.csv"
+#OUT_CSV = "Scores/ReAct/outlier_iterative_r_scoring_summary_ReAct.csv"
+
+
 CLASSES = ["outlier_high", "outlier_low", "not_outlier"]
+
+# Maps attach_statistical_method_outlierr.py's free-text labels onto the
+# (fewer) method names that actually have ground truth computed. Anything
+# not listed here (Getis-Ord, Mahalanobis, IQR, MAD, "none", or a bare
+# generic z-score) falls back to the manifest's Iterative-R answer.
+METHOD_NAME_MAP = {
+    "Iterative-R (Lu, Chen & Kou 2003)": "Iterative-R (Lu, Chen & Kou 2003)",
+    "Single-pass OLS regression (no masking correction)": "Single-pass OLS regression (no masking correction)",
+    "Robust regression (Huber/RANSAC/Theil-Sen)": "Robust regression (Huber/RANSAC/Theil-Sen)",
+    "Neighbor mean/std z-score (non-regression)": "Neighbor mean/std z-score (non-regression)",
+    "Local Moran's I / LISA": "Local Moran's I / LISA",
+}
+
+# ABSOLUTE, method-specific tolerances -- see module docstring for
+# the empirical derivation of these figures.
+METHOD_TOLERANCE = {
+    "Iterative-R (Lu, Chen & Kou 2003)": 0.1,
+    "Single-pass OLS regression (no masking correction)": 0.1,
+    "Robust regression (Huber/RANSAC/Theil-Sen)": 0.1,
+    "Neighbor mean/std z-score (non-regression)": 0.05,
+    "Local Moran's I / LISA": 1.5,
+}
+DEFAULT_TOLERANCE = 0.1  # used for the manifest_fallback source
 
 SELF_ADMITTED_NON_COMPUTATION_PHRASES = [
     "not computed", "could not be computed", "unable to compute", "impossible to compute",
@@ -187,6 +281,12 @@ def outlier_magnitude_plausible(raw_value, threshold=12.0):
     Getis-Ord's IMPLAUSIBLE_THRESHOLD=10 in score_getisord.py, applied
     consistently here rather than invented fresh.
 
+    NOTE: this stays a single, generic threshold regardless of which
+    method a row used -- it's a coarse sanity filter for catching
+    grossly broken computations (like the masking-bias-omission bug
+    below), not the fine-grained per-method comparison that's a
+    separate, stricter check (see accuracy_fully_verified).
+
     Motivation: direct inspection of real conversation logs this session
     (openai/gpt-4o-mini, single-turn, outlierr_2021_energy_city_of_london)
     showed a genuine, real pandas computation -- no fabrication -- that
@@ -204,10 +304,104 @@ def outlier_magnitude_plausible(raw_value, threshold=12.0):
     return abs(f) <= threshold
 
 
+def load_ground_truth_methods():
+    gt = pd.read_csv(GROUND_TRUTH_METHODS_PATH)
+    table = {}
+    for _, r in gt.iterrows():
+        table[(r["chunk_id"], r["method"])] = {
+            "gt_direction": r["gt_direction"],
+            "gt_z": r["gt_z"],
+        }
+    return table
+
+
+def resolve_ground_truth(chunk_id, statistical_method, manifest_direction, manifest_z, gt_methods):
+    """Returns (direction, z, source, method_used_for_tolerance): the
+    method-specific ground truth if computed, else the manifest's
+    Iterative-R answer (already present on every row)."""
+    normalized_method = METHOD_NAME_MAP.get(statistical_method)
+    if normalized_method is not None:
+        key = (chunk_id, normalized_method)
+        if key in gt_methods:
+            gt = gt_methods[key]
+            return gt["gt_direction"], gt["gt_z"], "method_specific", normalized_method
+    return manifest_direction, manifest_z, "manifest_fallback", "Iterative-R (Lu, Chen & Kou 2003)"
+
+
+def value_within_tolerance(model_val, gt_val, method_for_tolerance):
+    """ABSOLUTE tolerance check (not relative -- see module docstring)."""
+    m = _to_float(model_val)
+    g = _to_float(gt_val)
+    if m is None or g is None:
+        return None
+    tol = METHOD_TOLERANCE.get(method_for_tolerance, DEFAULT_TOLERANCE)
+    return abs(m - g) <= tol
+
+
+def _load_manifest_index():
+    """Loads the manifest indexed by chunk_id, for the shift-invariance
+    re-check. Degrades to an always-missing stand-in (shift check
+    becomes inconclusive/None for every row, never blocking scoring) if
+    the file isn't found."""
+    try:
+        return pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
+    except (FileNotFoundError, OSError):
+        print(f"WARNING: manifest not found at {MANIFEST_PATH} -- "
+              f"shift-invariance re-checks will be skipped (inconclusive) for every row.")
+        return pd.DataFrame(columns=["csv_path", "adjacency_path"])
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
+
+    if "statistical_method" not in df.columns:
+        raise ValueError(
+            f"'{RESULTS_CSV}' has no `statistical_method` column. "
+            "Run attach_statistical_method_outlierr.py first and point "
+            "RESULTS_CSV at its '_with_method' output."
+        )
+
+    gt_methods = load_ground_truth_methods()
+    manifest = _load_manifest_index()
+
+    resolved = df.apply(
+        lambda r: resolve_ground_truth(
+            r["chunk_id"], r.get("statistical_method"),
+            r["ground_truth_direction"], r["ground_truth_z_score"], gt_methods),
+        axis=1)
+    df["gt_direction_used"] = resolved.apply(lambda t: t[0])
+    df["gt_z_used"] = resolved.apply(lambda t: t[1])
+    df["ground_truth_source"] = resolved.apply(lambda t: t[2])
+    df["gt_method_used"] = resolved.apply(lambda t: t[3])
+
     df["has_real_statistic_bool"] = df.apply(
         lambda r: _has_real_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
+
+    total_checkable = int(df["has_real_statistic_bool"].sum())
+    print(f"Running shift-invariance re-checks on {total_checkable} row(s) with a real statistic "
+          f"(this re-executes each row's saved code, so it's the slow part)...", flush=True)
+    _progress = {"n": 0}
+
+    def _shift_check(row):
+        # --- Shift-invariance re-execution (process-based check) ---
+        # Every method here (Iterative-R, single-pass OLS, robust
+        # regression, neighbor mean/std z, Local Moran's I) is invariant
+        # to a constant additive shift of the input values -- see
+        # module docstring. Re-runs the model's own saved code on a
+        # shifted copy of the data and compares against the original.
+        if not row["has_real_statistic_bool"]:
+            return None
+        _progress["n"] += 1
+        print(f"  [{_progress['n']}/{total_checkable}] {row['model']} | {row['chunk_id']}", flush=True)
+        if row["chunk_id"] not in manifest.index:
+            return None
+        m = manifest.loc[row["chunk_id"]]
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        return check_shift_invariant(
+            row["run_dir"], m["csv_path"], m.get("adjacency_path"), raw_stat)
+
+    df["shift_invariant"] = df.apply(_shift_check, axis=1)
+    print("Shift-invariance re-checks complete.\n", flush=True)
 
     def _plausibility_check(row):
         if not row["has_real_statistic_bool"]:
@@ -222,15 +416,38 @@ def load():
         return True
 
     df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
-    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
+
+    # Evidence requires ALL of: a real, non-fabricated number; the
+    # statistic/p-value being plausible and internally consistent with
+    # the stated verdict; AND the formula behaving correctly under a
+    # constant shift (where the re-check was conclusive) -- this last
+    # condition is what makes has_evidence_bool (and therefore
+    # accuracy_evidence_filtered / f1_evidence_filtered) process-based,
+    # not just a stricter outcome check.
+    df["has_evidence_bool"] = (
+        df["has_real_statistic_bool"]
+        & (df["shift_invariant"] != False)  # noqa: E712
+        & df["statistic_plausible"]
+    )
+
     df["ambiguous"] = df["predicted"].isna() | (~df["predicted"].isin(CLASSES))
-    df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])
+    df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["gt_direction_used"])
     df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
+
+    def _value_check(row):
+        if not (row["correct"] and row["has_evidence_bool"]):
+            return None
+        raw = _extract_raw_statistic(row["evidence_text"])
+        return value_within_tolerance(raw, row["gt_z_used"], row["gt_method_used"])
+
+    df["value_verified"] = df.apply(_value_check, axis=1)
+    df["fully_verified"] = df["correct"] & df["has_evidence_bool"] & (df["value_verified"] == True)  # noqa: E712
+
     return df
 
 
 def per_class_metrics(g, use_evidence_filter):
-    y_true = g["ground_truth_direction"]
+    y_true = g["gt_direction_used"]
 
     def effective_pred(r):
         if r["ambiguous"]:
@@ -294,6 +511,10 @@ def run():
         tp, fp, precision, recall, f1 = per_class_metrics(g, use_evidence_filter=False)
         tp_ef, fp_ef, precision_ef, recall_ef, f1_ef = per_class_metrics(g, use_evidence_filter=True)
 
+        n_method_specific_gt = int((g["ground_truth_source"] == "method_specific").sum())
+        n_fully_verified = int(g["fully_verified"].sum())
+        accuracy_fully_verified = round(n_fully_verified / n, 3)
+
         rows.append({
             "mode": mode, "model": model, "n": n, "n_ambiguous": n_ambiguous,
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
@@ -306,6 +527,9 @@ def run():
             "precision_evidence_filtered": precision_ef,
             "recall_evidence_filtered": recall_ef,
             "f1_evidence_filtered": f1_ef,
+            # the 2 columns beyond the original schema -- see docstring
+            "n_method_specific_gt": n_method_specific_gt,
+            "accuracy_fully_verified": accuracy_fully_verified,
         })
 
     out = pd.DataFrame(rows).sort_values(["mode", "model"]).reset_index(drop=True)
@@ -313,7 +537,8 @@ def run():
                "pct_with_evidence", "tp", "fp", "accuracy", "precision", "recall", "f1",
                "correct_number_evidence_filtered", "tp_evidence_filtered", "fp_evidence_filtered",
                "accuracy_evidence_filtered", "precision_evidence_filtered",
-               "recall_evidence_filtered", "f1_evidence_filtered"]]
+               "recall_evidence_filtered", "f1_evidence_filtered",
+               "n_method_specific_gt", "accuracy_fully_verified"]]
     out.to_csv(OUT_CSV, index=False)
 
     print(out.to_string(index=False))

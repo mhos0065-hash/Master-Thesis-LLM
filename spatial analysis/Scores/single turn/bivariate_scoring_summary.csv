@@ -1,10 +1,10 @@
 mode,model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,f1,correct_number_evidence_filtered,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered,n_value_checkable,n_value_has_ground_truth,n_value_no_ground_truth_for_method,n_value_matched,pct_value_matched_of_verifiable,accuracy_fully_verified_strict,accuracy_fully_verified_lenient,n_method_specific_gt,n_manifest_fallback_gt,accuracy_vs_manifest_lee_l
 single,deepseek/deepseek-chat-v3-0324,50,19,31,26,0.4,26,5,0.52,0.533,0.393,0.437,19,19,1,0.38,0.333,0.162,0.218,19,19,0,4,0.211,0.08,0.08,50,0,0.52
 single,deepseek/deepseek-r1-0528,50,0,50,35,0.54,35,15,0.7,0.458,0.556,0.448,26,26,1,0.52,0.333,0.222,0.267,26,26,0,6,0.231,0.12,0.12,50,0,0.7
-single,meta-llama/llama-3.1-8b-instruct,50,22,28,3,0.0,3,25,0.06,0.182,0.184,0.059,0,0,0,0.0,0.0,0.0,0.0,0,0,0,0,,0.0,0.0,50,0,0.06
+single,meta-llama/llama-3.1-8b-instruct,50,22,28,3,0,3,25,0.06,0.182,0.184,0.059,0,0,0,0,0,0,0,0,0,0,0,,0,0,50,0,0.06
 single,moonshotai/kimi-k2.6,50,0,50,37,0.64,37,13,0.74,0.401,0.43,0.413,31,31,1,0.62,0.656,0.322,0.401,31,31,0,5,0.161,0.1,0.1,50,0,0.74
 single,openai/gpt-4,50,17,33,21,0.58,21,12,0.42,0.435,0.236,0.306,19,19,10,0.38,0.467,0.191,0.264,19,19,0,3,0.158,0.06,0.06,50,0,0.42
-single,openai/gpt-4o-mini,50,38,12,5,0.08,5,7,0.1,0.417,0.1,0.149,2,2,2,0.04,0.222,0.017,0.032,2,2,0,0,0.0,0.0,0.0,50,0,0.1
+single,openai/gpt-4o-mini,50,38,12,5,0.08,5,7,0.1,0.417,0.1,0.149,2,2,2,0.04,0.222,0.017,0.032,2,2,0,0,0,0,0,50,0,0.1
 single,openai/o3,50,11,39,28,0.46,28,11,0.56,0.438,0.382,0.388,21,21,2,0.42,0.318,0.179,0.23,21,21,0,5,0.238,0.1,0.1,50,0,0.56
 single,openai/o4-mini,50,1,49,35,0.52,35,14,0.7,0.445,0.499,0.441,26,26,0,0.52,0.667,0.251,0.327,26,26,0,5,0.192,0.1,0.1,50,0,0.7
-single,qwen/qwen3-32b,50,20,30,19,0.38,19,11,0.38,0.45,0.219,0.295,12,12,7,0.24,0.286,0.103,0.151,12,12,0,0,0.0,0.0,0.0,50,0,0.38
+single,qwen/qwen3-32b,50,20,30,19,0.38,19,11,0.38,0.45,0.219,0.295,12,12,7,0.24,0.286,0.103,0.151,12,12,0,0,0,0,0,50,0,0.38

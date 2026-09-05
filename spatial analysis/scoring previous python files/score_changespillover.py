@@ -1,0 +1,363 @@
+"""
+score_changespillover.py
+===========================
+Scores the spatial change-spillover task's binary classification
+(CLUSTERED / NOT CLUSTERED, via predicted vs ground truth), with the
+SAME column structure used for bivariate, getisord, and outlier-r, so
+all tables are directly comparable.
+
+Binary, not 3-way -- predicted and the resolved ground truth are both
+simple booleans.
+
+Evidence check (UNCHANGED from the previous version of this script):
+a chunk only counts as evidenced if at least one REAL, finite,
+non-placeholder number is cited (not nan, not a method name, not a
+self-admitted fabrication), the statistic is magnitude-plausible, the
+p-value is a genuine probability, and the claimed verdict is consistent
+with its own reported p-value.
+
+NEW in this version:
+
+1. VERDICT correctness is resolved PER ROW against the ground truth for
+   the SPECIFIC method that row used (from
+   ground_truth_all_methods_changespillover.csv: Geary's C, Join Count
+   Statistic, or Neighbor-average correlation), falling back to the
+   manifest's official Global Moran's I-derived ground truth (already
+   present via `ground_truth_present`) only when the row's method has
+   no computed ground truth. `n_method_specific_gt` records how many
+   chunks per model used a method-matched comparison vs. the fallback.
+
+2. A per-chunk VALUE-verification layer: for chunks that are verdict-
+   correct AND evidenced, the reported test statistic is compared
+   against the RESOLVED ground truth's statistic using a flat, ABSOLUTE
+   0.05 tolerance (not relative -- same reasoning applied in the
+   getisord/outlier-r tasks: relative error is meaningless near zero,
+   and these statistics are all roughly bounded in a similar small
+   range). 0.05 is reused directly from the bivariate task's Cross-
+   Moran's I / Lee's L derivation (p95 of legitimate row-standardized-
+   vs-binary weight variation was ~0.04) rather than re-derived from
+   scratch, since Global Moran's I is the same statistic family (a
+   univariate special case of Cross-Moran's I). This is applied
+   uniformly across all methods here as a deliberate simplification,
+   per explicit instruction -- Geary's C's different natural scale
+   (centered at 1, not 0) and the correlation-based method's tighter
+   true ambiguity are both real caveats worth flagging in the thesis
+   write-up rather than treated as settled. `accuracy_fully_verified`
+   is the fraction of chunks passing ALL of: correct verdict, real
+   evidence, AND a statistic value that actually matches its claimed
+   method.
+
+Note on p-values: the task prompt itself warns that permutation-based
+p-values need >=500 shuffles to be stable, i.e. p-values carry real,
+expected Monte Carlo noise even from a correct implementation. This
+version does not add a separate p-value tolerance check -- only the
+test STATISTIC is value-verified above -- so a correct statistic with
+a p-value that landed just the wrong side of 0.05 purely from
+permutation noise is still handled by the existing `verdict_p_consistent`
+plausibility check, not by the new tolerance layer.
+
+Usage:
+    python score_changespillover.py
+Reads:  <mode>_results_with_method.csv (must include `statistical_method`
+        -- see attach_statistical_method_changespillover.py),
+        ground_truth_all_methods_changespillover.csv
+Writes: changespillover_scoring_summary.csv
+"""
+
+import re
+import pandas as pd
+
+from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
+
+GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_changespillover.csv"
+
+#Multi agent
+#RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
+#OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
+
+#Multi turn
+#RESULTS_CSV = "results/single agent/changespillover_results_multi_with_method.csv"
+#OUT_CSV = "Scores/multi turn/changespillover_scoring_summary_multi.csv"
+
+#Single turn
+#RESULTS_CSV = "changespillover_results_with_method.csv"
+#OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
+
+#ReAct multi turn
+RESULTS_CSV = "ReAct/changespillover_results_react.csv"
+OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
+
+# Maps attach_statistical_method_changespillover.py's free-text labels
+# onto the (fewer) method names that actually have ground truth
+# computed. "Local Moran's I / LISA" and the generic "Permutation /
+# Monte Carlo (unspecified statistic)" label both fall back to the
+# manifest's Global Moran's I answer -- see the R script's docstring
+# for why Local Moran's I specifically isn't computed for this task.
+METHOD_NAME_MAP = {
+    "Global Moran's I": "Global Moran's I",
+    "Geary's C": "Geary's C",
+    "Join Count Statistic": "Join Count Statistic",
+    "Neighbor-average correlation (non-standard)": "Neighbor-average correlation (non-standard)",
+}
+
+# Flat absolute tolerance, per explicit instruction -- see module
+# docstring for the reuse rationale and caveats.
+VALUE_TOLERANCE = 0.05
+
+SELF_ADMITTED_NON_COMPUTATION_PHRASES = [
+    "not computed", "could not be computed", "unable to compute", "impossible to compute",
+    "no numerical results", "did not reach a valid", "no valid final answer",
+    "not available", "cannot provide a computed number", "no computed",
+    "did not execute", "not execute correctly", "syntaxerror", "not provided",
+    "could not compute", "n/a", "[not computed]", "placeholder value",
+    "not actual computation", "can't report a valid", "cannot report a valid",
+    "failed to converge", "insufficient data", "insufficient information",
+    "could not be completed", "cannot be determined", "don't include actual",
+    "do not include actual", "numerical issue that prevented",
+    "please replace the values", "replace the values with the actual",
+    "i cannot provide the actual", "i recommend running the corrected code",
+]
+
+
+def _has_self_admitted_non_computation(text):
+    if not isinstance(text, str):
+        return False
+    return any(phrase in text.lower() for phrase in SELF_ADMITTED_NON_COMPUTATION_PHRASES)
+
+
+def _has_real_statistic(evidence_text, full_text=None):
+    """Checks that the first '=...,' or '=...)' value in the text is a
+    genuine, finite number -- method-agnostic, and rejects a number that
+    LOOKS real if the model's own words admit it isn't."""
+    if not isinstance(evidence_text, str):
+        return False
+    if _has_self_admitted_non_computation(full_text if full_text else evidence_text):
+        return False
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    if not match:
+        return False
+    val = match.group(1).strip()
+    try:
+        f = float(val)
+        return f == f and abs(f) != float("inf")
+    except ValueError:
+        return False
+
+
+def _extract_raw_statistic(evidence_text):
+    if not isinstance(evidence_text, str):
+        return None
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    return match.group(1).strip() if match else None
+
+
+def _extract_p_value(evidence_text):
+    """Second '=...' value -- the p-value, which always follows the
+    primary statistic in this task's required format."""
+    if not isinstance(evidence_text, str):
+        return None
+    matches = re.findall(r"=\s*([^,)]+)[,)]", evidence_text)
+    return matches[1].strip() if len(matches) >= 2 else None
+
+
+def _to_float(raw):
+    if raw is None:
+        return None
+    try:
+        f = float(str(raw).strip())
+        return f if (f == f and abs(f) != float("inf")) else None
+    except ValueError:
+        return None
+
+
+def load_ground_truth_methods():
+    gt = pd.read_csv(GROUND_TRUTH_METHODS_PATH)
+    table = {}
+    for _, r in gt.iterrows():
+        table[(r["chunk_id"], r["method"])] = {
+            "gt_stat": r["gt_stat"],
+            "gt_clustered": bool(r["gt_clustered"]),
+        }
+    return table
+
+
+def resolve_ground_truth(chunk_id, statistical_method, manifest_clustered, gt_methods):
+    """Returns (clustered_bool, gt_stat, source, method_used_for_tolerance).
+    Falls back to the manifest's Global Moran's I answer -- note the
+    manifest doesn't carry a single gt_stat column directly on the
+    results rows (only ground_truth_present), so the fallback's gt_stat
+    is None -- value-verification is simply skipped (not penalized) for
+    fallback rows, same principle as "unverifiable, not wrong"
+    elsewhere in this pipeline."""
+    normalized_method = METHOD_NAME_MAP.get(statistical_method)
+    if normalized_method is not None:
+        key = (chunk_id, normalized_method)
+        if key in gt_methods:
+            gt = gt_methods[key]
+            return gt["gt_clustered"], gt["gt_stat"], "method_specific", normalized_method
+    return bool(manifest_clustered), None, "manifest_fallback", "Global Moran's I"
+
+
+def value_within_tolerance(model_val, gt_val):
+    m = _to_float(model_val)
+    g = _to_float(gt_val)
+    if m is None or g is None:
+        return None
+    return abs(m - g) <= VALUE_TOLERANCE
+
+
+def load():
+    df = pd.read_csv(RESULTS_CSV)
+
+    if "statistical_method" not in df.columns:
+        raise ValueError(
+            f"'{RESULTS_CSV}' has no `statistical_method` column. "
+            "Run attach_statistical_method_changespillover.py first and "
+            "point RESULTS_CSV at its '_with_method' output."
+        )
+
+    gt_methods = load_ground_truth_methods()
+    resolved = df.apply(
+        lambda r: resolve_ground_truth(
+            r["chunk_id"], r.get("statistical_method"), r["ground_truth_present"], gt_methods),
+        axis=1)
+    df["gt_clustered_used"] = resolved.apply(lambda t: t[0])
+    df["gt_stat_used"] = resolved.apply(lambda t: t[1])
+    df["ground_truth_source"] = resolved.apply(lambda t: t[2])
+    df["gt_method_used"] = resolved.apply(lambda t: t[3])
+
+    df["predicted_bool"] = df["predicted"].map({"True": True, "False": False, True: True, False: False})
+    df["ambiguous"] = df["predicted_bool"].isna()
+    df["has_real_statistic_bool"] = df.apply(
+        lambda r: _has_real_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
+
+    def _plausibility_check(row):
+        if not row["has_real_statistic_bool"]:
+            return True  # already disqualified elsewhere -- avoid double-penalizing
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        raw_p = _extract_p_value(row["evidence_text"])
+        if not magnitude_plausible(raw_stat):
+            return False
+        if not bounded_probability(raw_p):
+            return False
+        if not pd.isna(row["predicted_bool"]):
+            if not verdict_p_consistent(bool(row["predicted_bool"]), raw_p):
+                return False
+        return True
+
+    df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
+    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
+    df["correct"] = (~df["ambiguous"]) & (df["predicted_bool"] == df["gt_clustered_used"])
+    df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
+
+    def _value_check(row):
+        if not (row["correct"] and row["has_evidence_bool"]):
+            return None
+        if row["gt_stat_used"] is None:
+            return None  # manifest fallback with no comparable stat -- unverifiable, not wrong
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        return value_within_tolerance(raw_stat, row["gt_stat_used"])
+
+    df["value_verified"] = df.apply(_value_check, axis=1)
+    df["fully_verified"] = df["correct"] & df["has_evidence_bool"] & (df["value_verified"] == True)  # noqa: E712
+
+    return df
+
+
+def compute_metrics(g, use_evidence_filter):
+    """precision/recall/F1 are 2-CLASS MACRO-averaged (CLUSTERED and
+    NOT_CLUSTERED each treated as their own class, then averaged) --
+    UNCHANGED from the previous version of this script. tp/fp returned
+    are still the raw CLUSTERED-class counts (descriptive only);
+    precision/recall/F1 no longer derive from them directly."""
+    y_true = g["gt_clustered_used"].astype(bool)
+    has_evidence = g["has_evidence_bool"].astype(bool)
+
+    if use_evidence_filter:
+        keep_as_is = g["predicted_bool"].isna() | (g["predicted_bool"] == False) | has_evidence
+        y_pred = g["predicted_bool"].where(keep_as_is, None)
+    else:
+        y_pred = g["predicted_bool"]
+
+    tp = int(((y_pred == True) & (y_true == True)).sum())
+    fp = int(((y_pred == True) & (y_true == False)).sum())
+
+    f1s, precisions, recalls = [], [], []
+    for target_class in (True, False):
+        n_real = int((y_true == target_class).sum())
+        if n_real == 0:
+            continue
+        tp_c = int(((y_pred == target_class) & (y_true == target_class)).sum())
+        fp_c = int(((y_pred == target_class) & (y_true != target_class)).sum())
+        fn_c = int(((y_pred != target_class) & (y_true == target_class)).sum())
+        p = tp_c / (tp_c + fp_c) if (tp_c + fp_c) > 0 else 0.0
+        r = tp_c / (tp_c + fn_c) if (tp_c + fn_c) > 0 else 0.0
+        f1_c = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+        precisions.append(p)
+        recalls.append(r)
+        f1s.append(f1_c)
+
+    precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
+    recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
+    f1 = round(sum(f1s) / len(f1s), 3) if f1s else 0.0
+
+    n_total = len(g)
+    correct_col = "correct_evidence_filtered" if use_evidence_filter else "correct"
+    accuracy = round(g[correct_col].sum() / n_total, 3) if n_total > 0 else 0.0
+    return accuracy, precision, recall, f1, tp, fp
+
+
+def run():
+    df = load()
+    rows = []
+
+    for (mode, model), g in df.groupby(["mode", "model"]):
+        n = len(g)
+        n_ambiguous = int(g["ambiguous"].sum())
+        non_ambiguous = n - n_ambiguous
+        correct_number = int(g["correct"].sum())
+        correct_number_ef = int(g["correct_evidence_filtered"].sum())
+        pct_with_evidence = round(g["has_evidence_bool"].mean(), 3) if n else 0.0
+
+        if n == 0:
+            continue
+
+        accuracy, precision, recall, f1, tp, fp = compute_metrics(g, use_evidence_filter=False)
+        accuracy_ef, precision_ef, recall_ef, f1_ef, tp_ef, fp_ef = compute_metrics(g, use_evidence_filter=True)
+
+        n_method_specific_gt = int((g["ground_truth_source"] == "method_specific").sum())
+        n_fully_verified = int(g["fully_verified"].sum())
+        accuracy_fully_verified = round(n_fully_verified / n, 3)
+
+        rows.append({
+            "mode": mode, "model": model, "n": n, "n_ambiguous": n_ambiguous,
+            "non_ambiguous": non_ambiguous, "correct_number": correct_number,
+            "pct_with_evidence": pct_with_evidence,
+            "tp": tp, "fp": fp,
+            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "correct_number_evidence_filtered": correct_number_ef,
+            "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
+            "accuracy_evidence_filtered": accuracy_ef,
+            "precision_evidence_filtered": precision_ef,
+            "recall_evidence_filtered": recall_ef,
+            "f1_evidence_filtered": f1_ef,
+            # the 2 columns beyond the original schema -- see docstring
+            "n_method_specific_gt": n_method_specific_gt,
+            "accuracy_fully_verified": accuracy_fully_verified,
+        })
+
+    out = pd.DataFrame(rows).sort_values(["mode", "model"]).reset_index(drop=True)
+    out = out[["mode", "model", "n", "n_ambiguous", "non_ambiguous", "correct_number",
+               "pct_with_evidence", "tp", "fp", "accuracy", "precision", "recall", "f1",
+               "correct_number_evidence_filtered", "tp_evidence_filtered", "fp_evidence_filtered",
+               "accuracy_evidence_filtered", "precision_evidence_filtered",
+               "recall_evidence_filtered", "f1_evidence_filtered",
+               "n_method_specific_gt", "accuracy_fully_verified"]]
+    out.to_csv(OUT_CSV, index=False)
+
+    print(out.to_string(index=False))
+    print(f"\nSaved to {OUT_CSV}")
+
+
+if __name__ == "__main__":
+    run()

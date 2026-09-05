@@ -39,7 +39,8 @@ dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 files <- c(
   "Follow up_summary_single agent_single_shot.csv" = "Single-Agent Single-Turn",
   "Follow up_summary_single agent_multi_shot.csv"   = "Single-Agent Multi-Turn",
-  "Follow up_summary_multi_agent.csv"               = "Multi-Agent"
+  "Follow up_summary_multi_agent.csv"               = "Multi-Agent",
+  "Follow up_summary-ReAct.csv"               = "ReAct-Multi-Turn"
 )
 
 # Canonical task names, in the order the 6 blocks appear in every file
@@ -65,7 +66,12 @@ model_order <- c(
   "qwen/qwen3-32b"
 )
 
-method_order <- c("Single-Agent Single-Turn", "Single-Agent Multi-Turn", "Multi-Agent")
+method_order <- c(
+  "Single-Agent Single-Turn",
+  "Single-Agent Multi-Turn",
+  "Multi-Agent",
+  "ReAct-Multi-Turn"
+)
 
 ## ---- 1. PARSER ---------------------------------------------------------------
 ## The CSVs are "report style": task titles + two labelled sub-tables
@@ -112,15 +118,28 @@ parse_after_filtering_tables <- function(path, method_label) {
     b4 <- trim(block[[4]])
     b1 <- trim(block[[1]])
 
-    # find "After filtering based on correct evidence" marker
+    # Try to find the "After filtering based on correct evidence" marker
     af_idx <- which(b4 == "After filtering based on correct evidence")
-    if (length(af_idx) == 0) next
-    af_idx <- af_idx[1]
-
-    # find the "model" header row after the marker
-    hdr_candidates <- which(b1 == "model" & seq_len(nrow(block)) > af_idx)
-    if (length(hdr_candidates) == 0) next
-    hdr_idx <- hdr_candidates[1]
+    
+    if (length(af_idx) > 0) {
+      
+      # If marker exists, find the model header after it
+      hdr_candidates <- which(
+        b1 == "model" &
+          seq_len(nrow(block)) > af_idx[1]
+      )
+      
+      if (length(hdr_candidates) == 0) next
+      hdr_idx <- hdr_candidates[1]
+      
+    } else {
+      
+      # If marker is missing, use the second model header
+      hdr_candidates <- which(b1 == "model")
+      
+      if (length(hdr_candidates) < 2) next
+      hdr_idx <- hdr_candidates[2]
+    }
 
     # data rows: everything after header until first fully-blank row (V1=="")
     j <- hdr_idx + 1
@@ -181,7 +200,8 @@ make_task_figure <- function(task_label, task_num) {
     scale_fill_manual(values = c(
       "Single-Agent Single-Turn" = "#4C72B0",
       "Single-Agent Multi-Turn"  = "#DD8452",
-      "Multi-Agent"              = "#55A868"
+      "Multi-Agent"              = "#55A868",
+      "ReAct-Multi-Turn"         = "#8172B2"
     ), drop = FALSE) +
     coord_cartesian(ylim = c(0, 1)) +
     labs(

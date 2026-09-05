@@ -1,7 +1,7 @@
 mode,model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,f1,correct_number_evidence_filtered,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered,n_value_checkable,n_value_has_ground_truth,n_value_no_ground_truth_for_method,n_value_matched,pct_value_matched_of_verifiable,accuracy_fully_verified_strict,accuracy_fully_verified_lenient,n_method_specific_gt,n_manifest_fallback_gt,accuracy_vs_manifest_lee_l
 multiagent,deepseek/deepseek-chat-v3-0324,50,0,50,45,1.0,45,5,0.9,0.605,0.613,0.609,45,45,5,0.9,0.605,0.613,0.609,45,45,0,11,0.244,0.22,0.22,50,0,0.9
-multiagent,deepseek/deepseek-r1-0528,50,0,50,47,0.98,47,3,0.94,0.606,0.658,0.629,46,46,3,0.92,0.606,0.65,0.625,46,46,0,13,0.283,0.26,0.26,50,0,0.94
-multiagent,meta-llama/llama-3.1-8b-instruct,50,2,48,21,0.52,21,27,0.42,0.28,0.171,0.212,14,14,12,0.28,0.311,0.114,0.167,14,14,0,5,0.357,0.1,0.1,50,0,0.38
+multiagent,deepseek/deepseek-r1-0528,50,0,50,47,1.0,47,3,0.94,0.606,0.658,0.629,47,47,3,0.94,0.606,0.658,0.629,47,47,0,13,0.277,0.26,0.26,50,0,0.94
+multiagent,meta-llama/llama-3.1-8b-instruct,50,2,48,21,0.54,21,27,0.42,0.28,0.171,0.212,14,14,13,0.28,0.311,0.114,0.167,14,14,0,5,0.357,0.1,0.1,50,0,0.38
 multiagent,moonshotai/kimi-k2.6,50,0,50,44,1.0,44,6,0.88,0.634,0.575,0.6,44,44,6,0.88,0.634,0.575,0.6,44,44,0,10,0.227,0.2,0.2,50,0,0.88
 multiagent,openai/gpt-4o-mini,50,1,49,35,0.92,35,14,0.7,0.259,0.299,0.278,34,34,12,0.68,0.264,0.291,0.276,34,34,0,2,0.059,0.04,0.04,50,0,0.7
 multiagent,openai/o3,50,0,50,44,0.94,44,6,0.88,0.591,0.604,0.596,41,41,6,0.82,0.574,0.521,0.546,41,38,3,8,0.211,0.16,0.22,50,0,0.88

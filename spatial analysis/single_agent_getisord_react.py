@@ -71,10 +71,11 @@ def _extract_statistical_method(evidence_text):
     FIRST '=' in evidence_text (e.g. "Gi*", "z-score", "statistical
     method") -- same approach as score_getisord.py's
     parse_borough_labels(), applied here to a single chunk's overall
-    evidence_text rather than per-borough. Returns '' if no label-value
-    pattern is found (e.g. evidence_text is 'none' or empty)."""
+    evidence_text rather than per-borough. Returns 'none' (not an empty
+    string) if no label-value pattern is found, so the CSV always shows
+    an explicit value rather than a blank cell."""
     if not isinstance(evidence_text, str):
-        return ""
+        return "none"
     match = re.search(r"([A-Za-z_\-\s\*]*)=", evidence_text)
     if match:
         label = match.group(1).strip()
@@ -82,7 +83,7 @@ def _extract_statistical_method(evidence_text):
         # keeping just the statistic label itself
         label = re.sub(r"^.*?\((?:HOT|COLD)[^,]*,\s*", "", label).strip()
         return label
-    return ""
+    return "none"
 
 
 def append_result(chunk_id, meta, model, predicted, verdict_detail, evidence_text,

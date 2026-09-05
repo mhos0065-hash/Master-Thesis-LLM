@@ -41,10 +41,36 @@ _CODE_BLOCK_RE = re.compile(r"```python\s*\n(.*?)```", re.DOTALL)
 
 
 def _extract_statistic(text):
+    """Primary path (UNCHANGED): looks for the statistic right after a
+    literal 'FINAL ANSWER:' marker -- correct for single-agent/multi-
+    agent code, which (via answer_from_code_output=True) always prints
+    that marker itself as part of its own output.
+
+    FALLBACK (NEW, additive only): if no 'FINAL ANSWER:' marker is found
+    anywhere in the re-executed output, this is expected for ReAct code
+    -- agent_loop_react() has no answer_from_code_output equivalent, and
+    its normal path has the model print just the raw computed statistic
+    from code (e.g. "Lee's L: 0.23, p = 0.04"), stating FINAL ANSWER:
+    separately in a LATER prose-only message that is never re-executed
+    here. Without this fallback, EVERY ReAct row would come back False
+    (a confirmed "bug" flag) purely because the marker convention
+    differs, not because anything is actually wrong -- confirmed by
+    direct comparison against this project's own React harness
+    (agent_utils_react.py / single_agent_bivariate_react.py) against
+    single_agent_bivariate.py's answer_from_code_output=True convention.
+    Searches the WHOLE output for the first plausible label=value pair
+    instead -- the same generic, anchor-free pattern every scoring
+    script's own _extract_raw_statistic() already uses. This branch is
+    only ever reached when the primary anchored search already failed,
+    so it can only find MORE cases, never fewer -- single-agent/
+    multiagent code (which always has the marker) is completely
+    unaffected."""
     m = _FINAL_ANSWER_RE.search(text or "")
-    if not m:
-        return None
-    pairs = _KV_PAIR_RE.findall(m.group(1))
+    if m:
+        pairs = _KV_PAIR_RE.findall(m.group(1))
+        if pairs:
+            return pairs[0][1]
+    pairs = _KV_PAIR_RE.findall(text or "")
     return pairs[0][1] if pairs else None
 
 
@@ -90,10 +116,26 @@ def extract_final_code(run_dir):
     return None
 
 
-def _shift_and_rerun(code_text, dataset_path, extra_files):
+def _shift_and_rerun(code_text, dataset_path, extra_files, shift_only_column=None):
     """Re-runs code_text against a copy of dataset_path shifted by a
     constant, from an isolated temp directory. Returns the resulting
-    statistic (str) or None."""
+    statistic (str) or None.
+
+    shift_only_column: None (default, UNCHANGED behavior for bivariate/
+    getisord/outlier-r/spatial) shifts EVERY numeric column by the same
+    constant. If given a column name (or substring -- exact match tried
+    first, then substring, same fallback order used by
+    ground_truth_all_methods_changespillover.R's own compute_change()),
+    ONLY that one column is shifted, every other numeric column is left
+    untouched. This matters for changespillover specifically: its data
+    has TWO year columns whose DIFFERENCE (year2 - year1) is the actual
+    variable being tested. Shifting both by the same constant cancels
+    exactly in that difference, so the re-run receives numerically
+    IDENTICAL input to the original -- the check would trivially "pass"
+    regardless of whether the code is correct, testing nothing. Shifting
+    only the later year moves the derived change value by a uniform
+    constant instead, which is the shift Moran's I/Geary's C/etc. are
+    actually invariant to."""
     cwd_before = os.getcwd()
     tmp_root = tempfile.mkdtemp()
     output = None
@@ -103,9 +145,23 @@ def _shift_and_rerun(code_text, dataset_path, extra_files):
         os.makedirs(shifted_dir, exist_ok=True)
 
         df = pd.read_csv(dataset_path)
-        for col in df.columns:
-            if pd.api.types.is_numeric_dtype(df[col]):
-                df[col] = df[col] + SHIFT_CONSTANT
+        if shift_only_column is not None:
+            target_col = shift_only_column if shift_only_column in df.columns else next(
+                (c for c in df.columns if shift_only_column in c), None)
+            if target_col is not None and pd.api.types.is_numeric_dtype(df[target_col]):
+                df[target_col] = df[target_col] + SHIFT_CONSTANT
+            else:
+                # couldn't find/match the requested column -- fall back
+                # to shifting every numeric column rather than silently
+                # shifting nothing (which would make the check trivially
+                # pass for a different, worse reason)
+                for col in df.columns:
+                    if pd.api.types.is_numeric_dtype(df[col]):
+                        df[col] = df[col] + SHIFT_CONSTANT
+        else:
+            for col in df.columns:
+                if pd.api.types.is_numeric_dtype(df[col]):
+                    df[col] = df[col] + SHIFT_CONSTANT
         shifted_csv = os.path.join(shifted_dir, os.path.basename(dataset_path))
         df.to_csv(shifted_csv, index=False)
 
@@ -132,14 +188,41 @@ def _shift_and_rerun(code_text, dataset_path, extra_files):
     return _extract_statistic(output)
 
 
+def compute_shifted_statistic(run_dir, dataset_path, adjacency_path, shift_only_column=None):
+    """Returns the recomputed statistic (str) after re-running the
+    model's OWN saved code on shifted data, WITHOUT comparing it to any
+    single original value -- unlike check_shift_invariant(), which
+    assumes a strict 1:1 comparison against ONE original_stat_str.
+    Needed for multi-value answer formats (e.g. getisord's list of
+    boroughs), where the re-executed output's print order is not
+    guaranteed to match the original evidence_text's order -- a strict
+    positional match there would spuriously fail correct code just
+    because two different (but both real) boroughs got compared to
+    each other. Callers should instead check this returned value against
+    the FULL set of originally-reported values, accepting a match with
+    ANY of them. Returns None if code can't be found or execution
+    failed -- same tri-state philosophy as check_shift_invariant()."""
+    code_text = extract_final_code(run_dir)
+    if not code_text:
+        return None
+    extra_files = {"ADJACENCY_PATH": adjacency_path} if adjacency_path and pd.notna(adjacency_path) else None
+    return _shift_and_rerun(code_text, dataset_path, extra_files, shift_only_column=shift_only_column)
+
+
 def check_shift_invariant(run_dir, dataset_path, adjacency_path, original_stat_str,
-                           check_applicable=True):
+                           check_applicable=True, shift_only_column=None):
     """Returns True/False/None.
     True  = re-run under a shift produced (approximately) the same statistic.
     False = statistic changed substantially, or became non-finite -- likely bug.
     None  = inconclusive (no code found, original statistic wasn't finite to
             begin with -- already caught by the fabrication check, or
-            check_applicable=False for this task/method)."""
+            check_applicable=False for this task/method).
+
+    shift_only_column: passed straight through to _shift_and_rerun() --
+    see that function's docstring. Leave as None (default) for every
+    task except changespillover, whose two-year-column data needs only
+    ONE column shifted for the check to be meaningful rather than
+    trivially self-cancelling."""
     if not check_applicable:
         return None
     if not _is_finite(original_stat_str):
@@ -149,7 +232,7 @@ def check_shift_invariant(run_dir, dataset_path, adjacency_path, original_stat_s
         return None
 
     extra_files = {"ADJACENCY_PATH": adjacency_path} if adjacency_path and pd.notna(adjacency_path) else None
-    shifted_stat = _shift_and_rerun(code_text, dataset_path, extra_files)
+    shifted_stat = _shift_and_rerun(code_text, dataset_path, extra_files, shift_only_column=shift_only_column)
     if not _is_finite(shifted_stat):
         return False
 

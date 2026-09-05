@@ -1,0 +1,207 @@
+"""
+score_distance_decay.py
+==========================
+Scores distance-decay's 3-way classification (negative_significant /
+positive_significant / not_significant) with the SAME column structure
+used for bivariate and the original Moran's I task, so all tables are
+directly comparable.
+
+Evidence check: same principle as score_bivariate.py -- a chunk only
+counts as evidenced if at least one REAL, finite, non-placeholder number
+is cited (not nan, not N/A, not a method name, not a self-admitted
+"please replace this" fabrication).
+
+Usage:
+    python score_distance_decay.py
+Reads:  distance_decay_results.csv
+Writes: distance_decay_scoring_summary.csv
+"""
+
+import re
+import pandas as pd
+
+from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
+
+RESULTS_CSV = "distance_decay_results.csv"
+OUT_CSV = "distance_decay_scoring_summary.csv"
+
+CLASSES = ["negative_significant", "positive_significant", "not_significant"]
+
+SELF_ADMITTED_NON_COMPUTATION_PHRASES = [
+    "not computed", "could not be computed", "unable to compute", "impossible to compute",
+    "no numerical results", "did not reach a valid", "no valid final answer",
+    "not available", "cannot provide a computed number", "no computed",
+    "did not execute", "not execute correctly", "syntaxerror", "not provided",
+    "could not compute", "n/a", "[not computed]", "placeholder value",
+    "not actual computation", "can't report a valid", "cannot report a valid",
+    "failed to converge", "insufficient data", "insufficient information",
+    "could not be completed", "cannot be determined", "don't include actual",
+    "do not include actual", "numerical issue that prevented",
+    "please replace the values", "replace the values with the actual",
+    "i cannot provide the actual", "i recommend running the corrected code",
+]
+
+
+def _has_self_admitted_non_computation(text):
+    if not isinstance(text, str):
+        return False
+    return any(phrase in text.lower() for phrase in SELF_ADMITTED_NON_COMPUTATION_PHRASES)
+
+
+def _has_real_statistic(evidence_text, full_text=None):
+    """Checks that the first '=...,' or '=...)' value in the text is a
+    genuine, finite number -- method-agnostic, and rejects a number that
+    LOOKS real if the model's own words admit it isn't."""
+    if not isinstance(evidence_text, str):
+        return False
+    if _has_self_admitted_non_computation(full_text if full_text else evidence_text):
+        return False
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    if not match:
+        return False
+    val = match.group(1).strip()
+    try:
+        f = float(val)
+        return f == f and abs(f) != float("inf")
+    except ValueError:
+        return False
+
+
+def _extract_raw_statistic(evidence_text):
+    if not isinstance(evidence_text, str):
+        return None
+    match = re.search(r"=\s*([^,)]+)[,)]", evidence_text)
+    return match.group(1).strip() if match else None
+
+
+def _extract_p_value(evidence_text):
+    """Second '=...' value -- the p-value, which always follows the
+    slope in this task's required format."""
+    if not isinstance(evidence_text, str):
+        return None
+    matches = re.findall(r"=\s*([^,)]+)[,)]", evidence_text)
+    return matches[1].strip() if len(matches) >= 2 else None
+
+
+def load():
+    df = pd.read_csv(RESULTS_CSV)
+    df["has_real_statistic_bool"] = df.apply(
+        lambda r: _has_real_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
+
+    def _plausibility_check(row):
+        if not row["has_real_statistic_bool"]:
+            return True
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        raw_p = _extract_p_value(row["evidence_text"])
+        if not magnitude_plausible(raw_stat):
+            return False
+        if not bounded_probability(raw_p):
+            return False
+        claims_significance = row["predicted"] in ("positive_significant", "negative_significant")
+        if row["predicted"] in CLASSES:
+            if not verdict_p_consistent(claims_significance, raw_p):
+                return False
+        return True
+
+    df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
+    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
+    df["ambiguous"] = df["predicted"].isna() | (~df["predicted"].isin(CLASSES))
+    df["correct"] = (~df["ambiguous"]) & (df["predicted"] == df["ground_truth_direction"])
+    df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
+    return df
+
+
+def per_class_metrics(g, use_evidence_filter):
+    y_true = g["ground_truth_direction"]
+
+    def effective_pred(r):
+        if r["ambiguous"]:
+            return "__no_answer__"
+        if use_evidence_filter and not r["has_evidence_bool"]:
+            return "__unevidenced__"
+        return r["predicted"]
+
+    y_pred = g.apply(effective_pred, axis=1)
+
+    tp_total = fp_total = 0
+    precisions, recalls, f1_scores = [], [], []
+    for cls in CLASSES:
+        n_real = int((y_true == cls).sum())
+        if n_real == 0:
+            # class never occurs in this group's real ground truth -- excluded
+            # from the macro average entirely, rather than defaulting to 0.0.
+            # A metric shouldn't penalize a model for a category that
+            # structurally cannot appear in the data being evaluated (confirmed
+            # concrete case: gpt-4o-mini scored 100% accuracy on distance-decay
+            # but F1=0.667, purely because positive_significant never occurs
+            # in this dataset -- fixed here).
+            continue
+
+        tp = int(((y_pred == cls) & (y_true == cls)).sum())
+        fp = int(((y_pred == cls) & (y_true != cls)).sum())
+        fn = int(((y_pred != cls) & (y_true == cls)).sum())
+        tp_total += tp
+        fp_total += fp
+
+        precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+        recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+        precisions.append(precision)
+        recalls.append(recall)
+        f1_scores.append(f1)
+
+    macro_precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
+    macro_recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
+    macro_f1 = round(sum(f1_scores) / len(f1_scores), 3) if f1_scores else 0.0
+    return tp_total, fp_total, macro_precision, macro_recall, macro_f1
+
+
+def run():
+    df = load()
+    rows = []
+
+    for (mode, model), g in df.groupby(["mode", "model"]):
+        n = len(g)
+        n_ambiguous = int(g["ambiguous"].sum())
+        non_ambiguous = n - n_ambiguous
+        correct_number = int(g["correct"].sum())
+        correct_number_ef = int(g["correct_evidence_filtered"].sum())
+        pct_with_evidence = round(g["has_evidence_bool"].mean(), 3)
+
+        if n == 0:
+            continue
+
+        accuracy = round(correct_number / n, 3)
+        accuracy_ef = round(correct_number_ef / n, 3)
+
+        tp, fp, precision, recall, f1 = per_class_metrics(g, use_evidence_filter=False)
+        tp_ef, fp_ef, precision_ef, recall_ef, f1_ef = per_class_metrics(g, use_evidence_filter=True)
+
+        rows.append({
+            "mode": mode, "model": model, "n": n, "n_ambiguous": n_ambiguous,
+            "non_ambiguous": non_ambiguous, "correct_number": correct_number,
+            "pct_with_evidence": pct_with_evidence,
+            "tp": tp, "fp": fp,
+            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "correct_number_evidence_filtered": correct_number_ef,
+            "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
+            "accuracy_evidence_filtered": accuracy_ef,
+            "precision_evidence_filtered": precision_ef,
+            "recall_evidence_filtered": recall_ef,
+            "f1_evidence_filtered": f1_ef,
+        })
+
+    out = pd.DataFrame(rows).sort_values(["mode", "model"]).reset_index(drop=True)
+    out = out[["mode", "model", "n", "n_ambiguous", "non_ambiguous", "correct_number",
+               "pct_with_evidence", "tp", "fp", "accuracy", "precision", "recall", "f1",
+               "correct_number_evidence_filtered", "tp_evidence_filtered", "fp_evidence_filtered",
+               "accuracy_evidence_filtered", "precision_evidence_filtered",
+               "recall_evidence_filtered", "f1_evidence_filtered"]]
+    out.to_csv(OUT_CSV, index=False)
+
+    print(out.to_string(index=False))
+    print(f"\nSaved to {OUT_CSV}")
+
+
+if __name__ == "__main__":
+    run()
