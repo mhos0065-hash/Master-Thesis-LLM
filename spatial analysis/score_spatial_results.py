@@ -64,17 +64,21 @@ from formula_invariance_check import check_shift_invariant, compute_shifted_stat
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_spatial.csv"
 MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path per chunk_id
 
+# ReAct multi-turn agent
+#RESULTS_CSV = "ReAct/spatial_correlation_results_react.csv"
+#OUT_CSV = "Scores/ReAct/scoring_spatial_summary_react.csv"
+
 # Multi agent
-RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent_with_method.csv"
-OUT_CSV = "Scores/multi agent/scoring_spatial_summary.csv"
+#RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent_with_method.csv"
+#OUT_CSV = "Scores/multi agent/scoring_spatial_summary.csv"
 
 # Multi turn
 #RESULTS_CSV = "results/single agent/results_spatial_multi_with_method.csv"
 #OUT_CSV = "Scores/multi turn/scoring_spatial_summary.csv"
 
 # Single turn
-#RESULTS_CSV = "spatial_results_with_method.csv"
-#OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
+RESULTS_CSV = "spatial_results_with_method.csv"
+OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
 
 METHOD_NAME_MAP_GLOBAL = {
     "Global Moran's I": "Global Moran's I",
@@ -304,7 +308,24 @@ def load():
     df["gt_method_used"] = resolved.apply(lambda t: t[3])
 
     df["predicted_bool"] = df["predicted"].apply(parse_bool)
-    df["ambiguous"] = df["predicted_bool"].isna()
+    # A row is ambiguous if predicted_bool is genuinely missing, OR if
+    # the evidence_text itself admits no valid answer was ever produced
+    # (e.g. "(Stopped: reached iteration limit...)") -- confirmed
+    # necessary: the ReAct runner's LOCAL-granularity path writes a
+    # literal "FALSE" into `predicted` even when the model produced
+    # NOTHING parseable, unlike the GLOBAL path which correctly leaves
+    # it blank in the same failure case. Without this, a genuine
+    # non-answer gets silently scored as a confident "no cluster found"
+    # prediction instead of being excluded.
+    _NO_VALID_ANSWER_PHRASES = ("stopped:", "reached iteration limit", "(empty response)")
+
+    def _admits_no_valid_answer(text):
+        if not isinstance(text, str):
+            return False
+        low = text.lower()
+        return any(phrase in low for phrase in _NO_VALID_ANSWER_PHRASES)
+
+    df["ambiguous"] = df["predicted_bool"].isna() | df["evidence_text"].apply(_admits_no_valid_answer)
     df["has_real_statistic_bool"] = df["evidence_text"].apply(_has_real_statistic)
     df["is_local"] = df["spatial_granularity"].astype(str).str.strip().str.lower() == "local"
 
@@ -411,7 +432,30 @@ def load():
     df["local_fp"] = correctness.apply(lambda t: t[2])
     df["local_fn"] = correctness.apply(lambda t: t[3])
 
-    df["correct_evidence_filtered"] = df["correct"] * df["has_evidence_bool"].astype(float)
+    def _correct_ef_value(row):
+        # LOCAL rows: correctness is entirely borough-name-based, so
+        # there's no clean "negative claim needs less evidence" concept
+        # the way there is for a bare boolean -- keep the strict rule.
+        if row["is_local"]:
+            return row["correct"] * float(row["has_evidence_bool"])
+        # GLOBAL rows: match compute_metrics()'s OWN lenient rule for
+        # f1_evidence_filtered/precision_ef/recall_ef -- a NOT_CLUSTERED
+        # (False) claim doesn't need real evidence to count, since
+        # there's nothing to fabricate when claiming "nothing was
+        # found"; only a CLUSTERED (True) claim does. Confirmed
+        # necessary: without this, correct_evidence_filtered used a
+        # STRICTER bar than f1_evidence_filtered, causing
+        # accuracy_evidence_filtered to read far below f1_evidence_filtered
+        # for EVERY model in this dataset, not just one -- a systematic
+        # inconsistency between two metrics that are supposed to share
+        # the same definition of "evidenced", not two different ones.
+        if row["ambiguous"]:
+            return 0.0
+        if row["predicted_bool"] == False and row["correct"] >= 1.0:  # noqa: E712
+            return 1.0
+        return row["correct"] * float(row["has_evidence_bool"])
+
+    df["correct_evidence_filtered"] = df.apply(_correct_ef_value, axis=1)
 
     def _value_check(row):
         if row["is_local"] or row["correct"] < 1.0 or not row["has_evidence_bool"]:

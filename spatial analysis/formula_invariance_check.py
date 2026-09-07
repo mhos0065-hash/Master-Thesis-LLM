@@ -37,7 +37,33 @@ TOLERANCE = 1e-3
 
 _FINAL_ANSWER_RE = re.compile(r"FINAL ANSWER:\s*(.*)", re.IGNORECASE)
 _KV_PAIR_RE = re.compile(r"([A-Za-z_][A-Za-z0-9_ \-()*]*?)\s*=\s*([\-0-9.eE]+|nan)", re.IGNORECASE)
+_COLON_PAIR_RE = re.compile(r"([A-Za-z_][A-Za-z0-9_ \-()*']*?)\s*:\s*([\-0-9.eE]+|nan)\b", re.IGNORECASE)
 _CODE_BLOCK_RE = re.compile(r"```python\s*\n(.*?)```", re.DOTALL)
+
+
+def _looks_like_bare_diagnostic_integer(value_str):
+    """True for a plain integer with no decimal point or exponent (e.g.
+    '32', '164', '500') -- almost always a row/permutation/neighbor
+    COUNT printed alongside the real statistic, never the statistic
+    itself (confirmed against real re-executed output this session:
+    'Remaining rows after NaN removal: 32 | Lee's L: -0.138...' -- a
+    naive first-match search would otherwise grab '32'). Real spatial
+    statistics (Lee's L, correlations, z-scores) are essentially always
+    printed with a decimal point in this project's actual outputs."""
+    return "." not in value_str and "e" not in value_str.lower() and value_str.lower() != "nan"
+
+
+def _pick_best_value(pairs):
+    """Given a list of (label, value_str) matches, prefers the FIRST one
+    that doesn't look like a bare diagnostic integer -- falls back to
+    the literal first match only if EVERY candidate looks like a bare
+    integer (better than returning nothing)."""
+    if not pairs:
+        return None
+    for _, value in pairs:
+        if not _looks_like_bare_diagnostic_integer(value):
+            return value
+    return pairs[0][1]
 
 
 def _extract_statistic(text):
@@ -46,7 +72,7 @@ def _extract_statistic(text):
     agent code, which (via answer_from_code_output=True) always prints
     that marker itself as part of its own output.
 
-    FALLBACK (NEW, additive only): if no 'FINAL ANSWER:' marker is found
+    FALLBACK 1 (additive): if no 'FINAL ANSWER:' marker is found
     anywhere in the re-executed output, this is expected for ReAct code
     -- agent_loop_react() has no answer_from_code_output equivalent, and
     its normal path has the model print just the raw computed statistic
@@ -60,18 +86,42 @@ def _extract_statistic(text):
     single_agent_bivariate.py's answer_from_code_output=True convention.
     Searches the WHOLE output for the first plausible label=value pair
     instead -- the same generic, anchor-free pattern every scoring
-    script's own _extract_raw_statistic() already uses. This branch is
-    only ever reached when the primary anchored search already failed,
-    so it can only find MORE cases, never fewer -- single-agent/
-    multiagent code (which always has the marker) is completely
-    unaffected."""
+    script's own _extract_raw_statistic() already uses.
+
+    FALLBACK 2 (NEW, additive): if no '=' sign is found ANYWHERE either,
+    tries a colon-separated 'Label: value' pattern instead. Confirmed
+    necessary by direct diagnostic: deepseek-chat-v3-0324 and
+    qwen3-32b's own ReAct code consistently prints results with a colon
+    ("Lee's L: -0.0117", "Observed correlation: -0.0274...") and NEVER
+    an '=' sign anywhere in their output -- without this, 100% of both
+    models' chunks came back as a confirmed shift-invariance FAILURE,
+    not because either model's code was wrong, but because nothing
+    could be extracted from its differently-formatted output to compare
+    against the original.
+
+    Both fallback tiers prefer a value that isn't a bare diagnostic
+    integer (see _pick_best_value) -- confirmed necessary since some
+    real outputs print an unrelated row/permutation count using the
+    exact same separator before the real statistic appears (e.g.
+    "Remaining rows after NaN removal: 32 | Lee's L: -0.138...").
+
+    Each fallback tier is only ever reached when the previous one
+    failed, so this can only find MORE genuine cases, never fewer --
+    single-agent/multiagent code (which always has the '=' marker) is
+    completely unaffected."""
     m = _FINAL_ANSWER_RE.search(text or "")
     if m:
         pairs = _KV_PAIR_RE.findall(m.group(1))
         if pairs:
             return pairs[0][1]
-    pairs = _KV_PAIR_RE.findall(text or "")
-    return pairs[0][1] if pairs else None
+
+    eq_pairs = _KV_PAIR_RE.findall(text or "")
+    best = _pick_best_value(eq_pairs)
+    if best is not None:
+        return best
+
+    colon_pairs = _COLON_PAIR_RE.findall(text or "")
+    return _pick_best_value(colon_pairs)
 
 
 def _is_finite(s):

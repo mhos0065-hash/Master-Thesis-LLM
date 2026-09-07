@@ -1,0 +1,50 @@
+
+[2026-09-05T11:09:10.364848+00:00] FAILED: mode=react model=meta-llama/llama-3.1-8b-instruct chunk=bivariate_2023_gas_crime
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_bivariate_react.py", line 184, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_bivariate_react.py", line 147, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 131072 tokens. However, you requested about 150380 tokens (150380 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-05T15:15:31.107819+00:00] FAILED: mode=react model=moonshotai/kimi-k2.6 chunk=bivariate_2022_gas_waste
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_bivariate_react.py", line 184, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_bivariate_react.py", line 147, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1788621305-B71MjflCNbL2m2OFNliP', 'object': 'chat.completion', 'created': 1788621305, 'model': 'moonshotai/kimi-k2.6', 'provider': 'Baidu', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 'stop'
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------

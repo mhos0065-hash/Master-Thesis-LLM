@@ -106,7 +106,8 @@ CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 
 # For multi turn
 #RESULTS_CSV = "results/single agent/bivariate_results_multi_with_method.csv"
-##CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
+#SUMMARY_OUT = "Scores/multi turn/bivariate_scoring_summary_multi.csv"
+#CONFUSION_OUT = "Scores/multi turn/bivariate_confusion_matrix_multi.csv"
 
 # For multi agent
 #RESULTS_CSV = "results/multi agent/bivariate_results_multiagent_with_method.csv"

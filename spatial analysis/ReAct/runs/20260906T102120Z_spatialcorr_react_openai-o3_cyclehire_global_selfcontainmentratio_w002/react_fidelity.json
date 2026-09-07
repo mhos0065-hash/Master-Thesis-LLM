@@ -1,0 +1,8 @@
+{
+  "per_turn": [
+    false,
+    true,
+    false
+  ],
+  "fraction_compliant": 0.333
+}

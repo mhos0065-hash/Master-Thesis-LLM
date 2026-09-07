@@ -81,11 +81,12 @@ from statistic_plausibility import magnitude_plausible, bounded_probability, ver
 from formula_invariance_check import check_shift_invariant
 
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_changespillover.csv"
-MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest.csv"  # must have csv_path / adjacency_path per chunk_id
+MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path per chunk_id
+
 
 #Multi agent
-RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
-OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
+#RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
+#OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
 
 #Multi turn
 #RESULTS_CSV = "results/single agent/changespillover_results_multi_with_method.csv"
@@ -96,8 +97,8 @@ OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
 #OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
 
 #ReAct multi turn
-#RESULTS_CSV = "ReAct/changespillover_results_react.csv"
-#OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
+RESULTS_CSV = "ReAct/changespillover_results_react.csv"
+OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
 
 # Maps attach_statistical_method_changespillover.py's free-text labels
 # onto the (fewer) method names that actually have ground truth
@@ -320,7 +321,26 @@ def load():
     )
 
     df["correct"] = (~df["ambiguous"]) & (df["predicted_bool"] == df["gt_clustered_used"])
-    df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
+
+    def _correct_ef_value(row):
+        # Match compute_metrics()'s OWN lenient rule for
+        # f1_evidence_filtered/precision_ef/recall_ef -- a NOT_CLUSTERED
+        # (False) claim doesn't need real evidence to count, since
+        # there's nothing to fabricate when claiming "nothing was
+        # found"; only a CLUSTERED (True) claim does. Confirmed
+        # necessary (found via the identical bug in score_spatial_results.py):
+        # without this, correct_evidence_filtered used a STRICTER bar
+        # than f1_evidence_filtered, which already exempts False
+        # predictions via compute_metrics' keep_as_is logic -- causing
+        # accuracy_evidence_filtered to read systematically below
+        # f1_evidence_filtered for every model, not a real finding.
+        if row["ambiguous"]:
+            return False
+        if row["predicted_bool"] == False and row["correct"]:  # noqa: E712
+            return True
+        return bool(row["correct"] and row["has_evidence_bool"])
+
+    df["correct_evidence_filtered"] = df.apply(_correct_ef_value, axis=1)
 
     def _value_check(row):
         if not (row["correct"] and row["has_evidence_bool"]):
