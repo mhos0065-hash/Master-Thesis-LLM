@@ -123,3 +123,553 @@ RuntimeError: chat() failed after 5 attempts. Last error: API response missing '
 If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
 
 ----------------------------------------------------------------------
+
+[2026-09-24T12:07:49.690004+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_no2_Q4_2021_to_Q1_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:08:11.417814+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_no2_Q1_2022_to_Q2_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:09:33.193802+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_no2_Q2_2022_to_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:09:55.021845+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_no2_Q3_2022_to_Q4_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:10:17.126157+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_no2_Q4_2022_to_Q1_2023
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:10:38.322733+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_no2_Q1_2023_to_Q2_2023
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:10:59.651001+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_no2_Q2_2023_to_Q3_2023
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:24:42.260247+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_crime_first_half_2012_to_second_half_2012
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:25:52.715571+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_crime_first_half_2013_to_second_half_2013
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:26:14.248178+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_crime_second_half_2013_to_first_half_2014
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:26:35.853726+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_crime_first_half_2014_to_second_half_2014
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:26:57.406103+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_crime_second_half_2014_to_first_half_2015
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:38:29.166215+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_crime_second_half_2016_to_first_half_2017
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T12:43:42.815093+00:00] FAILED: mode=react model=deepseek/deepseek-chat-v3-0324 chunk=changespillover_no2crime_crime_second_half_2017_to_first_half_2018
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T15:18:40.970985+00:00] FAILED: mode=react model=deepseek/deepseek-r1-0528 chunk=changespillover_no2crime_crime_first_half_2014_to_second_half_2014
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790263022-Msyl9XsMOt1U5J4fShcI', 'object': 'chat.completion', 'created': 1790263022, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T17:00:41.670812+00:00] FAILED: mode=react model=deepseek/deepseek-r1-0528 chunk=changespillover_no2crime_crime_second_half_2018_to_first_half_2019
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790269103-OLtKY63JYlCfcIrym9eR', 'object': 'chat.completion', 'created': 1790269103, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T17:20:22.741481+00:00] FAILED: mode=react model=deepseek/deepseek-r1-0528 chunk=changespillover_no2crime_crime_second_half_2019_to_first_half_2020
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790270316-blLW88V7TsIkgI9QGque', 'object': 'chat.completion', 'created': 1790270316, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T22:04:02.149796+00:00] FAILED: mode=react model=meta-llama/llama-3.1-8b-instruct chunk=changespillover_no2crime_crime_second_half_2010_to_first_half_2011
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 131072 tokens. However, you requested about 178542 tokens (178542 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T22:19:05.327390+00:00] FAILED: mode=react model=meta-llama/llama-3.1-8b-instruct chunk=changespillover_no2crime_crime_second_half_2014_to_first_half_2015
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"This endpoint's maximum context length is 131072 tokens. However, you requested about 141995 tokens (141995 of text input). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T22:22:48.273626+00:00] FAILED: mode=react model=meta-llama/llama-3.1-8b-instruct chunk=changespillover_no2crime_crime_first_half_2016_to_second_half_2016
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Input too long: 131097 input tokens, limit is 131072 for this model\",\"type\":\"invalid_request_error\",\"param\":null,\"code\":\"context_length_exceeded\"}}","provider_name":"DeepInfra","is_byok":
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T22:28:15.677691+00:00] FAILED: mode=react model=meta-llama/llama-3.1-8b-instruct chunk=changespillover_no2crime_crime_first_half_2017_to_second_half_2017
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Input too long: 137275 input tokens, limit is 131072 for this model\",\"type\":\"invalid_request_error\",\"param\":null,\"code\":\"context_length_exceeded\"}}","provider_name":"DeepInfra","is_byok":
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-25T00:07:01.647411+00:00] FAILED: mode=react model=meta-llama/llama-3.1-8b-instruct chunk=changespillover_no2crime_crime_first_half_2020_to_second_half_2020
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 186, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_changespillover_react.py", line 148, in run_one
+    verdict, final_text, log, react_fidelity = agent_loop_react(
+                                               ~~~~~~~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_react.py", line 173, in agent_loop_react
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API response missing 'choices' (attempt 5/5). Full response: {'id': 'gen-1790294805-k7PiBxfU4tuM6StMA9XC', 'error': {'message': "Upstream error from DeepInfra: This model's maximum context length is 131072 tokens. However, you requested 16384 output tokens and your prompt contains at least 114689 input tokens, for a total of at least 131073 tokens. Please red
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------

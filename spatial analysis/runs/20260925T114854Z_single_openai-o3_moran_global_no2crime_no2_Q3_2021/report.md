@@ -1,0 +1,7 @@
+# Single-agent report: moran_global_no2crime_no2_Q3_2021
+
+**Predicted:** False
+
+**Detail:** NOT CLUSTERED (statistical method = Moran's I = -0.14443827733910544, p = 0.837)
+
+**Answer line:** NOT CLUSTERED (statistical method = Moran's I = -0.14443827733910544, p = 0.837)

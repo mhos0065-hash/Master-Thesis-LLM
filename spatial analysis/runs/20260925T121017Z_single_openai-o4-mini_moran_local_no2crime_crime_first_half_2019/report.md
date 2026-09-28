@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_no2crime_crime_first_half_2019
+
+**Predicted:** True
+
+**Detail:** Haringey (HH, statistical method=nan), Kensington and Chelsea (HH, statistical method=nan), Barking and Dagenham (LL, statistical method=nan), Bexley (LL, statistical method=nan), Bromley (LL, statistical method=nan), Croydon (LL, statistical method=nan), Ealing (LL, statistical method=nan), Enfield (LL, statistical method=nan), Greenwich (LL, statistical method=nan), Harrow (LL, statistical method=nan), Havering (LL, statistical method=nan), Hillingdon (LL, statistical method=nan), Hounslow (LL
+
+**Answer line:** Haringey (HH, statistical method=nan), Kensington and Chelsea (HH, statistical method=nan), Barking and Dagenham (LL, statistical method=nan), Bexley (LL, statistical method=nan), Bromley (LL, statistical method=nan), Croydon (LL, statistical method=nan), Ealing (LL, statistical method=nan), Enfield (LL, statistical method=nan), Greenwich (LL, statistical method=nan), Harrow (LL, statistical method=nan), Havering (LL, statistical method=nan), Hillingdon (LL, statistical method=nan), Hounslow (LL, statistical method=nan), Kingston upon Thames (LL, statistical method=nan), Lewisham (LL, statistical method=nan), Merton (LL, statistical method=nan), Newham (LL, statistical method=nan), Redbridge (LL, statistical method=nan), Richmond upon Thames (LL, statistical method=nan), Sutton (LL, statistical method=nan), Waltham Forest (LL, statistical method=nan)

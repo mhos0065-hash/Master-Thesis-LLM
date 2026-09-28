@@ -83,3 +83,457 @@ Traceback (most recent call last):
 PermissionError: [Errno 13] Permission denied: 'results/multi agent/spatial_correlation_results_multiagent.csv'
 
 ----------------------------------------------------------------------
+
+[2026-09-26T21:06:05.458209+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q1_2021
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-26T21:06:26.443514+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2021
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-26T21:09:01.085329+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-26T21:09:45.712589+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q1_2023
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-26T21:17:40.434852+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_crime_second_half_2016
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-26T21:20:47.161308+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_crime_second_half_2018
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T02:11:45.337539+00:00] FAILED: mode=multiagent model=deepseek/deepseek-r1-0528 chunk=moran_local_no2crime_no2_Q2_2023
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 357, in multi_agent_loop
+    plan, planner_prompt = run_planner(question, profile_text, prior_planner_feedback, model)
+                           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 122, in run_planner
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790474803-E8VQDGPpbqhGJRQ5c6IF', 'object': 'chat.completion', 'created': 1790474803, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T04:23:00.326634+00:00] FAILED: mode=multiagent model=deepseek/deepseek-r1-0528 chunk=moran_local_no2crime_crime_first_half_2015
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790482549-aNPeAH8mMQUnLw0kw1K4', 'object': 'chat.completion', 'created': 1790482549, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T19:55:56.461280+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2021
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T19:56:16.095924+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T19:59:25.817660+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_crime_second_half_2018
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T20:13:11.614979+00:00] FAILED: mode=multiagent model=deepseek/deepseek-r1-0528 chunk=moran_local_no2crime_crime_first_half_2015
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790539926-zlFFSBjvimU0NUnXBZm5', 'object': 'chat.completion', 'created': 1790539926, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T20:16:20.514236+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T20:22:13.577890+00:00] FAILED: mode=multiagent model=deepseek/deepseek-r1-0528 chunk=moran_local_no2crime_crime_first_half_2015
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790540502-NAsXo9IGcObC8s2ULipM', 'object': 'chat.completion', 'created': 1790540502, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T20:22:57.100410+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T20:29:51.301657+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T20:35:44.378304+00:00] FAILED: mode=multiagent model=deepseek/deepseek-r1-0528 chunk=moran_local_no2crime_crime_first_half_2015
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790541313-t7Xmm9qJoH83AhhxVtCQ', 'object': 'chat.completion', 'created': 1790541313, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-27T20:37:27.254594+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 361, in multi_agent_loop
+    coder_result = run_coder(question, dataset_path, extra_files, profile_text,
+                              plan, prior_coder_feedback, model, run_dir,
+                              answer_format_instructions=answer_format_instructions)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 174, in run_coder
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-28T00:43:12.281474+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=moran_global_no2crime_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 125, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_spatial_correlation.py", line 91, in run_one
+    ma_result = multi_agent_loop(
+        question=meta["insight_def"], dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API response missing 'choices' (attempt 5/5). Full response: {'id': 'gen-1790556168-beRXlN8FacVW4kKL0jBy', 'error': {'message': 'Backend request failed with status 400', 'code': 400, 'metadata': {'error_type': 'invalid_request', 'provider_code': '400'}}}
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------

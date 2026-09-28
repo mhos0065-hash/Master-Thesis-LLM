@@ -1,0 +1,103 @@
+chunk_id,method,ground_truth_boroughs
+getisord_crime_first_half_2011,Getis-Ord Gi (no star),Brent:hot:2.621632; Camden:hot:2.402294; Kensington and Chelsea:hot:2.503054; Westminster:hot:2.570414
+getisord_crime_first_half_2011,Getis-Ord Gi*,Brent:hot:2.5135; Camden:hot:2.636; Kensington and Chelsea:hot:2.7057; Westminster:hot:2.9276
+getisord_crime_first_half_2011,Local Moran's I / LISA,Camden:hot:2.402294; Kensington and Chelsea:hot:2.503054; Westminster:hot:2.570414
+getisord_crime_first_half_2012,Getis-Ord Gi (no star),Brent:hot:2.586212; Camden:hot:2.423038; Kensington and Chelsea:hot:2.61988; Wandsworth:hot:1.988485; Westminster:hot:2.815949
+getisord_crime_first_half_2012,Getis-Ord Gi*,Brent:hot:2.472; Camden:hot:2.6356; Kensington and Chelsea:hot:2.8705; Westminster:hot:3.064
+getisord_crime_first_half_2012,Local Moran's I / LISA,Camden:hot:2.423038; Kensington and Chelsea:hot:2.61988; Westminster:hot:2.815949
+getisord_crime_first_half_2013,Getis-Ord Gi (no star),Brent:hot:2.47016; Camden:hot:2.318473; Kensington and Chelsea:hot:2.499103; Westminster:hot:2.694559
+getisord_crime_first_half_2013,Getis-Ord Gi*,Brent:hot:2.3249; Camden:hot:2.5335; Kensington and Chelsea:hot:2.7277; Westminster:hot:2.9893
+getisord_crime_first_half_2013,Local Moran's I / LISA,Camden:hot:2.318473; Kensington and Chelsea:hot:2.499103; Westminster:hot:2.694559
+getisord_crime_first_half_2014,Getis-Ord Gi (no star),Brent:hot:2.385837; Camden:hot:2.503759; Kensington and Chelsea:hot:2.460096; Westminster:hot:2.594628
+getisord_crime_first_half_2014,Getis-Ord Gi*,Brent:hot:2.2769; Camden:hot:2.6843; Kensington and Chelsea:hot:2.7441; Westminster:hot:2.9852
+getisord_crime_first_half_2014,Local Moran's I / LISA,Camden:hot:2.503759; Kensington and Chelsea:hot:2.460096; Westminster:hot:2.594628
+getisord_crime_first_half_2015,Getis-Ord Gi (no star),Brent:hot:2.406472; Camden:hot:2.449842; Kensington and Chelsea:hot:2.301733; Westminster:hot:2.478117
+getisord_crime_first_half_2015,Getis-Ord Gi*,Brent:hot:2.246; Camden:hot:2.7123; Kensington and Chelsea:hot:2.6381; Westminster:hot:2.9713
+getisord_crime_first_half_2015,Local Moran's I / LISA,Camden:hot:2.449842; Kensington and Chelsea:hot:2.301733; Westminster:hot:2.478117
+getisord_crime_first_half_2016,Getis-Ord Gi (no star),Brent:hot:2.347985; Camden:hot:2.555092; Kensington and Chelsea:hot:2.392564; Westminster:hot:2.453134
+getisord_crime_first_half_2016,Getis-Ord Gi*,Brent:hot:2.2298; Camden:hot:2.7453; Kensington and Chelsea:hot:2.7119; Westminster:hot:2.9529
+getisord_crime_first_half_2016,Local Moran's I / LISA,Camden:hot:2.555092; Kensington and Chelsea:hot:2.392564; Westminster:hot:2.453134
+getisord_crime_first_half_2017,Getis-Ord Gi (no star),Brent:hot:2.297601; Camden:hot:2.652154; Kensington and Chelsea:hot:2.177587; Westminster:hot:2.325975
+getisord_crime_first_half_2017,Getis-Ord Gi*,Brent:hot:2.1633; Camden:hot:2.9118; Islington:hot:2.071; Kensington and Chelsea:hot:2.4713; Westminster:hot:2.874
+getisord_crime_first_half_2017,Local Moran's I / LISA,Camden:hot:2.652154; Kensington and Chelsea:hot:2.177587; Westminster:hot:2.325975
+getisord_crime_first_half_2018,Getis-Ord Gi (no star),Brent:hot:2.38493; Camden:hot:2.624517; Kensington and Chelsea:hot:2.410896; Westminster:hot:2.63249
+getisord_crime_first_half_2018,Getis-Ord Gi*,Brent:hot:2.2825; Camden:hot:2.862; Kensington and Chelsea:hot:2.7057; Westminster:hot:3.0242
+getisord_crime_first_half_2018,Local Moran's I / LISA,Camden:hot:2.624517; Kensington and Chelsea:hot:2.410896; Westminster:hot:2.63249
+getisord_crime_first_half_2019,Getis-Ord Gi (no star),Brent:hot:2.468316; Camden:hot:2.502041; Kensington and Chelsea:hot:2.432582; Westminster:hot:2.368904
+getisord_crime_first_half_2019,Getis-Ord Gi*,Brent:hot:2.3156; Camden:hot:2.656; Kensington and Chelsea:hot:2.6284; Westminster:hot:2.754
+getisord_crime_first_half_2019,Local Moran's I / LISA,Camden:hot:2.502041; Kensington and Chelsea:hot:2.432582; Westminster:hot:2.368904
+getisord_crime_first_half_2020,Getis-Ord Gi (no star),Brent:hot:2.250889; Camden:hot:2.565355; Kensington and Chelsea:hot:2.22747; Westminster:hot:2.125543
+getisord_crime_first_half_2020,Getis-Ord Gi*,Brent:hot:2.1286; Camden:hot:2.7841; Kensington and Chelsea:hot:2.4285; Westminster:hot:2.7254
+getisord_crime_first_half_2020,Local Moran's I / LISA,Camden:hot:2.565355; Kensington and Chelsea:hot:2.22747; Westminster:hot:2.125543
+getisord_crime_first_half_2021,Getis-Ord Gi (no star),Brent:hot:2.02623; Camden:hot:2.296948; Kensington and Chelsea:hot:2.145334; Kingston upon Thames:cold:-2.109635
+getisord_crime_first_half_2021,Getis-Ord Gi*,Camden:hot:2.4846; Kensington and Chelsea:hot:2.4328; Kingston upon Thames:cold:-2.3275; Westminster:hot:2.5365
+getisord_crime_first_half_2021,Local Moran's I / LISA,Camden:hot:2.296948; Kensington and Chelsea:hot:2.145334; Kingston upon Thames:cold:-2.109635
+getisord_crime_second_half_2010,Getis-Ord Gi (no star),Brent:hot:2.628387; Camden:hot:2.236597; Kensington and Chelsea:hot:2.604665; Wandsworth:hot:2.000829; Westminster:hot:2.593584
+getisord_crime_second_half_2010,Getis-Ord Gi*,Brent:hot:2.4994; Camden:hot:2.4307; Kensington and Chelsea:hot:2.8949; Westminster:hot:2.9497
+getisord_crime_second_half_2010,Local Moran's I / LISA,Camden:hot:2.236597; Kensington and Chelsea:hot:2.604665; Westminster:hot:2.593584
+getisord_crime_second_half_2011,Getis-Ord Gi (no star),Brent:hot:2.59036; Camden:hot:2.416698; Kensington and Chelsea:hot:2.60597; Wandsworth:hot:2.020466; Westminster:hot:2.829762
+getisord_crime_second_half_2011,Getis-Ord Gi*,Brent:hot:2.5102; Camden:hot:2.6435; Kensington and Chelsea:hot:2.8249; Westminster:hot:3.0548
+getisord_crime_second_half_2011,Local Moran's I / LISA,Camden:hot:2.416698; Kensington and Chelsea:hot:2.60597; Westminster:hot:2.829762
+getisord_crime_second_half_2012,Getis-Ord Gi (no star),Brent:hot:2.583524; Camden:hot:2.348686; Kensington and Chelsea:hot:2.603037; Wandsworth:hot:2.063886; Westminster:hot:2.812533
+getisord_crime_second_half_2012,Getis-Ord Gi*,Brent:hot:2.4492; Camden:hot:2.5353; Kensington and Chelsea:hot:2.9096; Westminster:hot:3.06
+getisord_crime_second_half_2012,Local Moran's I / LISA,Camden:hot:2.348686; Kensington and Chelsea:hot:2.603037; Westminster:hot:2.812533
+getisord_crime_second_half_2013,Getis-Ord Gi (no star),Brent:hot:2.413816; Camden:hot:2.268971; Kensington and Chelsea:hot:2.492366; Wandsworth:hot:1.968847; Westminster:hot:2.668224
+getisord_crime_second_half_2013,Getis-Ord Gi*,Brent:hot:2.2679; Camden:hot:2.4494; Kensington and Chelsea:hot:2.785; Westminster:hot:2.9984
+getisord_crime_second_half_2013,Local Moran's I / LISA,Camden:hot:2.268971; Kensington and Chelsea:hot:2.492366; Westminster:hot:2.668224
+getisord_crime_second_half_2014,Getis-Ord Gi (no star),Brent:hot:2.449376; Camden:hot:2.362982; Kensington and Chelsea:hot:2.479664; Wandsworth:hot:2.047437; Westminster:hot:2.65087
+getisord_crime_second_half_2014,Getis-Ord Gi*,Brent:hot:2.2989; Camden:hot:2.563; Kensington and Chelsea:hot:2.8448; Westminster:hot:3.0464
+getisord_crime_second_half_2014,Local Moran's I / LISA,Camden:hot:2.362982; Kensington and Chelsea:hot:2.479664; Westminster:hot:2.65087
+getisord_crime_second_half_2015,Getis-Ord Gi (no star),Brent:hot:2.444498; Camden:hot:2.47917; Kensington and Chelsea:hot:2.350993; Westminster:hot:2.610701
+getisord_crime_second_half_2015,Getis-Ord Gi*,Brent:hot:2.3021; Camden:hot:2.674; Kensington and Chelsea:hot:2.7514; Westminster:hot:3.041
+getisord_crime_second_half_2015,Local Moran's I / LISA,Camden:hot:2.47917; Kensington and Chelsea:hot:2.350993; Westminster:hot:2.610701
+getisord_crime_second_half_2016,Getis-Ord Gi (no star),Brent:hot:2.385671; Camden:hot:2.474316; Kensington and Chelsea:hot:2.379289; Westminster:hot:2.654039
+getisord_crime_second_half_2016,Getis-Ord Gi*,Brent:hot:2.2572; Camden:hot:2.668; Kensington and Chelsea:hot:2.7848; Westminster:hot:3.0659
+getisord_crime_second_half_2016,Local Moran's I / LISA,Camden:hot:2.474316; Kensington and Chelsea:hot:2.379289; Westminster:hot:2.654039
+getisord_crime_second_half_2017,Getis-Ord Gi (no star),Brent:hot:2.450078; Camden:hot:2.661185; Kensington and Chelsea:hot:2.275616; Westminster:hot:2.647913
+getisord_crime_second_half_2017,Getis-Ord Gi*,Brent:hot:2.3344; Camden:hot:2.9505; Kensington and Chelsea:hot:2.6234; Westminster:hot:3.0671
+getisord_crime_second_half_2017,Local Moran's I / LISA,Camden:hot:2.661185; Kensington and Chelsea:hot:2.275616; Westminster:hot:2.647913
+getisord_crime_second_half_2018,Getis-Ord Gi (no star),Brent:hot:2.418138; Camden:hot:2.508595; Kensington and Chelsea:hot:2.440618; Westminster:hot:2.483992
+getisord_crime_second_half_2018,Getis-Ord Gi*,Brent:hot:2.2981; Camden:hot:2.6815; Kensington and Chelsea:hot:2.7386; Westminster:hot:2.8871
+getisord_crime_second_half_2018,Local Moran's I / LISA,Camden:hot:2.508595; Kensington and Chelsea:hot:2.440618; Westminster:hot:2.483992
+getisord_crime_second_half_2019,Getis-Ord Gi (no star),Brent:hot:2.567; Camden:hot:2.417124; Kensington and Chelsea:hot:2.408137; Westminster:hot:2.498285
+getisord_crime_second_half_2019,Getis-Ord Gi*,Brent:hot:2.397; Camden:hot:2.5899; Kensington and Chelsea:hot:2.7371; Westminster:hot:2.8546
+getisord_crime_second_half_2019,Local Moran's I / LISA,Camden:hot:2.417124; Kensington and Chelsea:hot:2.408137; Westminster:hot:2.498285
+getisord_crime_second_half_2020,Getis-Ord Gi (no star),Brent:hot:2.122544; Camden:hot:2.4235; Kensington and Chelsea:hot:2.214759; Westminster:hot:2.043876
+getisord_crime_second_half_2020,Getis-Ord Gi*,Brent:hot:2.004; Camden:hot:2.6016; Kensington and Chelsea:hot:2.5104; Westminster:hot:2.7069
+getisord_crime_second_half_2020,Local Moran's I / LISA,Camden:hot:2.4235; Kensington and Chelsea:hot:2.214759; Westminster:hot:2.043876
+getisord_no2_Q1_2021,Getis-Ord Gi (no star),
+getisord_no2_Q1_2021,Getis-Ord Gi*,(none)
+getisord_no2_Q1_2021,Local Moran's I / LISA,
+getisord_no2_Q1_2022,Getis-Ord Gi (no star),
+getisord_no2_Q1_2022,Getis-Ord Gi*,(none)
+getisord_no2_Q1_2022,Local Moran's I / LISA,
+getisord_no2_Q1_2023,Getis-Ord Gi (no star),Brent:hot:2.087775
+getisord_no2_Q1_2023,Getis-Ord Gi*,(none)
+getisord_no2_Q1_2023,Local Moran's I / LISA,
+getisord_no2_Q2_2021,Getis-Ord Gi (no star),
+getisord_no2_Q2_2021,Getis-Ord Gi*,(none)
+getisord_no2_Q2_2021,Local Moran's I / LISA,
+getisord_no2_Q2_2022,Getis-Ord Gi (no star),Barnet:cold:-2.023105
+getisord_no2_Q2_2022,Getis-Ord Gi*,(none)
+getisord_no2_Q2_2022,Local Moran's I / LISA,
+getisord_no2_Q2_2023,Getis-Ord Gi (no star),Lambeth:hot:2.288096
+getisord_no2_Q2_2023,Getis-Ord Gi*,Lambeth:hot:2.6519
+getisord_no2_Q2_2023,Local Moran's I / LISA,Lambeth:hot:2.288096
+getisord_no2_Q3_2021,Getis-Ord Gi (no star),
+getisord_no2_Q3_2021,Getis-Ord Gi*,(none)
+getisord_no2_Q3_2021,Local Moran's I / LISA,
+getisord_no2_Q3_2022,Getis-Ord Gi (no star),Greenwich:cold:-2.275027
+getisord_no2_Q3_2022,Getis-Ord Gi*,Greenwich:cold:-2.2227
+getisord_no2_Q3_2022,Local Moran's I / LISA,Greenwich:cold:-2.275027
+getisord_no2_Q3_2023,Getis-Ord Gi (no star),Islington:hot:2.314136
+getisord_no2_Q3_2023,Getis-Ord Gi*,City of London:hot:2.1554
+getisord_no2_Q3_2023,Local Moran's I / LISA,
+getisord_no2_Q4_2021,Getis-Ord Gi (no star),Croydon:cold:-2.761633; Harrow:hot:2.490599
+getisord_no2_Q4_2021,Getis-Ord Gi*,Croydon:cold:-2.7696
+getisord_no2_Q4_2021,Local Moran's I / LISA,Croydon:cold:-2.761633
+getisord_no2_Q4_2022,Getis-Ord Gi (no star),Bromley:cold:-2.125266; Harrow:hot:2.56429
+getisord_no2_Q4_2022,Getis-Ord Gi*,Bromley:cold:-2.2714
+getisord_no2_Q4_2022,Local Moran's I / LISA,Bromley:cold:-2.125266
+getisord_no2_Q4_2023,Getis-Ord Gi (no star),City of London:hot:2.029433; Islington:hot:3.002022; Richmond upon Thames:cold:-2.243102
+getisord_no2_Q4_2023,Getis-Ord Gi*,City of London:hot:2.4282; Islington:hot:2.0266; Kingston upon Thames:cold:-2.4194; Richmond upon Thames:cold:-2.2454
+getisord_no2_Q4_2023,Local Moran's I / LISA,City of London:hot:2.029433; Richmond upon Thames:cold:-2.243102

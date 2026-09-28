@@ -13,6 +13,13 @@ OWN `spatial_granularity` column (already in the results CSV) is what
 determines which half of the ground-truth table a detected method gets
 looked up against, not the detection logic itself.
 
+ENCODING NOTE: result CSVs are read as UTF-8 with a per-byte Windows-1252
+fallback (see read_csv_rows). A file that has been opened/re-saved in
+Excel, or had UTF-8 rows appended to Windows-1252 content, contains mixed
+encodings and crashes a plain UTF-8 read (e.g. byte 0x92, a curly
+apostrophe, "invalid start byte"). Output files are always written as
+clean UTF-8, so downstream scoring scripts read them normally.
+
 USAGE
 -----
 1. Edit RUNS_DIR and RESULT_FILES below.
@@ -21,7 +28,9 @@ USAGE
    "unmatched_rows_spatial.csv" for any row whose run folder wasn't found.
 """
 
+import codecs
 import csv
+import io
 import re
 from pathlib import Path
 
@@ -29,9 +38,10 @@ from pathlib import Path
 RUNS_DIR = Path(r"D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\runs")
 
 RESULT_FILES = {
+    "ReAct":      Path(r"D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\ReAct\spatial_correlation_results_react.csv"),
     "single":     Path(r"D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\spatial_results.csv"),
     "multi":      Path(r"D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\results\single agent\results_spatial_multi.csv"),
-    "multiagent": Path(r"D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\results\multi agent\spatial_correlation_results_multiagent.csv"),
+    "multiagent": Path(r"D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\results\multi agent\spatial_correlation_results_multiagent.csv")
 }
 
 LOG_EXTENSIONS = {".txt", ".log", ".json", ".md", ".py", ".out", ".jsonl"}
@@ -56,6 +66,39 @@ METHOD_PATTERNS = [
 METHOD_REGEXES = [(label, re.compile(pat, re.IGNORECASE)) for label, pat in METHOD_PATTERNS]
 
 _TIMESTAMP_RE = re.compile(r"(\d{8}T\d{6}Z)_")
+
+
+# ---------------------------------------------------------------------
+# Encoding-tolerant CSV reading
+# ---------------------------------------------------------------------
+
+def _cp1252_fallback(err):
+    """Error handler for UTF-8 decoding: bytes that are not valid UTF-8
+    are re-interpreted as Windows-1252 (so 0x92 becomes a curly
+    apostrophe, not a crash). Bytes undefined even in Windows-1252
+    (0x81, 0x8D, 0x8F, 0x90, 0x9D) become U+FFFD."""
+    if isinstance(err, UnicodeDecodeError):
+        bad = err.object[err.start:err.end]
+        try:
+            return bad.decode("cp1252"), err.end
+        except UnicodeDecodeError:
+            return "\ufffd", err.end
+    raise err
+
+
+codecs.register_error("utf8_cp1252_fallback", _cp1252_fallback)
+
+
+def read_csv_rows(csv_path: Path):
+    """Returns (fieldnames, rows). Valid UTF-8 sequences (and a leading
+    BOM) are decoded normally; only genuinely invalid bytes fall back to
+    Windows-1252, so mixed-encoding files load without mangling either
+    kind of character."""
+    text = csv_path.read_bytes().decode("utf-8-sig", errors="utf8_cp1252_fallback")
+    reader = csv.DictReader(io.StringIO(text, newline=""))
+    fieldnames = list(reader.fieldnames)
+    rows = list(reader)
+    return fieldnames, rows
 
 
 def find_run_folder(run_dir_value: str):
@@ -102,12 +145,9 @@ def scan_folder_for_method(folder: Path) -> str:
 
 def process_file(label: str, csv_path: Path, unmatched_rows: list):
     print(f"\nProcessing [{label}]: {csv_path.name}")
-    with open(csv_path, encoding="utf-8-sig", newline="") as f:
-        reader = csv.DictReader(f)
-        fieldnames = list(reader.fieldnames)
-        if "statistical_method" not in fieldnames:
-            fieldnames.append("statistical_method")
-        rows = list(reader)
+    fieldnames, rows = read_csv_rows(csv_path)
+    if "statistical_method" not in fieldnames:
+        fieldnames.append("statistical_method")
 
     n_found = 0
     n_no_folder = 0

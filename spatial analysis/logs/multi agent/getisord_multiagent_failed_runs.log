@@ -168,3 +168,73 @@ Traceback (most recent call last):
 PermissionError: [Errno 13] Permission denied: 'results/multi agent/getisord_results_multiagent.csv'
 
 ----------------------------------------------------------------------
+
+[2026-09-23T21:44:58.514015+00:00] FAILED: mode=multiagent model=deepseek/deepseek-chat-v3-0324 chunk=getisord_no2_Q3_2022
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 159, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 125, in run_one
+    ma_result = multi_agent_loop(
+        question=question_with_format, dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 357, in multi_agent_loop
+    plan, planner_prompt = run_planner(question, profile_text, prior_planner_feedback, model)
+                           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 122, in run_planner
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API response missing 'choices' (attempt 5/5). Full response: {'id': 'gen-1790199875-h8RfLYXRYpdIWlIoPm3y', 'error': {'message': 'Backend request failed with status 400', 'code': 400, 'metadata': {'error_type': 'invalid_request', 'provider_code': '400'}}}
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T01:51:52.877283+00:00] FAILED: mode=multiagent model=deepseek/deepseek-r1-0528 chunk=getisord_crime_first_half_2018
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 159, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 125, in run_one
+    ma_result = multi_agent_loop(
+        question=question_with_format, dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790214669-FI2nazWLyogyvY64WjnA', 'object': 'chat.completion', 'created': 1790214669, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-24T03:27:01.518927+00:00] FAILED: mode=multiagent model=deepseek/deepseek-r1-0528 chunk=getisord_crime_second_half_2018
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 159, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_getisord.py", line 125, in run_one
+    ma_result = multi_agent_loop(
+        question=question_with_format, dataset_path=meta["csv_path"], run_dir=run_dir,
+        model=model, extra_files=extra_files, max_plan_count=3, max_coder_retries=2,
+    )
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 350, in multi_agent_loop
+    profile = run_profiler(dataset_path, extra_files, model, run_dir)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\multi_agent_utils.py", line 76, in run_profiler
+    reply = chat([{"role": "user", "content": prompt}], model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils_multi_turn.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API returned null content (attempt 5/5). Full response: {'id': 'gen-1790220388-yqdtRznauvAH6sMp0F0H', 'object': 'chat.completion', 'created': 1790220388, 'model': 'deepseek/deepseek-r1-0528', 'provider': 'Novita', 'system_fingerprint': None, 'service_tier': None, 'choices': [{'index': 0, 'logprobs': None, 'finish_reason': 'stop', 'native_finish_reason': 
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------

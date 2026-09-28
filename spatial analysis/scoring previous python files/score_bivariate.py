@@ -100,9 +100,9 @@ MANIFEST_PATH = "chunks_csv/bivariate/bivariate_manifest.csv"
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_bivariate.csv"
 
 # For single turn
-#RESULTS_CSV = "bivariate_results_with_method.csv"
-#SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
-#CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
+RESULTS_CSV = "bivariate_results_with_method.csv"
+SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
+CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 
 # For multi turn
 #RESULTS_CSV = "results/single agent/bivariate_results_multi_with_method.csv"
@@ -115,9 +115,9 @@ GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_bivariate.csv
 #CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multiagent.csv"
 
 # For ReAct agent
-RESULTS_CSV = "ReAct/bivariate_results_react.csv"
-SUMMARY_OUT = "Scores/ReAct/bivariate_scoring_summary_ReAct.csv"
-CONFUSION_OUT = "Scores/ReAct/bivariate_confusion_matrix_ReAct.csv"
+#RESULTS_CSV = "ReAct/bivariate_results_react.csv"
+#SUMMARY_OUT = "Scores/ReAct/bivariate_scoring_summary_ReAct.csv"
+#CONFUSION_OUT = "Scores/ReAct/bivariate_confusion_matrix_ReAct.csv"
 
 
 CLASSES = ["positive", "negative", "not_significant"]

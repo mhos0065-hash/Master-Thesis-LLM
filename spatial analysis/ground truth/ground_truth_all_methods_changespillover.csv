@@ -1,85 +1,150 @@
-"chunk_id","method","gt_stat","gt_p","gt_clustered"
-"changespillover_2021_2022_crime","Geary's C",0.842641655462612,0.124,FALSE
-"changespillover_2021_2022_crime","Global Moran's I",0.0809,0.0043,TRUE
-"changespillover_2021_2022_crime","Join Count Statistic",0,0.572,FALSE
-"changespillover_2021_2022_crime","Neighbor-average correlation (non-standard)",0.227535670483206,0.166,FALSE
-"changespillover_2021_2022_energy","Geary's C",1.08636074103006,0.758,FALSE
-"changespillover_2021_2022_energy","Global Moran's I",-0.012,0.3311,FALSE
-"changespillover_2021_2022_energy","Join Count Statistic",11.2095238095238,0.234,FALSE
-"changespillover_2021_2022_energy","Neighbor-average correlation (non-standard)",-0.0279128482536495,0.889,FALSE
-"changespillover_2021_2022_gas","Geary's C",1.09253113463099,0.79,FALSE
-"changespillover_2021_2022_gas","Global Moran's I",-0.046,0.5653,FALSE
-"changespillover_2021_2022_gas","Join Count Statistic",15.425,0.7345,FALSE
-"changespillover_2021_2022_gas","Neighbor-average correlation (non-standard)",-0.11208946965562,0.521,FALSE
-"changespillover_2021_2022_ghg","Geary's C",1.08748041940636,0.767,FALSE
-"changespillover_2021_2022_ghg","Global Moran's I",-0.012,0.3247,FALSE
-"changespillover_2021_2022_ghg","Join Count Statistic",10.7928571428571,0.042,TRUE
-"changespillover_2021_2022_ghg","Neighbor-average correlation (non-standard)",-0.0279665794624326,0.87,FALSE
-"changespillover_2021_2022_no2","Geary's C",0.879609637787666,0.187,FALSE
-"changespillover_2021_2022_no2","Global Moran's I",-0.0566,0.6378,FALSE
-"changespillover_2021_2022_no2","Join Count Statistic",9.55952380952381,0.4285,FALSE
-"changespillover_2021_2022_no2","Neighbor-average correlation (non-standard)",-0.219582527871327,0.206,FALSE
-"changespillover_2021_2022_transport","Geary's C",0.908450144637326,0.188,FALSE
-"changespillover_2021_2022_transport","Global Moran's I",0.005,0.3178,FALSE
-"changespillover_2021_2022_transport","Join Count Statistic",0,0.4995,FALSE
-"changespillover_2021_2022_transport","Neighbor-average correlation (non-standard)",0.0131531525291569,0.945,FALSE
-"changespillover_2021_2022_waste","Geary's C",1.14079739153718,0.928,FALSE
-"changespillover_2021_2022_waste","Global Moran's I",-0.1375,0.8561,FALSE
-"changespillover_2021_2022_waste","Join Count Statistic",6.55833333333333,0.687,FALSE
-"changespillover_2021_2022_waste","Neighbor-average correlation (non-standard)",-0.336567501382452,0.058,FALSE
-"changespillover_2021_2023_crime","Geary's C",0.809976847145667,0.07,FALSE
-"changespillover_2021_2023_crime","Global Moran's I",0.1082,0.0016,TRUE
-"changespillover_2021_2023_crime","Join Count Statistic",0,0.4995,FALSE
-"changespillover_2021_2023_crime","Neighbor-average correlation (non-standard)",0.29575067565188,0.123,FALSE
-"changespillover_2021_2023_energy","Geary's C",0.970604824855795,0.365,FALSE
-"changespillover_2021_2023_energy","Global Moran's I",0.0479,0.1591,FALSE
-"changespillover_2021_2023_energy","Join Count Statistic",3.08571428571429,0.071,FALSE
-"changespillover_2021_2023_energy","Neighbor-average correlation (non-standard)",0.113162718644836,0.58,FALSE
-"changespillover_2021_2023_gas","Geary's C",0.882829347137877,0.157,FALSE
-"changespillover_2021_2023_gas","Global Moran's I",0.1652,0.0152,TRUE
-"changespillover_2021_2023_gas","Join Count Statistic",NA,NA,FALSE
-"changespillover_2021_2023_gas","Neighbor-average correlation (non-standard)",0.347848406371,0.039,TRUE
-"changespillover_2021_2023_ghg","Geary's C",1.10960837713368,0.823,FALSE
-"changespillover_2021_2023_ghg","Global Moran's I",-0.1228,0.8699,FALSE
-"changespillover_2021_2023_ghg","Join Count Statistic",5.84404761904762,0.011,TRUE
-"changespillover_2021_2023_ghg","Neighbor-average correlation (non-standard)",-0.312326241339152,0.077,FALSE
-"changespillover_2021_2023_no2","Geary's C",1.10703500785052,0.778,FALSE
-"changespillover_2021_2023_no2","Global Moran's I",-0.0558,0.5974,FALSE
-"changespillover_2021_2023_no2","Join Count Statistic",10.4166666666667,0.2455,FALSE
-"changespillover_2021_2023_no2","Neighbor-average correlation (non-standard)",-0.186406291438977,0.338,FALSE
-"changespillover_2021_2023_transport","Geary's C",1.01587659852023,0.549,FALSE
-"changespillover_2021_2023_transport","Global Moran's I",-0.021,0.4492,FALSE
-"changespillover_2021_2023_transport","Join Count Statistic",0,0.5745,FALSE
-"changespillover_2021_2023_transport","Neighbor-average correlation (non-standard)",-0.0528532953261352,0.853,FALSE
-"changespillover_2021_2023_waste","Geary's C",0.7433022425237,0.00900000000000001,TRUE
-"changespillover_2021_2023_waste","Global Moran's I",0.1743,0.0144,TRUE
-"changespillover_2021_2023_waste","Join Count Statistic",5.70714285714286,0.33,FALSE
-"changespillover_2021_2023_waste","Neighbor-average correlation (non-standard)",0.308554847923827,0.079,FALSE
-"changespillover_2022_2023_crime","Geary's C",0.763158663049928,0.021,TRUE
-"changespillover_2022_2023_crime","Global Moran's I",0.1472,0.0029,TRUE
-"changespillover_2022_2023_crime","Join Count Statistic",0,0.6995,FALSE
-"changespillover_2022_2023_crime","Neighbor-average correlation (non-standard)",0.383805027849698,0.045,TRUE
-"changespillover_2022_2023_energy","Geary's C",1.17114446325526,0.947,FALSE
-"changespillover_2022_2023_energy","Global Moran's I",-0.128,0.9228,FALSE
-"changespillover_2022_2023_energy","Join Count Statistic",0,0.926,FALSE
-"changespillover_2022_2023_energy","Neighbor-average correlation (non-standard)",-0.326213384176392,0.067,FALSE
-"changespillover_2022_2023_gas","Geary's C",0.898232852845206,0.171,FALSE
-"changespillover_2022_2023_gas","Global Moran's I",0.0727,0.1227,FALSE
-"changespillover_2022_2023_gas","Join Count Statistic",2.91071428571429,0.132,FALSE
-"changespillover_2022_2023_gas","Neighbor-average correlation (non-standard)",0.161884432353663,0.386,FALSE
-"changespillover_2022_2023_ghg","Geary's C",1.16518357199359,0.927,FALSE
-"changespillover_2022_2023_ghg","Global Moran's I",-0.0816,0.9858,FALSE
-"changespillover_2022_2023_ghg","Join Count Statistic",1.29761904761905,0.5985,FALSE
-"changespillover_2022_2023_ghg","Neighbor-average correlation (non-standard)",-0.193525357701108,0.218,FALSE
-"changespillover_2022_2023_no2","Geary's C",0.984155509090602,0.437,FALSE
-"changespillover_2022_2023_no2","Global Moran's I",-0.0687,0.6538,FALSE
-"changespillover_2022_2023_no2","Join Count Statistic",7.51666666666667,0.289,FALSE
-"changespillover_2022_2023_no2","Neighbor-average correlation (non-standard)",-0.249345423805323,0.233,FALSE
-"changespillover_2022_2023_transport","Geary's C",1.03956262091672,0.605,FALSE
-"changespillover_2022_2023_transport","Global Moran's I",0.0043,0.3069,FALSE
-"changespillover_2022_2023_transport","Join Count Statistic",0.225,0.3195,FALSE
-"changespillover_2022_2023_transport","Neighbor-average correlation (non-standard)",0.00999861941741757,0.956,FALSE
-"changespillover_2022_2023_waste","Geary's C",0.625492698957977,0.002,TRUE
-"changespillover_2022_2023_waste","Global Moran's I",0.3036,1e-04,TRUE
-"changespillover_2022_2023_waste","Join Count Statistic",3.71190476190476,0.046,TRUE
-"changespillover_2022_2023_waste","Neighbor-average correlation (non-standard)",0.489476654195436,0.008,TRUE
+chunk_id,method,gt_stat,gt_p,gt_clustered
+changespillover_2021_2022_crime,Global Moran's I,0.0809,0.0043,TRUE
+changespillover_2021_2022_energy,Global Moran's I,-0.012,0.3311,FALSE
+changespillover_2021_2022_gas,Global Moran's I,-0.046,0.5653,FALSE
+changespillover_2021_2022_ghg,Global Moran's I,-0.012,0.3247,FALSE
+changespillover_2021_2022_no2,Global Moran's I,-0.0566,0.6378,FALSE
+changespillover_2021_2022_transport,Global Moran's I,0.005,0.3178,FALSE
+changespillover_2021_2022_waste,Global Moran's I,-0.1375,0.8561,FALSE
+changespillover_2021_2023_crime,Global Moran's I,0.1082,0.0016,TRUE
+changespillover_2021_2023_energy,Global Moran's I,0.0479,0.1591,FALSE
+changespillover_2021_2023_gas,Global Moran's I,0.1652,0.0152,TRUE
+changespillover_2021_2023_ghg,Global Moran's I,-0.1228,0.8699,FALSE
+changespillover_2021_2023_no2,Global Moran's I,-0.0558,0.5974,FALSE
+changespillover_2021_2023_transport,Global Moran's I,-0.021,0.4492,FALSE
+changespillover_2021_2023_waste,Global Moran's I,0.1743,0.0144,TRUE
+changespillover_2022_2023_crime,Global Moran's I,0.1472,0.0029,TRUE
+changespillover_2022_2023_energy,Global Moran's I,-0.128,0.9228,FALSE
+changespillover_2022_2023_gas,Global Moran's I,0.0727,0.1227,FALSE
+changespillover_2022_2023_ghg,Global Moran's I,-0.0816,0.9858,FALSE
+changespillover_2022_2023_no2,Global Moran's I,-0.0687,0.6538,FALSE
+changespillover_2022_2023_transport,Global Moran's I,0.0043,0.3069,FALSE
+changespillover_2022_2023_waste,Global Moran's I,0.3036,1e-04,TRUE
+changespillover_no2crime_crime_first_half_2011_to_second_half_2011,Geary's C,1.017963992,0.543,FALSE
+changespillover_no2crime_crime_first_half_2011_to_second_half_2011,Global Moran's I,-0.0372,0.5226,FALSE
+changespillover_no2crime_crime_first_half_2011_to_second_half_2011,Join Count Statistic,7.591666667,0.914,FALSE
+changespillover_no2crime_crime_first_half_2011_to_second_half_2011,Neighbor-average correlation (non-standard),-0.088970248,0.648,FALSE
+changespillover_no2crime_crime_first_half_2012_to_second_half_2012,Geary's C,0.978566326,0.406,FALSE
+changespillover_no2crime_crime_first_half_2012_to_second_half_2012,Global Moran's I,-0.0196,0.4543,FALSE
+changespillover_no2crime_crime_first_half_2012_to_second_half_2012,Join Count Statistic,6.792857143,0.092,FALSE
+changespillover_no2crime_crime_first_half_2012_to_second_half_2012,Neighbor-average correlation (non-standard),-0.077321359,0.681,FALSE
+changespillover_no2crime_crime_first_half_2013_to_second_half_2013,Geary's C,1.019867087,0.551,FALSE
+changespillover_no2crime_crime_first_half_2013_to_second_half_2013,Global Moran's I,-0.0517,0.5783,FALSE
+changespillover_no2crime_crime_first_half_2013_to_second_half_2013,Join Count Statistic,2.664285714,0.6955,FALSE
+changespillover_no2crime_crime_first_half_2013_to_second_half_2013,Neighbor-average correlation (non-standard),-0.126248608,0.468,FALSE
+changespillover_no2crime_crime_first_half_2014_to_second_half_2014,Geary's C,0.757717341,0.029,TRUE
+changespillover_no2crime_crime_first_half_2014_to_second_half_2014,Global Moran's I,0.188,0.0144,TRUE
+changespillover_no2crime_crime_first_half_2014_to_second_half_2014,Join Count Statistic,0.183333333,0.317,FALSE
+changespillover_no2crime_crime_first_half_2014_to_second_half_2014,Neighbor-average correlation (non-standard),0.36045509,0.045,TRUE
+changespillover_no2crime_crime_first_half_2015_to_second_half_2015,Geary's C,0.887734526,0.17,FALSE
+changespillover_no2crime_crime_first_half_2015_to_second_half_2015,Global Moran's I,0.0385,0.2457,FALSE
+changespillover_no2crime_crime_first_half_2015_to_second_half_2015,Join Count Statistic,0.825,0.0235,TRUE
+changespillover_no2crime_crime_first_half_2015_to_second_half_2015,Neighbor-average correlation (non-standard),0.096390358,0.576,FALSE
+changespillover_no2crime_crime_first_half_2016_to_second_half_2016,Geary's C,0.716918133,0.01,TRUE
+changespillover_no2crime_crime_first_half_2016_to_second_half_2016,Global Moran's I,0.1828,0.0116,TRUE
+changespillover_no2crime_crime_first_half_2016_to_second_half_2016,Join Count Statistic,0.266666667,0.7645,FALSE
+changespillover_no2crime_crime_first_half_2016_to_second_half_2016,Neighbor-average correlation (non-standard),0.475303554,0.008,TRUE
+changespillover_no2crime_crime_first_half_2017_to_second_half_2017,Geary's C,0.644858135,0.002,TRUE
+changespillover_no2crime_crime_first_half_2017_to_second_half_2017,Global Moran's I,0.2766,8e-04,TRUE
+changespillover_no2crime_crime_first_half_2017_to_second_half_2017,Join Count Statistic,0,0.7055,FALSE
+changespillover_no2crime_crime_first_half_2017_to_second_half_2017,Neighbor-average correlation (non-standard),0.611521985,0.001,TRUE
+changespillover_no2crime_crime_first_half_2018_to_second_half_2018,Geary's C,0.927494723,0.296,FALSE
+changespillover_no2crime_crime_first_half_2018_to_second_half_2018,Global Moran's I,0.0106,0.231,FALSE
+changespillover_no2crime_crime_first_half_2018_to_second_half_2018,Join Count Statistic,0,0.4995,FALSE
+changespillover_no2crime_crime_first_half_2018_to_second_half_2018,Neighbor-average correlation (non-standard),0.008056961,0.959,FALSE
+changespillover_no2crime_crime_first_half_2019_to_second_half_2019,Geary's C,0.766694343,0.023,TRUE
+changespillover_no2crime_crime_first_half_2019_to_second_half_2019,Global Moran's I,0.0755,0.0804,FALSE
+changespillover_no2crime_crime_first_half_2019_to_second_half_2019,Join Count Statistic,NA,NA,FALSE
+changespillover_no2crime_crime_first_half_2019_to_second_half_2019,Neighbor-average correlation (non-standard),0.2150886,0.21,FALSE
+changespillover_no2crime_crime_first_half_2020_to_second_half_2020,Geary's C,0.825633011,0.057,FALSE
+changespillover_no2crime_crime_first_half_2020_to_second_half_2020,Global Moran's I,0.1118,0.0794,FALSE
+changespillover_no2crime_crime_first_half_2020_to_second_half_2020,Join Count Statistic,0.2,0.233,FALSE
+changespillover_no2crime_crime_first_half_2020_to_second_half_2020,Neighbor-average correlation (non-standard),0.349757143,0.048,TRUE
+changespillover_no2crime_crime_second_half_2010_to_first_half_2011,Geary's C,0.880306765,0.154,FALSE
+changespillover_no2crime_crime_second_half_2010_to_first_half_2011,Global Moran's I,0.0659,0.1664,FALSE
+changespillover_no2crime_crime_second_half_2010_to_first_half_2011,Join Count Statistic,2.314285714,0.329,FALSE
+changespillover_no2crime_crime_second_half_2010_to_first_half_2011,Neighbor-average correlation (non-standard),0.182524487,0.311,FALSE
+changespillover_no2crime_crime_second_half_2011_to_first_half_2012,Geary's C,0.938859833,0.279,FALSE
+changespillover_no2crime_crime_second_half_2011_to_first_half_2012,Global Moran's I,0.0159,0.3216,FALSE
+changespillover_no2crime_crime_second_half_2011_to_first_half_2012,Join Count Statistic,5.523809524,0.4785,FALSE
+changespillover_no2crime_crime_second_half_2011_to_first_half_2012,Neighbor-average correlation (non-standard),0.088971934,0.63,FALSE
+changespillover_no2crime_crime_second_half_2012_to_first_half_2013,Geary's C,0.613342048,0.001,TRUE
+changespillover_no2crime_crime_second_half_2012_to_first_half_2013,Global Moran's I,0.2816,4e-04,TRUE
+changespillover_no2crime_crime_second_half_2012_to_first_half_2013,Join Count Statistic,14.91666667,0.7305,FALSE
+changespillover_no2crime_crime_second_half_2012_to_first_half_2013,Neighbor-average correlation (non-standard),0.616934195,0.001,TRUE
+changespillover_no2crime_crime_second_half_2013_to_first_half_2014,Geary's C,0.787320135,0.035,TRUE
+changespillover_no2crime_crime_second_half_2013_to_first_half_2014,Global Moran's I,0.1328,0.0277,TRUE
+changespillover_no2crime_crime_second_half_2013_to_first_half_2014,Join Count Statistic,11.03333333,0.813,FALSE
+changespillover_no2crime_crime_second_half_2013_to_first_half_2014,Neighbor-average correlation (non-standard),0.342009277,0.049,TRUE
+changespillover_no2crime_crime_second_half_2014_to_first_half_2015,Geary's C,0.70199375,0.008,TRUE
+changespillover_no2crime_crime_second_half_2014_to_first_half_2015,Global Moran's I,0.1808,0.0164,TRUE
+changespillover_no2crime_crime_second_half_2014_to_first_half_2015,Join Count Statistic,5.444047619,0.143,FALSE
+changespillover_no2crime_crime_second_half_2014_to_first_half_2015,Neighbor-average correlation (non-standard),0.437483361,0.016,TRUE
+changespillover_no2crime_crime_second_half_2015_to_first_half_2016,Geary's C,0.786157735,0.037,TRUE
+changespillover_no2crime_crime_second_half_2015_to_first_half_2016,Global Moran's I,0.1094,0.065,FALSE
+changespillover_no2crime_crime_second_half_2015_to_first_half_2016,Join Count Statistic,2.925,0.839,FALSE
+changespillover_no2crime_crime_second_half_2015_to_first_half_2016,Neighbor-average correlation (non-standard),0.314008779,0.082,FALSE
+changespillover_no2crime_crime_second_half_2016_to_first_half_2017,Geary's C,0.768749567,0.025,TRUE
+changespillover_no2crime_crime_second_half_2016_to_first_half_2017,Global Moran's I,0.1318,0.05,FALSE
+changespillover_no2crime_crime_second_half_2016_to_first_half_2017,Join Count Statistic,0.992857143,0.343,FALSE
+changespillover_no2crime_crime_second_half_2016_to_first_half_2017,Neighbor-average correlation (non-standard),0.375148656,0.039,TRUE
+changespillover_no2crime_crime_second_half_2017_to_first_half_2018,Geary's C,0.622929444,0.003,TRUE
+changespillover_no2crime_crime_second_half_2017_to_first_half_2018,Global Moran's I,0.2399,0.0026,TRUE
+changespillover_no2crime_crime_second_half_2017_to_first_half_2018,Join Count Statistic,12.55714286,0.1055,FALSE
+changespillover_no2crime_crime_second_half_2017_to_first_half_2018,Neighbor-average correlation (non-standard),0.634926938,0.001,TRUE
+changespillover_no2crime_crime_second_half_2018_to_first_half_2019,Geary's C,0.973215974,0.45,FALSE
+changespillover_no2crime_crime_second_half_2018_to_first_half_2019,Global Moran's I,-0.041,0.5808,FALSE
+changespillover_no2crime_crime_second_half_2018_to_first_half_2019,Join Count Statistic,0.379761905,0.8665,FALSE
+changespillover_no2crime_crime_second_half_2018_to_first_half_2019,Neighbor-average correlation (non-standard),-0.125681846,0.351,FALSE
+changespillover_no2crime_crime_second_half_2019_to_first_half_2020,Geary's C,0.726563642,0.011,TRUE
+changespillover_no2crime_crime_second_half_2019_to_first_half_2020,Global Moran's I,0.1816,0.001,TRUE
+changespillover_no2crime_crime_second_half_2019_to_first_half_2020,Join Count Statistic,NA,NA,FALSE
+changespillover_no2crime_crime_second_half_2019_to_first_half_2020,Neighbor-average correlation (non-standard),0.441018355,0.021,TRUE
+changespillover_no2crime_crime_second_half_2020_to_first_half_2021,Geary's C,0.715950916,0.015,TRUE
+changespillover_no2crime_crime_second_half_2020_to_first_half_2021,Global Moran's I,0.2002,0.0015,TRUE
+changespillover_no2crime_crime_second_half_2020_to_first_half_2021,Join Count Statistic,NA,NA,FALSE
+changespillover_no2crime_crime_second_half_2020_to_first_half_2021,Neighbor-average correlation (non-standard),0.475932088,0.005,TRUE
+changespillover_no2crime_no2_Q1_2021_to_Q2_2021,Geary's C,0.836985648,0.098,FALSE
+changespillover_no2crime_no2_Q1_2021_to_Q2_2021,Global Moran's I,0.0561,0.1931,FALSE
+changespillover_no2crime_no2_Q1_2021_to_Q2_2021,Join Count Statistic,13.65,0.2005,FALSE
+changespillover_no2crime_no2_Q1_2021_to_Q2_2021,Neighbor-average correlation (non-standard),0.158121653,0.41,FALSE
+changespillover_no2crime_no2_Q1_2022_to_Q2_2022,Geary's C,0.915689475,0.206,FALSE
+changespillover_no2crime_no2_Q1_2022_to_Q2_2022,Global Moran's I,0.0114,0.3403,FALSE
+changespillover_no2crime_no2_Q1_2022_to_Q2_2022,Join Count Statistic,NA,NA,FALSE
+changespillover_no2crime_no2_Q1_2022_to_Q2_2022,Neighbor-average correlation (non-standard),-0.000423536,0.998,FALSE
+changespillover_no2crime_no2_Q1_2023_to_Q2_2023,Geary's C,0.684195418,0.01,TRUE
+changespillover_no2crime_no2_Q1_2023_to_Q2_2023,Global Moran's I,0.1957,0.0127,TRUE
+changespillover_no2crime_no2_Q1_2023_to_Q2_2023,Join Count Statistic,NA,NA,FALSE
+changespillover_no2crime_no2_Q1_2023_to_Q2_2023,Neighbor-average correlation (non-standard),0.406845012,0.031,TRUE
+changespillover_no2crime_no2_Q2_2021_to_Q3_2021,Geary's C,1.211208849,0.962,FALSE
+changespillover_no2crime_no2_Q2_2021_to_Q3_2021,Global Moran's I,-0.1219,0.8436,FALSE
+changespillover_no2crime_no2_Q2_2021_to_Q3_2021,Join Count Statistic,5.61547619,0.849,FALSE
+changespillover_no2crime_no2_Q2_2021_to_Q3_2021,Neighbor-average correlation (non-standard),-0.564647373,0.015,TRUE
+changespillover_no2crime_no2_Q2_2022_to_Q3_2022,Geary's C,0.791900128,0.045,TRUE
+changespillover_no2crime_no2_Q2_2022_to_Q3_2022,Global Moran's I,0.1065,0.0752,FALSE
+changespillover_no2crime_no2_Q2_2022_to_Q3_2022,Join Count Statistic,NA,NA,FALSE
+changespillover_no2crime_no2_Q2_2022_to_Q3_2022,Neighbor-average correlation (non-standard),0.251339851,0.177,FALSE
+changespillover_no2crime_no2_Q2_2023_to_Q3_2023,Geary's C,0.688371856,0.012,TRUE
+changespillover_no2crime_no2_Q2_2023_to_Q3_2023,Global Moran's I,0.2621,0.0023,TRUE
+changespillover_no2crime_no2_Q2_2023_to_Q3_2023,Join Count Statistic,5.308333333,0.0885,FALSE
+changespillover_no2crime_no2_Q2_2023_to_Q3_2023,Neighbor-average correlation (non-standard),0.457967786,0.007,TRUE
+changespillover_no2crime_no2_Q3_2021_to_Q4_2021,Geary's C,0.900662483,0.203,FALSE
+changespillover_no2crime_no2_Q3_2021_to_Q4_2021,Global Moran's I,0.1562,0.0347,TRUE
+changespillover_no2crime_no2_Q3_2021_to_Q4_2021,Join Count Statistic,0,0.4995,FALSE
+changespillover_no2crime_no2_Q3_2021_to_Q4_2021,Neighbor-average correlation (non-standard),0.163724042,0.378,FALSE
+changespillover_no2crime_no2_Q3_2022_to_Q4_2022,Geary's C,0.983056053,0.422,FALSE
+changespillover_no2crime_no2_Q3_2022_to_Q4_2022,Global Moran's I,-0.036,0.5191,FALSE
+changespillover_no2crime_no2_Q3_2022_to_Q4_2022,Join Count Statistic,0,0.587,FALSE
+changespillover_no2crime_no2_Q3_2022_to_Q4_2022,Neighbor-average correlation (non-standard),-0.105123233,0.565,FALSE
+changespillover_no2crime_no2_Q3_2023_to_Q4_2023,Geary's C,0.646678602,0.005,TRUE
+changespillover_no2crime_no2_Q3_2023_to_Q4_2023,Global Moran's I,0.2945,5e-04,TRUE
+changespillover_no2crime_no2_Q3_2023_to_Q4_2023,Join Count Statistic,NA,NA,FALSE
+changespillover_no2crime_no2_Q3_2023_to_Q4_2023,Neighbor-average correlation (non-standard),0.535080923,0.007,TRUE
+changespillover_no2crime_no2_Q4_2021_to_Q1_2022,Geary's C,1.021929775,0.563,FALSE
+changespillover_no2crime_no2_Q4_2021_to_Q1_2022,Global Moran's I,-0.0882,0.7191,FALSE
+changespillover_no2crime_no2_Q4_2021_to_Q1_2022,Join Count Statistic,1.071428571,0.7095,FALSE
+changespillover_no2crime_no2_Q4_2021_to_Q1_2022,Neighbor-average correlation (non-standard),-0.228570001,0.231,FALSE
+changespillover_no2crime_no2_Q4_2022_to_Q1_2023,Geary's C,1.272637685,0.982,FALSE
+changespillover_no2crime_no2_Q4_2022_to_Q1_2023,Global Moran's I,-0.243,0.9866,FALSE
+changespillover_no2crime_no2_Q4_2022_to_Q1_2023,Join Count Statistic,1.55,0.293,FALSE
+changespillover_no2crime_no2_Q4_2022_to_Q1_2023,Neighbor-average correlation (non-standard),-0.686643067,0.001,TRUE

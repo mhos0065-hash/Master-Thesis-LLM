@@ -1,159 +1,267 @@
-"chunk_id","method","gt_stat","gt_clustered"
-"cyclehire_global_selfcontainmentindex_w000","Global Moran's I",0.2691,TRUE
-"cyclehire_global_selfcontainmentindex_w001","Global Moran's I",0.2764,TRUE
-"cyclehire_global_selfcontainmentindex_w002","Global Moran's I",0.2814,TRUE
-"cyclehire_global_selfcontainmentindex_w003","Global Moran's I",0.2814,TRUE
-"cyclehire_global_selfcontainmentindex_w004","Global Moran's I",0.2891,TRUE
-"cyclehire_global_selfcontainmentindex_w005","Global Moran's I",-0.0453,FALSE
-"cyclehire_global_selfcontainmentindex_w006","Global Moran's I",-0.0451,FALSE
-"cyclehire_global_selfcontainmentindex_w007","Global Moran's I",-0.044,FALSE
-"cyclehire_global_selfcontainmentratio_w000","Global Moran's I",0.1361,FALSE
-"cyclehire_global_selfcontainmentratio_w001","Global Moran's I",0.1338,FALSE
-"cyclehire_global_selfcontainmentratio_w002","Global Moran's I",0.1302,FALSE
-"cyclehire_global_selfcontainmentratio_w003","Global Moran's I",0.1213,FALSE
-"cyclehire_global_selfcontainmentratio_w004","Global Moran's I",0.1262,FALSE
-"cyclehire_global_selfcontainmentratio_w005","Global Moran's I",0.1421,FALSE
-"cyclehire_global_selfcontainmentratio_w006","Global Moran's I",0.1309,FALSE
-"cyclehire_global_selfcontainmentratio_w007","Global Moran's I",0.134,FALSE
-"cyclehire_local_selfcontainmentindex_w000","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentindex_w001","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentindex_w002","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentindex_w003","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentindex_w004","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentindex_w005","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentindex_w006","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentindex_w007","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentratio_w000","Local Moran's I / LISA",NA,FALSE
-"cyclehire_local_selfcontainmentratio_w001","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentratio_w002","Local Moran's I / LISA",NA,TRUE
-"cyclehire_local_selfcontainmentratio_w003","Local Moran's I / LISA",NA,FALSE
-"cyclehire_local_selfcontainmentratio_w004","Local Moran's I / LISA",NA,FALSE
-"cyclehire_local_selfcontainmentratio_w005","Local Moran's I / LISA",NA,FALSE
-"cyclehire_local_selfcontainmentratio_w006","Local Moran's I / LISA",NA,FALSE
-"cyclehire_local_selfcontainmentratio_w007","Local Moran's I / LISA",NA,FALSE
-"moran_global_2021_crime","Geary's C",0.678559350517192,TRUE
-"moran_global_2021_crime","Global Moran's I",0.2345,TRUE
-"moran_global_2021_crime","Join Count Statistic",4.825,TRUE
-"moran_global_2021_crime","Neighbor-average correlation (non-standard)",0.542507908784373,TRUE
-"moran_global_2021_energy","Geary's C",1.10216340753109,FALSE
-"moran_global_2021_energy","Global Moran's I",-0.0118,FALSE
-"moran_global_2021_energy","Join Count Statistic",3.88095238095238,FALSE
-"moran_global_2021_energy","Neighbor-average correlation (non-standard)",-0.0266294318178144,FALSE
-"moran_global_2021_gas","Geary's C",1.0971701588349,FALSE
-"moran_global_2021_gas","Global Moran's I",-0.0072,FALSE
-"moran_global_2021_gas","Join Count Statistic",5.13571428571429,TRUE
-"moran_global_2021_gas","Neighbor-average correlation (non-standard)",-0.0162549466233281,FALSE
-"moran_global_2021_ghg","Geary's C",1.10296896869245,FALSE
-"moran_global_2021_ghg","Global Moran's I",-0.0126,FALSE
-"moran_global_2021_ghg","Join Count Statistic",3.88095238095238,FALSE
-"moran_global_2021_ghg","Neighbor-average correlation (non-standard)",-0.0285373461793534,FALSE
-"moran_global_2021_no2","Geary's C",1.09211212232853,FALSE
-"moran_global_2021_no2","Global Moran's I",-0.0455,FALSE
-"moran_global_2021_no2","Join Count Statistic",3.52142857142857,FALSE
-"moran_global_2021_no2","Neighbor-average correlation (non-standard)",-0.0804454530754058,FALSE
-"moran_global_2021_transport","Geary's C",1.12532891352512,FALSE
-"moran_global_2021_transport","Global Moran's I",-0.0813,FALSE
-"moran_global_2021_transport","Join Count Statistic",3.58452380952381,FALSE
-"moran_global_2021_transport","Neighbor-average correlation (non-standard)",-0.21966904795095,FALSE
-"moran_global_2021_waste","Geary's C",0.759854601332893,TRUE
-"moran_global_2021_waste","Global Moran's I",0.1851,TRUE
-"moran_global_2021_waste","Join Count Statistic",3.51666666666667,FALSE
-"moran_global_2021_waste","Neighbor-average correlation (non-standard)",0.34524959154882,FALSE
-"moran_global_2022_crime","Geary's C",0.746857779304998,TRUE
-"moran_global_2022_crime","Global Moran's I",0.1682,TRUE
-"moran_global_2022_crime","Join Count Statistic",4.61666666666667,FALSE
-"moran_global_2022_crime","Neighbor-average correlation (non-standard)",0.423186644275679,TRUE
-"moran_global_2022_energy","Geary's C",1.10235397278175,FALSE
-"moran_global_2022_energy","Global Moran's I",-0.012,FALSE
-"moran_global_2022_energy","Join Count Statistic",4.07738095238095,FALSE
-"moran_global_2022_energy","Neighbor-average correlation (non-standard)",-0.0272967684930633,FALSE
-"moran_global_2022_gas","Geary's C",1.09494451404321,FALSE
-"moran_global_2022_gas","Global Moran's I",-0.005,FALSE
-"moran_global_2022_gas","Join Count Statistic",5.13571428571429,TRUE
-"moran_global_2022_gas","Neighbor-average correlation (non-standard)",-0.0112243452242799,FALSE
-"moran_global_2022_ghg","Geary's C",1.10305358022204,FALSE
-"moran_global_2022_ghg","Global Moran's I",-0.0128,FALSE
-"moran_global_2022_ghg","Join Count Statistic",4.07738095238095,FALSE
-"moran_global_2022_ghg","Neighbor-average correlation (non-standard)",-0.0290421792402095,FALSE
-"moran_global_2022_no2","Geary's C",0.970111497099946,FALSE
-"moran_global_2022_no2","Global Moran's I",-0.0847,FALSE
-"moran_global_2022_no2","Join Count Statistic",3.3952380952381,FALSE
-"moran_global_2022_no2","Neighbor-average correlation (non-standard)",-0.208881242740467,FALSE
-"moran_global_2022_transport","Geary's C",1.09790758593378,FALSE
-"moran_global_2022_transport","Global Moran's I",-0.0712,FALSE
-"moran_global_2022_transport","Join Count Statistic",3.58452380952381,FALSE
-"moran_global_2022_transport","Neighbor-average correlation (non-standard)",-0.192192701896285,FALSE
-"moran_global_2022_waste","Geary's C",0.796621066131453,TRUE
-"moran_global_2022_waste","Global Moran's I",0.1691,TRUE
-"moran_global_2022_waste","Join Count Statistic",3.94166666666667,FALSE
-"moran_global_2022_waste","Neighbor-average correlation (non-standard)",0.314455856509117,FALSE
-"moran_global_2023_crime","Geary's C",0.747485929358037,TRUE
-"moran_global_2023_crime","Global Moran's I",0.1671,TRUE
-"moran_global_2023_crime","Join Count Statistic",5.26904761904762,TRUE
-"moran_global_2023_crime","Neighbor-average correlation (non-standard)",0.423069469665308,TRUE
-"moran_global_2023_energy","Geary's C",1.09889679665468,FALSE
-"moran_global_2023_energy","Global Moran's I",-0.0088,FALSE
-"moran_global_2023_energy","Join Count Statistic",3.47380952380952,FALSE
-"moran_global_2023_energy","Neighbor-average correlation (non-standard)",-0.0198303682051987,FALSE
-"moran_global_2023_gas","Geary's C",1.09881053949388,FALSE
-"moran_global_2023_gas","Global Moran's I",-0.0088,FALSE
-"moran_global_2023_gas","Join Count Statistic",5.13571428571429,TRUE
-"moran_global_2023_gas","Neighbor-average correlation (non-standard)",-0.0198311594518451,FALSE
-"moran_global_2023_ghg","Geary's C",1.09552734334843,FALSE
-"moran_global_2023_ghg","Global Moran's I",-0.0054,FALSE
-"moran_global_2023_ghg","Join Count Statistic",3.75714285714286,FALSE
-"moran_global_2023_ghg","Neighbor-average correlation (non-standard)",-0.0122716924701935,FALSE
-"moran_global_2023_no2","Geary's C",0.915798099152457,FALSE
-"moran_global_2023_no2","Global Moran's I",0.0837,FALSE
-"moran_global_2023_no2","Join Count Statistic",3.71071428571429,FALSE
-"moran_global_2023_no2","Neighbor-average correlation (non-standard)",0.183820332143333,FALSE
-"moran_global_2023_transport","Geary's C",1.104930386103,FALSE
-"moran_global_2023_transport","Global Moran's I",-0.0709,FALSE
-"moran_global_2023_transport","Join Count Statistic",3.50119047619048,FALSE
-"moran_global_2023_transport","Neighbor-average correlation (non-standard)",-0.188329729539226,FALSE
-"moran_global_2023_waste","Geary's C",0.837124081557181,FALSE
-"moran_global_2023_waste","Global Moran's I",0.104,FALSE
-"moran_global_2023_waste","Join Count Statistic",3.94166666666667,FALSE
-"moran_global_2023_waste","Neighbor-average correlation (non-standard)",0.220862360062503,FALSE
-"moran_local_2021_crime","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2021_crime","Local Moran's I / LISA",NA,TRUE
-"moran_local_2021_energy","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2021_energy","Local Moran's I / LISA",NA,TRUE
-"moran_local_2021_gas","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2021_gas","Local Moran's I / LISA",NA,TRUE
-"moran_local_2021_ghg","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2021_ghg","Local Moran's I / LISA",NA,TRUE
-"moran_local_2021_no2","Getis-Ord Gi / Gi*",NA,FALSE
-"moran_local_2021_no2","Local Moran's I / LISA",NA,FALSE
-"moran_local_2021_transport","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2021_transport","Local Moran's I / LISA",NA,FALSE
-"moran_local_2021_waste","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2021_waste","Local Moran's I / LISA",NA,TRUE
-"moran_local_2022_crime","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2022_crime","Local Moran's I / LISA",NA,TRUE
-"moran_local_2022_energy","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2022_energy","Local Moran's I / LISA",NA,TRUE
-"moran_local_2022_gas","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2022_gas","Local Moran's I / LISA",NA,TRUE
-"moran_local_2022_ghg","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2022_ghg","Local Moran's I / LISA",NA,TRUE
-"moran_local_2022_no2","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2022_no2","Local Moran's I / LISA",NA,TRUE
-"moran_local_2022_transport","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2022_transport","Local Moran's I / LISA",NA,FALSE
-"moran_local_2022_waste","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2022_waste","Local Moran's I / LISA",NA,TRUE
-"moran_local_2023_crime","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2023_crime","Local Moran's I / LISA",NA,TRUE
-"moran_local_2023_energy","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2023_energy","Local Moran's I / LISA",NA,TRUE
-"moran_local_2023_gas","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2023_gas","Local Moran's I / LISA",NA,TRUE
-"moran_local_2023_ghg","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2023_ghg","Local Moran's I / LISA",NA,TRUE
-"moran_local_2023_no2","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2023_no2","Local Moran's I / LISA",NA,TRUE
-"moran_local_2023_transport","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2023_transport","Local Moran's I / LISA",NA,FALSE
-"moran_local_2023_waste","Getis-Ord Gi / Gi*",NA,TRUE
-"moran_local_2023_waste","Local Moran's I / LISA",NA,TRUE
+chunk_id,method,gt_stat,gt_clustered
+cyclehire_global_selfcontainmentindex_w000,Global Moran's I,0.2691,TRUE
+cyclehire_global_selfcontainmentindex_w001,Global Moran's I,0.2764,TRUE
+cyclehire_global_selfcontainmentindex_w002,Global Moran's I,0.2814,TRUE
+cyclehire_global_selfcontainmentindex_w003,Global Moran's I,0.2814,TRUE
+cyclehire_global_selfcontainmentindex_w004,Global Moran's I,0.2891,TRUE
+cyclehire_global_selfcontainmentindex_w005,Global Moran's I,-0.0453,FALSE
+cyclehire_global_selfcontainmentindex_w006,Global Moran's I,-0.0451,FALSE
+cyclehire_global_selfcontainmentindex_w007,Global Moran's I,-0.044,FALSE
+cyclehire_global_selfcontainmentratio_w000,Global Moran's I,0.1361,FALSE
+cyclehire_global_selfcontainmentratio_w001,Global Moran's I,0.1338,FALSE
+cyclehire_global_selfcontainmentratio_w002,Global Moran's I,0.1302,FALSE
+cyclehire_global_selfcontainmentratio_w003,Global Moran's I,0.1213,FALSE
+cyclehire_global_selfcontainmentratio_w004,Global Moran's I,0.1262,FALSE
+cyclehire_global_selfcontainmentratio_w005,Global Moran's I,0.1421,FALSE
+cyclehire_global_selfcontainmentratio_w006,Global Moran's I,0.1309,FALSE
+cyclehire_global_selfcontainmentratio_w007,Global Moran's I,0.134,FALSE
+cyclehire_local_selfcontainmentindex_w000,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentindex_w001,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentindex_w002,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentindex_w003,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentindex_w004,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentindex_w005,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentindex_w006,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentindex_w007,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentratio_w000,Local Moran's I / LISA,NA,FALSE
+cyclehire_local_selfcontainmentratio_w001,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentratio_w002,Local Moran's I / LISA,NA,TRUE
+cyclehire_local_selfcontainmentratio_w003,Local Moran's I / LISA,NA,FALSE
+cyclehire_local_selfcontainmentratio_w004,Local Moran's I / LISA,NA,FALSE
+cyclehire_local_selfcontainmentratio_w005,Local Moran's I / LISA,NA,FALSE
+cyclehire_local_selfcontainmentratio_w006,Local Moran's I / LISA,NA,FALSE
+cyclehire_local_selfcontainmentratio_w007,Local Moran's I / LISA,NA,FALSE
+moran_global_2021_crime,Geary's C,0.678559351,TRUE
+moran_global_2021_crime,Global Moran's I,0.2345,TRUE
+moran_global_2021_crime,Join Count Statistic,4.825,TRUE
+moran_global_2021_crime,Neighbor-average correlation (non-standard),0.542507909,TRUE
+moran_global_2021_energy,Geary's C,1.102163408,FALSE
+moran_global_2021_energy,Global Moran's I,-0.0118,FALSE
+moran_global_2021_energy,Join Count Statistic,3.880952381,FALSE
+moran_global_2021_energy,Neighbor-average correlation (non-standard),-0.026629432,FALSE
+moran_global_2021_gas,Geary's C,1.097170159,FALSE
+moran_global_2021_gas,Global Moran's I,-0.0072,FALSE
+moran_global_2021_gas,Join Count Statistic,5.135714286,TRUE
+moran_global_2021_gas,Neighbor-average correlation (non-standard),-0.016254947,FALSE
+moran_global_2021_ghg,Geary's C,1.102968969,FALSE
+moran_global_2021_ghg,Global Moran's I,-0.0126,FALSE
+moran_global_2021_ghg,Join Count Statistic,3.880952381,FALSE
+moran_global_2021_ghg,Neighbor-average correlation (non-standard),-0.028537346,FALSE
+moran_global_2021_no2,Geary's C,1.092112122,FALSE
+moran_global_2021_no2,Global Moran's I,-0.0455,FALSE
+moran_global_2021_no2,Join Count Statistic,3.521428571,FALSE
+moran_global_2021_no2,Neighbor-average correlation (non-standard),-0.080445453,FALSE
+moran_global_2021_transport,Geary's C,1.125328914,FALSE
+moran_global_2021_transport,Global Moran's I,-0.0813,FALSE
+moran_global_2021_transport,Join Count Statistic,3.58452381,FALSE
+moran_global_2021_transport,Neighbor-average correlation (non-standard),-0.219669048,FALSE
+moran_global_2021_waste,Geary's C,0.759854601,TRUE
+moran_global_2021_waste,Global Moran's I,0.1851,TRUE
+moran_global_2021_waste,Join Count Statistic,3.516666667,FALSE
+moran_global_2021_waste,Neighbor-average correlation (non-standard),0.345249592,FALSE
+moran_global_2022_crime,Geary's C,0.746857779,TRUE
+moran_global_2022_crime,Global Moran's I,0.1682,TRUE
+moran_global_2022_crime,Join Count Statistic,4.616666667,FALSE
+moran_global_2022_crime,Neighbor-average correlation (non-standard),0.423186644,TRUE
+moran_global_2022_energy,Geary's C,1.102353973,FALSE
+moran_global_2022_energy,Global Moran's I,-0.012,FALSE
+moran_global_2022_energy,Join Count Statistic,4.077380952,FALSE
+moran_global_2022_energy,Neighbor-average correlation (non-standard),-0.027296768,FALSE
+moran_global_2022_gas,Geary's C,1.094944514,FALSE
+moran_global_2022_gas,Global Moran's I,-0.005,FALSE
+moran_global_2022_gas,Join Count Statistic,5.135714286,TRUE
+moran_global_2022_gas,Neighbor-average correlation (non-standard),-0.011224345,FALSE
+moran_global_2022_ghg,Geary's C,1.10305358,FALSE
+moran_global_2022_ghg,Global Moran's I,-0.0128,FALSE
+moran_global_2022_ghg,Join Count Statistic,4.077380952,FALSE
+moran_global_2022_ghg,Neighbor-average correlation (non-standard),-0.029042179,FALSE
+moran_global_2022_no2,Geary's C,0.970111497,FALSE
+moran_global_2022_no2,Global Moran's I,-0.0847,FALSE
+moran_global_2022_no2,Join Count Statistic,3.395238095,FALSE
+moran_global_2022_no2,Neighbor-average correlation (non-standard),-0.208881243,FALSE
+moran_global_2022_transport,Geary's C,1.097907586,FALSE
+moran_global_2022_transport,Global Moran's I,-0.0712,FALSE
+moran_global_2022_transport,Join Count Statistic,3.58452381,FALSE
+moran_global_2022_transport,Neighbor-average correlation (non-standard),-0.192192702,FALSE
+moran_global_2022_waste,Geary's C,0.796621066,TRUE
+moran_global_2022_waste,Global Moran's I,0.1691,TRUE
+moran_global_2022_waste,Join Count Statistic,3.941666667,FALSE
+moran_global_2022_waste,Neighbor-average correlation (non-standard),0.314455857,FALSE
+moran_global_2023_crime,Geary's C,0.747485929,TRUE
+moran_global_2023_crime,Global Moran's I,0.1671,TRUE
+moran_global_2023_crime,Join Count Statistic,5.269047619,TRUE
+moran_global_2023_crime,Neighbor-average correlation (non-standard),0.42306947,TRUE
+moran_global_2023_energy,Geary's C,1.098896797,FALSE
+moran_global_2023_energy,Global Moran's I,-0.0088,FALSE
+moran_global_2023_energy,Join Count Statistic,3.473809524,FALSE
+moran_global_2023_energy,Neighbor-average correlation (non-standard),-0.019830368,FALSE
+moran_global_2023_gas,Geary's C,1.098810539,FALSE
+moran_global_2023_gas,Global Moran's I,-0.0088,FALSE
+moran_global_2023_gas,Join Count Statistic,5.135714286,TRUE
+moran_global_2023_gas,Neighbor-average correlation (non-standard),-0.019831159,FALSE
+moran_global_2023_ghg,Geary's C,1.095527343,FALSE
+moran_global_2023_ghg,Global Moran's I,-0.0054,FALSE
+moran_global_2023_ghg,Join Count Statistic,3.757142857,FALSE
+moran_global_2023_ghg,Neighbor-average correlation (non-standard),-0.012271692,FALSE
+moran_global_2023_no2,Geary's C,0.915798099,FALSE
+moran_global_2023_no2,Global Moran's I,0.0837,FALSE
+moran_global_2023_no2,Join Count Statistic,3.710714286,FALSE
+moran_global_2023_no2,Neighbor-average correlation (non-standard),0.183820332,FALSE
+moran_global_2023_transport,Geary's C,1.104930386,FALSE
+moran_global_2023_transport,Global Moran's I,-0.0709,FALSE
+moran_global_2023_transport,Join Count Statistic,3.501190476,FALSE
+moran_global_2023_transport,Neighbor-average correlation (non-standard),-0.18832973,FALSE
+moran_global_2023_waste,Geary's C,0.837124082,FALSE
+moran_global_2023_waste,Global Moran's I,0.104,FALSE
+moran_global_2023_waste,Join Count Statistic,3.941666667,FALSE
+moran_global_2023_waste,Neighbor-average correlation (non-standard),0.22086236,FALSE
+moran_local_2021_crime,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2021_crime,Local Moran's I / LISA,NA,TRUE
+moran_local_2021_energy,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2021_energy,Local Moran's I / LISA,NA,TRUE
+moran_local_2021_gas,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2021_gas,Local Moran's I / LISA,NA,TRUE
+moran_local_2021_ghg,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2021_ghg,Local Moran's I / LISA,NA,TRUE
+moran_local_2021_no2,Getis-Ord Gi / Gi*,NA,FALSE
+moran_local_2021_no2,Local Moran's I / LISA,NA,FALSE
+moran_local_2021_transport,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2021_transport,Local Moran's I / LISA,NA,FALSE
+moran_local_2021_waste,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2021_waste,Local Moran's I / LISA,NA,TRUE
+moran_local_2022_crime,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2022_crime,Local Moran's I / LISA,NA,TRUE
+moran_local_2022_energy,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2022_energy,Local Moran's I / LISA,NA,TRUE
+moran_local_2022_gas,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2022_gas,Local Moran's I / LISA,NA,TRUE
+moran_local_2022_ghg,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2022_ghg,Local Moran's I / LISA,NA,TRUE
+moran_local_2022_no2,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2022_no2,Local Moran's I / LISA,NA,TRUE
+moran_local_2022_transport,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2022_transport,Local Moran's I / LISA,NA,FALSE
+moran_local_2022_waste,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2022_waste,Local Moran's I / LISA,NA,TRUE
+moran_local_2023_crime,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2023_crime,Local Moran's I / LISA,NA,TRUE
+moran_local_2023_energy,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2023_energy,Local Moran's I / LISA,NA,TRUE
+moran_local_2023_gas,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2023_gas,Local Moran's I / LISA,NA,TRUE
+moran_local_2023_ghg,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2023_ghg,Local Moran's I / LISA,NA,TRUE
+moran_local_2023_no2,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2023_no2,Local Moran's I / LISA,NA,TRUE
+moran_local_2023_transport,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2023_transport,Local Moran's I / LISA,NA,FALSE
+moran_local_2023_waste,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_2023_waste,Local Moran's I / LISA,NA,TRUE
+moran_global_no2crime_crime_first_half_2011,Geary's C,0.700249527,TRUE
+moran_global_no2crime_crime_first_half_2011,Global Moran's I,0.2109,TRUE
+moran_global_no2crime_crime_first_half_2011,Join Count Statistic,5.24047619,TRUE
+moran_global_no2crime_crime_first_half_2011,Neighbor-average correlation (non-standard),0.51476095,TRUE
+moran_global_no2crime_crime_second_half_2010,Geary's C,0.690920343,TRUE
+moran_global_no2crime_crime_second_half_2010,Global Moran's I,0.2171,TRUE
+moran_global_no2crime_crime_second_half_2010,Join Count Statistic,5.24047619,TRUE
+moran_global_no2crime_crime_second_half_2010,Neighbor-average correlation (non-standard),0.528041399,TRUE
+moran_global_no2crime_crime_second_half_2011,Geary's C,0.682283038,TRUE
+moran_global_no2crime_crime_second_half_2011,Global Moran's I,0.2271,TRUE
+moran_global_no2crime_crime_second_half_2011,Join Count Statistic,5.49047619,TRUE
+moran_global_no2crime_crime_second_half_2011,Neighbor-average correlation (non-standard),0.544621513,TRUE
+moran_global_no2crime_crime_second_half_2012,Geary's C,0.660938418,TRUE
+moran_global_no2crime_crime_second_half_2012,Global Moran's I,0.2435,TRUE
+moran_global_no2crime_crime_second_half_2012,Join Count Statistic,5.26547619,TRUE
+moran_global_no2crime_crime_second_half_2012,Neighbor-average correlation (non-standard),0.580143682,TRUE
+moran_global_no2crime_crime_second_half_2013,Geary's C,0.668270274,TRUE
+moran_global_no2crime_crime_second_half_2013,Global Moran's I,0.239,TRUE
+moran_global_no2crime_crime_second_half_2013,Join Count Statistic,5.094047619,TRUE
+moran_global_no2crime_crime_second_half_2013,Neighbor-average correlation (non-standard),0.572560389,TRUE
+moran_global_no2crime_crime_second_half_2014,Geary's C,0.639077544,TRUE
+moran_global_no2crime_crime_second_half_2014,Global Moran's I,0.2637,TRUE
+moran_global_no2crime_crime_second_half_2014,Join Count Statistic,5.094047619,TRUE
+moran_global_no2crime_crime_second_half_2014,Neighbor-average correlation (non-standard),0.619310413,TRUE
+moran_global_no2crime_crime_second_half_2015,Geary's C,0.619144309,TRUE
+moran_global_no2crime_crime_second_half_2015,Global Moran's I,0.2804,TRUE
+moran_global_no2crime_crime_second_half_2015,Join Count Statistic,5.094047619,TRUE
+moran_global_no2crime_crime_second_half_2015,Neighbor-average correlation (non-standard),0.648672935,TRUE
+moran_global_no2crime_crime_second_half_2016,Geary's C,0.609707238,TRUE
+moran_global_no2crime_crime_second_half_2016,Global Moran's I,0.2907,TRUE
+moran_global_no2crime_crime_second_half_2016,Join Count Statistic,5.110714286,TRUE
+moran_global_no2crime_crime_second_half_2016,Neighbor-average correlation (non-standard),0.663936138,TRUE
+moran_global_no2crime_crime_second_half_2017,Geary's C,0.611715308,TRUE
+moran_global_no2crime_crime_second_half_2017,Global Moran's I,0.29,TRUE
+moran_global_no2crime_crime_second_half_2017,Join Count Statistic,5.269047619,TRUE
+moran_global_no2crime_crime_second_half_2017,Neighbor-average correlation (non-standard),0.661353827,TRUE
+moran_global_no2crime_crime_second_half_2018,Geary's C,0.680768403,TRUE
+moran_global_no2crime_crime_second_half_2018,Global Moran's I,0.2291,TRUE
+moran_global_no2crime_crime_second_half_2018,Join Count Statistic,5.469047619,TRUE
+moran_global_no2crime_crime_second_half_2018,Neighbor-average correlation (non-standard),0.536811439,TRUE
+moran_global_no2crime_crime_second_half_2019,Geary's C,0.708921177,TRUE
+moran_global_no2crime_crime_second_half_2019,Global Moran's I,0.2015,TRUE
+moran_global_no2crime_crime_second_half_2019,Join Count Statistic,4.825,TRUE
+moran_global_no2crime_crime_second_half_2019,Neighbor-average correlation (non-standard),0.486800437,TRUE
+moran_global_no2crime_crime_second_half_2020,Geary's C,0.643611907,TRUE
+moran_global_no2crime_crime_second_half_2020,Global Moran's I,0.2679,TRUE
+moran_global_no2crime_crime_second_half_2020,Join Count Statistic,5.310714286,TRUE
+moran_global_no2crime_crime_second_half_2020,Neighbor-average correlation (non-standard),0.59602065,TRUE
+moran_global_no2crime_no2_Q1_2021,Geary's C,1.139649019,FALSE
+moran_global_no2crime_no2_Q1_2021,Global Moran's I,-0.1444,FALSE
+moran_global_no2crime_no2_Q1_2021,Join Count Statistic,2.632142857,FALSE
+moran_global_no2crime_no2_Q1_2021,Neighbor-average correlation (non-standard),-0.316019654,FALSE
+moran_global_no2crime_no2_Q1_2022,Geary's C,1.073221352,FALSE
+moran_global_no2crime_no2_Q1_2022,Global Moran's I,-0.0944,FALSE
+moran_global_no2crime_no2_Q1_2022,Join Count Statistic,3.247619048,FALSE
+moran_global_no2crime_no2_Q1_2022,Neighbor-average correlation (non-standard),-0.321045471,FALSE
+moran_global_no2crime_no2_Q1_2023,Geary's C,1.035165752,FALSE
+moran_global_no2crime_no2_Q1_2023,Global Moran's I,-0.0695,FALSE
+moran_global_no2crime_no2_Q1_2023,Join Count Statistic,2.916666667,FALSE
+moran_global_no2crime_no2_Q1_2023,Neighbor-average correlation (non-standard),-0.225620169,FALSE
+moran_global_no2crime_no2_Q3_2021,Geary's C,1.079609699,FALSE
+moran_global_no2crime_no2_Q3_2021,Global Moran's I,-0.1414,FALSE
+moran_global_no2crime_no2_Q3_2021,Join Count Statistic,3.445238095,FALSE
+moran_global_no2crime_no2_Q3_2021,Neighbor-average correlation (non-standard),-0.306006598,FALSE
+moran_global_no2crime_no2_Q3_2022,Geary's C,1.025355628,FALSE
+moran_global_no2crime_no2_Q3_2022,Global Moran's I,-0.0719,FALSE
+moran_global_no2crime_no2_Q3_2022,Join Count Statistic,3.00952381,FALSE
+moran_global_no2crime_no2_Q3_2022,Neighbor-average correlation (non-standard),-0.162497185,FALSE
+moran_global_no2crime_no2_Q3_2023,Geary's C,1.048559782,FALSE
+moran_global_no2crime_no2_Q3_2023,Global Moran's I,-0.0546,FALSE
+moran_global_no2crime_no2_Q3_2023,Join Count Statistic,3.141666667,FALSE
+moran_global_no2crime_no2_Q3_2023,Neighbor-average correlation (non-standard),-0.182944037,FALSE
+moran_local_no2crime_crime_first_half_2011,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2011,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2012,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2012,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2013,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2013,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2014,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2014,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2015,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2015,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2016,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2016,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2017,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2017,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2018,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2018,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2019,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2019,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2020,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2020,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2021,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2021,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q1_2021,Getis-Ord Gi / Gi*,NA,FALSE
+moran_local_no2crime_no2_Q1_2021,Local Moran's I / LISA,NA,FALSE
+moran_local_no2crime_no2_Q2_2021,Getis-Ord Gi / Gi*,NA,FALSE
+moran_local_no2crime_no2_Q2_2021,Local Moran's I / LISA,NA,FALSE
+moran_local_no2crime_no2_Q2_2022,Getis-Ord Gi / Gi*,NA,FALSE
+moran_local_no2crime_no2_Q2_2022,Local Moran's I / LISA,NA,FALSE
+moran_local_no2crime_no2_Q2_2023,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q2_2023,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q4_2021,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q4_2021,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q4_2022,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q4_2022,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q4_2023,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q4_2023,Local Moran's I / LISA,NA,TRUE

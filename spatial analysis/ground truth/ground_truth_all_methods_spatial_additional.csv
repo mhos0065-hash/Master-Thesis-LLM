@@ -1,0 +1,109 @@
+chunk_id,method,gt_stat,gt_clustered
+moran_global_no2crime_crime_first_half_2011,Geary's C,0.700249527,TRUE
+moran_global_no2crime_crime_first_half_2011,Global Moran's I,0.2109,TRUE
+moran_global_no2crime_crime_first_half_2011,Join Count Statistic,5.24047619,TRUE
+moran_global_no2crime_crime_first_half_2011,Neighbor-average correlation (non-standard),0.51476095,TRUE
+moran_global_no2crime_crime_second_half_2010,Geary's C,0.690920343,TRUE
+moran_global_no2crime_crime_second_half_2010,Global Moran's I,0.2171,TRUE
+moran_global_no2crime_crime_second_half_2010,Join Count Statistic,5.24047619,TRUE
+moran_global_no2crime_crime_second_half_2010,Neighbor-average correlation (non-standard),0.528041399,TRUE
+moran_global_no2crime_crime_second_half_2011,Geary's C,0.682283038,TRUE
+moran_global_no2crime_crime_second_half_2011,Global Moran's I,0.2271,TRUE
+moran_global_no2crime_crime_second_half_2011,Join Count Statistic,5.49047619,TRUE
+moran_global_no2crime_crime_second_half_2011,Neighbor-average correlation (non-standard),0.544621513,TRUE
+moran_global_no2crime_crime_second_half_2012,Geary's C,0.660938418,TRUE
+moran_global_no2crime_crime_second_half_2012,Global Moran's I,0.2435,TRUE
+moran_global_no2crime_crime_second_half_2012,Join Count Statistic,5.26547619,TRUE
+moran_global_no2crime_crime_second_half_2012,Neighbor-average correlation (non-standard),0.580143682,TRUE
+moran_global_no2crime_crime_second_half_2013,Geary's C,0.668270274,TRUE
+moran_global_no2crime_crime_second_half_2013,Global Moran's I,0.239,TRUE
+moran_global_no2crime_crime_second_half_2013,Join Count Statistic,5.094047619,TRUE
+moran_global_no2crime_crime_second_half_2013,Neighbor-average correlation (non-standard),0.572560389,TRUE
+moran_global_no2crime_crime_second_half_2014,Geary's C,0.639077544,TRUE
+moran_global_no2crime_crime_second_half_2014,Global Moran's I,0.2637,TRUE
+moran_global_no2crime_crime_second_half_2014,Join Count Statistic,5.094047619,TRUE
+moran_global_no2crime_crime_second_half_2014,Neighbor-average correlation (non-standard),0.619310413,TRUE
+moran_global_no2crime_crime_second_half_2015,Geary's C,0.619144309,TRUE
+moran_global_no2crime_crime_second_half_2015,Global Moran's I,0.2804,TRUE
+moran_global_no2crime_crime_second_half_2015,Join Count Statistic,5.094047619,TRUE
+moran_global_no2crime_crime_second_half_2015,Neighbor-average correlation (non-standard),0.648672935,TRUE
+moran_global_no2crime_crime_second_half_2016,Geary's C,0.609707238,TRUE
+moran_global_no2crime_crime_second_half_2016,Global Moran's I,0.2907,TRUE
+moran_global_no2crime_crime_second_half_2016,Join Count Statistic,5.110714286,TRUE
+moran_global_no2crime_crime_second_half_2016,Neighbor-average correlation (non-standard),0.663936138,TRUE
+moran_global_no2crime_crime_second_half_2017,Geary's C,0.611715308,TRUE
+moran_global_no2crime_crime_second_half_2017,Global Moran's I,0.29,TRUE
+moran_global_no2crime_crime_second_half_2017,Join Count Statistic,5.269047619,TRUE
+moran_global_no2crime_crime_second_half_2017,Neighbor-average correlation (non-standard),0.661353827,TRUE
+moran_global_no2crime_crime_second_half_2018,Geary's C,0.680768403,TRUE
+moran_global_no2crime_crime_second_half_2018,Global Moran's I,0.2291,TRUE
+moran_global_no2crime_crime_second_half_2018,Join Count Statistic,5.469047619,TRUE
+moran_global_no2crime_crime_second_half_2018,Neighbor-average correlation (non-standard),0.536811439,TRUE
+moran_global_no2crime_crime_second_half_2019,Geary's C,0.708921177,TRUE
+moran_global_no2crime_crime_second_half_2019,Global Moran's I,0.2015,TRUE
+moran_global_no2crime_crime_second_half_2019,Join Count Statistic,4.825,TRUE
+moran_global_no2crime_crime_second_half_2019,Neighbor-average correlation (non-standard),0.486800437,TRUE
+moran_global_no2crime_crime_second_half_2020,Geary's C,0.643611907,TRUE
+moran_global_no2crime_crime_second_half_2020,Global Moran's I,0.2679,TRUE
+moran_global_no2crime_crime_second_half_2020,Join Count Statistic,5.310714286,TRUE
+moran_global_no2crime_crime_second_half_2020,Neighbor-average correlation (non-standard),0.59602065,TRUE
+moran_global_no2crime_no2_Q1_2021,Geary's C,1.139649019,FALSE
+moran_global_no2crime_no2_Q1_2021,Global Moran's I,-0.1444,FALSE
+moran_global_no2crime_no2_Q1_2021,Join Count Statistic,2.632142857,FALSE
+moran_global_no2crime_no2_Q1_2021,Neighbor-average correlation (non-standard),-0.316019654,FALSE
+moran_global_no2crime_no2_Q1_2022,Geary's C,1.073221352,FALSE
+moran_global_no2crime_no2_Q1_2022,Global Moran's I,-0.0944,FALSE
+moran_global_no2crime_no2_Q1_2022,Join Count Statistic,3.247619048,FALSE
+moran_global_no2crime_no2_Q1_2022,Neighbor-average correlation (non-standard),-0.321045471,FALSE
+moran_global_no2crime_no2_Q1_2023,Geary's C,1.035165752,FALSE
+moran_global_no2crime_no2_Q1_2023,Global Moran's I,-0.0695,FALSE
+moran_global_no2crime_no2_Q1_2023,Join Count Statistic,2.916666667,FALSE
+moran_global_no2crime_no2_Q1_2023,Neighbor-average correlation (non-standard),-0.225620169,FALSE
+moran_global_no2crime_no2_Q3_2021,Geary's C,1.079609699,FALSE
+moran_global_no2crime_no2_Q3_2021,Global Moran's I,-0.1414,FALSE
+moran_global_no2crime_no2_Q3_2021,Join Count Statistic,3.445238095,FALSE
+moran_global_no2crime_no2_Q3_2021,Neighbor-average correlation (non-standard),-0.306006598,FALSE
+moran_global_no2crime_no2_Q3_2022,Geary's C,1.025355628,FALSE
+moran_global_no2crime_no2_Q3_2022,Global Moran's I,-0.0719,FALSE
+moran_global_no2crime_no2_Q3_2022,Join Count Statistic,3.00952381,FALSE
+moran_global_no2crime_no2_Q3_2022,Neighbor-average correlation (non-standard),-0.162497185,FALSE
+moran_global_no2crime_no2_Q3_2023,Geary's C,1.048559782,FALSE
+moran_global_no2crime_no2_Q3_2023,Global Moran's I,-0.0546,FALSE
+moran_global_no2crime_no2_Q3_2023,Join Count Statistic,3.141666667,FALSE
+moran_global_no2crime_no2_Q3_2023,Neighbor-average correlation (non-standard),-0.182944037,FALSE
+moran_local_no2crime_crime_first_half_2011,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2011,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2012,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2012,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2013,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2013,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2014,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2014,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2015,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2015,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2016,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2016,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2017,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2017,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2018,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2018,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2019,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2019,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2020,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2020,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_crime_first_half_2021,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_crime_first_half_2021,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q1_2021,Getis-Ord Gi / Gi*,NA,FALSE
+moran_local_no2crime_no2_Q1_2021,Local Moran's I / LISA,NA,FALSE
+moran_local_no2crime_no2_Q2_2021,Getis-Ord Gi / Gi*,NA,FALSE
+moran_local_no2crime_no2_Q2_2021,Local Moran's I / LISA,NA,FALSE
+moran_local_no2crime_no2_Q2_2022,Getis-Ord Gi / Gi*,NA,FALSE
+moran_local_no2crime_no2_Q2_2022,Local Moran's I / LISA,NA,FALSE
+moran_local_no2crime_no2_Q2_2023,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q2_2023,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q4_2021,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q4_2021,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q4_2022,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q4_2022,Local Moran's I / LISA,NA,TRUE
+moran_local_no2crime_no2_Q4_2023,Getis-Ord Gi / Gi*,NA,TRUE
+moran_local_no2crime_no2_Q4_2023,Local Moran's I / LISA,NA,TRUE

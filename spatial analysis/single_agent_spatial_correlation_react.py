@@ -61,11 +61,15 @@ from agent_utils_react import agent_loop_react
 from manifest_io import load_manifest
 from casual_verdict import parse_casual_final_answer, parse_casual_with_citation
 
-MANIFEST_PATH = "chunks_csv/manifest.csv"
+#MANIFEST_PATH = "chunks_csv/manifest.csv"
+
+MANIFEST_PATH = "chunks_csv/manifest2.csv" # For additional test cases
 
 # CHANGE 2: separate output location -- never touches any existing results file.
 RESULTS_DIR = "ReAct"
-RESULTS_CSV = os.path.join(RESULTS_DIR, "spatial_correlation_results_react.csv")
+#RESULTS_CSV = os.path.join(RESULTS_DIR, "spatial_correlation_results_react.csv")
+
+RESULTS_CSV = os.path.join(RESULTS_DIR, "spatial_correlation_results_react_additional.csv") # For additional test cases
 FAILED_LOG = os.path.join(RESULTS_DIR, "spatial_correlation_react_failed_runs.log")
 
 SYSTEM_PROMPT = """You are a single AI agent responsible for the entire analysis pipeline,

@@ -938,3 +938,78 @@ Traceback (most recent call last):
 IndexError: list index out of range
 
 ----------------------------------------------------------------------
+
+[2026-09-23T11:49:06.648715+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=getisord_crime_second_half_2017
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_getisord.py", line 132, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_getisord.py", line 94, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6, answer_from_code_output=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 320, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API response missing 'choices' (attempt 5/5). Full response: {'id': 'gen-1790164121-yGjT3P0MLJGimSRMCwE5', 'error': {'message': 'Backend request failed with status 400', 'code': 400, 'metadata': {'error_type': 'invalid_request', 'provider_code': '400'}}}
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-23T11:50:54.885470+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=getisord_crime_second_half_2019
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_getisord.py", line 132, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_getisord.py", line 94, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6, answer_from_code_output=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 320, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: API response missing 'choices' (attempt 5/5). Full response: {'id': 'gen-1790164230-P4krTpGfQcaRTyX8PNFX', 'error': {'message': 'Backend request failed with status 400', 'code': 400, 'metadata': {'error_type': 'invalid_request', 'provider_code': '400'}}}
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------
+
+[2026-09-23T11:51:50.564272+00:00] FAILED: mode=single model=deepseek/deepseek-chat-v3-0324 chunk=getisord_crime_second_half_2020
+Traceback (most recent call last):
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_getisord.py", line 132, in <module>
+    run_one(cid, manifest[cid], args.model)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\single_agent_getisord.py", line 94, in run_one
+    verdict, final_text, log = agent_loop(
+                               ~~~~~~~~~~^
+        SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        model=model, require_structured_verdict=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        extra_files=extra_files, max_iterations=6, answer_from_code_output=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 320, in agent_loop
+    reply = chat(messages, model=model)
+  File "D:\Australia\Monash\Semester 4\Research stream\Master Thesis\Master-Thesis-LLM\spatial analysis\agent_utils.py", line 132, in chat
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: chat() failed after 5 attempts. Last error: HTTP error: 400 Client Error: Bad Request for url: https://openrouter.ai/api/v1/chat/completions. Body: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"error\":{\"message\":\"Backend request failed with status 400\",\"type\":\"backend_error\",\"code\":400,\"details\":\"{\\\"error\\\":{\\\"message\\\":\\\"Requested token count exceeds the model's maximum context length of
+If this was rate limiting, try increasing LLM_MIN_INTERVAL_SECONDS in your .env file (e.g. LLM_MIN_INTERVAL_SECONDS=4), or run fewer chunks/models at once.
+
+----------------------------------------------------------------------

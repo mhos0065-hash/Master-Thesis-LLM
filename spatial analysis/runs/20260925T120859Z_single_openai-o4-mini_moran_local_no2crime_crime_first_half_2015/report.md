@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_no2crime_crime_first_half_2015
+
+**Predicted:** True
+
+**Detail:** Haringey (HH, statistical method=487.0695), Kensington and Chelsea (HH, statistical method=606.7457), Barking and Dagenham (LL, statistical method=327.3683), Bexley (LL, statistical method=339.5980), Bromley (LL, statistical method=400.9476), Croydon (LL, statistical method=346.8733), Ealing (LL, statistical method=374.4889), Enfield (LL, statistical method=379.1148), Greenwich (LL, statistical method=366.6221), Harrow (LL, statistical method=345.3547), Havering (LL, statistical method=312.4000)
+
+**Answer line:** Haringey (HH, statistical method=487.0695), Kensington and Chelsea (HH, statistical method=606.7457), Barking and Dagenham (LL, statistical method=327.3683), Bexley (LL, statistical method=339.5980), Bromley (LL, statistical method=400.9476), Croydon (LL, statistical method=346.8733), Ealing (LL, statistical method=374.4889), Enfield (LL, statistical method=379.1148), Greenwich (LL, statistical method=366.6221), Harrow (LL, statistical method=345.3547), Havering (LL, statistical method=312.4000), Hillingdon (LL, statistical method=321.3179), Hounslow (LL, statistical method=384.7011), Kingston upon Thames (LL, statistical method=294.5081), Lewisham (LL, statistical method=406.1546), Merton (LL, statistical method=362.4842), Redbridge (LL, statistical method=368.1530), Richmond upon Thames (LL, statistical method=389.6847), Sutton (LL, statistical method=320.2597), Waltham Forest (LL, statistical method=410.3013)

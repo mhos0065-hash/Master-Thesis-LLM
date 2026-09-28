@@ -47,11 +47,16 @@ from agent_utils_react import agent_loop_react
 
 from getisord_verdict import parse_getisord_with_citation
 
-MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest.csv"
+#MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest.csv"
+
+MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest2.csv" # For additional test cases
+
 
 # CHANGE 2: separate output location -- never touches getisord_results.csv.
 RESULTS_DIR = "ReAct"
-RESULTS_CSV = os.path.join(RESULTS_DIR, "getisord_results_react.csv")
+#RESULTS_CSV = os.path.join(RESULTS_DIR, "getisord_results_react.csv")
+
+RESULTS_CSV = os.path.join(RESULTS_DIR, "getisord_results_react_additional.csv")  # For additional test cases
 FAILED_LOG = os.path.join(RESULTS_DIR, "getisord_react_failed_runs.log")
 
 SYSTEM_PROMPT = (

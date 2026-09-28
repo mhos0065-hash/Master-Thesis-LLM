@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_no2crime_crime_first_half_2011
+
+**Predicted:** True
+
+**Detail:** Brent (HH, statistical method=443.4079), Hammersmith and Fulham (HH, statistical method=640.5022), Haringey (HH, statistical method=467.2597), Kensington and Chelsea (HH, statistical method=708.0195), Lewisham (HH, statistical method=467.4651), Newham (HH, statistical method=454.7422), Waltham Forest (HH, statistical method=475.1437), Bexley (LL, statistical method=260.0811), Croydon (LL, statistical method=413.3316), Harrow (LL, statistical method=270.7233), Havering (LL, statistical method=336
+
+**Answer line:** Brent (HH, statistical method=443.4079), Hammersmith and Fulham (HH, statistical method=640.5022), Haringey (HH, statistical method=467.2597), Kensington and Chelsea (HH, statistical method=708.0195), Lewisham (HH, statistical method=467.4651), Newham (HH, statistical method=454.7422), Waltham Forest (HH, statistical method=475.1437), Bexley (LL, statistical method=260.0811), Croydon (LL, statistical method=413.3316), Harrow (LL, statistical method=270.7233), Havering (LL, statistical method=336.1832), Hillingdon (LL, statistical method=386.695), Hounslow (LL, statistical method=407.3213), Kingston upon Thames (LL, statistical method=317.1429), Merton (LL, statistical method=339.0335), Richmond upon Thames (LL, statistical method=303.4836), Sutton (LL, statistical method=289.9332)

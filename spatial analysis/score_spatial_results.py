@@ -63,10 +63,11 @@ from formula_invariance_check import check_shift_invariant, compute_shifted_stat
 
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_spatial.csv"
 MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path per chunk_id
+MANIFEST2_PATH = "chunks_csv/manifest2.csv"  # additional chunks; same schema, appended for scoring
 
 # ReAct multi-turn agent
-#RESULTS_CSV = "ReAct/spatial_correlation_results_react.csv"
-#OUT_CSV = "Scores/ReAct/scoring_spatial_summary_react.csv"
+RESULTS_CSV = "ReAct/spatial_correlation_results_react_with_method.csv"
+OUT_CSV = "Scores/ReAct/scoring_spatial_summary_react.csv"
 
 # Multi agent
 #RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent_with_method.csv"
@@ -77,8 +78,8 @@ MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path
 #OUT_CSV = "Scores/multi turn/scoring_spatial_summary.csv"
 
 # Single turn
-RESULTS_CSV = "spatial_results_with_method.csv"
-OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
+#RESULTS_CSV = "spatial_results_with_method.csv"
+#OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
 
 METHOD_NAME_MAP_GLOBAL = {
     "Global Moran's I": "Global Moran's I",
@@ -208,12 +209,28 @@ def load_ground_truth_methods():
     return table
 
 
+def _load_combined_manifest_df():
+    """Loads MANIFEST_PATH and MANIFEST2_PATH (if present) and
+    concatenates them into a single un-indexed DataFrame, for both
+    load_local_borough_ground_truth() and _load_manifest_index() to
+    read from. Missing files are skipped, never fatal."""
+    frames = []
+    for path in (MANIFEST_PATH, MANIFEST2_PATH):
+        try:
+            frames.append(pd.read_csv(path))
+        except (FileNotFoundError, OSError):
+            print(f"WARNING: manifest not found at {path} -- its rows will be missing.")
+    if not frames:
+        return pd.DataFrame(columns=["chunk_id", "csv_path", "adjacency_path"])
+    return pd.concat(frames, ignore_index=True)
+
+
 def load_local_borough_ground_truth():
     """chunk_id -> set of borough names in the manifest's
     significant_cluster_boroughs (the SAME ground truth this task
     always had -- ground_truth_metric_json -- just not previously
     checked at borough-name granularity)."""
-    manifest = pd.read_csv(MANIFEST_PATH)
+    manifest = _load_combined_manifest_df()
     table = {}
     for _, r in manifest.iterrows():
         if str(r.get("spatial_granularity", "")).strip().lower() != "local":
@@ -269,18 +286,17 @@ def _local_chunk_f1(pred_set, true_set):
 
 
 def _load_manifest_index():
-    """Loads the manifest indexed by chunk_id, for the shift-invariance
-    re-check's csv_path/adjacency_path lookup (separate from
+    """Loads the combined manifest (MANIFEST_PATH + MANIFEST2_PATH)
+    indexed by chunk_id, for the shift-invariance re-check's
+    csv_path/adjacency_path lookup (separate from
     load_local_borough_ground_truth()'s own manifest read, which needs
     the un-indexed frame to iterate rows). Degrades to an always-missing
-    stand-in if the file isn't found, so the shift check becomes
+    stand-in if neither file is found, so the shift check becomes
     inconclusive/None for every row rather than blocking scoring."""
-    try:
-        return pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
-    except (FileNotFoundError, OSError):
-        print(f"WARNING: manifest not found at {MANIFEST_PATH} -- "
-              f"shift-invariance re-checks will be skipped (inconclusive) for every row.")
+    manifest = _load_combined_manifest_df()
+    if manifest.empty or "chunk_id" not in manifest.columns:
         return pd.DataFrame(columns=["csv_path", "adjacency_path"])
+    return manifest.set_index("chunk_id")
 
 
 def load():
@@ -547,7 +563,7 @@ def compute_metrics(g, use_evidence_filter):
 
     n_total = len(g)
     accuracy = g[use_col].sum() / n_total if n_total > 0 else 0.0
-    return round(accuracy, 3), round(precision, 3), round(recall, 3), round(f1, 3), tp_total, fp_total
+    return accuracy, precision, recall, f1, tp_total, fp_total
 
 
 def run():
@@ -573,13 +589,14 @@ def run():
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
             "pct_with_evidence": pct_with_evidence,
             "tp": tp, "fp": fp,
-            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "accuracy": f"{accuracy * 100:05.2f}", "precision": f"{precision * 100:05.2f}",
+            "recall": f"{recall * 100:05.2f}", "f1": f"{f1 * 100:05.2f}",
             "correct_number_evidence_filtered": correct_number_ef,
             "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
-            "accuracy_evidence_filtered": acc_ef,
-            "precision_evidence_filtered": prec_ef,
-            "recall_evidence_filtered": rec_ef,
-            "f1_evidence_filtered": f1_ef,
+            "accuracy_evidence_filtered": f"{acc_ef * 100:05.2f}",
+            "precision_evidence_filtered": f"{prec_ef * 100:05.2f}",
+            "recall_evidence_filtered": f"{rec_ef * 100:05.2f}",
+            "f1_evidence_filtered": f"{f1_ef * 100:05.2f}",
         })
 
     out = pd.DataFrame(rows).sort_values(["mode", "model"]).reset_index(drop=True)

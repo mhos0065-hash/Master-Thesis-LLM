@@ -27,9 +27,19 @@ from agent_utils_multi_turn import agent_loop, LLM_MODEL # Multi turn
 
 from casual_verdict import parse_casual_with_citation
 
-MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest.csv"
-RESULTS_CSV = "results/changespillover_results_multi.csv" # Multi turn
+#MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest.csv"
+MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest2.csv" # For additional test cases
+
+#RESULTS_CSV = "results/single agent/changespillover_results_multi.csv" # Multi turn
+
+RESULTS_CSV = "results/single agent/changespillover_results_multi_additional.csv" # Multi turn additional test cases .
+
+
 #RESULTS_CSV = "changespillover_results.csv" # Single turn
+
+#RESULTS_CSV = "changespillover_results_additional.csv" # Single-turn For additional test cases  
+
+
 FAILED_LOG = "changespillover_failed_runs.log"
 
 SYSTEM_PROMPT = (

@@ -65,25 +65,15 @@ official Gi*-derived ground truth (already present in every row's own
 `ground_truth_boroughs` column) only when the row's method has no
 computed ground truth.
 
-NEW -- SHIFT-INVARIANCE RE-EXECUTION (the same mechanism used in
-score_bivariate.py, folded into `has_real_evidence` so
-`accuracy_evidence_filtered`/`f1_evidence_filtered` are process-based,
-not just a stricter outcome check): Getis-Ord Gi/Gi* and Local Moran's
-I are invariant to a constant additive shift of the input values. The
-model's OWN saved code is re-executed on a shifted copy of the data,
-and the recomputed value is checked against EVERY originally-reported
-borough value (accepting a match with ANY of them), NOT a strict
-positional "first borough vs first borough" comparison -- getisord
-lists MULTIPLE boroughs per chunk, and the re-executed code's raw print
-order has no reason to match predicted_boroughs' order, so a strict
-positional match would spuriously fail correct code whenever two
-DIFFERENT boroughs got compared to each other. This was confirmed to
-happen in practice and is why an earlier version of this check produced
-unexpectedly low scores across many models -- fixed here by matching
-against the full set of original values instead of just the first one.
-No code found / execution failed entirely is treated as inconclusive
-(not penalized), same tri-state philosophy used everywhere else in
-this pipeline.
+NOTE: this version does NOT include the shift-invariance re-execution
+check (code re-run on shifted data) that was added and then removed
+from `has_real_evidence` on request, to keep this script's logic
+identical to the pre-process-based-metric baseline. `has_real_evidence`
+here is exactly `_chunk_has_real_evidence()` -- a real, finite, non-
+fabricated number cited -- plus the existing magnitude/threshold
+plausibility checks. `accuracy_evidence_filtered`/`f1_evidence_filtered`
+are therefore evidence-integrity metrics (stricter outcome checks), not
+process-based ones, in this version.
 
 Usage:
     python score_getisord.py
@@ -97,25 +87,23 @@ import re
 import pandas as pd
 
 from statistic_plausibility import magnitude_plausible, gi_threshold_consistent
-from formula_invariance_check import compute_shifted_statistic
 
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_getisord.csv"
-MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest.csv"  # must have csv_path / adjacency_path per chunk_id
 
 # for multi agent
-#RESULTS_CSV = "results/multi agent/getisord_results_multiagent_with_method.csv"
-#OUT_CSV = "Scores/multi agent/getisord_scoring_summary_multiagent.csv"
+RESULTS_CSV = "results/multi agent/getisord_results_multiagent_with_method.csv"
+OUT_CSV = "Scores/multi agent/getisord_scoring_summary_multiagent.csv"
 
 # for multi turn
-RESULTS_CSV = "results/single agent/getisord_results_multi_with_method.csv"
-OUT_CSV = "Scores/multi turn/getisord_scoring_summary.csv"
+#RESULTS_CSV = "results/single agent/getisord_results_multi_with_method.csv"
+#OUT_CSV = "Scores/multi turn/getisord_scoring_summary.csv"
 
 #For single turn
 #RESULTS_CSV = "getisord_results_with_method.csv"
 #OUT_CSV = "Scores/single turn/getisord_scoring_summary.csv"
 
 #For React model
-#RESULTS_CSV = "ReAct/getisord_results_react.csv"
+#RESULTS_CSV = "ReAct/getisord_results_react_with_method.csv"
 #OUT_CSV = "Scores/ReAct/getisord_scoring_summary.csv"
 
 ALL_BOROUGHS = [
@@ -348,19 +336,6 @@ def _value_check_chunk(pred_values, truth_values, matched_boroughs, method_for_t
     return True if checked_any else None
 
 
-def _load_manifest_index():
-    """Loads the manifest indexed by chunk_id, for the shift-invariance
-    re-check's csv_path/adjacency_path lookup. Degrades to an always-
-    missing stand-in (shift check skipped entirely, never blocking
-    scoring) if the file isn't found."""
-    try:
-        return pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
-    except (FileNotFoundError, OSError):
-        print(f"WARNING: manifest not found at {MANIFEST_PATH} -- "
-              f"shift-invariance re-checks will be skipped for every row.")
-        return pd.DataFrame(columns=["csv_path", "adjacency_path"])
-
-
 def run():
     df = pd.read_csv(RESULTS_CSV)
 
@@ -372,7 +347,6 @@ def run():
         )
 
     gt_methods = load_ground_truth_methods()
-    manifest = _load_manifest_index()
     rows = []
 
     for (mode, model), g in df.groupby(["mode", "model"]):
@@ -430,43 +404,6 @@ def run():
             if is_valid_none and pred == truth == {}:
                 has_real_evidence = True
 
-            # --- Shift-invariance re-execution (process-based check) ---
-            # Getis-Ord Gi/Gi* (and Local Moran's I) are invariant to a
-            # constant additive shift of the input values -- re-run the
-            # model's OWN saved code on a shifted copy of the data and
-            # compare the recomputed value against the ORIGINALLY
-            # reported ones. Unlike a single-scalar task (bivariate/
-            # outlier-r/changespillover), a getisord chunk lists
-            # MULTIPLE boroughs, and the re-executed code's raw print
-            # order has no reason to match predicted_boroughs' order --
-            # comparing "first vs first" positionally would spuriously
-            # fail correct code whenever two DIFFERENT boroughs got
-            # compared to each other (confirmed to happen in practice --
-            # this is why an earlier version of this check produced
-            # unexpectedly low scores across many models). Instead, the
-            # recomputed value is checked against EVERY originally-
-            # reported borough value, accepting a match with ANY of
-            # them -- still a real discriminating check (a wildly
-            # different or non-finite re-run result matches none of
-            # them), just robust to ordering differences.
-            if has_real_evidence and pred_values and r.get("chunk_id") in manifest.index:
-                m = manifest.loc[r["chunk_id"]]
-                shifted_stat = compute_shifted_statistic(
-                    r.get("run_dir"), m["csv_path"], m.get("adjacency_path"))
-                if shifted_stat is not None:
-                    try:
-                        shifted_val = float(shifted_stat)
-                        tol = METHOD_TOLERANCE.get(gt_method_used, DEFAULT_TOLERANCE)
-                        is_match = any(abs(shifted_val - v) <= tol for v in pred_values.values())
-                        if not (shifted_val == shifted_val and abs(shifted_val) != float("inf") and is_match):
-                            has_real_evidence = False
-                    except (TypeError, ValueError):
-                        has_real_evidence = False
-                # shifted_stat is None (no code found / execution failed
-                # entirely) -- inconclusive, NOT penalized; has_real_evidence
-                # is left as-is, same tri-state philosophy used everywhere
-                # else in this pipeline.
-
             is_failed_chunk = is_ambiguous_chunk or is_implausible_chunk
 
             if is_failed_chunk:
@@ -522,15 +459,15 @@ def run():
         non_ambiguous = n - n_ambiguous
         pct_with_evidence = round(evidence_weighted_sum / n, 3) if n else 0.0
 
-        accuracy = round(sum(graded_f1_scores) / n, 3) if n else 0.0
-        precision = round(tp / (tp + fp), 3) if (tp + fp) > 0 else 0.0
-        recall = round(tp / (tp + fn), 3) if (tp + fn) > 0 else 0.0
-        f1 = round(2 * precision * recall / (precision + recall), 3) if (precision + recall) > 0 else 0.0
+        accuracy = sum(graded_f1_scores) / n if n else 0.0
+        precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+        recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
 
-        accuracy_ef = round(sum(graded_f1_scores_ef) / n, 3) if n else 0.0
-        precision_ef = round(tp_ef / (tp_ef + fp_ef), 3) if (tp_ef + fp_ef) > 0 else 0.0
-        recall_ef = round(tp_ef / (tp_ef + fn_ef), 3) if (tp_ef + fn_ef) > 0 else 0.0
-        f1_ef = round(2 * precision_ef * recall_ef / (precision_ef + recall_ef), 3) \
+        accuracy_ef = sum(graded_f1_scores_ef) / n if n else 0.0
+        precision_ef = tp_ef / (tp_ef + fp_ef) if (tp_ef + fp_ef) > 0 else 0.0
+        recall_ef = tp_ef / (tp_ef + fn_ef) if (tp_ef + fn_ef) > 0 else 0.0
+        f1_ef = 2 * precision_ef * recall_ef / (precision_ef + recall_ef) \
             if (precision_ef + recall_ef) > 0 else 0.0
 
         partial_accuracy = round(sum(partial_accuracies) / n, 3) if n else 0.0
@@ -543,14 +480,14 @@ def run():
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
             "pct_with_evidence": pct_with_evidence,
             "tp": tp, "fp": fp,
-            "accuracy": accuracy,
-            "precision": precision, "recall": recall, "f1": f1,
+            "accuracy": f"{accuracy * 100:05.2f}",
+            "precision": f"{precision * 100:05.2f}", "recall": f"{recall * 100:05.2f}", "f1": f"{f1 * 100:05.2f}",
             "correct_number_evidence_filtered": correct_number_ef,
             "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
-            "accuracy_evidence_filtered": accuracy_ef,
-            "precision_evidence_filtered": precision_ef,
-            "recall_evidence_filtered": recall_ef,
-            "f1_evidence_filtered": f1_ef,
+            "accuracy_evidence_filtered": f"{accuracy_ef * 100:05.2f}",
+            "precision_evidence_filtered": f"{precision_ef * 100:05.2f}",
+            "recall_evidence_filtered": f"{recall_ef * 100:05.2f}",
+            "f1_evidence_filtered": f"{f1_ef * 100:05.2f}",
             "partial_accuracy": partial_accuracy,
             "partial_accuracy_evidence_filtered": partial_accuracy_ef,
             # the 2 new columns beyond the original script -- see docstring

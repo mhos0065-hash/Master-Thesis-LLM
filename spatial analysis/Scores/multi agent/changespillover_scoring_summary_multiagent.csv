@@ -1,9 +1,9 @@
 mode,model,n,n_ambiguous,non_ambiguous,correct_number,pct_with_evidence,tp,fp,accuracy,precision,recall,f1,correct_number_evidence_filtered,tp_evidence_filtered,fp_evidence_filtered,accuracy_evidence_filtered,precision_evidence_filtered,recall_evidence_filtered,f1_evidence_filtered,n_method_specific_gt,accuracy_fully_verified
-multiagent,deepseek/deepseek-chat-v3-0324,21,0,21,19,0.952,4,0,0.905,0.941,0.833,0.869,19,4,0,0.905,0.941,0.833,0.869,21,0.81
-multiagent,deepseek/deepseek-r1-0528,21,0,21,21,1.0,6,0,1.0,1.0,1.0,1.0,21,6,0,1.0,1.0,1.0,1.0,21,1.0
-multiagent,meta-llama/llama-3.1-8b-instruct,21,5,16,11,0.524,2,2,0.524,0.625,0.467,0.533,10,1,1,0.476,0.625,0.383,0.458,21,0.143
-multiagent,moonshotai/kimi-k2.6,21,0,21,20,0.952,5,0,0.952,0.969,0.917,0.938,20,5,0,0.952,0.969,0.917,0.938,21,0.905
-multiagent,openai/gpt-4o-mini,21,0,21,17,0.952,3,2,0.81,0.738,0.738,0.738,17,3,1,0.81,0.812,0.738,0.771,21,0.333
-multiagent,openai/o3,21,0,21,18,0.952,3,0,0.857,0.917,0.75,0.788,18,3,0,0.857,0.917,0.75,0.788,21,0.81
-multiagent,openai/o4-mini,21,0,21,21,1.0,6,0,1.0,1.0,1.0,1.0,21,6,0,1.0,1.0,1.0,1.0,21,1.0
-multiagent,qwen/qwen3-32b,21,0,21,19,1.0,5,1,0.905,0.883,0.883,0.883,19,5,1,0.905,0.883,0.883,0.883,21,0.857
+multiagent,deepseek/deepseek-chat-v3-0324,53,0,53,48,0.962,14,0,90.57,93.59,86.84,89.00,48,14,0,90.57,93.59,86.84,89.00,53,0.774
+multiagent,deepseek/deepseek-r1-0528,53,0,53,50,0.962,17,1,94.34,94.37,93.27,93.77,49,16,1,92.45,94.20,90.63,92.27,53,0.906
+multiagent,meta-llama/llama-3.1-8b-instruct,53,11,42,23,0.585,7,11,43.40,52.78,41.95,46.51,20,4,7,37.74,51.52,34.06,40.92,48,0.113
+multiagent,moonshotai/kimi-k2.6,53,0,53,48,0.981,15,1,90.57,91.47,88.00,89.34,48,15,1,90.57,91.47,88.00,89.34,53,0.792
+multiagent,openai/gpt-4o-mini,53,1,52,41,0.943,11,4,77.36,77.21,73.07,74.61,41,11,2,77.36,82.85,73.07,76.63,50,0.377
+multiagent,openai/o3,53,0,53,45,0.981,13,1,84.91,87.45,80.98,82.68,45,13,1,84.91,87.45,80.98,82.68,53,0.755
+multiagent,openai/o4-mini,53,0,53,53,1.0,19,0,100.00,100.00,100.00,100.00,53,19,0,100.00,100.00,100.00,100.00,53,0.962
+multiagent,qwen/qwen3-32b,53,0,53,48,1.0,17,3,90.57,89.47,90.33,89.86,48,17,3,90.57,89.47,90.33,89.86,53,0.755

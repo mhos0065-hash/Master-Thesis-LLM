@@ -9,43 +9,53 @@ all tables are directly comparable.
 Binary, not 3-way -- predicted and the resolved ground truth are both
 simple booleans.
 
-Evidence check (UNCHANGED from the previous version of this script):
-a chunk only counts as evidenced if at least one REAL, finite,
+Evidence check (UNCHANGED apart from the shift-invariance addition
+below): a chunk only counts as evidenced if at least one REAL, finite,
 non-placeholder number is cited (not nan, not a method name, not a
 self-admitted fabrication), the statistic is magnitude-plausible, the
 p-value is a genuine probability, and the claimed verdict is consistent
 with its own reported p-value.
 
-NEW in this version:
+VERDICT correctness is resolved PER ROW against the ground truth for
+the SPECIFIC method that row used (from
+ground_truth_all_methods_changespillover.csv: Geary's C, Join Count
+Statistic, or Neighbor-average correlation), falling back to the
+manifest's official Global Moran's I-derived ground truth (already
+present via `ground_truth_present`) only when the row's method has no
+computed ground truth. `n_method_specific_gt` records how many chunks
+per model used a method-matched comparison vs. the fallback.
 
-1. VERDICT correctness is resolved PER ROW against the ground truth for
-   the SPECIFIC method that row used (from
-   ground_truth_all_methods_changespillover.csv: Geary's C, Join Count
-   Statistic, or Neighbor-average correlation), falling back to the
-   manifest's official Global Moran's I-derived ground truth (already
-   present via `ground_truth_present`) only when the row's method has
-   no computed ground truth. `n_method_specific_gt` records how many
-   chunks per model used a method-matched comparison vs. the fallback.
+A per-chunk VALUE-verification layer: for chunks that are verdict-
+correct AND evidenced, the reported test statistic is compared against
+the RESOLVED ground truth's statistic using a flat, ABSOLUTE 0.05
+tolerance (not relative -- relative error is meaningless near zero, and
+these statistics are all roughly bounded in a similar small range).
+0.05 is reused directly from the bivariate task's Cross-Moran's I /
+Lee's L derivation rather than re-derived from scratch, since Global
+Moran's I is the same statistic family. This is applied uniformly
+across all methods here as a deliberate simplification, per explicit
+instruction -- Geary's C's different natural scale (centered at 1, not
+0) and the correlation-based method's tighter true ambiguity are both
+real caveats worth flagging in the thesis write-up rather than treated
+as settled. `accuracy_fully_verified` is the fraction of chunks passing
+ALL of: correct verdict, real evidence, AND a statistic value that
+actually matches its claimed method.
 
-2. A per-chunk VALUE-verification layer: for chunks that are verdict-
-   correct AND evidenced, the reported test statistic is compared
-   against the RESOLVED ground truth's statistic using a flat, ABSOLUTE
-   0.05 tolerance (not relative -- same reasoning applied in the
-   getisord/outlier-r tasks: relative error is meaningless near zero,
-   and these statistics are all roughly bounded in a similar small
-   range). 0.05 is reused directly from the bivariate task's Cross-
-   Moran's I / Lee's L derivation (p95 of legitimate row-standardized-
-   vs-binary weight variation was ~0.04) rather than re-derived from
-   scratch, since Global Moran's I is the same statistic family (a
-   univariate special case of Cross-Moran's I). This is applied
-   uniformly across all methods here as a deliberate simplification,
-   per explicit instruction -- Geary's C's different natural scale
-   (centered at 1, not 0) and the correlation-based method's tighter
-   true ambiguity are both real caveats worth flagging in the thesis
-   write-up rather than treated as settled. `accuracy_fully_verified`
-   is the fraction of chunks passing ALL of: correct verdict, real
-   evidence, AND a statistic value that actually matches its claimed
-   method.
+NEW -- SHIFT-INVARIANCE RE-EXECUTION (the same mechanism used in
+score_bivariate.py, added here so `accuracy_evidence_filtered` and
+`f1_evidence_filtered` are process-based metrics, not just a stricter
+outcome check): Global Moran's I, Geary's C, the Join Count statistic's
+underlying values, and the neighbor-average correlation are all built
+from deviations around a mean (or a binary split derived from the raw
+values), so all are invariant to a constant additive shift applied to
+every borough's change value. For each chunk with a real cited number,
+the model's OWN saved code is re-executed on a SHIFTED copy of the
+input data, and the recomputed statistic is compared against the
+original -- interrogating the code itself, not just the number it
+happened to output once. `has_evidence_bool` now additionally requires
+this re-check to NOT have returned a confirmed failure (True or
+inconclusive both pass; only a confirmed False disqualifies), same
+tri-state handling as bivariate.
 
 Note on p-values: the task prompt itself warns that permutation-based
 p-values need >=500 shuffles to be stable, i.e. p-values carry real,
@@ -60,7 +70,7 @@ Usage:
     python score_changespillover.py
 Reads:  <mode>_results_with_method.csv (must include `statistical_method`
         -- see attach_statistical_method_changespillover.py),
-        ground_truth_all_methods_changespillover.csv
+        ground_truth_all_methods_changespillover.csv, changespillover_manifest.csv
 Writes: changespillover_scoring_summary.csv
 """
 
@@ -68,12 +78,15 @@ import re
 import pandas as pd
 
 from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
+from formula_invariance_check import check_shift_invariant
 
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_changespillover.csv"
+MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path per chunk_id
+
 
 #Multi agent
-#RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
-#OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
+RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
+OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
 
 #Multi turn
 #RESULTS_CSV = "results/single agent/changespillover_results_multi_with_method.csv"
@@ -84,8 +97,8 @@ GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_changespillov
 #OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
 
 #ReAct multi turn
-RESULTS_CSV = "ReAct/changespillover_results_react.csv"
-OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
+#RESULTS_CSV = "ReAct/changespillover_results_react.csv"
+#OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
 
 # Maps attach_statistical_method_changespillover.py's free-text labels
 # onto the (fewer) method names that actually have ground truth
@@ -206,6 +219,19 @@ def value_within_tolerance(model_val, gt_val):
     return abs(m - g) <= VALUE_TOLERANCE
 
 
+def _load_manifest_index():
+    """Loads the manifest indexed by chunk_id, for the shift-invariance
+    re-check. Degrades to an always-missing stand-in (shift check
+    becomes inconclusive/None for every row, never blocking scoring) if
+    the file isn't found."""
+    try:
+        return pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
+    except (FileNotFoundError, OSError):
+        print(f"WARNING: manifest not found at {MANIFEST_PATH} -- "
+              f"shift-invariance re-checks will be skipped (inconclusive) for every row.")
+        return pd.DataFrame(columns=["csv_path", "adjacency_path"])
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
 
@@ -217,6 +243,8 @@ def load():
         )
 
     gt_methods = load_ground_truth_methods()
+    manifest = _load_manifest_index()
+
     resolved = df.apply(
         lambda r: resolve_ground_truth(
             r["chunk_id"], r.get("statistical_method"), r["ground_truth_present"], gt_methods),
@@ -230,6 +258,39 @@ def load():
     df["ambiguous"] = df["predicted_bool"].isna()
     df["has_real_statistic_bool"] = df.apply(
         lambda r: _has_real_statistic(r["evidence_text"], r.get("verdict_detail")), axis=1)
+
+    total_checkable = int(df["has_real_statistic_bool"].sum())
+    print(f"Running shift-invariance re-checks on {total_checkable} row(s) with a real statistic "
+          f"(this re-executes each row's saved code, so it's the slow part)...", flush=True)
+    _progress = {"n": 0}
+
+    def _shift_check(row):
+        # --- Shift-invariance re-execution (process-based check) ---
+        # Global Moran's I / Geary's C / Join Count / neighbor-average
+        # correlation are all invariant to a constant additive shift of
+        # the CHANGE variable -- see module docstring. Shifting BOTH
+        # year columns (the old default) cancels exactly in the
+        # difference (year2-year1), making the check trivially pass
+        # regardless of correctness -- so only the LATER year column is
+        # shifted here, identified via the manifest's own window_end
+        # field (the same field ground_truth_all_methods_changespillover.R
+        # already uses to identify that column).
+        if not row["has_real_statistic_bool"]:
+            return None
+        _progress["n"] += 1
+        print(f"  [{_progress['n']}/{total_checkable}] {row['model']} | {row['chunk_id']}", flush=True)
+        if row["chunk_id"] not in manifest.index:
+            return None
+        m = manifest.loc[row["chunk_id"]]
+        raw_stat = _extract_raw_statistic(row["evidence_text"])
+        window_end = m.get("window_end")
+        shift_col = str(int(window_end)) if pd.notna(window_end) else None
+        return check_shift_invariant(
+            row["run_dir"], m["csv_path"], m.get("adjacency_path"), raw_stat,
+            shift_only_column=shift_col)
+
+    df["shift_invariant"] = df.apply(_shift_check, axis=1)
+    print("Shift-invariance re-checks complete.\n", flush=True)
 
     def _plausibility_check(row):
         if not row["has_real_statistic_bool"]:
@@ -246,9 +307,40 @@ def load():
         return True
 
     df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
-    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
+
+    # Evidence requires ALL of: a real, non-fabricated number; the
+    # formula behaving correctly under a constant shift (where the
+    # re-check was conclusive); AND the statistic/p-value being
+    # plausible and internally consistent with the stated verdict --
+    # this is what makes accuracy_evidence_filtered/f1_evidence_filtered
+    # process-based, not just a stricter outcome check.
+    df["has_evidence_bool"] = (
+        df["has_real_statistic_bool"]
+        & (df["shift_invariant"] != False)  # noqa: E712
+        & df["statistic_plausible"]
+    )
+
     df["correct"] = (~df["ambiguous"]) & (df["predicted_bool"] == df["gt_clustered_used"])
-    df["correct_evidence_filtered"] = df["correct"] & df["has_evidence_bool"]
+
+    def _correct_ef_value(row):
+        # Match compute_metrics()'s OWN lenient rule for
+        # f1_evidence_filtered/precision_ef/recall_ef -- a NOT_CLUSTERED
+        # (False) claim doesn't need real evidence to count, since
+        # there's nothing to fabricate when claiming "nothing was
+        # found"; only a CLUSTERED (True) claim does. Confirmed
+        # necessary (found via the identical bug in score_spatial_results.py):
+        # without this, correct_evidence_filtered used a STRICTER bar
+        # than f1_evidence_filtered, which already exempts False
+        # predictions via compute_metrics' keep_as_is logic -- causing
+        # accuracy_evidence_filtered to read systematically below
+        # f1_evidence_filtered for every model, not a real finding.
+        if row["ambiguous"]:
+            return False
+        if row["predicted_bool"] == False and row["correct"]:  # noqa: E712
+            return True
+        return bool(row["correct"] and row["has_evidence_bool"])
+
+    df["correct_evidence_filtered"] = df.apply(_correct_ef_value, axis=1)
 
     def _value_check(row):
         if not (row["correct"] and row["has_evidence_bool"]):
@@ -274,13 +366,13 @@ def compute_metrics(g, use_evidence_filter):
     has_evidence = g["has_evidence_bool"].astype(bool)
 
     if use_evidence_filter:
-        keep_as_is = g["predicted_bool"].isna() | (g["predicted_bool"] == False) | has_evidence
+        keep_as_is = g["predicted_bool"].isna() | (g["predicted_bool"] == False) | has_evidence  # noqa: E712
         y_pred = g["predicted_bool"].where(keep_as_is, None)
     else:
         y_pred = g["predicted_bool"]
 
-    tp = int(((y_pred == True) & (y_true == True)).sum())
-    fp = int(((y_pred == True) & (y_true == False)).sum())
+    tp = int(((y_pred == True) & (y_true == True)).sum())  # noqa: E712
+    fp = int(((y_pred == True) & (y_true == False)).sum())  # noqa: E712
 
     f1s, precisions, recalls = [], [], []
     for target_class in (True, False):
@@ -297,13 +389,13 @@ def compute_metrics(g, use_evidence_filter):
         recalls.append(r)
         f1s.append(f1_c)
 
-    precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
-    recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
-    f1 = round(sum(f1s) / len(f1s), 3) if f1s else 0.0
+    precision = sum(precisions) / len(precisions) if precisions else 0.0
+    recall = sum(recalls) / len(recalls) if recalls else 0.0
+    f1 = sum(f1s) / len(f1s) if f1s else 0.0
 
     n_total = len(g)
     correct_col = "correct_evidence_filtered" if use_evidence_filter else "correct"
-    accuracy = round(g[correct_col].sum() / n_total, 3) if n_total > 0 else 0.0
+    accuracy = g[correct_col].sum() / n_total if n_total > 0 else 0.0
     return accuracy, precision, recall, f1, tp, fp
 
 
@@ -334,13 +426,14 @@ def run():
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
             "pct_with_evidence": pct_with_evidence,
             "tp": tp, "fp": fp,
-            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "accuracy": f"{accuracy * 100:05.2f}", "precision": f"{precision * 100:05.2f}",
+            "recall": f"{recall * 100:05.2f}", "f1": f"{f1 * 100:05.2f}",
             "correct_number_evidence_filtered": correct_number_ef,
             "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
-            "accuracy_evidence_filtered": accuracy_ef,
-            "precision_evidence_filtered": precision_ef,
-            "recall_evidence_filtered": recall_ef,
-            "f1_evidence_filtered": f1_ef,
+            "accuracy_evidence_filtered": f"{accuracy_ef * 100:05.2f}",
+            "precision_evidence_filtered": f"{precision_ef * 100:05.2f}",
+            "recall_evidence_filtered": f"{recall_ef * 100:05.2f}",
+            "f1_evidence_filtered": f"{f1_ef * 100:05.2f}",
             # the 2 columns beyond the original schema -- see docstring
             "n_method_specific_gt": n_method_specific_gt,
             "accuracy_fully_verified": accuracy_fully_verified,

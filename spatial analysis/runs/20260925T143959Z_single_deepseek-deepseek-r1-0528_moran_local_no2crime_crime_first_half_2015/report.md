@@ -1,0 +1,7 @@
+# Single-agent report: moran_local_no2crime_crime_first_half_2015
+
+**Predicted:** True
+
+**Detail:** Haringey (HH, proportion_high=0.6667), Lewisham (HH, proportion_high=0.7500), Southwark (HH, proportion_high=0.6000), Islington (HH, proportion_high=0.7500), Tower Hamlets (HH, proportion_high=0.8333), Greenwich (HH, proportion_high=0.6667), Waltham Forest (HH, proportion_high=0.6000), Camden (HH, proportion_high=0.5000), Newham (HH, proportion_high=0.8333), Hackney (HH, proportion_high=0.8333), Kensington and Chelsea (HH, proportion_high=0.5000), Westminster (HH, proportion_high=0.5000), Merton
+
+**Answer line:** Haringey (HH, proportion_high=0.6667), Lewisham (HH, proportion_high=0.7500), Southwark (HH, proportion_high=0.6000), Islington (HH, proportion_high=0.7500), Tower Hamlets (HH, proportion_high=0.8333), Greenwich (HH, proportion_high=0.6667), Waltham Forest (HH, proportion_high=0.6000), Camden (HH, proportion_high=0.5000), Newham (HH, proportion_high=0.8333), Hackney (HH, proportion_high=0.8333), Kensington and Chelsea (HH, proportion_high=0.5000), Westminster (HH, proportion_high=0.5000), Merton (LL, proportion_low=0.6000), Hillingdon (LL, proportion_low=1.0000), Harrow (LL, proportion_low=1.0000), Havering (LL, proportion_low=0.6667), Bexley (LL, proportion_low=0.5000), Sutton (LL, proportion_low=0.6667), Kingston upon Thames (LL, proportion_low=1.0000), Ealing (LL, proportion_low=0.8000), Barnet (LL, proportion_low=0.6000), Richmond upon Thames (LL, proportion_low=0.7500), Hounslow (LL, proportion_low=0.7500)

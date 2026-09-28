@@ -89,8 +89,8 @@ GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_outlierr.csv"
 MANIFEST_PATH = "chunks_csv/outlier/routlier_iterative_r_manifest.csv"  # must have csv_path / adjacency_path per chunk_id
 
 # Multi agent
-RESULTS_CSV = "results/multi agent/outlier_iterative_r_results_multiagent_with_method.csv"
-OUT_CSV = "Scores/multi agent/outlier_iterative_r_scoring_summary_multiagent.csv"
+#RESULTS_CSV = "results/multi agent/outlier_iterative_r_results_multiagent_with_method.csv"
+#OUT_CSV = "Scores/multi agent/outlier_iterative_r_scoring_summary_multiagent.csv"
 
 # Single turn
 #RESULTS_CSV = "outlier_iterative_r_results_with_method.csv"
@@ -101,8 +101,8 @@ OUT_CSV = "Scores/multi agent/outlier_iterative_r_scoring_summary_multiagent.csv
 #OUT_CSV = "Scores/multi turn/outlier_iterative_r_scoring_summary_multi.csv"
 
 #ReAct multi turn
-#RESULTS_CSV = "ReAct/outlier_iterative_r_results_react.csv"
-#OUT_CSV = "Scores/ReAct/outlier_iterative_r_scoring_summary_ReAct.csv"
+RESULTS_CSV = "ReAct/outlier_iterative_r_results_react.csv"
+OUT_CSV = "Scores/ReAct/outlier_iterative_r_scoring_summary_ReAct.csv"
 
 
 CLASSES = ["outlier_high", "outlier_low", "not_outlier"]
@@ -484,9 +484,9 @@ def per_class_metrics(g, use_evidence_filter):
         recalls.append(recall)
         f1_scores.append(f1)
 
-    macro_precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
-    macro_recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
-    macro_f1 = round(sum(f1_scores) / len(f1_scores), 3) if f1_scores else 0.0
+    macro_precision = sum(precisions) / len(precisions) if precisions else 0.0
+    macro_recall = sum(recalls) / len(recalls) if recalls else 0.0
+    macro_f1 = sum(f1_scores) / len(f1_scores) if f1_scores else 0.0
     return tp_total, fp_total, macro_precision, macro_recall, macro_f1
 
 
@@ -505,8 +505,8 @@ def run():
         if n == 0:
             continue
 
-        accuracy = round(correct_number / n, 3)
-        accuracy_ef = round(correct_number_ef / n, 3)
+        accuracy = correct_number / n
+        accuracy_ef = correct_number_ef / n
 
         tp, fp, precision, recall, f1 = per_class_metrics(g, use_evidence_filter=False)
         tp_ef, fp_ef, precision_ef, recall_ef, f1_ef = per_class_metrics(g, use_evidence_filter=True)
@@ -520,13 +520,14 @@ def run():
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
             "pct_with_evidence": pct_with_evidence,
             "tp": tp, "fp": fp,
-            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "accuracy": f"{accuracy * 100:05.2f}", "precision": f"{precision * 100:05.2f}",
+            "recall": f"{recall * 100:05.2f}", "f1": f"{f1 * 100:05.2f}",
             "correct_number_evidence_filtered": correct_number_ef,
             "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
-            "accuracy_evidence_filtered": accuracy_ef,
-            "precision_evidence_filtered": precision_ef,
-            "recall_evidence_filtered": recall_ef,
-            "f1_evidence_filtered": f1_ef,
+            "accuracy_evidence_filtered": f"{accuracy_ef * 100:05.2f}",
+            "precision_evidence_filtered": f"{precision_ef * 100:05.2f}",
+            "recall_evidence_filtered": f"{recall_ef * 100:05.2f}",
+            "f1_evidence_filtered": f"{f1_ef * 100:05.2f}",
             # the 2 columns beyond the original schema -- see docstring
             "n_method_specific_gt": n_method_specific_gt,
             "accuracy_fully_verified": accuracy_fully_verified,

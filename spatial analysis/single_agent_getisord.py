@@ -27,11 +27,16 @@ from agent_utils import agent_loop, LLM_MODEL # Single turn
 
 from getisord_verdict import parse_getisord_with_citation
 
-MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest.csv" 
+#MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest.csv" 
+MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest2.csv" # Additional files 
 
-RESULTS_CSV = "getisord_results.csv" # Single turn
+#RESULTS_CSV = "getisord_results.csv" # Single turn
 
-#RESULTS_CSV = "results/getisord_results_multi.csv" # multi turn 
+#RESULTS_CSV = "getisord_results_additional.csv" # Single-turn additional
+
+#RESULTS_CSV = "results/single agent/getisord_results_multi.csv" # multi-turn 
+
+RESULTS_CSV = "results/single agent/getisord_results_multi_additional.csv" # multi-turn additional
 
 FAILED_LOG = "getisord_failed_runs.log"
 
@@ -86,17 +91,17 @@ def run_one(chunk_id, meta, model):
 
 
     # For multi turn
-    #verdict, final_text, log = agent_loop(
-       # SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
-        #model=model, require_structured_verdict=False,
-        #extra_files=extra_files, max_iterations=6, answer_from_code_output=True)
-
-
-    # For single turn
     verdict, final_text, log = agent_loop(
         SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
         model=model, require_structured_verdict=False,
-        extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
+        extra_files=extra_files, max_iterations=6, answer_from_code_output=True)
+
+
+    # For single turn
+    #verdict, final_text, log = agent_loop(
+        #SYSTEM_PROMPT, meta["insight_def"], meta["csv_path"], run_dir,
+        #model=model, require_structured_verdict=False,
+        #extra_files=extra_files, max_iterations=1, answer_from_code_output=True)
 
 
     with open(os.path.join(run_dir, "conversation_log.json"), "w", encoding="utf-8") as f:

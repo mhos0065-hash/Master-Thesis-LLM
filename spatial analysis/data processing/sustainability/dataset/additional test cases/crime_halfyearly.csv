@@ -1,0 +1,727 @@
+time,Borough,population,crime_rate
+second_half_2010,Barking and Dagenham,218900,431.1558
+second_half_2010,Barnet,389300,323.401
+second_half_2010,Bexley,246500,276.3083
+second_half_2010,Brent,339800,426.0742
+second_half_2010,Bromley,330000,322.2424
+second_half_2010,Camden,210100,787.7677
+second_half_2010,City of London,8600,
+second_half_2010,Croydon,390800,408.6233
+second_half_2010,Ealing,367100,462.5987
+second_half_2010,Enfield,330000,345.7576
+second_half_2010,Greenwich,289100,408.1633
+second_half_2010,Hackney,259200,527.662
+second_half_2010,Hammersmith and Fulham,183200,642.5764
+second_half_2010,Haringey,264200,454.3906
+second_half_2010,Harrow,261300,278.8366
+second_half_2010,Havering,262000,326.1832
+second_half_2010,Hillingdon,305900,367.0481
+second_half_2010,Hounslow,288200,403.5739
+second_half_2010,Islington,216600,637.0729
+second_half_2010,Kensington and Chelsea,143400,762.4826
+second_half_2010,Kingston upon Thames,168000,333.5119
+second_half_2010,Lambeth,317600,556.8325
+second_half_2010,Lewisham,300600,457.851
+second_half_2010,Merton,215200,328.5781
+second_half_2010,Newham,351100,487.2971
+second_half_2010,Redbridge,310300,378.8269
+second_half_2010,Richmond upon Thames,195200,286.9877
+second_half_2010,Southwark,307700,592.2002
+second_half_2010,Sutton,209600,289.5992
+second_half_2010,Tower Hamlets,310300,465.8717
+second_half_2010,Waltham Forest,278400,490.4813
+second_half_2010,Wandsworth,327500,382.1679
+second_half_2010,Westminster,204300,1564.9046
+first_half_2011,Barking and Dagenham,218900,432.572
+first_half_2011,Barnet,389300,342.5893
+first_half_2011,Bexley,246500,260.0811
+first_half_2011,Brent,339800,443.4079
+first_half_2011,Bromley,330000,334.2424
+first_half_2011,Camden,210100,861.9705
+first_half_2011,City of London,8600,
+first_half_2011,Croydon,390800,413.3316
+first_half_2011,Ealing,367100,456.5241
+first_half_2011,Enfield,330000,369.2727
+first_half_2011,Greenwich,289100,396.7485
+first_half_2011,Hackney,259200,539.3519
+first_half_2011,Hammersmith and Fulham,183200,640.5022
+first_half_2011,Haringey,264200,467.2597
+first_half_2011,Harrow,261300,270.7233
+first_half_2011,Havering,262000,336.1832
+first_half_2011,Hillingdon,305900,386.695
+first_half_2011,Hounslow,288200,407.3213
+first_half_2011,Islington,216600,650.9234
+first_half_2011,Kensington and Chelsea,143400,708.0195
+first_half_2011,Kingston upon Thames,168000,317.1429
+first_half_2011,Lambeth,317600,575.5353
+first_half_2011,Lewisham,300600,467.4651
+first_half_2011,Merton,215200,339.0335
+first_half_2011,Newham,351100,454.7422
+first_half_2011,Redbridge,310300,399.2588
+first_half_2011,Richmond upon Thames,195200,303.4836
+first_half_2011,Southwark,307700,567.5008
+first_half_2011,Sutton,209600,289.9332
+first_half_2011,Tower Hamlets,310300,460.9733
+first_half_2011,Waltham Forest,278400,475.1437
+first_half_2011,Wandsworth,327500,344.3664
+first_half_2011,Westminster,204300,1619.7259
+second_half_2011,Barking and Dagenham,218900,414.0704
+second_half_2011,Barnet,389300,329.7457
+second_half_2011,Bexley,246500,238.215
+second_half_2011,Brent,339800,455.827
+second_half_2011,Bromley,330000,332.6364
+second_half_2011,Camden,210100,846.2637
+second_half_2011,City of London,8600,
+second_half_2011,Croydon,390800,411.9754
+second_half_2011,Ealing,367100,426.1782
+second_half_2011,Enfield,330000,339
+second_half_2011,Greenwich,289100,380.422
+second_half_2011,Hackney,259200,521.6049
+second_half_2011,Hammersmith and Fulham,183200,627.7293
+second_half_2011,Haringey,264200,487.0931
+second_half_2011,Harrow,261300,260.6582
+second_half_2011,Havering,262000,321.5267
+second_half_2011,Hillingdon,305900,394.2138
+second_half_2011,Hounslow,288200,416.2734
+second_half_2011,Islington,216600,607.9409
+second_half_2011,Kensington and Chelsea,143400,715.272
+second_half_2011,Kingston upon Thames,168000,338.8095
+second_half_2011,Lambeth,317600,581.0139
+second_half_2011,Lewisham,300600,449.2681
+second_half_2011,Merton,215200,325.8829
+second_half_2011,Newham,351100,439.6468
+second_half_2011,Redbridge,310300,384.6278
+second_half_2011,Richmond upon Thames,195200,302.2541
+second_half_2011,Southwark,307700,562.4634
+second_half_2011,Sutton,209600,272.7576
+second_half_2011,Tower Hamlets,310300,478.0535
+second_half_2011,Waltham Forest,278400,440.158
+second_half_2011,Wandsworth,327500,362.687
+second_half_2011,Westminster,204300,1603.6221
+first_half_2012,Barking and Dagenham,218900,404.4769
+first_half_2012,Barnet,389300,328.8466
+first_half_2012,Bexley,246500,252.5355
+first_half_2012,Brent,339800,425.8682
+first_half_2012,Bromley,330000,309
+first_half_2012,Camden,210100,811.0424
+first_half_2012,City of London,8600,
+first_half_2012,Croydon,390800,419.8311
+first_half_2012,Ealing,367100,421.0569
+first_half_2012,Enfield,330000,340.8788
+first_half_2012,Greenwich,289100,373.3656
+first_half_2012,Hackney,259200,555.517
+first_half_2012,Hammersmith and Fulham,183200,612.8821
+first_half_2012,Haringey,264200,488.9856
+first_half_2012,Harrow,261300,271.106
+first_half_2012,Havering,262000,323.9313
+first_half_2012,Hillingdon,305900,364.8578
+first_half_2012,Hounslow,288200,425.0173
+first_half_2012,Islington,216600,631.7175
+first_half_2012,Kensington and Chelsea,143400,720.9205
+first_half_2012,Kingston upon Thames,168000,316.8452
+first_half_2012,Lambeth,317600,564.1058
+first_half_2012,Lewisham,300600,423.2868
+first_half_2012,Merton,215200,319.0985
+first_half_2012,Newham,351100,456.1948
+first_half_2012,Redbridge,310300,364.3893
+first_half_2012,Richmond upon Thames,195200,304.252
+first_half_2012,Southwark,307700,530.9067
+first_half_2012,Sutton,209600,271.9466
+first_half_2012,Tower Hamlets,310300,467.8698
+first_half_2012,Waltham Forest,278400,434.375
+first_half_2012,Wandsworth,327500,397.8321
+first_half_2012,Westminster,204300,1536.9065
+second_half_2012,Barking and Dagenham,218900,385.7012
+second_half_2012,Barnet,389300,328.6155
+second_half_2012,Bexley,246500,247.789
+second_half_2012,Brent,339800,406.5921
+second_half_2012,Bromley,330000,314.8182
+second_half_2012,Camden,210100,784.3884
+second_half_2012,City of London,8600,
+second_half_2012,Croydon,390800,407.9836
+second_half_2012,Ealing,367100,419.0684
+second_half_2012,Enfield,330000,344.2121
+second_half_2012,Greenwich,289100,365.3061
+second_half_2012,Hackney,259200,543.9815
+second_half_2012,Hammersmith and Fulham,183200,602.5655
+second_half_2012,Haringey,264200,446.707
+second_half_2012,Harrow,261300,255.7979
+second_half_2012,Havering,262000,315.0763
+second_half_2012,Hillingdon,305900,337.2998
+second_half_2012,Hounslow,288200,395.6627
+second_half_2012,Islington,216600,655.1708
+second_half_2012,Kensington and Chelsea,143400,764.7141
+second_half_2012,Kingston upon Thames,168000,311.6071
+second_half_2012,Lambeth,317600,564.1373
+second_half_2012,Lewisham,300600,415.4025
+second_half_2012,Merton,215200,314.1729
+second_half_2012,Newham,351100,471.1193
+second_half_2012,Redbridge,310300,366.8708
+second_half_2012,Richmond upon Thames,195200,301.998
+second_half_2012,Southwark,307700,531.9467
+second_half_2012,Sutton,209600,274.3321
+second_half_2012,Tower Hamlets,310300,482.6619
+second_half_2012,Waltham Forest,278400,438.4698
+second_half_2012,Wandsworth,327500,395.7557
+second_half_2012,Westminster,204300,1566.5688
+first_half_2013,Barking and Dagenham,218900,386.6606
+first_half_2013,Barnet,389300,300.4881
+first_half_2013,Bexley,246500,237.6065
+first_half_2013,Brent,339800,359.2407
+first_half_2013,Bromley,330000,289.3939
+first_half_2013,Camden,210100,712.0895
+first_half_2013,City of London,8600,
+first_half_2013,Croydon,390800,359.4933
+first_half_2013,Ealing,367100,366.9028
+first_half_2013,Enfield,330000,330.1212
+first_half_2013,Greenwich,289100,336.3542
+first_half_2013,Hackney,259200,502.1605
+first_half_2013,Hammersmith and Fulham,183200,515.8843
+first_half_2013,Haringey,264200,394.0197
+first_half_2013,Harrow,261300,241.5614
+first_half_2013,Havering,262000,297.1756
+first_half_2013,Hillingdon,305900,310.6898
+first_half_2013,Hounslow,288200,340.0763
+first_half_2013,Islington,216600,569.8984
+first_half_2013,Kensington and Chelsea,143400,622.2455
+first_half_2013,Kingston upon Thames,168000,278.869
+first_half_2013,Lambeth,317600,506.2343
+first_half_2013,Lewisham,300600,381.1377
+first_half_2013,Merton,215200,289.0335
+first_half_2013,Newham,351100,395.215
+first_half_2013,Redbridge,310300,332.9681
+first_half_2013,Richmond upon Thames,195200,279.8668
+first_half_2013,Southwark,307700,519.792
+first_half_2013,Sutton,209600,242.9866
+first_half_2013,Tower Hamlets,310300,433.1615
+first_half_2013,Waltham Forest,278400,405.8908
+first_half_2013,Wandsworth,327500,355.7252
+first_half_2013,Westminster,204300,1373.4704
+second_half_2013,Barking and Dagenham,218900,367.1083
+second_half_2013,Barnet,389300,294.503
+second_half_2013,Bexley,246500,244.9899
+second_half_2013,Brent,339800,360.5062
+second_half_2013,Bromley,330000,299.1515
+second_half_2013,Camden,210100,678.5816
+second_half_2013,City of London,8600,
+second_half_2013,Croydon,390800,366.7349
+second_half_2013,Ealing,367100,358.9213
+second_half_2013,Enfield,330000,344.6061
+second_half_2013,Greenwich,289100,343.8257
+second_half_2013,Hackney,259200,510.5324
+second_half_2013,Hammersmith and Fulham,183200,529.9672
+second_half_2013,Haringey,264200,417.4868
+second_half_2013,Harrow,261300,233.0272
+second_half_2013,Havering,262000,290.687
+second_half_2013,Hillingdon,305900,311.3436
+second_half_2013,Hounslow,288200,350.4511
+second_half_2013,Islington,216600,565.5125
+second_half_2013,Kensington and Chelsea,143400,659.484
+second_half_2013,Kingston upon Thames,168000,283.3929
+second_half_2013,Lambeth,317600,532.3992
+second_half_2013,Lewisham,300600,377.4451
+second_half_2013,Merton,215200,266.6822
+second_half_2013,Newham,351100,417.1461
+second_half_2013,Redbridge,310300,322.6877
+second_half_2013,Richmond upon Thames,195200,268.2889
+second_half_2013,Southwark,307700,527.5268
+second_half_2013,Sutton,209600,250.5725
+second_half_2013,Tower Hamlets,310300,451.4341
+second_half_2013,Waltham Forest,278400,402.7299
+second_half_2013,Wandsworth,327500,347.0534
+second_half_2013,Westminster,204300,1347.8218
+first_half_2014,Barking and Dagenham,218900,364.9612
+first_half_2014,Barnet,389300,289.5197
+first_half_2014,Bexley,246500,242.8803
+first_half_2014,Brent,339800,369.3938
+first_half_2014,Bromley,330000,297.2727
+first_half_2014,Camden,210100,649.2147
+first_half_2014,City of London,8600,
+first_half_2014,Croydon,390800,346.0338
+first_half_2014,Ealing,367100,335.4672
+first_half_2014,Enfield,330000,337.4242
+first_half_2014,Greenwich,289100,345.4514
+first_half_2014,Hackney,259200,474.1512
+first_half_2014,Hammersmith and Fulham,183200,510.5895
+first_half_2014,Haringey,264200,433.4217
+first_half_2014,Harrow,261300,230.1569
+first_half_2014,Havering,262000,282.3664
+first_half_2014,Hillingdon,305900,341.5495
+first_half_2014,Hounslow,288200,340.7703
+first_half_2014,Islington,216600,575.3463
+first_half_2014,Kensington and Chelsea,143400,606.0669
+first_half_2014,Kingston upon Thames,168000,267.619
+first_half_2014,Lambeth,317600,501.8892
+first_half_2014,Lewisham,300600,354.4578
+first_half_2014,Merton,215200,264.684
+first_half_2014,Newham,351100,410.6238
+first_half_2014,Redbridge,310300,319.9162
+first_half_2014,Richmond upon Thames,195200,265.7787
+first_half_2014,Southwark,307700,462.7559
+first_half_2014,Sutton,209600,243.8454
+first_half_2014,Tower Hamlets,310300,411.2794
+first_half_2014,Waltham Forest,278400,375.3592
+first_half_2014,Wandsworth,327500,316.0305
+first_half_2014,Westminster,204300,1197.6016
+second_half_2014,Barking and Dagenham,218900,375.5596
+second_half_2014,Barnet,389300,301.2844
+second_half_2014,Bexley,246500,251.5213
+second_half_2014,Brent,339800,369.3643
+second_half_2014,Bromley,330000,313.3939
+second_half_2014,Camden,210100,677.7725
+second_half_2014,City of London,8600,
+second_half_2014,Croydon,390800,378.6592
+second_half_2014,Ealing,367100,363.1708
+second_half_2014,Enfield,330000,340.4545
+second_half_2014,Greenwich,289100,365.5137
+second_half_2014,Hackney,259200,496.7978
+second_half_2014,Hammersmith and Fulham,183200,559.3886
+second_half_2014,Haringey,264200,456.8887
+second_half_2014,Harrow,261300,239.7627
+second_half_2014,Havering,262000,301.4504
+second_half_2014,Hillingdon,305900,363.8771
+second_half_2014,Hounslow,288200,363.1159
+second_half_2014,Islington,216600,607.2022
+second_half_2014,Kensington and Chelsea,143400,679.219
+second_half_2014,Kingston upon Thames,168000,301.3095
+second_half_2014,Lambeth,317600,537.9723
+second_half_2014,Lewisham,300600,370.4258
+second_half_2014,Merton,215200,287.8717
+second_half_2014,Newham,351100,408.6585
+second_half_2014,Redbridge,310300,332.1624
+second_half_2014,Richmond upon Thames,195200,282.3258
+second_half_2014,Southwark,307700,506.9548
+second_half_2014,Sutton,209600,270.229
+second_half_2014,Tower Hamlets,310300,447.3413
+second_half_2014,Waltham Forest,278400,371.7313
+second_half_2014,Wandsworth,327500,354.1985
+second_half_2014,Westminster,204300,1207.9785
+first_half_2015,Barking and Dagenham,218900,381.3157
+first_half_2015,Barnet,389300,302.8513
+first_half_2015,Bexley,246500,246.4097
+first_half_2015,Brent,339800,363.6257
+first_half_2015,Bromley,330000,316.9394
+first_half_2015,Camden,210100,728.5578
+first_half_2015,City of London,8600,
+first_half_2015,Croydon,390800,382.2416
+first_half_2015,Ealing,367100,359.9564
+first_half_2015,Enfield,330000,334.6364
+first_half_2015,Greenwich,289100,366.2055
+first_half_2015,Hackney,259200,528.6265
+first_half_2015,Hammersmith and Fulham,183200,549.8362
+first_half_2015,Haringey,264200,457.9485
+first_half_2015,Harrow,261300,240.222
+first_half_2015,Havering,262000,293.9313
+first_half_2015,Hillingdon,305900,354.9853
+first_half_2015,Hounslow,288200,363.7752
+first_half_2015,Islington,216600,651.2004
+first_half_2015,Kensington and Chelsea,143400,650.2092
+first_half_2015,Kingston upon Thames,168000,293.0357
+first_half_2015,Lambeth,317600,518.6398
+first_half_2015,Lewisham,300600,392.4817
+first_half_2015,Merton,215200,285.5019
+first_half_2015,Newham,351100,420.8203
+first_half_2015,Redbridge,310300,309.4747
+first_half_2015,Richmond upon Thames,195200,274.0266
+first_half_2015,Southwark,307700,499.7075
+first_half_2015,Sutton,209600,266.4122
+first_half_2015,Tower Hamlets,310300,441.766
+first_half_2015,Waltham Forest,278400,376.5445
+first_half_2015,Wandsworth,327500,352.0916
+first_half_2015,Westminster,204300,1161.4293
+second_half_2015,Barking and Dagenham,218900,402.9237
+second_half_2015,Barnet,389300,328.6412
+second_half_2015,Bexley,246500,253.9959
+second_half_2015,Brent,339800,389.1407
+second_half_2015,Bromley,330000,321.0909
+second_half_2015,Camden,210100,713.2318
+second_half_2015,City of London,8600,
+second_half_2015,Croydon,390800,367.2467
+second_half_2015,Ealing,367100,374.067
+second_half_2015,Enfield,330000,356.6364
+second_half_2015,Greenwich,289100,380.249
+second_half_2015,Hackney,259200,522.9167
+second_half_2015,Hammersmith and Fulham,183200,562.8821
+second_half_2015,Haringey,264200,505.0341
+second_half_2015,Harrow,261300,256.1424
+second_half_2015,Havering,262000,329.8473
+second_half_2015,Hillingdon,305900,361.981
+second_half_2015,Hounslow,288200,391.0132
+second_half_2015,Islington,216600,647.3684
+second_half_2015,Kensington and Chelsea,143400,721.1297
+second_half_2015,Kingston upon Thames,168000,306.131
+second_half_2015,Lambeth,317600,567.1285
+second_half_2015,Lewisham,300600,413.7392
+second_half_2015,Merton,215200,301.9052
+second_half_2015,Newham,351100,439.5329
+second_half_2015,Redbridge,310300,319.7228
+second_half_2015,Richmond upon Thames,195200,274.9488
+second_half_2015,Southwark,307700,513.0972
+second_half_2015,Sutton,209600,251.479
+second_half_2015,Tower Hamlets,310300,477.5701
+second_half_2015,Waltham Forest,278400,398.3477
+second_half_2015,Wandsworth,327500,355.6641
+second_half_2015,Westminster,204300,1236.1723
+first_half_2016,Barking and Dagenham,218900,413.7963
+first_half_2016,Barnet,389300,328.6412
+first_half_2016,Bexley,246500,260.1623
+first_half_2016,Brent,339800,400.206
+first_half_2016,Bromley,330000,308.1212
+first_half_2016,Camden,210100,690.6711
+first_half_2016,City of London,8600,
+first_half_2016,Croydon,390800,375.1535
+first_half_2016,Ealing,367100,370.8799
+first_half_2016,Enfield,330000,349.9394
+first_half_2016,Greenwich,289100,395.0536
+first_half_2016,Hackney,259200,539.2747
+first_half_2016,Hammersmith and Fulham,183200,570.6332
+first_half_2016,Haringey,264200,514.5344
+first_half_2016,Harrow,261300,256.372
+first_half_2016,Havering,262000,336.9847
+first_half_2016,Hillingdon,305900,357.4044
+first_half_2016,Hounslow,288200,382.6162
+first_half_2016,Islington,216600,633.518
+first_half_2016,Kensington and Chelsea,143400,652.4407
+first_half_2016,Kingston upon Thames,168000,303.75
+first_half_2016,Lambeth,317600,548.9924
+first_half_2016,Lewisham,300600,415.336
+first_half_2016,Merton,215200,302.3699
+first_half_2016,Newham,351100,424.352
+first_half_2016,Redbridge,310300,320.5285
+first_half_2016,Richmond upon Thames,195200,284.0676
+first_half_2016,Southwark,307700,519.727
+first_half_2016,Sutton,209600,269.6565
+first_half_2016,Tower Hamlets,310300,469.9968
+first_half_2016,Waltham Forest,278400,385.7399
+first_half_2016,Wandsworth,327500,360.0611
+first_half_2016,Westminster,204300,1160.1566
+second_half_2016,Barking and Dagenham,218900,397.2133
+second_half_2016,Barnet,389300,330.953
+second_half_2016,Bexley,246500,283.4077
+second_half_2016,Brent,339800,412.5662
+second_half_2016,Bromley,330000,318.9091
+second_half_2016,Camden,210100,743.3603
+second_half_2016,City of London,8600,
+second_half_2016,Croydon,390800,397.697
+second_half_2016,Ealing,367100,390.9289
+second_half_2016,Enfield,330000,356.0303
+second_half_2016,Greenwich,289100,417.8139
+second_half_2016,Hackney,259200,584.9151
+second_half_2016,Hammersmith and Fulham,183200,564.3559
+second_half_2016,Haringey,264200,552.9523
+second_half_2016,Harrow,261300,263.9878
+second_half_2016,Havering,262000,329.3893
+second_half_2016,Hillingdon,305900,384.7663
+second_half_2016,Hounslow,288200,410.3747
+second_half_2016,Islington,216600,650.554
+second_half_2016,Kensington and Chelsea,143400,758.159
+second_half_2016,Kingston upon Thames,168000,311.6667
+second_half_2016,Lambeth,317600,568.1675
+second_half_2016,Lewisham,300600,412.8743
+second_half_2016,Merton,215200,311.0595
+second_half_2016,Newham,351100,463.714
+second_half_2016,Redbridge,310300,329.9065
+second_half_2016,Richmond upon Thames,195200,301.5881
+second_half_2016,Southwark,307700,537.4066
+second_half_2016,Sutton,209600,255.8206
+second_half_2016,Tower Hamlets,310300,517.757
+second_half_2016,Waltham Forest,278400,383.8362
+second_half_2016,Wandsworth,327500,393.2214
+second_half_2016,Westminster,204300,1293.7347
+first_half_2017,Barking and Dagenham,218900,419.0498
+first_half_2017,Barnet,389300,340.5343
+first_half_2017,Bexley,246500,287.3428
+first_half_2017,Brent,339800,418.4815
+first_half_2017,Bromley,330000,349.1818
+first_half_2017,Camden,210100,843.9791
+first_half_2017,City of London,8600,
+first_half_2017,Croydon,390800,386.131
+first_half_2017,Ealing,367100,378.6162
+first_half_2017,Enfield,330000,371.4545
+first_half_2017,Greenwich,289100,437.1498
+first_half_2017,Hackney,259200,623.8426
+first_half_2017,Hammersmith and Fulham,183200,566.4847
+first_half_2017,Haringey,264200,545.9879
+first_half_2017,Harrow,261300,264.6001
+first_half_2017,Havering,262000,355.6489
+first_half_2017,Hillingdon,305900,397.6136
+first_half_2017,Hounslow,288200,417.245
+first_half_2017,Islington,216600,730.9326
+first_half_2017,Kensington and Chelsea,143400,697.8382
+first_half_2017,Kingston upon Thames,168000,328.6905
+first_half_2017,Lambeth,317600,529.3451
+first_half_2017,Lewisham,300600,414.9701
+first_half_2017,Merton,215200,314.0799
+first_half_2017,Newham,351100,472.0023
+first_half_2017,Redbridge,310300,361.7467
+first_half_2017,Richmond upon Thames,195200,328.5348
+first_half_2017,Southwark,307700,530.3542
+first_half_2017,Sutton,209600,291.6031
+first_half_2017,Tower Hamlets,310300,505.6719
+first_half_2017,Waltham Forest,278400,406.3937
+first_half_2017,Wandsworth,327500,372.2137
+first_half_2017,Westminster,204300,1326.6765
+second_half_2017,Barking and Dagenham,218900,433.8511
+second_half_2017,Barnet,389300,351.9137
+second_half_2017,Bexley,246500,313.2252
+second_half_2017,Brent,339800,455.7681
+second_half_2017,Bromley,330000,340.2424
+second_half_2017,Camden,210100,959.4955
+second_half_2017,City of London,8600,
+second_half_2017,Croydon,390800,395.3173
+second_half_2017,Ealing,367100,392.4544
+second_half_2017,Enfield,330000,391.9394
+second_half_2017,Greenwich,289100,444.2062
+second_half_2017,Hackney,259200,602.8935
+second_half_2017,Hammersmith and Fulham,183200,616.048
+second_half_2017,Haringey,264200,601.1734
+second_half_2017,Harrow,261300,268.8481
+second_half_2017,Havering,262000,366.5649
+second_half_2017,Hillingdon,305900,410.7551
+second_half_2017,Hounslow,288200,444.3442
+second_half_2017,Islington,216600,754.109
+second_half_2017,Kensington and Chelsea,143400,800.2092
+second_half_2017,Kingston upon Thames,168000,353.9286
+second_half_2017,Lambeth,317600,570.2456
+second_half_2017,Lewisham,300600,419.0619
+second_half_2017,Merton,215200,326.6264
+second_half_2017,Newham,351100,510.994
+second_half_2017,Redbridge,310300,393.3613
+second_half_2017,Richmond upon Thames,195200,348.8217
+second_half_2017,Southwark,307700,577.1856
+second_half_2017,Sutton,209600,282.5382
+second_half_2017,Tower Hamlets,310300,524.8469
+second_half_2017,Waltham Forest,278400,411.4224
+second_half_2017,Wandsworth,327500,400.0611
+second_half_2017,Westminster,204300,1465.7367
+first_half_2018,Barking and Dagenham,218900,414.2531
+first_half_2018,Barnet,389300,355.8695
+first_half_2018,Bexley,246500,300.6491
+first_half_2018,Brent,339800,445.4091
+first_half_2018,Bromley,330000,349.3939
+first_half_2018,Camden,210100,837.4584
+first_half_2018,City of London,8600,
+first_half_2018,Croydon,390800,387.4872
+first_half_2018,Ealing,367100,371.8605
+first_half_2018,Enfield,330000,416.3333
+first_half_2018,Greenwich,289100,426.2885
+first_half_2018,Hackney,259200,566.5509
+first_half_2018,Hammersmith and Fulham,183200,584.2795
+first_half_2018,Haringey,264200,581.5291
+first_half_2018,Harrow,261300,269.0394
+first_half_2018,Havering,262000,351.7176
+first_half_2018,Hillingdon,305900,398.6924
+first_half_2018,Hounslow,288200,431.5753
+first_half_2018,Islington,216600,648.338
+first_half_2018,Kensington and Chelsea,143400,725.1743
+first_half_2018,Kingston upon Thames,168000,345.119
+first_half_2018,Lambeth,317600,544.3955
+first_half_2018,Lewisham,300600,417.1324
+first_half_2018,Merton,215200,312.1283
+first_half_2018,Newham,351100,504.2153
+first_half_2018,Redbridge,310300,376.6355
+first_half_2018,Richmond upon Thames,195200,308.9139
+first_half_2018,Southwark,307700,553.8512
+first_half_2018,Sutton,209600,279.8187
+first_half_2018,Tower Hamlets,310300,523.6868
+first_half_2018,Waltham Forest,278400,410.2011
+first_half_2018,Wandsworth,327500,396.2443
+first_half_2018,Westminster,204300,1400.979
+second_half_2018,Barking and Dagenham,218900,422.1106
+second_half_2018,Barnet,389300,370.1259
+second_half_2018,Bexley,246500,322.7992
+second_half_2018,Brent,339800,460.359
+second_half_2018,Bromley,330000,353.2424
+second_half_2018,Camden,210100,857.2109
+second_half_2018,City of London,8600,
+second_half_2018,Croydon,390800,406.1924
+second_half_2018,Ealing,367100,398.8014
+second_half_2018,Enfield,330000,432.0606
+second_half_2018,Greenwich,289100,462.0201
+second_half_2018,Hackney,259200,638.8889
+second_half_2018,Hammersmith and Fulham,183200,619.869
+second_half_2018,Haringey,264200,592.9977
+second_half_2018,Harrow,261300,300.7271
+second_half_2018,Havering,262000,361.374
+second_half_2018,Hillingdon,305900,419.5162
+second_half_2018,Hounslow,288200,451.6308
+second_half_2018,Islington,216600,679.9169
+second_half_2018,Kensington and Chelsea,143400,812.4826
+second_half_2018,Kingston upon Thames,168000,391.3095
+second_half_2018,Lambeth,317600,559.3829
+second_half_2018,Lewisham,300600,450.4657
+second_half_2018,Merton,215200,329.6004
+second_half_2018,Newham,351100,521.3614
+second_half_2018,Redbridge,310300,382.3397
+second_half_2018,Richmond upon Thames,195200,342.0082
+second_half_2018,Southwark,307700,606.6623
+second_half_2018,Sutton,209600,296.4218
+second_half_2018,Tower Hamlets,310300,560.4254
+second_half_2018,Waltham Forest,278400,440.2658
+second_half_2018,Wandsworth,327500,392.7023
+second_half_2018,Westminster,204300,1684.0431
+first_half_2019,Barking and Dagenham,218900,460.2558
+first_half_2019,Barnet,389300,401.9779
+first_half_2019,Bexley,246500,360.4462
+first_half_2019,Brent,339800,445.1148
+first_half_2019,Bromley,330000,367.9697
+first_half_2019,Camden,210100,921.8467
+first_half_2019,City of London,8600,
+first_half_2019,Croydon,390800,412.564
+first_half_2019,Ealing,367100,424.9796
+first_half_2019,Enfield,330000,452.5455
+first_half_2019,Greenwich,289100,482.359
+first_half_2019,Hackney,259200,645.5633
+first_half_2019,Hammersmith and Fulham,183200,634.9891
+first_half_2019,Haringey,264200,612.6041
+first_half_2019,Harrow,261300,327.057
+first_half_2019,Havering,262000,365.0763
+first_half_2019,Hillingdon,305900,435.8941
+first_half_2019,Hounslow,288200,463.8793
+first_half_2019,Islington,216600,672.6223
+first_half_2019,Kensington and Chelsea,143400,802.371
+first_half_2019,Kingston upon Thames,168000,392.7976
+first_half_2019,Lambeth,317600,560.5793
+first_half_2019,Lewisham,300600,475.6487
+first_half_2019,Merton,215200,325.697
+first_half_2019,Newham,351100,510.5953
+first_half_2019,Redbridge,310300,384.4344
+first_half_2019,Richmond upon Thames,195200,327.1004
+first_half_2019,Southwark,307700,637.8941
+first_half_2019,Sutton,209600,330.2958
+first_half_2019,Tower Hamlets,310300,568.321
+first_half_2019,Waltham Forest,278400,433.6207
+first_half_2019,Wandsworth,327500,393.0687
+first_half_2019,Westminster,204300,2004.9927
+second_half_2019,Barking and Dagenham,218900,462.6313
+second_half_2019,Barnet,389300,409.1446
+second_half_2019,Bexley,246500,372.2921
+second_half_2019,Brent,339800,450.9712
+second_half_2019,Bromley,330000,394.9697
+second_half_2019,Camden,210100,971.7753
+second_half_2019,City of London,8600,
+second_half_2019,Croydon,390800,453.6592
+second_half_2019,Ealing,367100,441.8959
+second_half_2019,Enfield,330000,474.3333
+second_half_2019,Greenwich,289100,516.0152
+second_half_2019,Hackney,259200,683.8349
+second_half_2019,Hammersmith and Fulham,183200,664.2467
+second_half_2019,Haringey,264200,616.4269
+second_half_2019,Harrow,261300,337.6196
+second_half_2019,Havering,262000,367.1756
+second_half_2019,Hillingdon,305900,461.1638
+second_half_2019,Hounslow,288200,472.1027
+second_half_2019,Islington,216600,729.8707
+second_half_2019,Kensington and Chelsea,143400,957.1827
+second_half_2019,Kingston upon Thames,168000,394.1667
+second_half_2019,Lambeth,317600,580.636
+second_half_2019,Lewisham,300600,494.644
+second_half_2019,Merton,215200,348.4201
+second_half_2019,Newham,351100,522.6431
+second_half_2019,Redbridge,310300,394.2636
+second_half_2019,Richmond upon Thames,195200,334.9385
+second_half_2019,Southwark,307700,664.9984
+second_half_2019,Sutton,209600,335.1622
+second_half_2019,Tower Hamlets,310300,571.4792
+second_half_2019,Waltham Forest,278400,436.2069
+second_half_2019,Wandsworth,327500,411.542
+second_half_2019,Westminster,204300,2052.6187
+first_half_2020,Barking and Dagenham,218900,429.0087
+first_half_2020,Barnet,389300,341.382
+first_half_2020,Bexley,246500,312.3327
+first_half_2020,Brent,339800,409.1524
+first_half_2020,Bromley,330000,326.3939
+first_half_2020,Camden,210100,712.5654
+first_half_2020,City of London,8600,
+first_half_2020,Croydon,390800,420.7011
+first_half_2020,Ealing,367100,383.4922
+first_half_2020,Enfield,330000,421
+first_half_2020,Greenwich,289100,436.7693
+first_half_2020,Hackney,259200,540.5478
+first_half_2020,Hammersmith and Fulham,183200,498.6354
+first_half_2020,Haringey,264200,522.3316
+first_half_2020,Harrow,261300,292.4225
+first_half_2020,Havering,262000,306.5649
+first_half_2020,Hillingdon,305900,401.373
+first_half_2020,Hounslow,288200,419.1881
+first_half_2020,Islington,216600,569.9446
+first_half_2020,Kensington and Chelsea,143400,591.4226
+first_half_2020,Kingston upon Thames,168000,329.0476
+first_half_2020,Lambeth,317600,465.1134
+first_half_2020,Lewisham,300600,442.1158
+first_half_2020,Merton,215200,304.0892
+first_half_2020,Newham,351100,444.7451
+first_half_2020,Redbridge,310300,361.65
+first_half_2020,Richmond upon Thames,195200,297.6947
+first_half_2020,Southwark,307700,490.0227
+first_half_2020,Sutton,209600,321.8511
+first_half_2020,Tower Hamlets,310300,473.2517
+first_half_2020,Waltham Forest,278400,421.9828
+first_half_2020,Wandsworth,327500,354.1069
+first_half_2020,Westminster,204300,1209.3
+second_half_2020,Barking and Dagenham,218900,447.4189
+second_half_2020,Barnet,389300,362.0858
+second_half_2020,Bexley,246500,320.568
+second_half_2020,Brent,339800,438.3461
+second_half_2020,Bromley,330000,340.697
+second_half_2020,Camden,210100,695.0976
+second_half_2020,City of London,8600,
+second_half_2020,Croydon,390800,431.5763
+second_half_2020,Ealing,367100,416.3171
+second_half_2020,Enfield,330000,453.5758
+second_half_2020,Greenwich,289100,453.8568
+second_half_2020,Hackney,259200,644.483
+second_half_2020,Hammersmith and Fulham,183200,539.4651
+second_half_2020,Haringey,264200,569.8713
+second_half_2020,Harrow,261300,314.5809
+second_half_2020,Havering,262000,335.8015
+second_half_2020,Hillingdon,305900,414.3511
+second_half_2020,Hounslow,288200,424.4969
+second_half_2020,Islington,216600,605.1247
+second_half_2020,Kensington and Chelsea,143400,659.2748
+second_half_2020,Kingston upon Thames,168000,346.7262
+second_half_2020,Lambeth,317600,511.461
+second_half_2020,Lewisham,300600,475.316
+second_half_2020,Merton,215200,327.3234
+second_half_2020,Newham,351100,501.4811
+second_half_2020,Redbridge,310300,384.2411
+second_half_2020,Richmond upon Thames,195200,331.1475
+second_half_2020,Southwark,307700,557.8486
+second_half_2020,Sutton,209600,301.1927
+second_half_2020,Tower Hamlets,310300,545.601
+second_half_2020,Waltham Forest,278400,424.2098
+second_half_2020,Wandsworth,327500,406.7481
+second_half_2020,Westminster,204300,1167.4009
+first_half_2021,Barking and Dagenham,218900,436.0439
+first_half_2021,Barnet,389300,345.235
+first_half_2021,Bexley,246500,284.1379
+first_half_2021,Brent,339800,388.9052
+first_half_2021,Bromley,330000,319.1212
+first_half_2021,Camden,210100,585.6259
+first_half_2021,City of London,8600,
+first_half_2021,Croydon,390800,402.6868
+first_half_2021,Ealing,367100,381.3402
+first_half_2021,Enfield,330000,425.7273
+first_half_2021,Greenwich,289100,444.7942
+first_half_2021,Hackney,259200,537.6157
+first_half_2021,Hammersmith and Fulham,183200,513.2096
+first_half_2021,Haringey,264200,519.5685
+first_half_2021,Harrow,261300,283.2377
+first_half_2021,Havering,262000,305.2672
+first_half_2021,Hillingdon,305900,371.3959
+first_half_2021,Hounslow,288200,395.1423
+first_half_2021,Islington,216600,513.5272
+first_half_2021,Kensington and Chelsea,143400,556.9735
+first_half_2021,Kingston upon Thames,168000,313.9881
+first_half_2021,Lambeth,317600,466.0264
+first_half_2021,Lewisham,300600,429.7405
+first_half_2021,Merton,215200,286.2918
+first_half_2021,Newham,351100,449.1883
+first_half_2021,Redbridge,310300,373.6062
+first_half_2021,Richmond upon Thames,195200,275.5635
+first_half_2021,Southwark,307700,484.7254
+first_half_2021,Sutton,209600,285.5439
+first_half_2021,Tower Hamlets,310300,504.7051
+first_half_2021,Waltham Forest,278400,394.7917
+first_half_2021,Wandsworth,327500,370.1985
+first_half_2021,Westminster,204300,897.1121

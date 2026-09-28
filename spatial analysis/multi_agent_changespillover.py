@@ -39,8 +39,14 @@ import pandas as pd
 from multi_agent_utils import multi_agent_loop
 from casual_verdict import parse_casual_with_citation
 
-MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest.csv"
-RESULTS_CSV = "results/multi agent/changespillover_results_multiagent.csv"
+#MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest.csv"
+MANIFEST_PATH = "chunks_csv/changespillover/changespillover_manifest2.csv"  # For additional test cases
+
+
+#RESULTS_CSV = "results/multi agent/changespillover_results_multiagent.csv"
+RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_additional.csv"  # For additional test cases
+
+
 FAILED_LOG = "logs/multi agent/changespillover_multiagent_failed_runs.log"
 
 

@@ -75,18 +75,20 @@ Writes: changespillover_scoring_summary.csv
 """
 
 import re
+import json
 import pandas as pd
 
 from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
 from formula_invariance_check import check_shift_invariant
 
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_changespillover.csv"
-MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path per chunk_id
+MANIFEST_PATH = "chunks_csv/changespillover/manifest.csv"  # must have csv_path / adjacency_path per chunk_id
+MANIFEST2_PATH = "chunks_csv/changespillover/manifest2.csv"  # additional chunks; same schema, appended for scoring
 
 
 #Multi agent
-#RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
-#OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
+RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
+OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
 
 #Multi turn
 #RESULTS_CSV = "results/single agent/changespillover_results_multi_with_method.csv"
@@ -97,8 +99,8 @@ MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path
 #OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
 
 #ReAct multi turn
-RESULTS_CSV = "ReAct/changespillover_results_react.csv"
-OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
+#RESULTS_CSV = "ReAct/changespillover_results_react.csv"
+#OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
 
 # Maps attach_statistical_method_changespillover.py's free-text labels
 # onto the (fewer) method names that actually have ground truth
@@ -220,16 +222,20 @@ def value_within_tolerance(model_val, gt_val):
 
 
 def _load_manifest_index():
-    """Loads the manifest indexed by chunk_id, for the shift-invariance
-    re-check. Degrades to an always-missing stand-in (shift check
-    becomes inconclusive/None for every row, never blocking scoring) if
-    the file isn't found."""
-    try:
-        return pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
-    except (FileNotFoundError, OSError):
-        print(f"WARNING: manifest not found at {MANIFEST_PATH} -- "
-              f"shift-invariance re-checks will be skipped (inconclusive) for every row.")
+    """Loads MANIFEST_PATH and MANIFEST2_PATH (if present), concatenated
+    and indexed by chunk_id, for the shift-invariance re-check. Degrades
+    to an always-missing stand-in (shift check becomes inconclusive/None
+    for every row, never blocking scoring) if neither file is found."""
+    frames = []
+    for path in (MANIFEST_PATH, MANIFEST2_PATH):
+        try:
+            frames.append(pd.read_csv(path))
+        except (FileNotFoundError, OSError):
+            print(f"WARNING: manifest not found at {path} -- "
+                  f"its rows will be missing from shift-invariance re-checks.")
+    if not frames:
         return pd.DataFrame(columns=["csv_path", "adjacency_path"])
+    return pd.concat(frames, ignore_index=True).set_index("chunk_id")
 
 
 def load():
@@ -264,6 +270,35 @@ def load():
           f"(this re-executes each row's saved code, so it's the slow part)...", flush=True)
     _progress = {"n": 0}
 
+    def _resolve_shift_column(m, csv_columns):
+        """Finds the real column name to shift, for the LATER period in
+        a chunk. Tries manifest2's '<period_end>_value' naming first
+        (period_end read from ground_truth_metric_json, since manifest2's
+        window_end only holds a bare year, not the full quarter/half
+        label), then falls back to the original manifest's bare-year
+        column naming (str(int(window_end))) -- unchanged from before
+        for every original-manifest row. Returns None, same as before,
+        if neither resolves (the shift check then stays inconclusive for
+        that row, exactly as it already did when window_end was blank)."""
+        raw_json = m.get("ground_truth_metric_json")
+        try:
+            metric = json.loads(raw_json) if isinstance(raw_json, str) else {}
+        except (TypeError, ValueError):
+            metric = {}
+        period_end = metric.get("period_end")
+        if period_end:
+            candidate = f"{period_end}_value"
+            if candidate in csv_columns:
+                return candidate
+
+        window_end = m.get("window_end")
+        if pd.notna(window_end):
+            candidate = str(int(window_end))
+            if candidate in csv_columns:
+                return candidate
+
+        return None
+
     def _shift_check(row):
         # --- Shift-invariance re-execution (process-based check) ---
         # Global Moran's I / Geary's C / Join Count / neighbor-average
@@ -283,8 +318,11 @@ def load():
             return None
         m = manifest.loc[row["chunk_id"]]
         raw_stat = _extract_raw_statistic(row["evidence_text"])
-        window_end = m.get("window_end")
-        shift_col = str(int(window_end)) if pd.notna(window_end) else None
+        try:
+            csv_columns = set(pd.read_csv(m["csv_path"], nrows=0).columns)
+        except (FileNotFoundError, OSError):
+            csv_columns = set()
+        shift_col = _resolve_shift_column(m, csv_columns)
         return check_shift_invariant(
             row["run_dir"], m["csv_path"], m.get("adjacency_path"), raw_stat,
             shift_only_column=shift_col)
@@ -389,13 +427,13 @@ def compute_metrics(g, use_evidence_filter):
         recalls.append(r)
         f1s.append(f1_c)
 
-    precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
-    recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
-    f1 = round(sum(f1s) / len(f1s), 3) if f1s else 0.0
+    precision = sum(precisions) / len(precisions) if precisions else 0.0
+    recall = sum(recalls) / len(recalls) if recalls else 0.0
+    f1 = sum(f1s) / len(f1s) if f1s else 0.0
 
     n_total = len(g)
     correct_col = "correct_evidence_filtered" if use_evidence_filter else "correct"
-    accuracy = round(g[correct_col].sum() / n_total, 3) if n_total > 0 else 0.0
+    accuracy = g[correct_col].sum() / n_total if n_total > 0 else 0.0
     return accuracy, precision, recall, f1, tp, fp
 
 
@@ -426,13 +464,14 @@ def run():
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
             "pct_with_evidence": pct_with_evidence,
             "tp": tp, "fp": fp,
-            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "accuracy": f"{accuracy * 100:05.2f}", "precision": f"{precision * 100:05.2f}",
+            "recall": f"{recall * 100:05.2f}", "f1": f"{f1 * 100:05.2f}",
             "correct_number_evidence_filtered": correct_number_ef,
             "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
-            "accuracy_evidence_filtered": accuracy_ef,
-            "precision_evidence_filtered": precision_ef,
-            "recall_evidence_filtered": recall_ef,
-            "f1_evidence_filtered": f1_ef,
+            "accuracy_evidence_filtered": f"{accuracy_ef * 100:05.2f}",
+            "precision_evidence_filtered": f"{precision_ef * 100:05.2f}",
+            "recall_evidence_filtered": f"{recall_ef * 100:05.2f}",
+            "f1_evidence_filtered": f"{f1_ef * 100:05.2f}",
             # the 2 columns beyond the original schema -- see docstring
             "n_method_specific_gt": n_method_specific_gt,
             "accuracy_fully_verified": accuracy_fully_verified,

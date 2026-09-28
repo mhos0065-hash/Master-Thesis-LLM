@@ -42,8 +42,13 @@ import pandas as pd
 from multi_agent_utils import multi_agent_loop
 from getisord_verdict import parse_getisord_with_citation
 
-MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest.csv"
-RESULTS_CSV = "results/multi agent/getisord_results_multiagent.csv"
+#MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest.csv"
+
+MANIFEST_PATH = "chunks_csv/getisord/getisord_manifest2.csv" # For additional test cases
+
+#RESULTS_CSV = "results/multi agent/getisord_results_multiagent.csv"
+
+RESULTS_CSV = "results/multi agent/getisord_results_multiagent_additional.csv" # For additional test cases
 FAILED_LOG = "logs/multi agent/getisord_multiagent_failed_runs.log"
 
 FORMAT_INSTRUCTIONS_BLOCK = (

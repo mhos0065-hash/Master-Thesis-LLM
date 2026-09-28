@@ -41,8 +41,15 @@ from multi_agent_utils import multi_agent_loop
 from manifest_io import load_manifest
 from casual_verdict import parse_casual_with_citation
 
-MANIFEST_PATH = "chunks_csv/manifest.csv"
-RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent.csv"
+#MANIFEST_PATH = "chunks_csv/manifest.csv"
+
+MANIFEST_PATH = "chunks_csv/manifest2.csv"  # For additional test cases
+
+#RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent.csv"
+
+
+RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent_additional.csv"  # For additional test cases
+
 FAILED_LOG = "logs/multi agent/spatial_correlation_multiagent_failed_runs.log"
 
 

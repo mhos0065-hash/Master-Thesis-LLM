@@ -1,0 +1,409 @@
+chunk_id,dataset,insight_type,modality,csv_path,adjacency_path,insight_def,ground_truth_boroughs,answer_format,Unnamed: 9,acceptance_rule
+getisord_no2_Q1_2021,Getis-Ord Gi* (NO2 (Q1 2021 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q1_2021.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q1 2021 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q1 2021 average) (a HOT spot) or low NO2 (Q1 2021 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q1_2022,Getis-Ord Gi* (NO2 (Q1 2022 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q1_2022.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q1 2022 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q1 2022 average) (a HOT spot) or low NO2 (Q1 2022 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q1_2023,Getis-Ord Gi* (NO2 (Q1 2023 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q1_2023.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q1 2023 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q1 2023 average) (a HOT spot) or low NO2 (Q1 2023 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q2_2021,Getis-Ord Gi* (NO2 (Q2 2021 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q2_2021.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q2 2021 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q2 2021 average) (a HOT spot) or low NO2 (Q2 2021 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q2_2022,Getis-Ord Gi* (NO2 (Q2 2022 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q2_2022.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q2 2022 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q2 2022 average) (a HOT spot) or low NO2 (Q2 2022 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q2_2023,Getis-Ord Gi* (NO2 (Q2 2023 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q2_2023.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q2 2023 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q2 2023 average) (a HOT spot) or low NO2 (Q2 2023 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Lambeth:hot:2.6519,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q3_2021,Getis-Ord Gi* (NO2 (Q3 2021 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q3_2021.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q3 2021 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q3 2021 average) (a HOT spot) or low NO2 (Q3 2021 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q3_2022,Getis-Ord Gi* (NO2 (Q3 2022 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q3_2022.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q3 2022 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q3 2022 average) (a HOT spot) or low NO2 (Q3 2022 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Greenwich:cold:-2.2227,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q3_2023,Getis-Ord Gi* (NO2 (Q3 2023 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q3_2023.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q3 2023 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q3 2023 average) (a HOT spot) or low NO2 (Q3 2023 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",City of London:hot:2.1554,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q4_2021,Getis-Ord Gi* (NO2 (Q4 2021 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q4_2021.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q4 2021 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q4 2021 average) (a HOT spot) or low NO2 (Q4 2021 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Croydon:cold:-2.7696,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q4_2022,Getis-Ord Gi* (NO2 (Q4 2022 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q4_2022.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q4 2022 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q4 2022 average) (a HOT spot) or low NO2 (Q4 2022 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Bromley:cold:-2.2714,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_no2_Q4_2023,Getis-Ord Gi* (NO2 (Q4 2023 average)),getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_no2_Q4_2023.csv,chunks_csv/borough_adjacency.csv,"I've attached NO2 (Q4 2023 average) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high NO2 (Q4 2023 average) (a HOT spot) or low NO2 (Q4 2023 average) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",City of London:hot:2.4282; Islington:hot:2.0266; Kingston upon Thames:cold:-2.4194; Richmond upon Thames:cold:-2.2454,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2011,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2011))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2011.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2011) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2011) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2011) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.5135; Camden:hot:2.636; Kensington and Chelsea:hot:2.7057; Westminster:hot:2.9276,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2012,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2012))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2012.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2012) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2012) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2012) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.472; Camden:hot:2.6356; Kensington and Chelsea:hot:2.8705; Westminster:hot:3.064,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2013,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2013))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2013.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2013) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2013) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2013) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.3249; Camden:hot:2.5335; Kensington and Chelsea:hot:2.7277; Westminster:hot:2.9893,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2014,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2014))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2014.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2014) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2014) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2014) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.2769; Camden:hot:2.6843; Kensington and Chelsea:hot:2.7441; Westminster:hot:2.9852,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2015,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2015))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2015.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2015) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2015) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2015) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.246; Camden:hot:2.7123; Kensington and Chelsea:hot:2.6381; Westminster:hot:2.9713,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2016,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2016))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2016.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2016) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2016) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2016) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.2298; Camden:hot:2.7453; Kensington and Chelsea:hot:2.7119; Westminster:hot:2.9529,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2017,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2017))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2017.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2017) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2017) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2017) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.1633; Camden:hot:2.9118; Islington:hot:2.071; Kensington and Chelsea:hot:2.4713; Westminster:hot:2.874,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2018,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2018))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2018.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2018) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2018) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2018) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.2825; Camden:hot:2.862; Kensington and Chelsea:hot:2.7057; Westminster:hot:3.0242,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2019,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2019))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2019.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2019) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2019) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2019) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.3156; Camden:hot:2.656; Kensington and Chelsea:hot:2.6284; Westminster:hot:2.754,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2020,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2020))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2020.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2020) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2020) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2020) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.1286; Camden:hot:2.7841; Kensington and Chelsea:hot:2.4285; Westminster:hot:2.7254,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_first_half_2021,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (first half 2021))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_first_half_2021.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (first half 2021) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (first half 2021) (a HOT spot) or low Recorded Crime per 10,000 residents (first half 2021) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Camden:hot:2.4846; Kensington and Chelsea:hot:2.4328; Kingston upon Thames:cold:-2.3275; Westminster:hot:2.5365,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2010,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2010))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2010.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2010) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2010) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2010) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.4994; Camden:hot:2.4307; Kensington and Chelsea:hot:2.8949; Westminster:hot:2.9497,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2011,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2011))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2011.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2011) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2011) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2011) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.5102; Camden:hot:2.6435; Kensington and Chelsea:hot:2.8249; Westminster:hot:3.0548,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2012,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2012))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2012.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2012) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2012) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2012) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.4492; Camden:hot:2.5353; Kensington and Chelsea:hot:2.9096; Westminster:hot:3.06,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2013,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2013))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2013.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2013) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2013) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2013) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.2679; Camden:hot:2.4494; Kensington and Chelsea:hot:2.785; Westminster:hot:2.9984,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2014,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2014))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2014.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2014) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2014) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2014) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.2989; Camden:hot:2.563; Kensington and Chelsea:hot:2.8448; Westminster:hot:3.0464,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2015,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2015))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2015.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2015) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2015) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2015) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.3021; Camden:hot:2.674; Kensington and Chelsea:hot:2.7514; Westminster:hot:3.041,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2016,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2016))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2016.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2016) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2016) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2016) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.2572; Camden:hot:2.668; Kensington and Chelsea:hot:2.7848; Westminster:hot:3.0659,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2017,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2017))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2017.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2017) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2017) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2017) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.3344; Camden:hot:2.9505; Kensington and Chelsea:hot:2.6234; Westminster:hot:3.0671,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2018,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2018))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2018.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2018) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2018) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2018) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.2981; Camden:hot:2.6815; Kensington and Chelsea:hot:2.7386; Westminster:hot:2.8871,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2019,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2019))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2019.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2019) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2019) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2019) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.397; Camden:hot:2.5899; Kensington and Chelsea:hot:2.7371; Westminster:hot:2.8546,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"
+getisord_crime_second_half_2020,"Getis-Ord Gi* (Recorded Crime per 10,000 residents (second half 2020))",getisord_hotspot,spatial,chunks_csv/getisord_no2_crime/getisord_crime_second_half_2020.csv,chunks_csv/borough_adjacency.csv,"I've attached Recorded Crime per 10,000 residents (second half 2020) data for 33 London boroughs and a list showing which boroughs are geographic neighbors of each other.
+
+Question: You can use a statistical method such as Getis-Ord Gi*, or any other method you choose, to identify boroughs where there is an unusually intense CONCENTRATION of high Recorded Crime per 10,000 residents (second half 2020) (a HOT spot) or low Recorded Crime per 10,000 residents (second half 2020) (a COLD spot), considering each borough TOGETHER WITH its neighbors as one combined local area.
+
+This is different from asking whether a borough simply resembles its immediate neighbors -- instead, you are testing whether the COMBINED total (the borough together with its neighbors) is unusually large or small compared to the citywide average, regardless of how similar the borough is to any one neighbor individually.
+
+Note: a borough whose own value is missing should not itself be reported as a hot or cold spot in your final answer. Note: dedicated spatial-statistics packages (pysal, esda, libpysal, geopandas, or similar) are NOT installed in this environment -- don't spend turns trying different import paths for them. Implement your chosen method directly using only pandas and numpy. If your method produces a z-score, use the standard critical values: |z| > 1.96 for 95% confidence, |z| > 2.576 for 99% confidence.
+
+End your response with exactly one line listing every borough you identified, using HOT for hot spot and COLD for cold spot, and including the computed real number (e.g. a z-score) for each:
+FINAL ANSWER: BoroughName1 (HOT, z-score = <value>), BoroughName2 (COLD, z-score = <value>), ... (z-score is just an example label -- if your method produces a different statistic, use its name instead, but the value after '=' must be a real number)
+
+If you find none, write: FINAL ANSWER: none",Brent:hot:2.004; Camden:hot:2.6016; Kensington and Chelsea:hot:2.5104; Westminster:hot:2.7069,getisord_with_citation,,"significant if |Gi* z-score| > 1.96 (95%) or > 2.576 (99%), via spdep::localG() with include.self() weights (Ord & Getis 1995); boroughs with missing source data (direction='no_data') are excluded from scoring in either direction"

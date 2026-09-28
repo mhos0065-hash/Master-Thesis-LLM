@@ -4,47 +4,47 @@ score_spatial_results.py
 Scores results.csv (single/multi-agent, Global + Local Moran's I) with
 the SAME column structure used across every other task's scorer.
 
-GLOBAL rows: unchanged from the previous version -- verdict correctness
-resolved per row against the method-matched ground truth (from
-ground_truth_all_methods_spatial.csv), boolean CLUSTERED/NOT_CLUSTERED,
-2-class macro precision/recall/F1.
+GLOBAL rows: verdict correctness resolved per row against the method-
+matched ground truth (from ground_truth_all_methods_spatial.csv),
+boolean CLUSTERED/NOT_CLUSTERED, 2-class macro precision/recall/F1.
 
-LOCAL rows: CHANGED. The task's own prompt asks for SPECIFIC named
-boroughs ("HOT SPOT: a borough ... COLD SPOT: a borough ..."), not
-just a yes/no existence check -- so scoring only the derived TRUE/FALSE
+LOCAL rows: the task's own prompt asks for SPECIFIC named boroughs
+("HOT SPOT: a borough ... COLD SPOT: a borough ..."), not just a
+yes/no existence check -- so scoring only the derived TRUE/FALSE
 boolean and ignoring which boroughs were actually named under-tests
-what was asked. A model could name completely wrong boroughs and still
-score as fully correct under a pure existence check.
+what was asked. Local correctness is per-chunk PARTIAL CREDIT: the
+model's cited borough names (parsed from evidence_text, NORMALIZED for
+case/punctuation/`&`-vs-`and` before comparison) are compared as a SET
+against the manifest's `significant_cluster_boroughs`, scored via
+per-chunk F1 -- credit for each correctly named borough, a penalty for
+each wrong one, naturally bounded [0, 1] (F1 can't go negative, so no
+explicit floor is needed).
 
-Local correctness is now per-chunk PARTIAL CREDIT: the model's cited
-borough names (parsed from evidence_text) are compared as a SET against
-the manifest's `significant_cluster_boroughs` (the same ground truth
-this task always had, just not previously checked at this level of
-detail), and scored via per-chunk F1 -- credit for each correctly
-named borough, a penalty for each wrong one (both folded into the
-standard precision/recall/F1 formula), never negative (F1 is naturally
-bounded in [0, 1], so no explicit floor is needed the way a raw
-credit-minus-penalty score would require one). This is the SAME
-approach used for getisord's per-chunk F1, chosen there for the same
-reason: it penalizes false positives and false negatives symmetrically
-without being diluted by an unrelated large negative pool, unlike
-Informedness/Youden's J.
+NO NEW COLUMNS beyond the shift-invariance addition below: `correct`
+is a FLOAT in [0, 1] for local rows (partial-credit F1) and stays
+exactly as before (0/1) for global rows -- `accuracy` and the pooled
+`tp`/`fp`/`precision`/`recall`/`f1` columns blend exact-match credit
+(global) with partial credit (local) under the hood, via a THIRD
+pseudo-class ("LOCAL_BOROUGH_MATCH") in the macro-average alongside
+the existing CLUSTERED/NOT_CLUSTERED classes.
 
-NO NEW COLUMNS: `correct` becomes a FLOAT in [0, 1] for local rows
-(instead of a strict boolean) and stays exactly as before (0/1) for
-global rows -- `accuracy` (= mean of `correct` across all chunks) and
-the pooled `tp`/`fp`/`precision`/`recall`/`f1` columns are computed
-from the SAME formulas as before, they just now blend exact-match
-credit (global) with partial credit (local) under the hood. This is
-implemented by treating "LOCAL_BOROUGH_MATCH" as a THIRD pseudo-class
-alongside the existing CLUSTERED/NOT_CLUSTERED classes in the macro-
-average -- its tp/fp/fn are borough-level counts pooled across every
-local chunk in the group, averaged in on equal footing with the two
-existing chunk-level classes. See the scoring-logic table in the chat
-for the plain-English version of this.
-
-Evidence check: unchanged -- a chunk only counts as evidenced if at
-least one REAL, finite, non-placeholder number is cited.
+NEW -- SHIFT-INVARIANCE RE-EXECUTION (the same mechanism used in
+score_bivariate.py, added here so `accuracy_evidence_filtered` and
+`f1_evidence_filtered` are process-based metrics, not just a stricter
+outcome check): Global Moran's I, Geary's C, Join Count, the neighbor-
+average correlation, Local Moran's I/LISA, and Getis-Ord Gi/Gi* are all
+invariant to a constant additive shift applied to every borough's
+value. For each chunk with a real cited number, the model's OWN saved
+code is re-executed on a SHIFTED copy of the input data, and the
+recomputed statistic is compared against the original -- interrogating
+the code itself, not just the number it happened to output once. For
+GLOBAL rows the check uses the single reported statistic directly; for
+LOCAL rows (which list multiple boroughs, not one scalar) it uses ONE
+REPRESENTATIVE borough's value (the first listed) as a proxy for the
+whole chunk's computation, same principle as getisord. `has_evidence_bool`
+now additionally requires this re-check to NOT have returned a
+confirmed failure (True or inconclusive both pass; only a confirmed
+False disqualifies), same tri-state handling as bivariate.
 
 Usage:
     python score_spatial_results.py
@@ -59,9 +59,14 @@ import re
 import pandas as pd
 
 from statistic_plausibility import magnitude_plausible, bounded_probability, verdict_p_consistent
+from formula_invariance_check import check_shift_invariant, compute_shifted_statistic
 
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_spatial.csv"
-MANIFEST_PATH = "chunks_csv/manifest.csv"
+MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path per chunk_id
+
+# ReAct multi-turn agent
+RESULTS_CSV = "ReAct/spatial_correlation_results_react.csv"
+OUT_CSV = "Scores/ReAct/scoring_spatial_summary_react.csv"
 
 # Multi agent
 #RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent_with_method.csv"
@@ -72,8 +77,8 @@ MANIFEST_PATH = "chunks_csv/manifest.csv"
 #OUT_CSV = "Scores/multi turn/scoring_spatial_summary.csv"
 
 # Single turn
-RESULTS_CSV = "spatial_results_with_method.csv"
-OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
+#RESULTS_CSV = "spatial_results_with_method.csv"
+#OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
 
 METHOD_NAME_MAP_GLOBAL = {
     "Global Moran's I": "Global Moran's I",
@@ -87,6 +92,16 @@ METHOD_NAME_MAP_LOCAL = {
 }
 
 VALUE_TOLERANCE = 0.05  # flat absolute, GLOBAL rows only
+
+# For LOCAL rows' shift-invariance re-check only (not used for the
+# borough-name correctness check, which has no value tolerance at all).
+# Same figures already established and justified in score_getisord.py
+# for the identical statistics.
+LOCAL_SHIFT_TOLERANCE = {
+    "Local Moran's I / LISA": 1.5,
+    "Getis-Ord Gi / Gi*": 0.2,
+}
+DEFAULT_LOCAL_SHIFT_TOLERANCE = 0.2
 
 
 def _has_real_statistic(evidence_text):
@@ -253,6 +268,21 @@ def _local_chunk_f1(pred_set, true_set):
     return f1, tp, fp, fn
 
 
+def _load_manifest_index():
+    """Loads the manifest indexed by chunk_id, for the shift-invariance
+    re-check's csv_path/adjacency_path lookup (separate from
+    load_local_borough_ground_truth()'s own manifest read, which needs
+    the un-indexed frame to iterate rows). Degrades to an always-missing
+    stand-in if the file isn't found, so the shift check becomes
+    inconclusive/None for every row rather than blocking scoring."""
+    try:
+        return pd.read_csv(MANIFEST_PATH).set_index("chunk_id")
+    except (FileNotFoundError, OSError):
+        print(f"WARNING: manifest not found at {MANIFEST_PATH} -- "
+              f"shift-invariance re-checks will be skipped (inconclusive) for every row.")
+        return pd.DataFrame(columns=["csv_path", "adjacency_path"])
+
+
 def load():
     df = pd.read_csv(RESULTS_CSV)
 
@@ -265,6 +295,7 @@ def load():
 
     gt_methods = load_ground_truth_methods()
     local_borough_gt = load_local_borough_ground_truth()
+    manifest = _load_manifest_index()
 
     resolved = df.apply(
         lambda r: resolve_ground_truth(
@@ -277,9 +308,76 @@ def load():
     df["gt_method_used"] = resolved.apply(lambda t: t[3])
 
     df["predicted_bool"] = df["predicted"].apply(parse_bool)
-    df["ambiguous"] = df["predicted_bool"].isna()
+    # A row is ambiguous if predicted_bool is genuinely missing, OR if
+    # the evidence_text itself admits no valid answer was ever produced
+    # (e.g. "(Stopped: reached iteration limit...)") -- confirmed
+    # necessary: the ReAct runner's LOCAL-granularity path writes a
+    # literal "FALSE" into `predicted` even when the model produced
+    # NOTHING parseable, unlike the GLOBAL path which correctly leaves
+    # it blank in the same failure case. Without this, a genuine
+    # non-answer gets silently scored as a confident "no cluster found"
+    # prediction instead of being excluded.
+    _NO_VALID_ANSWER_PHRASES = ("stopped:", "reached iteration limit", "(empty response)")
+
+    def _admits_no_valid_answer(text):
+        if not isinstance(text, str):
+            return False
+        low = text.lower()
+        return any(phrase in low for phrase in _NO_VALID_ANSWER_PHRASES)
+
+    df["ambiguous"] = df["predicted_bool"].isna() | df["evidence_text"].apply(_admits_no_valid_answer)
     df["has_real_statistic_bool"] = df["evidence_text"].apply(_has_real_statistic)
     df["is_local"] = df["spatial_granularity"].astype(str).str.strip().str.lower() == "local"
+
+    total_checkable = int(df["has_real_statistic_bool"].sum())
+    print(f"Running shift-invariance re-checks on {total_checkable} row(s) with a real statistic "
+          f"(this re-executes each row's saved code, so it's the slow part)...", flush=True)
+    _progress = {"n": 0}
+
+    def _shift_check(row):
+        # --- Shift-invariance re-execution (process-based check) ---
+        # GLOBAL: uses the single reported statistic directly -- no
+        # ambiguity possible, one value per chunk.
+        # LOCAL: a chunk lists MULTIPLE boroughs, and the re-executed
+        # code's raw print order has no reason to match the original
+        # evidence_text's order -- comparing "first vs first"
+        # positionally would spuriously fail correct code whenever two
+        # DIFFERENT boroughs got compared to each other (the exact bug
+        # found and fixed in score_getisord.py). Instead, the recomputed
+        # value is checked against EVERY originally-reported local
+        # value, accepting a match with ANY of them.
+        if not row["has_real_statistic_bool"]:
+            return None
+        _progress["n"] += 1
+        print(f"  [{_progress['n']}/{total_checkable}] {row['model']} | {row['chunk_id']}", flush=True)
+        if row["chunk_id"] not in manifest.index:
+            return None
+        m = manifest.loc[row["chunk_id"]]
+
+        if row["is_local"]:
+            local_vals = _extract_local_values(row["evidence_text"])
+            if not local_vals:
+                return None
+            shifted_stat = compute_shifted_statistic(row["run_dir"], m["csv_path"], m.get("adjacency_path"))
+            if shifted_stat is None:
+                return None
+            try:
+                shifted_val = float(shifted_stat)
+            except (TypeError, ValueError):
+                return False
+            if not (shifted_val == shifted_val and abs(shifted_val) != float("inf")):
+                return False
+            tol = LOCAL_SHIFT_TOLERANCE.get(row.get("gt_method_used"), DEFAULT_LOCAL_SHIFT_TOLERANCE)
+            return any(abs(shifted_val - v) <= tol for v in local_vals)
+        else:
+            raw_stat = _extract_raw_statistic(row["evidence_text"])
+            if raw_stat is None:
+                return None
+            return check_shift_invariant(
+                row["run_dir"], m["csv_path"], m.get("adjacency_path"), raw_stat)
+
+    df["shift_invariant"] = df.apply(_shift_check, axis=1)
+    print("Shift-invariance re-checks complete.\n", flush=True)
 
     def _plausibility_check(row):
         if not row["has_real_statistic_bool"]:
@@ -300,7 +398,18 @@ def load():
             return True
 
     df["statistic_plausible"] = df.apply(_plausibility_check, axis=1)
-    df["has_evidence_bool"] = df["has_real_statistic_bool"] & df["statistic_plausible"]
+
+    # Evidence requires ALL of: a real, non-fabricated number; the
+    # formula behaving correctly under a constant shift (where the
+    # re-check was conclusive); AND the statistic/values being
+    # plausible -- this is what makes accuracy_evidence_filtered /
+    # f1_evidence_filtered process-based, not just a stricter outcome
+    # check.
+    df["has_evidence_bool"] = (
+        df["has_real_statistic_bool"]
+        & (df["shift_invariant"] != False)  # noqa: E712
+        & df["statistic_plausible"]
+    )
 
     # --- correctness: boolean for GLOBAL, partial-credit F1 for LOCAL ---
     def _row_correctness(row):
@@ -323,7 +432,30 @@ def load():
     df["local_fp"] = correctness.apply(lambda t: t[2])
     df["local_fn"] = correctness.apply(lambda t: t[3])
 
-    df["correct_evidence_filtered"] = df["correct"] * df["has_evidence_bool"].astype(float)
+    def _correct_ef_value(row):
+        # LOCAL rows: correctness is entirely borough-name-based, so
+        # there's no clean "negative claim needs less evidence" concept
+        # the way there is for a bare boolean -- keep the strict rule.
+        if row["is_local"]:
+            return row["correct"] * float(row["has_evidence_bool"])
+        # GLOBAL rows: match compute_metrics()'s OWN lenient rule for
+        # f1_evidence_filtered/precision_ef/recall_ef -- a NOT_CLUSTERED
+        # (False) claim doesn't need real evidence to count, since
+        # there's nothing to fabricate when claiming "nothing was
+        # found"; only a CLUSTERED (True) claim does. Confirmed
+        # necessary: without this, correct_evidence_filtered used a
+        # STRICTER bar than f1_evidence_filtered, causing
+        # accuracy_evidence_filtered to read far below f1_evidence_filtered
+        # for EVERY model in this dataset, not just one -- a systematic
+        # inconsistency between two metrics that are supposed to share
+        # the same definition of "evidenced", not two different ones.
+        if row["ambiguous"]:
+            return 0.0
+        if row["predicted_bool"] == False and row["correct"] >= 1.0:  # noqa: E712
+            return 1.0
+        return row["correct"] * float(row["has_evidence_bool"])
+
+    df["correct_evidence_filtered"] = df.apply(_correct_ef_value, axis=1)
 
     def _value_check(row):
         if row["is_local"] or row["correct"] < 1.0 or not row["has_evidence_bool"]:
@@ -347,12 +479,10 @@ def compute_metrics(g, use_evidence_filter):
     rows, pooled at chunk level, exactly as before), and
     LOCAL_BOROUGH_MATCH (from LOCAL rows, pooled at BOROUGH level across
     every local chunk in the group). All three are averaged with equal
-    weight if they occur at all in this group -- same "only classes
-    that actually occur count toward the macro average" principle used
-    everywhere else in this pipeline. tp/fp returned are the SUM across
-    all three (chunk-level global counts + borough-level local counts)
-    -- an aggregate diagnostic, not a single pure statistic, since it
-    mixes two different levels of granularity; see scoring-logic table."""
+    weight if they occur at all in this group. tp/fp returned are the
+    SUM across all three (chunk-level global counts + borough-level
+    local counts) -- an aggregate diagnostic, not a single pure
+    statistic, since it mixes two different levels of granularity."""
     is_local = g["is_local"]
     g_global = g[~is_local]
     g_local = g[is_local]
@@ -397,9 +527,6 @@ def compute_metrics(g, use_evidence_filter):
         tp_l = int(g_local.loc[counted, "local_tp"].fillna(0).sum())
         fp_l = int(g_local.loc[counted, "local_fp"].fillna(0).sum())
         fn_l = int(g_local.loc[counted, "local_fn"].fillna(0).sum())
-        # rows filtered out by evidence still contribute their true
-        # boroughs as misses (fn), same "unevidenced = treated as a
-        # miss" principle used for global's evidence filtering
         if use_evidence_filter:
             fn_l += int(g_local.loc[~counted, "local_fn"].fillna(0).sum()) \
                 + int(g_local.loc[~counted, "local_tp"].fillna(0).sum())
@@ -420,7 +547,7 @@ def compute_metrics(g, use_evidence_filter):
 
     n_total = len(g)
     accuracy = g[use_col].sum() / n_total if n_total > 0 else 0.0
-    return round(accuracy, 3), round(precision, 3), round(recall, 3), round(f1, 3), tp_total, fp_total
+    return accuracy, precision, recall, f1, tp_total, fp_total
 
 
 def run():
@@ -446,13 +573,14 @@ def run():
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
             "pct_with_evidence": pct_with_evidence,
             "tp": tp, "fp": fp,
-            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "accuracy": f"{accuracy * 100:05.2f}", "precision": f"{precision * 100:05.2f}",
+            "recall": f"{recall * 100:05.2f}", "f1": f"{f1 * 100:05.2f}",
             "correct_number_evidence_filtered": correct_number_ef,
             "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
-            "accuracy_evidence_filtered": acc_ef,
-            "precision_evidence_filtered": prec_ef,
-            "recall_evidence_filtered": rec_ef,
-            "f1_evidence_filtered": f1_ef,
+            "accuracy_evidence_filtered": f"{acc_ef * 100:05.2f}",
+            "precision_evidence_filtered": f"{prec_ef * 100:05.2f}",
+            "recall_evidence_filtered": f"{rec_ef * 100:05.2f}",
+            "f1_evidence_filtered": f"{f1_ef * 100:05.2f}",
         })
 
     out = pd.DataFrame(rows).sort_values(["mode", "model"]).reset_index(drop=True)

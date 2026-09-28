@@ -1,0 +1,397 @@
+time_period,borough,avg_no2
+Q1_2021,Barking and Dagenham,36.8503
+Q1_2021,Barnet,39.6923
+Q1_2021,Bexley,NA
+Q1_2021,Brent,44.7363
+Q1_2021,Bromley,34.4923
+Q1_2021,Camden,30.9529
+Q1_2021,City of London,37.3725
+Q1_2021,Croydon,38.5811
+Q1_2021,Ealing,40.1821
+Q1_2021,Enfield,39.7845
+Q1_2021,Hackney,38.617
+Q1_2021,Hammersmith and Fulham,44.3837
+Q1_2021,Haringey,39.2489
+Q1_2021,Harrow,33.8606
+Q1_2021,Havering,NA
+Q1_2021,Hillingdon,38.8974
+Q1_2021,Hounslow,34.1203
+Q1_2021,Islington,33.0539
+Q1_2021,Kensington and Chelsea,32.1746
+Q1_2021,Kingston upon Thames,43.0317
+Q1_2021,Lambeth,36.341
+Q1_2021,Lewisham,37.0833
+Q1_2021,Merton,30.6506
+Q1_2021,Newham,NA
+Q1_2021,Greenwich,NA
+Q1_2021,Redbridge,41.9683
+Q1_2021,Richmond upon Thames,37.634
+Q1_2021,Southwark,40.6784
+Q1_2021,Sutton,35.0987
+Q1_2021,Tower Hamlets,39.2542
+Q1_2021,Waltham Forest,38.1079
+Q1_2021,Wandsworth,39.1741
+Q1_2021,Westminster,33.9158
+Q2_2021,Barking and Dagenham,29.0533
+Q2_2021,Barnet,34.5833
+Q2_2021,Bexley,NA
+Q2_2021,Brent,37.16
+Q2_2021,Bromley,30.7867
+Q2_2021,Camden,29.7333
+Q2_2021,City of London,31.11
+Q2_2021,Croydon,35.39
+Q2_2021,Ealing,36.78
+Q2_2021,Enfield,26.22
+Q2_2021,Hackney,33.81
+Q2_2021,Hammersmith and Fulham,34.05
+Q2_2021,Haringey,31.09
+Q2_2021,Harrow,26.8533
+Q2_2021,Havering,NA
+Q2_2021,Hillingdon,30.04
+Q2_2021,Hounslow,26.6767
+Q2_2021,Islington,28.02
+Q2_2021,Kensington and Chelsea,25.08
+Q2_2021,Kingston upon Thames,36.2633
+Q2_2021,Lambeth,29.9367
+Q2_2021,Lewisham,37.3367
+Q2_2021,Merton,24.3567
+Q2_2021,Newham,NA
+Q2_2021,Greenwich,NA
+Q2_2021,Redbridge,35.6767
+Q2_2021,Richmond upon Thames,34.7933
+Q2_2021,Southwark,34.1
+Q2_2021,Sutton,28.75
+Q2_2021,Tower Hamlets,31.85
+Q2_2021,Waltham Forest,27.1
+Q2_2021,Wandsworth,32.9367
+Q2_2021,Westminster,28.6167
+Q3_2021,Barking and Dagenham,37.5319
+Q3_2021,Barnet,32.6103
+Q3_2021,Bexley,NA
+Q3_2021,Brent,39.2076
+Q3_2021,Bromley,27.8419
+Q3_2021,Camden,28.7489
+Q3_2021,City of London,31.9589
+Q3_2021,Croydon,35.2811
+Q3_2021,Ealing,36.5891
+Q3_2021,Enfield,26.1222
+Q3_2021,Hackney,32.1129
+Q3_2021,Hammersmith and Fulham,35.7098
+Q3_2021,Haringey,29.2443
+Q3_2021,Harrow,26.0238
+Q3_2021,Havering,NA
+Q3_2021,Hillingdon,31.1822
+Q3_2021,Hounslow,27.0732
+Q3_2021,Islington,26.3256
+Q3_2021,Kensington and Chelsea,25.027
+Q3_2021,Kingston upon Thames,34.4901
+Q3_2021,Lambeth,29.6421
+Q3_2021,Lewisham,37.6563
+Q3_2021,Merton,22.6188
+Q3_2021,Newham,NA
+Q3_2021,Greenwich,NA
+Q3_2021,Redbridge,32.23
+Q3_2021,Richmond upon Thames,33.8132
+Q3_2021,Southwark,32.8078
+Q3_2021,Sutton,28.3079
+Q3_2021,Tower Hamlets,32.2667
+Q3_2021,Waltham Forest,28.4323
+Q3_2021,Wandsworth,36.3208
+Q3_2021,Westminster,27.1263
+Q4_2021,Barking and Dagenham,41.1859
+Q4_2021,Barnet,40.2064
+Q4_2021,Bexley,NA
+Q4_2021,Brent,43.7895
+Q4_2021,Bromley,30.8458
+Q4_2021,Camden,37.9796
+Q4_2021,City of London,39.0655
+Q4_2021,Croydon,36.111
+Q4_2021,Ealing,43.0483
+Q4_2021,Enfield,35.5735
+Q4_2021,Hackney,34.0055
+Q4_2021,Hammersmith and Fulham,41.4149
+Q4_2021,Haringey,39.7456
+Q4_2021,Harrow,30.1512
+Q4_2021,Havering,NA
+Q4_2021,Hillingdon,41.8514
+Q4_2021,Hounslow,33.6133
+Q4_2021,Islington,33.3672
+Q4_2021,Kensington and Chelsea,30.9701
+Q4_2021,Kingston upon Thames,39.783
+Q4_2021,Lambeth,33.4814
+Q4_2021,Lewisham,44.1716
+Q4_2021,Merton,27.2995
+Q4_2021,Newham,NA
+Q4_2021,Greenwich,NA
+Q4_2021,Redbridge,42.0333
+Q4_2021,Richmond upon Thames,37.2156
+Q4_2021,Southwark,38.1691
+Q4_2021,Sutton,31.8337
+Q4_2021,Tower Hamlets,39.6729
+Q4_2021,Waltham Forest,31.8934
+Q4_2021,Wandsworth,35.6317
+Q4_2021,Westminster,33.4386
+Q1_2022,Barking and Dagenham,40.2485
+Q1_2022,Barnet,42.8254
+Q1_2022,Bexley,NA
+Q1_2022,Brent,41.6854
+Q1_2022,Bromley,35.4883
+Q1_2022,Camden,36.2927
+Q1_2022,City of London,43.6611
+Q1_2022,Croydon,35.6642
+Q1_2022,Ealing,45.5135
+Q1_2022,Enfield,37.0496
+Q1_2022,Greenwich,36.0173
+Q1_2022,Hammersmith and Fulham,44.5443
+Q1_2022,Hackney,42.1775
+Q1_2022,Haringey,33.3731
+Q1_2022,Harrow,30.2042
+Q1_2022,Havering,NA
+Q1_2022,Hillingdon,29.4355
+Q1_2022,Hounslow,34.2151
+Q1_2022,Islington,37.7
+Q1_2022,Kensington and Chelsea,35.1018
+Q1_2022,Kingston upon Thames,36.0614
+Q1_2022,Lambeth,34.8191
+Q1_2022,Lewisham,30.1278
+Q1_2022,Merton,42.4153
+Q1_2022,Newham,34.3746
+Q1_2022,Redbridge,38.3
+Q1_2022,Richmond upon Thames,38.5631
+Q1_2022,Southwark,39.034
+Q1_2022,Sutton,34.5549
+Q1_2022,Tower Hamlets,43.4629
+Q1_2022,Waltham Forest,35.4694
+Q1_2022,Wandsworth,36.9816
+Q1_2022,Westminster,35.998
+Q2_2022,Barking and Dagenham,29.1674
+Q2_2022,Barnet,30.6356
+Q2_2022,Bexley,NA
+Q2_2022,Brent,31.549
+Q2_2022,Bromley,25.3884
+Q2_2022,Camden,25.7942
+Q2_2022,City of London,32.4163
+Q2_2022,Croydon,28.6333
+Q2_2022,Ealing,32.7229
+Q2_2022,Enfield,25.6194
+Q2_2022,Greenwich,27.871
+Q2_2022,Hammersmith and Fulham,31.4636
+Q2_2022,Hackney,28.7407
+Q2_2022,Haringey,22.7143
+Q2_2022,Harrow,16.1556
+Q2_2022,Havering,NA
+Q2_2022,Hillingdon,25.8733
+Q2_2022,Hounslow,24.6806
+Q2_2022,Islington,29.7676
+Q2_2022,Kensington and Chelsea,30.8197
+Q2_2022,Kingston upon Thames,25.7141
+Q2_2022,Lambeth,28.305
+Q2_2022,Lewisham,20.095
+Q2_2022,Merton,34.6455
+Q2_2022,Newham,24.1607
+Q2_2022,Redbridge,33.6583
+Q2_2022,Richmond upon Thames,27.1761
+Q2_2022,Southwark,30.1595
+Q2_2022,Sutton,25.2149
+Q2_2022,Tower Hamlets,29.7396
+Q2_2022,Waltham Forest,25.294
+Q2_2022,Wandsworth,26.6791
+Q2_2022,Westminster,30.1313
+Q3_2022,Barking and Dagenham,29.7034
+Q3_2022,Barnet,32.2497
+Q3_2022,Bexley,NA
+Q3_2022,Brent,35.0254
+Q3_2022,Bromley,27.3533
+Q3_2022,Camden,26.7063
+Q3_2022,City of London,34.6137
+Q3_2022,Croydon,32.2705
+Q3_2022,Ealing,35.488
+Q3_2022,Enfield,26.8544
+Q3_2022,Greenwich,29.4205
+Q3_2022,Hammersmith and Fulham,36.372
+Q3_2022,Hackney,29.5751
+Q3_2022,Haringey,29.3835
+Q3_2022,Harrow,28.9583
+Q3_2022,Havering,NA
+Q3_2022,Hillingdon,34.7827
+Q3_2022,Hounslow,27.7988
+Q3_2022,Islington,38.7143
+Q3_2022,Kensington and Chelsea,32.2739
+Q3_2022,Kingston upon Thames,28.5479
+Q3_2022,Lambeth,29.1548
+Q3_2022,Lewisham,22.7043
+Q3_2022,Merton,40.1583
+Q3_2022,Newham,25.7996
+Q3_2022,Redbridge,35.7783
+Q3_2022,Richmond upon Thames,30.2721
+Q3_2022,Southwark,33.057
+Q3_2022,Sutton,28.2024
+Q3_2022,Tower Hamlets,31.3771
+Q3_2022,Waltham Forest,27.7302
+Q3_2022,Wandsworth,29.7282
+Q3_2022,Westminster,32.694
+Q4_2022,Barking and Dagenham,36.9269
+Q4_2022,Barnet,39.8971
+Q4_2022,Bexley,NA
+Q4_2022,Brent,41.7157
+Q4_2022,Bromley,31.7826
+Q4_2022,Camden,35.1793
+Q4_2022,City of London,40.1626
+Q4_2022,Croydon,33.3473
+Q4_2022,Ealing,42.6786
+Q4_2022,Enfield,32.7327
+Q4_2022,Greenwich,28.6369
+Q4_2022,Hammersmith and Fulham,37.8372
+Q4_2022,Hackney,39.776
+Q4_2022,Haringey,35.4762
+Q4_2022,Harrow,30.7306
+Q4_2022,Havering,NA
+Q4_2022,Hillingdon,35.6076
+Q4_2022,Hounslow,32.4023
+Q4_2022,Islington,32.6222
+Q4_2022,Kensington and Chelsea,35.3632
+Q4_2022,Kingston upon Thames,32.6832
+Q4_2022,Lambeth,34.2376
+Q4_2022,Lewisham,28.1062
+Q4_2022,Merton,40.8269
+Q4_2022,Newham,34.5305
+Q4_2022,Redbridge,38.2383
+Q4_2022,Richmond upon Thames,33.7758
+Q4_2022,Southwark,37.5361
+Q4_2022,Sutton,31.2074
+Q4_2022,Tower Hamlets,37.1527
+Q4_2022,Waltham Forest,37.2302
+Q4_2022,Wandsworth,33.5366
+Q4_2022,Westminster,37.2296
+Q1_2023,Barking and Dagenham,39.6183
+Q1_2023,Barnet,NA
+Q1_2023,Bexley,NA
+Q1_2023,Brent,34.2542
+Q1_2023,Bromley,31.4305
+Q1_2023,Camden,39.41
+Q1_2023,City of London,42.5124
+Q1_2023,Croydon,NA
+Q1_2023,Ealing,42.1569
+Q1_2023,Enfield,37.4991
+Q1_2023,Hackney,NA
+Q1_2023,Hammersmith and Fulham,NA
+Q1_2023,Haringey,33.9633
+Q1_2023,Harrow,42.4
+Q1_2023,Havering,NA
+Q1_2023,Hillingdon,34.4465
+Q1_2023,Hounslow,33.9473
+Q1_2023,Islington,30.8563
+Q1_2023,Kensington and Chelsea,34.5271
+Q1_2023,Kingston upon Thames,32.9293
+Q1_2023,Lambeth,36.6846
+Q1_2023,Lewisham,29.1155
+Q1_2023,Merton,41.7456
+Q1_2023,Newham,31.7554
+Q1_2023,Greenwich,35.8541
+Q1_2023,Redbridge,40.3924
+Q1_2023,Richmond upon Thames,35.3445
+Q1_2023,Southwark,38.4845
+Q1_2023,Sutton,32.1414
+Q1_2023,Tower Hamlets,37.7016
+Q1_2023,Waltham Forest,35.8254
+Q1_2023,Wandsworth,33.8596
+Q1_2023,Westminster,39.2201
+Q2_2023,Barking and Dagenham,29.8557
+Q2_2023,Barnet,NA
+Q2_2023,Bexley,NA
+Q2_2023,Brent,23.2238
+Q2_2023,Bromley,25.12
+Q2_2023,Camden,30.0058
+Q2_2023,City of London,32.1697
+Q2_2023,Croydon,NA
+Q2_2023,Ealing,31.8155
+Q2_2023,Enfield,22.7095
+Q2_2023,Hackney,NA
+Q2_2023,Hammersmith and Fulham,NA
+Q2_2023,Haringey,27.6441
+Q2_2023,Harrow,28.3
+Q2_2023,Havering,NA
+Q2_2023,Hillingdon,25.3162
+Q2_2023,Hounslow,25.3237
+Q2_2023,Islington,21.5711
+Q2_2023,Kensington and Chelsea,27.543
+Q2_2023,Kingston upon Thames,24.4572
+Q2_2023,Lambeth,32.4726
+Q2_2023,Lewisham,21.0938
+Q2_2023,Merton,34.0581
+Q2_2023,Newham,20.1138
+Q2_2023,Greenwich,28.4155
+Q2_2023,Redbridge,28.9485
+Q2_2023,Richmond upon Thames,27.5202
+Q2_2023,Southwark,32.5776
+Q2_2023,Sutton,25.6394
+Q2_2023,Tower Hamlets,29.1673
+Q2_2023,Waltham Forest,25.97
+Q2_2023,Wandsworth,27.2854
+Q2_2023,Westminster,29.3807
+Q3_2023,Barking and Dagenham,27.2946
+Q3_2023,Barnet,NA
+Q3_2023,Bexley,NA
+Q3_2023,Brent,24.7432
+Q3_2023,Bromley,24.5897
+Q3_2023,Camden,31.0012
+Q3_2023,City of London,34.3666
+Q3_2023,Croydon,NA
+Q3_2023,Ealing,32.0123
+Q3_2023,Enfield,24.7324
+Q3_2023,Hackney,NA
+Q3_2023,Hammersmith and Fulham,NA
+Q3_2023,Haringey,28.4564
+Q3_2023,Harrow,27.7667
+Q3_2023,Havering,NA
+Q3_2023,Hillingdon,26.6484
+Q3_2023,Hounslow,24.4643
+Q3_2023,Islington,20.7123
+Q3_2023,Kensington and Chelsea,26.7462
+Q3_2023,Kingston upon Thames,21.4958
+Q3_2023,Lambeth,29.6462
+Q3_2023,Lewisham,20.7308
+Q3_2023,Merton,30.4067
+Q3_2023,Newham,24.1234
+Q3_2023,Greenwich,27.0787
+Q3_2023,Redbridge,30.0712
+Q3_2023,Richmond upon Thames,25.8576
+Q3_2023,Southwark,29.904
+Q3_2023,Sutton,22.7215
+Q3_2023,Tower Hamlets,30.3331
+Q3_2023,Waltham Forest,25.9989
+Q3_2023,Wandsworth,25.1003
+Q3_2023,Westminster,28.8024
+Q4_2023,Barking and Dagenham,33.3969
+Q4_2023,Barnet,NA
+Q4_2023,Bexley,NA
+Q4_2023,Brent,30.1767
+Q4_2023,Bromley,26.9159
+Q4_2023,Camden,42.3494
+Q4_2023,City of London,37.7557
+Q4_2023,Croydon,NA
+Q4_2023,Ealing,35.4664
+Q4_2023,Enfield,31.6104
+Q4_2023,Hackney,NA
+Q4_2023,Hammersmith and Fulham,NA
+Q4_2023,Haringey,35.4415
+Q4_2023,Harrow,29.5
+Q4_2023,Havering,NA
+Q4_2023,Hillingdon,30.2207
+Q4_2023,Hounslow,27.5164
+Q4_2023,Islington,25.9879
+Q4_2023,Kensington and Chelsea,30.7399
+Q4_2023,Kingston upon Thames,23.0198
+Q4_2023,Lambeth,34.1262
+Q4_2023,Lewisham,24.6497
+Q4_2023,Merton,30.9622
+Q4_2023,Newham,33.2131
+Q4_2023,Greenwich,28.8625
+Q4_2023,Redbridge,36.2667
+Q4_2023,Richmond upon Thames,29.0054
+Q4_2023,Southwark,33.548
+Q4_2023,Sutton,26.4312
+Q4_2023,Tower Hamlets,34.8019
+Q4_2023,Waltham Forest,31.3863
+Q4_2023,Wandsworth,27.4311
+Q4_2023,Westminster,33.9029

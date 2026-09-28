@@ -1,8 +1,8 @@
 {
   "status": "accepted",
   "final_answer": "NOT SIGNIFICANT (test statistic = -0.075731, p = 0.351000)",
-  "validation_score": 6,
-  "validation_total": 6,
+  "validation_score": 5,
+  "validation_total": 5,
   "plan_attempts_used": 1,
   "coder_tries_used": 1,
   "profiler_prompt": "You are the Profiler. Explore this dataset with real, executed pandas code -- do not guess or describe from the preview alone. For every numeric column, print its missing-value count using EXACTLY this format, one line per column:\nmissing_count_<column_name> = <integer>\nThen print the total row count using EXACTLY this format:\nrow_count = <integer>\nDo not analyze or answer any question -- only report these facts about the data itself, using the exact print formats above.\n\nDataset path: chunks_csv/bivariate/bivariate_2021_gas_transport.csv\nWrite ONE ```python``` block that loads the data and prints these facts. Re-import pandas/numpy; this runs in a fresh process.\n\n\nReal preview of the main dataset (path: chunks_csv/bivariate/bivariate_2021_gas_transport.csv) -- use these EXACT column names, do not guess:\nColumns: ['borough', 'Gas_value', 'Transport_value']\nFirst 3 rows:\n             borough  Gas_value  Transport_value\nBarking and Dagenham 15195.2245        2487.6812\n              Barnet 20812.3311        3865.7504\n              Bexley 20966.8665        3257.1430\n\nReal preview of ADJACENCY_PATH (path: chunks_csv/borough_adjacency.csv) -- use these EXACT column names, do not guess:\nColumns: ['borough', 'neighbor']\nFirst 3 rows:\n             borough             neighbor\nKingston upon Thames               Sutton\nKingston upon Thames Richmond upon Thames\nKingston upon Thames               Merton",
@@ -23,8 +23,8 @@
         ],
         "final_answer": "NOT SIGNIFICANT (test statistic = -0.075731, p = 0.351000)"
       },
-      "validation_score": 6,
-      "validation_total": 6,
+      "validation_score": 5,
+      "validation_total": 5,
       "failed_checks": []
     }
   ]

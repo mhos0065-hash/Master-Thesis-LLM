@@ -100,9 +100,9 @@ MANIFEST_PATH = "chunks_csv/bivariate/bivariate_manifest.csv"
 GROUND_TRUTH_METHODS_PATH = "ground truth/ground_truth_all_methods_bivariate.csv"
 
 # For single turn
-RESULTS_CSV = "bivariate_results_with_method.csv"
-SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
-CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
+#RESULTS_CSV = "bivariate_results_with_method.csv"
+#SUMMARY_OUT = "Scores/single turn/bivariate_scoring_summary.csv"
+#CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 
 # For multi turn
 #RESULTS_CSV = "results/single agent/bivariate_results_multi_with_method.csv"
@@ -115,9 +115,9 @@ CONFUSION_OUT = "Scores/single turn/bivariate_confusion_matrix.csv"
 #CONFUSION_OUT = "Scores/multi agent/bivariate_confusion_matrix_multiagent.csv"
 
 # For ReAct agent
-#RESULTS_CSV = "ReAct/bivariate_results_react.csv"
-#SUMMARY_OUT = "Scores/ReAct/bivariate_scoring_summary_ReAct.csv"
-#CONFUSION_OUT = "Scores/ReAct/bivariate_confusion_matrix_ReAct.csv"
+RESULTS_CSV = "ReAct/bivariate_results_react.csv"
+SUMMARY_OUT = "Scores/ReAct/bivariate_scoring_summary_ReAct.csv"
+CONFUSION_OUT = "Scores/ReAct/bivariate_confusion_matrix_ReAct.csv"
 
 
 CLASSES = ["positive", "negative", "not_significant"]
@@ -439,9 +439,9 @@ def per_class_metrics(g, use_evidence_filter):
         per_class[cls] = {"precision": round(precision, 3), "recall": round(recall, 3),
                            "f1": round(f1, 3), "tp": tp, "fp": fp, "fn": fn}
 
-    macro_precision = round(sum(precisions) / len(precisions), 3) if precisions else 0.0
-    macro_recall = round(sum(recalls) / len(recalls), 3) if recalls else 0.0
-    macro_f1 = round(sum(f1_scores) / len(f1_scores), 3) if f1_scores else 0.0
+    macro_precision = sum(precisions) / len(precisions) if precisions else 0.0
+    macro_recall = sum(recalls) / len(recalls) if recalls else 0.0
+    macro_f1 = sum(f1_scores) / len(f1_scores) if f1_scores else 0.0
     return per_class, macro_precision, macro_recall, macro_f1
 
 
@@ -479,8 +479,8 @@ def run():
 
         # accuracy's denominator is the FULL count -- an ambiguous chunk is
         # never "correct" just because it was excluded from consideration
-        accuracy = round(correct_number / n, 3)
-        accuracy_ef = round(correct_number_ef / n, 3)
+        accuracy = correct_number / n
+        accuracy_ef = correct_number_ef / n
 
         per_class, precision, recall, f1 = per_class_metrics(g, use_evidence_filter=False)
         per_class_ef, precision_ef, recall_ef, f1_ef = per_class_metrics(g, use_evidence_filter=True)
@@ -525,13 +525,14 @@ def run():
             "non_ambiguous": non_ambiguous, "correct_number": correct_number,
             "pct_with_evidence": pct_with_evidence,
             "tp": tp, "fp": fp,
-            "accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1,
+            "accuracy": f"{accuracy * 100:05.2f}", "precision": f"{precision * 100:05.2f}",
+            "recall": f"{recall * 100:05.2f}", "f1": f"{f1 * 100:05.2f}",
             "correct_number_evidence_filtered": correct_number_ef,
             "tp_evidence_filtered": tp_ef, "fp_evidence_filtered": fp_ef,
-            "accuracy_evidence_filtered": accuracy_ef,
-            "precision_evidence_filtered": precision_ef,
-            "recall_evidence_filtered": recall_ef,
-            "f1_evidence_filtered": f1_ef,
+            "accuracy_evidence_filtered": f"{accuracy_ef * 100:05.2f}",
+            "precision_evidence_filtered": f"{precision_ef * 100:05.2f}",
+            "recall_evidence_filtered": f"{recall_ef * 100:05.2f}",
+            "f1_evidence_filtered": f"{f1_ef * 100:05.2f}",
             # value-verification layer (only meaningful on top of
             # verdict-correct + evidenced rows)
             "n_value_checkable": n_value_checkable,
