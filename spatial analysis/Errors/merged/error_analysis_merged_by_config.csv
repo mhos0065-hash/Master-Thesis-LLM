@@ -1,0 +1,5 @@
+config,format_failure,grounded_correctness,grounding_failure,reasoning_failure,ungrounded_correctness,,Total
+ReAct baseline,466,867,310,307,458,,2408
+Single agent multi turn,219,911,462,285,531,,2408
+Single agent single turn,524,783,425,239,437,,2408
+SpatialInsightAgent,47,1457,255,359,290,,2408

@@ -48,9 +48,9 @@ dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Map: file name -> friendly configuration label (no hyphens)
 files <- c(
-  "Follow up_summary_single agent_single_turn.csv" = "Single-agent single-turn",
-  "Follow up_summary_single agent_multi_turn.csv"   = "Single-agent multi-turn",
-  "Follow up_summary-ReAct.csv"                     = "ReAct baseline",
+  "Follow up_summary_single agent_single_turn.csv" = "Single-Agent Single-Turn",
+  "Follow up_summary_single agent_multi_turn.csv"   = "Single-Agent Multi-Turn",
+  "Follow up_summary-ReAct.csv"                     = "ReAct Baseline",
   "Follow up_summary_multi_agent.csv"               = "SpatialInsightAgent"
 )
 
@@ -92,9 +92,9 @@ model_labels <- c(
 # Configuration order: single agent single turn, single agent multi turn,
 # ReAct baseline third, SpatialInsightAgent fourth
 config_order <- c(
-  "Single-agent single-turn",
-  "Single-agent multi-turn",
-  "ReAct baseline",
+  "Single-Agent Single-Turn",
+  "Single-Agent Multi-Turn",
+  "ReAct Baseline",
   "SpatialInsightAgent"
 )
 

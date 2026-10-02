@@ -1,0 +1,21 @@
+config,task,mode,format_failure,grounded_correctness,grounding_failure,reasoning_failure,ungrounded_correctness,,Total
+Single agent single turn,bivariate,single,111,137,87,14,51,,400
+Single agent single turn,changespillover,single,95,137,97,13,82,,424
+Single agent single turn,getisord,single,77,237,74,52,0,,440
+Single agent single turn,outlier_r,single,53,141,13,10,47,,264
+Single agent single turn,spatial,single,188,131,154,150,257,,880
+Single agent multi turn,bivariate,single,22,174,100,39,65,,400
+Single agent multi turn,changespillover,single,39,169,100,14,102,,424
+Single agent multi turn,getisord,single,71,234,78,57,0,,440
+Single agent multi turn,outlier_r,single,22,176,14,6,46,,264
+Single agent multi turn,spatial,single,65,158,170,169,318,,880
+ReAct baseline,bivariate,react,76,157,40,51,76,,400
+ReAct baseline,changespillover,react,112,243,14,39,16,,424
+ReAct baseline,getisord,react,56,224,96,64,0,,440
+ReAct baseline,outlier_r,react,48,152,6,23,35,,264
+ReAct baseline,spatial,react,174,91,154,130,331,,880
+SpatialInsightAgent,bivariate,multiagent,3,295,16,60,26,,400
+SpatialInsightAgent,changespillover,multiagent,12,344,7,49,12,,424
+SpatialInsightAgent,getisord,multiagent,2,303,83,52,0,,440
+SpatialInsightAgent,outlier_r,multiagent,2,184,14,17,47,,264
+SpatialInsightAgent,spatial,multiagent,28,331,135,181,205,,880

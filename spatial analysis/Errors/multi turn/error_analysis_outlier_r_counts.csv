@@ -1,0 +1,2 @@
+task,mode,format_failure,grounded_correctness,grounding_failure,reasoning_failure,ungrounded_correctness
+outlier_r,single,22.0,176.0,14.0,6.0,46.0

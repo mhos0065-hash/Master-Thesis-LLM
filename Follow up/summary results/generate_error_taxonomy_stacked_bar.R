@@ -1,0 +1,264 @@
+## =============================================================================
+## generate_error_taxonomy_stacked_bar.R
+##
+## Reads error_analysis_merged_by_config.csv and produces a publication
+## ready 100% stacked bar chart of the 4-type error taxonomy (plus the
+## grounded_correctness success case), one bar per configuration, for
+## the quantitative error analysis in Section 4.3.
+##
+## TWO SEPARATE LEGENDS: the 4 genuine failure types (format, grounding,
+## reasoning, ungrounded correctness -- matching this thesis's own "4
+## failure types" framing in Section 4.3) get an "Error type" legend;
+## grounded_correctness, the only genuine success case, gets its own
+## separate "Outcome" legend with a visually distinct warm-vs-cool
+## colour split, so a reader never reads "success" as an "error type".
+## Stacking position is computed ONCE from the full 5-category total
+## BEFORE the data is split into the two plotting layers -- splitting
+## first and letting each layer's own position_fill() normalise
+## independently would be wrong (each layer would fill 100% of its own
+## height on its own, breaking the true combined proportions).
+##
+## Usage:
+##   Rscript generate_error_taxonomy_stacked_bar.R
+##
+## Requirements: ggplot2, dplyr, tidyr, RColorBrewer, ggnewscale
+##   install.packages(c("ggplot2","dplyr","tidyr","RColorBrewer","ggnewscale"))
+## =============================================================================
+
+if (!requireNamespace("RColorBrewer", quietly = TRUE)) install.packages("RColorBrewer")
+if (!requireNamespace("ggnewscale", quietly = TRUE)) install.packages("ggnewscale")
+library(RColorBrewer)
+library(ggnewscale)
+
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(tidyr)
+  library(ggplot2)
+})
+
+## ---- 0. CONFIG ----------------------------------------------------------
+
+input_csv <- "error_analysis_merged_by_config.csv"
+output_dir <- "output_figures"
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+
+# Fixed configuration order, matching every other figure in this thesis
+raw_config_names <- c(
+  "Single agent single turn",
+  "Single agent multi turn",
+  "ReAct baseline",
+  "SpatialInsightAgent"
+)
+
+# Purely cosmetic -- what actually appears on the x-axis.
+config_order <- c(
+  "Single-Agent Single-Turn",
+  "Single-Agent Multi-turn",
+  "ReAct Baseline",
+  "SpatialInsightAgent"
+)
+
+
+# Visual stacking order, TOP to BOTTOM (matches the confirmed rendering
+# of the earlier version of this figure: grounded_correctness at top,
+# format_failure at bottom).
+error_type_order <- c(
+  "grounded_correctness",
+  "ungrounded_correctness",
+  "reasoning_failure",
+  "grounding_failure",
+  "format_failure"
+)
+
+error_type_labels <- c(
+  "grounded_correctness"   = "Grounded correctness",
+  "ungrounded_correctness" = "Ungrounded correctness",
+  "reasoning_failure"      = "Reasoning failure",
+  "grounding_failure"      = "Grounding failure",
+  "format_failure"         = "Format failure"
+)
+
+# Legend display order, LEFT to RIGHT in the "Error type" box: Format,
+# Grounding, Reasoning, Ungrounded correctness. Deliberately a SEPARATE
+# variable from error_type_order above -- error_type_order controls
+# the visual STACKING order (via rev() below) and must stay untouched,
+# or the bars themselves reorder along with the legend. Only this
+# variable feeds error_label's factor levels, which is what actually
+# controls legend order in ggplot2 for a scale_fill_manual() mapped to
+# a factor. grounded_correctness's position in this list has no
+# effect -- it is filtered into its own separate "Successful outcome"
+# legend regardless of where it sits here.
+legend_order <- c("format_failure", "grounding_failure", "reasoning_failure",
+                  "ungrounded_correctness", "grounded_correctness")
+
+# The 4 genuine failure types, in their own legend titled "Error type".
+# Same Dark2 colours as the original single-legend version (confirmed
+# to render correctly and clearly) -- OrRd was tried here first, but
+# its lightest shade (used for format_failure) was too pale, nearly
+# blending into the white segment borders/background. Reusing the
+# exact Dark2[2:5] slice keeps the same well-differentiated, bold
+# colours, just now organised into two legends instead of one.
+failure_keys <- c("ungrounded_correctness", "reasoning_failure",
+                  "grounding_failure", "format_failure")
+failure_colors <- setNames(brewer.pal(8, "Dark2")[2:5], failure_keys)
+
+# grounded_correctness keeps Dark2[1] (the same teal used before),
+# in its own single-entry "Outcome" legend.
+success_color <- c("grounded_correctness" = brewer.pal(8, "Dark2")[1])
+
+## ---- 1. READ + RESHAPE ----------------------------------------------------
+## Selecting columns explicitly, by name -- robust to the stray blank
+## column and the Total column present in the raw merged CSV.
+
+raw <- read.csv(input_csv, stringsAsFactors = FALSE, check.names = FALSE)
+
+required_cols <- c("config", error_type_order)
+missing_cols <- setdiff(required_cols, names(raw))
+if (length(missing_cols) > 0) {
+  stop("Missing expected column(s) in ", input_csv, ": ",
+       paste(missing_cols, collapse = ", "))
+}
+
+data_wide <- raw[, required_cols]
+
+# Sanity check: if a Total column exists, confirm the 5 error types
+# actually sum to it -- catches a merge/rounding problem early rather
+# than silently plotting a subtly wrong chart.
+if ("Total" %in% names(raw)) {
+  row_sums <- rowSums(data_wide[, error_type_order])
+  mismatch <- abs(row_sums - raw$Total) > 0.5
+  if (any(mismatch)) {
+    warning("Row(s) where the 5 error types do not sum to the Total column: ",
+            paste(raw$config[mismatch], collapse = ", "),
+            " -- check error_analysis_merged_by_config.csv before trusting this figure.")
+  } else {
+    message("Sanity check passed: all rows' error-type counts sum to their Total.")
+  }
+}
+
+data_long <- data_wide %>%
+  pivot_longer(cols = all_of(error_type_order), names_to = "error_key", values_to = "n") %>%
+  mutate(
+    config = factor(config, levels = raw_config_names, labels = config_order),
+    total = ave(n, config, FUN = sum),
+    pct = n / total,
+    # Bottom-up order for cumulative stacking is the REVERSE of the
+    # top-to-bottom visual order above (format_failure ends up at
+    # ymin=0, grounded_correctness at ymax=1) -- verified numerically
+    # against the real data before writing this.
+    error_key = factor(error_key, levels = rev(error_type_order), ordered = TRUE)
+  ) %>%
+  arrange(config, error_key) %>%
+  group_by(config) %>%
+  mutate(ymax = cumsum(pct), ymin = ymax - pct) %>%
+  ungroup() %>%
+  mutate(
+    error_label = factor(error_key, levels = legend_order,
+                         labels = unname(error_type_labels[legend_order])),
+    x_num = as.numeric(config)
+  )
+
+data_failure <- data_long %>% filter(error_key %in% failure_keys)
+data_success <- data_long %>% filter(error_key == "grounded_correctness")
+
+# format_failure specifically, below the 3% in-bar label threshold --
+# empty (0 rows) if no such segment exists, in which case the callout
+# geoms below draw nothing.
+data_thin_bottom <- data_failure %>%
+  filter(error_key == "format_failure", pct < 0.03, n > 0)
+
+bar_width <- 0.68
+
+## ---- 2. PLOT ---------------------------------------------------------------
+
+p <- ggplot() +
+  # --- Layer 1: the 4 failure types, own colour scale + "Error type" legend ---
+  geom_rect(
+    data = data_failure,
+    aes(xmin = x_num - bar_width / 2, xmax = x_num + bar_width / 2,
+        ymin = ymin, ymax = ymax, fill = error_label),
+    colour = "white", linewidth = 0.3
+  ) +
+  geom_text(
+    data = data_failure %>% filter(pct >= 0.03 & n > 0),
+    aes(x = x_num, y = (ymin + ymax) / 2, label = n),
+    colour = "white", fontface = "bold", size = 3.5
+  ) +
+  # Callout for a segment too thin for an in-bar label. Only applied to
+  # format_failure specifically: it is always the bottom-most category
+  # (ymin = 0) under the fixed stacking order above, so a leader line
+  # straight down to just below the axis is an unambiguous, safe
+  # position. A thin segment anywhere in the MIDDLE of a stack has no
+  # single sensible "outside" position and is deliberately left
+  # unlabelled instead (rather than risk a misplaced callout) --
+  # data_thin_bottom is empty and draws nothing if no such segment
+  # exists in a given dataset, so this is safe to leave in
+  # unconditionally.
+  geom_segment(
+    data = data_thin_bottom,
+    aes(x = x_num, xend = x_num, y = ymax, yend = -0.07),
+    colour = "grey40", linewidth = 0.4
+  ) +
+  geom_text(
+    data = data_thin_bottom,
+    aes(x = x_num, y = -0.12, label = n),
+    colour = "grey20", fontface = "bold", size = 3.3
+  ) +
+  scale_fill_manual(
+    values = setNames(failure_colors, unname(error_type_labels[failure_keys])),
+    name = "Error type"
+  ) +
+  # --- Reset the fill scale so the success layer gets its OWN legend ---
+  ggnewscale::new_scale_fill() +
+  # --- Layer 2: grounded_correctness, own colour + "Successful outcome" legend ---
+  geom_rect(
+    data = data_success,
+    aes(xmin = x_num - bar_width / 2, xmax = x_num + bar_width / 2,
+        ymin = ymin, ymax = ymax, fill = error_label),
+    colour = "white", linewidth = 0.3
+  ) +
+  geom_text(
+    data = data_success %>% filter(pct >= 0.03 & n > 0),
+    aes(x = x_num, y = (ymin + ymax) / 2, label = n),
+    colour = "white", fontface = "bold", size = 3.5
+  ) +
+  scale_fill_manual(
+    values = setNames(unname(success_color), unname(error_type_labels["grounded_correctness"])),
+    name = "Successful outcome"
+  ) +
+  scale_x_continuous(breaks = seq_along(config_order), labels = config_order,
+                     expand = expansion(add = 0.6)) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     breaks = seq(0, 1, 0.25), limits = c(-0.17, 1),
+                     expand = expansion(mult = c(0, 0.01))) +
+  coord_cartesian(clip = "off") +
+  labs(
+    x = "Configuration",
+    y = "Share of cases (%)",
+    title = NULL
+  ) +
+  theme_classic(base_size = 13, base_family = "sans") +
+  theme(
+    axis.title.x     = element_text(size = 13.5, margin = margin(t = 10)),
+    axis.title.y     = element_text(size = 13.5, margin = margin(r = 8)),
+    axis.text.x      = element_text(size = 11.5, angle = 20, hjust = 1, margin = margin(t = 4)),
+    axis.text.y      = element_text(size = 11),
+    legend.title     = element_text(size = 12.5, face = "bold"),
+    legend.text      = element_text(size = 11.5),
+    legend.position  = "bottom",
+    legend.box       = "vertical",
+    plot.margin      = margin(t = 10, r = 16, b = 26, l = 8)
+  ) +
+  guides(fill = guide_legend(nrow = 1))
+
+## ---- 3. SAVE (high resolution, wide enough for 4 bars + count labels) ------
+
+ggsave(file.path(output_dir, "error_taxonomy_stacked_bar.png"), plot = p,
+       width = 8.5, height = 8.6, dpi = 400)
+message("Saved: ", file.path(output_dir, "error_taxonomy_stacked_bar.png"))
+
+# Also save the underlying long-format data, for transparency / in case
+# a reviewer wants to check the exact numbers behind the figure.
+write.csv(data_long %>% select(config, error_type = error_label, n, pct, ymin, ymax),
+          file.path(output_dir, "error_taxonomy_stacked_bar_data.csv"), row.names = FALSE)
+message("Saved: ", file.path(output_dir, "error_taxonomy_stacked_bar_data.csv"))

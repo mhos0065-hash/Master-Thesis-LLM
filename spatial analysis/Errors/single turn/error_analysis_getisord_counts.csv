@@ -1,0 +1,2 @@
+task,mode,format_failure,grounded_correctness,grounding_failure,reasoning_failure,ungrounded_correctness
+getisord,single,77,237,74,52,0
