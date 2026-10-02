@@ -1,5 +1,0 @@
-1. Compute the number of departures for each borough by counting the trips that started in each borough (use the StartBorough column).
-2. Calculate the number of self-contained trips for each borough by counting the trips where both the StartBorough and EndBorough are the same.
-3. Determine the total number of trips that ended in each borough and compute the overall arrival share for each borough as the ratio of trips ending in that borough to total trips.
-4. Calculate the expected self-contained trips for each borough using the formula: Departures x Arrival share.
-5. Compute the Self-Containment Index for each borough as: Self-contained trips / Expected self-contained trips, then use this index to calculate Moran's I and perform a permutation test with at least 500 shuffles to assess spatial clustering, reporting the significance level.

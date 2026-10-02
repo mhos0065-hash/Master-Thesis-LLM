@@ -1,1 +1,0 @@
-[RESULT] (Moran's I = [I_obs], p = [p_value])*

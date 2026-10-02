@@ -1,1 +1,0 @@
-NOT CLUSTERED (Moran's I = <rounded_I>, p = <rounded_p>)

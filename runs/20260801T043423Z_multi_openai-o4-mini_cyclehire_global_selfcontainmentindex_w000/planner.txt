@@ -1,5 +1,0 @@
-1. Aggregate the trip table by borough: for each borough B compute Departures_B = count(StartBorough==B) and SelfContained_B = count(StartBorough==B & EndBorough==B).
-2. Compute ArrivalShare_B = count(EndBorough==B) / total number of trips; then for each B compute ExpectedSelf_B = Departures_B * ArrivalShare_B and SCI_B = SelfContained_B / ExpectedSelf_B.
-3. Build a weight matrix W from the borough adjacency list (wij=1 if borough i and j share a border, else 0), compute n = number of boroughs, x̄ = mean(SCI), S0 = sum_i sum_j wij, and observed Moran’s I = (n/S0)*[Σ_i Σ_j wij*(SCI_i–x̄)*(SCI_j–x̄)]/[Σ_i (SCI_i–x̄)²].
-4. Perform 500 random permutations of the SCI values across borough labels, recompute Moran’s I for each, and calculate the two‐sided p-value as the fraction of permuted |I| ≥ |I_obs|.
-5. Check if p<0.05. If yes, conclude spatial clustering; if not, conclude no clustering.

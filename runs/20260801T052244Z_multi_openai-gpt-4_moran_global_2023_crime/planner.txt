@@ -1,1 +1,0 @@
-The Coder agent should perform these computations and check the computed Moran's I and p-value against the acceptance criteria.

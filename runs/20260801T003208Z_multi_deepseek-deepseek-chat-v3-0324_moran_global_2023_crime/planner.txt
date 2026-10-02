@@ -1,7 +1,0 @@
-1. Load the crime rate data (borough names and crime rates) and the neighbor list (pairs of boroughs that are adjacent)
-2. Create a binary adjacency matrix (1 if boroughs are neighbors, 0 otherwise) and row-standardize it
-3. Calculate Global Moran's I using the formula: 
-   I = (N/W) * ΣΣ w_ij * (x_i - x̄) * (x_j - x̄) / Σ (x_i - x̄)²
-   Where N=number of boroughs, W=sum of all weights, w_ij=weight between i and j, x=crime rate, x̄=mean crime rate
-4. Perform a permutation test (500+ shuffles) to calculate p-value by randomly shuffling crime rates and recomputing Moran's I each time
-5. Compare original Moran's I to null distribution: positive and significant (p<0.05) indicates clustering, otherwise not clustered

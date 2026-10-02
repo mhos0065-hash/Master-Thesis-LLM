@@ -1,9 +1,0 @@
-1. **Data Preparation**: Load the dataset from DATASET_PATH and the borough adjacency list from ADJACENCY_PATH. Replace any missing values in the indicator column with the mean of that column.
-
-2. **Compute Weights**: Create a row-standardized weight matrix (w_ij) based on the adjacency list, where each weight is calculated as w_ij = 1/(number of neighbors of borough i). Calculate S0 as the sum of all weights across every (i,j) pair.
-
-3. **Calculate Global Moran's I**: Using the formula I = (n/S0) * [sum_i sum_j w_ij*(x_i-xbar)*(x_j-xbar)] / [sum_i (x_i-xbar)^2], compute the observed Global Moran's I for the indicator values across the boroughs.
-
-4. **Permutation Test**: Perform at least 200 permutations by shuffling the indicator values across boroughs while keeping the adjacency list constant. For each permutation, recompute the Global Moran's I.
-
-5. **Evaluate Significance**: Calculate the p-value as the fraction of permuted I values that are greater than or equal to the observed I. Determine if significant positive clustering is FOUND (p < 0.05 AND I > 0) or NOT FOUND, and report the computed I and p-value.

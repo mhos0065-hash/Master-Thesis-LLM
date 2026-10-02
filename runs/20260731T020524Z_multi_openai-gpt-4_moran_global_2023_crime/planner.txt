@@ -1,1 +1,0 @@
-Perform the above steps to determine whether crime rates are CLUSTERED or NOT CLUSTERED, and report Moran's I and p-value.

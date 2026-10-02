@@ -1,3 +1,0 @@
-[from fresh profiler run]
-
-The dataset contains various columns with different data types, and it has a specific number of rows. A few sample rows are displayed to provide insight into the data structure.

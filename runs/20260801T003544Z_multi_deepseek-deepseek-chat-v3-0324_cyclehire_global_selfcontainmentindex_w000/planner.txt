@@ -1,5 +1,0 @@
-1. Compute the Self-Containment Index for each borough using the given method (steps 1-5 in the definition).
-2. Create a spatial weights matrix from the borough adjacency list (binary 1/0 indicating adjacency).
-3. Row-standardize the weights matrix so each row sums to 1.
-4. Calculate Global Moran's I using only pandas/numpy (formula: I = (N/W) * (sum(w_ij * (x_i - mean_x) * (x_j - mean_x))) / sum((x_i - mean_x)^2), where W is sum of all weights w_ij).
-5. Perform a permutation test (500+ shuffles) to assess significance by comparing observed I to shuffled distribution. Check if p < 0.05.

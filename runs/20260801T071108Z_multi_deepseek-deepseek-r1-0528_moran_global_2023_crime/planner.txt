@@ -1,7 +1,0 @@
-[CLUSTERED|NOT CLUSTERED] (Moran's I = [value], p = [value])
-
-Acceptance criteria:
-- Weights matrix must be symmetric and row-standardized
-- Exactly 500 permutations
-- p-value calculation includes +1 adjustment
-- Uses only numpy/pandas (no spatial packages)

@@ -1,6 +1,0 @@
-CLUSTERED/NOT CLUSTERED based on Moran's I and p-value.  
-
-Acceptance criteria:  
-- Verify that all boroughs have a valid Self-Containment Index.  
-- Ensure the adjacency list correctly maps borough neighbors.  
-- Confirm Moran's I is calculated correctly (range -1 to 1) and p-value is < 0.05 for significance.

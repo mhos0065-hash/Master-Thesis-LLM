@@ -71,55 +71,58 @@ with a real worked example from the benchmark.
 
 <table>
 <tr>
-<td width="50%">
+<td width="50%" valign="top">
 
 **1. Spatial Correlation Analysis**
 Does a location's value resemble its neighbours' values? The attached figure is tested with
 Local Moran's I (LISA) on 2023 recorded crime and waste generation
 across London boroughs.
 
-<img src="Follow up/summary results/Appendix/figures/Figure5_LISA_Crime_Waste.png" width="100%">
+<img src="Evaluations/Experimental Results/Appendix/figures/Figure5_LISA_Crime_Waste.png" width="100%">
 
 </td>
-<td width="50%">
+<td width="50%" valign="top">
 
 **2. Cross Variable Clustering**
 Do two different variables rise and fall together across neighbouring
-boroughs? The attached figure is tested with Lee's L on gas consumption and waste generation.
+boroughs? The attached figure is tested with Lee's L on gas consumption and waste generation. 
+The two variables are gas consumption and waste generation.
 
-<img src="Follow up/summary results/Appendix/figures/Figure_CrossVariableClustering_Gas_Waste.png" width="100%">
+<img src="Evaluations/Experimental Results/Appendix/figures/Figure_CrossVariableClustering_Gas_Waste.png" width="100%">
 
 </td>
 </tr>
 <tr>
-<td width="50%">
+<td width="50%" valign="top">
 
 **3. Spatial Hotspot Detection**
 Does a location, together with its neighbours, form an unusually
 intense concentration? The figure here is tested with Getis Ord Gi* on GHG emissions.
 
-<img src="Follow up/summary results/Appendix/figures/Figure_SpatialHotspotDetection_GHG.png" width="100%">
+<img src="Evaluations/Experimental Results/Appendix/figures/Figure_SpatialHotspotDetection_GHG.png" width="100%">
 
 </td>
-<td width="50%">
+<td width="50%" valign="top">
 
 **4. Spatial Outlier Detection**
 Does a location's value break sharply from what its neighbourhood
 predicts? The figure here is tested with a masking corrected regression on recorded crime.
 
-<img src="Follow up/summary results/Appendix/figures/Figure_SpatialOutlierDetection_Crime.png" width="100%">
+<img src="Evaluations/Experimental Results/Appendix/figures/Figure_SpatialOutlierDetection_Crime.png" width="100%">
 
 </td>
 </tr>
 <tr>
-<td width="50%" colspan="2">
+<td colspan="2" valign="top">
 
 **5. Spatiotemporal Change Clustering**
 Does the *change* in a variable between two time points cluster
 spatially? The attached figure is tested with Global Moran's I on the change in waste
 generation per capita, 2021 to 2023.
 
-<img src="Follow up/summary results/Appendix/figures/Figure_ChangeClusteringDetection_Waste.png" width="60%">
+<p align="center">
+  <img src="Evaluations/Experimental Results/Appendix/figures/Figure_ChangeClusteringDetection_Waste.png" width="80%">
+</p>
 
 </td>
 </tr>
@@ -135,13 +138,34 @@ being told which method to use.
 
 ```
 .
-├── spatial analysis/          # SpatialInsightAgent implementation
-│   ├── agent_utils.py         #   Profiler, Planner, Coder, Validator, execution loop
-│   ├── score_*.py              #   deterministic ground truth and scoring scripts
-│   └── runs/                  #   raw per chunk execution logs
-├── Follow up/summary results/ # evaluation outputs per configuration
-│   ├── generate_comparison_figures_AllMethods.R   # all result figures
-│   └── Appendix/figures/      #   worked example figures for each task
+├── spatial analysis/                 # SpatialInsightAgent implementation and experiments
+│   ├── code/                         #   all source code
+│   │   ├── test case generations/    #     builds the SpatialInsightBench test cases
+│   │   ├── ground truth/             #     deterministic ground truth computation
+│   │   ├── single and multi turn/    #     Configurations I and II (single agent)
+│   │   ├── ReAct/                    #     Configuration III (zero-shot ReAct Baseline)
+│   │   ├── Multi agent/              #     Configuration IV (SpatialInsightAgent)
+│   │   ├── score/                    #     evidence-grounded scoring scripts
+│   │   ├── Error analysis/           #     error taxonomy classification
+│   │   └── debug/                    #     debugging utilities
+│   ├── data pre-processing/          #   cleaning and normalisation of the six datasets
+│   ├── chunks_csv/                   #   per test case data chunks files given to the models
+│   ├── ground truth/                 #   computed ground truth labels
+│   ├── runs_logs/                    #   raw execution run logs (single, multi turn and SpatialInsightAgent)
+│   ├── ReAct_runs/                   #   raw execution logs (ReAct baseline)
+│   ├── logs_static/                  #   static run logs
+│   ├── results/                      #   model outputs per configuration
+│   ├── Scores/                       #   Evaluation scores for all configurations
+│   ├── Errors/                       #   error taxonomy outputs including quantitative error analysis
+│   ├── Qualitative Error Analysis/   #   case study logs and transcripts
+│   ├── artifacts/                    #   intermediate files produced during runs
+│   ├── .env.example                  #   template for API keys
+│   └── setup_and_run.ps1             #   environment setup and run script (Windows)
+├── Evaluations/                      #   evaluation outputs and figures
+│   ├── Experimental Results/         #   result tables and comparison figures
+        ├── code/                     #   R code for Experimental result analysis
+        ├── Appendix/                 #   R code and csv files for Appendix section
+├── .gitignore
 └── README.md
 ```
 

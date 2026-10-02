@@ -1,1 +1,0 @@
-CLUSTERED/NOT CLUSTERED (Moran's I = {I:.3f}, p = {p:.3f})

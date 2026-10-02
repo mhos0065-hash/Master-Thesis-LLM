@@ -1,5 +1,0 @@
-1. **Load and prepare data**: Load the crime rate dataset (columns: `borough`, `crime_rate`) and the adjacency list (columns: `borough`, `neighbor`). Ensure both datasets cover all 33 boroughs.  
-2. **Construct spatial weights matrix**: Create a binary adjacency matrix (33x33) where `w_ij = 1` if boroughs i and j are neighbors (else `0`). Row-standardize the matrix (each row sums to 1).  
-3. **Compute Global Moran's I**: Calculate Moran's I statistic and its p-value using the `crime_rate` values and the weights matrix. Use a permutation test (≥999 permutations) for significance.  
-4. **Check acceptance criteria**: Verify Moran's I ∈ [-1, 1], p-value ∈ [0, 1], and weights matrix symmetry.  
-5. **Output conclusion**: If p-value < 0.05 and I > 0, output `CLUSTERED`; else output `NOT CLUSTERED` with computed values.

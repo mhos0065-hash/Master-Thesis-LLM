@@ -1,5 +1,0 @@
-1. Construct a spatial weights matrix (33x33) using the neighbor list: set \( w_{ij} = 1 \) if borough \( j \) neighbors borough \( i \), else 0. Row-standardize the matrix.  
-2. Extract the crime rate column as a numeric vector, ensuring borough order matches the weights matrix.  
-3. Compute **Global Moran's I** and its p-value (using permutation test with 999 permutations) via `esda.Moran` (Python) or `spdep::moran.test` (R).  
-4. **Criteria**: If \( p < 0.05 \) and \( I > 0 \), conclude "CLUSTERED"; else "NOT CLUSTERED".  
-5. Output: `"CLUSTERED (Moran's I = {I}, p = {p})"` or `"NOT CLUSTERED (Moran's I = {I}, p = {p})"` with computed values.

@@ -1,1 +1,0 @@
-The Coder agent should follow the above plan to determine whether the crime rates in London boroughs are clustered or not. The computed Moran's I and p-value should be reported in the final answer.

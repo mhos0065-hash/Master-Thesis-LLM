@@ -1,1 +1,0 @@
-If the p-value is less than 0.05, conclude that the Self-Containment Index values are clustered (Moran's I = <value>, p = <value>). If the p-value is greater than or equal to 0.05, conclude that the Self-Containment Index values are not clustered (Moran's I = <value>, p = <value>).

@@ -1,7 +1,0 @@
-# Single-agent report: cyclehire_global_selfcontainmentratio_w007
-
-**Predicted:** False
-
-**Detail:** NOT CLUSTERED (Moran's I = 0.1172, p = 0.136)
-
-**Answer line:** NOT CLUSTERED (Moran's I = 0.1172, p = 0.136)

@@ -1,6 +1,0 @@
-NOT CLUSTERED (Moran's I = {I_obs:.4f}, p = {p_value:.4f})`
-
-**Acceptance criteria checks**: 
-- Weights matrix symmetric (`np.allclose(W, W.T)`) and diagonal zero (`np.all(np.diag(W) == 0)`). 
-- `y` length = 33, `denom > 0`, `S0 > 0`. 
-- Exactly 500 permutations, p-value computed as `(count + 1)/501`.

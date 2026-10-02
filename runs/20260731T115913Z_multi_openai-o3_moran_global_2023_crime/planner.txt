@@ -1,1 +1,0 @@
-CLUSTERED|NOT CLUSTERED (Moran's I = <I>, p = <p_sim>)

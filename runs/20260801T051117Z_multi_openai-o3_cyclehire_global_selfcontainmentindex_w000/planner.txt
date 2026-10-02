@@ -1,1 +1,0 @@
-NOT CLUSTERED (Moran's I = {I_obs:.3f}, p = {p_val:.3f})
