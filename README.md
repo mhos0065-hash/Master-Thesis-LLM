@@ -1,4 +1,4 @@
-# SpatialInsightAgent: Evidence-Grounded Multi-Agent Reasoning for Spatiotemporal Analytics
+# Spatiotemporal Insight Extraction with LLM Agents for Urban Sustainability: The Role of Multi-Agent Pipelines
 
 This repository accompanies a Master of IT research thesis built around
 two contributions: **SpatialInsightBench**, a spatiotemporal insight
@@ -13,54 +13,59 @@ this gap, but it remains unclear how much architecture such a system
 actually needs. This thesis addresses that question directly.
 
 **SpatialInsightBench** is a benchmark of more than 300 test cases
-across five spatiotemporal insight categories, built from real London
-open government data. Every test case has a ground truth computed
+across five spatial and spatiotemporal insight categories, built from
+real London open government data. The application domain is urban
+sustainability: the six datasets cover air quality, energy, emissions,
+waste, crime and cycle hire. Every test case has a ground truth computed
 deterministically, then independently checked by a human analyst, so a
 model's answer can be judged against a verifiable standard rather than a
 generated reference.
 
 **SpatialInsightAgent** is a three role multi agent framework, made up
 of a Profiler, a Planner, and a Coder, coupled to a deterministic
-Validator. The Validator checks that every answer is backed by a
-genuinely computed value, not a fabricated or merely plausible number,
-before that answer is ever accepted.
+Validator. The Validator applies five generic checks to every attempt,
+for example that the reported statistic is a finite computed value and
+that the code reproduces it when re-run. It never checks the correct
+answer or method.
 
 The thesis compares SpatialInsightAgent against three baselines on
 SpatialInsightBench, a single agent answering in one turn, the same
-agent given several turns to self correct, and a Zero-shot ReAct Baseline agent, 
+agent given several turns to self correct, and a zero-shot ReAct baseline, 
 across eight large language models spanning generalist and reasoning augmented
 families.
 
 ## What We Found
 
 - **SpatialInsightAgent achieves the highest score in 94 percent of the
-  model and metric combinations evaluated**, across all five tasks and
-  all eight models, ahead of every baseline on both accuracy and F1.
+  model, task and metric combinations evaluated**, and the highest mean
+  F1 for all eight models.
 - **The gain comes from grounding, not simply better guesses.** A
   verdict only counts as correct if it is also backed by a genuinely
   computed value. Under the baselines, a meaningful share of correct
   looking answers turn out to be ungrounded, correct by chance rather
-  than by computation. Under SpatialInsightAgent, this gap almost
-  closes, since its genericValidator rejects attempts with no real 
-  computation behind them before a verdict is produced.
+  than by computation. Under SpatialInsightAgent, far fewer
+  correct answers are ungrounded, consistent with its Validator
+  rejecting attempts with no real computation behind them. It does have
+  the most reasoning failures, because the Validator checks that a value
+  was computed, not that the method was right.
 - **Letting a single agent self correct over several turns barely
   helps.** Without an external, verifiable check on its own output, a
   model that repeats its own reasoning shows only a modest gain over
   answering in one pass, consistent with prior findings that self
   correction needs real, outside feedback to work.
-- **Reasoning augmented models generally outperform generalist models,
-  but not always.** The gap is widest under SpatialInsightAgent and
-  ReAct, where the agent receives real feedback to act on. Under the
-  simpler baselines, the strongest generalist model beats every
-  reasoning augmented model tested, so model family alone does not
-  decide performance, how the agent is configured matters just as much.
-- **Task difficulty varies sharply.** Models perform best on spatial
-  hotspot and spatial outlier detection, and consistently worst on
-  cross variable clustering, across every configuration tested.
+- **Reasoning augmented models are ahead of generalist models in most
+  comparisons, but not all.** The gap is widest under
+  SpatialInsightAgent. Under the two simplest baselines, the strongest
+  generalist model, Kimi-K2.6, beats every reasoning augmented model, so
+  model family alone does not decide performance.
+- **Task difficulty varies sharply.** Cross variable clustering is the
+  hardest category in every configuration. Spatial outlier detection is
+  the easiest under the three baselines, and spatiotemporal change
+  clustering under SpatialInsightAgent.
 
 ---
 
-## The Five Spatiotemporal Insight Tasks
+## The Five Insight Categories
 
 SpatialInsightBench tests five distinct ways a model can extract meaning
 from spatial data: whether a location resembles its neighbours, whether
@@ -74,7 +79,7 @@ with a real worked example from the benchmark.
 <td width="50%" valign="top">
 
 **1. Spatial Correlation Analysis**
-Does a location's value resemble its neighbours' values? The attached figure is tested with
+Does a location's value resemble its neighbours' values? Shown here:
 Local Moran's I (LISA) on 2023 recorded crime and waste generation
 across London boroughs.
 
@@ -85,8 +90,7 @@ across London boroughs.
 
 **2. Cross Variable Clustering**
 Do two different variables rise and fall together across neighbouring
-boroughs? The attached figure is tested with Lee's L on gas consumption and waste generation. 
-The two variables are gas consumption and waste generation.
+boroughs? Shown here: Lee's L on gas consumption and waste generation.
 
 <img src="Evaluations/Experimental Results/Appendix/figures/Figure_CrossVariableClustering_Gas_Waste.png" width="100%">
 
@@ -97,7 +101,7 @@ The two variables are gas consumption and waste generation.
 
 **3. Spatial Hotspot Detection**
 Does a location, together with its neighbours, form an unusually
-intense concentration? The figure here is tested with Getis Ord Gi* on GHG emissions.
+intense concentration? Shown here: Getis Ord Gi* on GHG emissions.
 
 <img src="Evaluations/Experimental Results/Appendix/figures/Figure_SpatialHotspotDetection_GHG.png" width="100%">
 
@@ -106,7 +110,7 @@ intense concentration? The figure here is tested with Getis Ord Gi* on GHG emiss
 
 **4. Spatial Outlier Detection**
 Does a location's value break sharply from what its neighbourhood
-predicts? The figure here is tested with a masking corrected regression on recorded crime.
+predicts? Shown here: a masking corrected regression on recorded crime.
 
 <img src="Evaluations/Experimental Results/Appendix/figures/Figure_SpatialOutlierDetection_Crime.png" width="100%">
 
@@ -117,7 +121,7 @@ predicts? The figure here is tested with a masking corrected regression on recor
 
 **5. Spatiotemporal Change Clustering**
 Does the *change* in a variable between two time points cluster
-spatially? The attached figure is tested with Global Moran's I on the change in waste
+spatially? Shown here: Global Moran's I on the change in waste
 generation per capita, 2021 to 2023.
 
 <p align="center">
@@ -128,9 +132,8 @@ generation per capita, 2021 to 2023.
 </tr>
 </table>
 
-Every prompt poses its question in plain, method agnostic language, so a
-model must choose and carry out its own statistical approach rather than
-being told which method to use.
+Every prompt poses its question in plain language and does not force a
+statistical method, so a model may choose any suitable one.
 
 ---
 
@@ -143,7 +146,7 @@ being told which method to use.
 │   │   ├── test case generations/    #     builds the SpatialInsightBench test cases
 │   │   ├── ground truth/             #     deterministic ground truth computation
 │   │   ├── single and multi turn/    #     Configurations I and II (single agent)
-│   │   ├── ReAct/                    #     Configuration III (zero-shot ReAct Baseline)
+│   │   ├── ReAct/                    #     Configuration III (zero-shot ReAct baseline)
 │   │   ├── Multi agent/              #     Configuration IV (SpatialInsightAgent)
 │   │   ├── score/                    #     evidence-grounded scoring scripts
 │   │   ├── Error analysis/           #     error taxonomy classification
@@ -161,10 +164,10 @@ being told which method to use.
 │   ├── artifacts/                    #   intermediate files produced during runs
 │   ├── .env.example                  #   template for API keys
 │   └── setup_and_run.ps1             #   environment setup and run script (Windows)
-├── Evaluations/                      #   evaluation outputs and figures
-│   ├── Experimental Results/         #   result tables and comparison figures
-        ├── code/                     #   R code for Experimental result analysis
-        ├── Appendix/                 #   R code and csv files for Appendix section
+├── Evaluations/                      # evaluation outputs and figures
+│   └── Experimental Results/         #   result tables and comparison figures
+│       ├── code/                     #     R code for experimental result analysis
+│       └── Appendix/                 #     R code, CSV files and figures for the Appendix
 ├── .gitignore
 └── README.md
 ```
@@ -175,7 +178,7 @@ If you use SpatialInsightBench or SpatialInsightAgent, please cite the
 accompanying thesis:
 
 ```
-Hossain, M.T. and Ali, M.E. (2026). SpatialInsightAgent: Evidence
-Grounded Multi Agent Reasoning for Spatiotemporal Analytics. Master's
-thesis, Monash University.
+Hossain, M.T. and Ali, M.E. (2026). Spatiotemporal Insight Extraction
+with LLM Agents for Urban Sustainability: The Role of Multi-Agent
+Pipelines. Master's thesis, Monash University.
 ```

@@ -35,7 +35,7 @@ suppressPackageStartupMessages({
 ## ---- 0. CONFIG --------------------------------------------------------------
 
 # Folder containing the 4 input CSVs (edit if needed)
-setwd("D:/Australia/Monash/Semester 4/Research stream/Master Thesis/Master-Thesis-LLM/Follow up/summary results")
+setwd("D:/Australia/Monash/Semester 4/Research stream/Master Thesis/Master-Thesis-LLM/Evaluations/Experimental Results")
 
 getwd()
 list.files(pattern = "\\.csv$", ignore.case = TRUE)
