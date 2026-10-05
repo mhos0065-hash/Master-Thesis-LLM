@@ -92,7 +92,7 @@ across London boroughs.
 Do two different variables rise and fall together across neighbouring
 boroughs? Shown here: Lee's L on gas consumption and waste generation.
 
-<img src="Evaluations/Experimental Results/Appendix/figures/Figure_CrossVariableClustering_Gas_Waste.png" width="100%">
+<img src="Evaluations/Experimental Results/Appendix/figures/Figure_CrossVariableClustering_Gas_Waste_2.png" width="100%">
 
 </td>
 </tr>
