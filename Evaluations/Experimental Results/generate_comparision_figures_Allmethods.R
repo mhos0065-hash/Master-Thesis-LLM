@@ -325,3 +325,69 @@ invisible(Map(function(task_label, task_num) {
 }, task_names, as.integer(names(task_names))))
 
 message("\nAll figures written to: ", normalizePath(output_dir))
+
+
+## ---- 6. MERGED FIGURES: ALL FIVE TASKS IN ONE ROW (16 cm x 7.5 cm) ----------------
+## Drawn at the exact printed size, so \includegraphics[width=\textwidth,height=7.5cm]
+## applies no scaling or distortion. 16 cm = ACL \textwidth.
+
+fig_w <- 16  / 2.54      # inches
+fig_h <- 7.5 / 2.54      # inches
+
+short_labels <- c(
+  "Spatial correlation detection"               = "(a) Spatial\ncorrelation",
+  "Cross variable clustering detection"         = "(b) Cross-variable\nclustering",
+  "Spatial hotspot detection"                   = "(c) Hotspot\ndetection",
+  "Spatial outlier detection"                   = "(d) Outlier\ndetection",
+  "Spatiotemporal change clustering detection"  = "(e) Change\nclustering"
+)
+
+theme_merged <- theme_classic(base_size = 6, base_family = "sans") +
+  theme(
+    axis.title.y     = element_text(size = 6.5, margin = margin(r = 2)),
+    axis.title.x     = element_blank(),
+    axis.text.x      = element_text(size = 5.5, angle = 90, hjust = 1, vjust = 0.5),
+    axis.text.y      = element_text(size = 6),
+    strip.background = element_blank(),
+    strip.text       = element_text(size = 6.5, face = "bold", hjust = 0, lineheight = 0.9),
+    legend.position  = "top",
+    legend.title     = element_blank(),
+    legend.text      = element_text(size = 6.5),
+    legend.key.size  = unit(0.3, "cm"),
+    legend.margin    = margin(0, 0, 0, 0),
+    legend.box.margin = margin(0, 0, -2, 0),
+    panel.spacing    = unit(0.15, "cm"),
+    plot.margin      = margin(2, 3, 2, 2)
+  )
+
+make_merged_figure <- function(metric_col, metric_name, file_stem) {
+  
+  d <- all_data %>%
+    mutate(value = .data[[metric_col]] * 100,
+           panel = factor(unname(short_labels[as.character(task)]),
+                          levels = unname(short_labels))) %>%
+    filter(!is.na(panel))
+  
+  p <- ggplot(d, aes(x = model, y = value, fill = config)) +
+    geom_col(position = position_dodge2(width = 0.85, padding = 0.03),
+             width = 0.85, na.rm = TRUE) +
+    scale_fill_manual(values = config_colors, drop = FALSE) +
+    scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 25),
+                       expand = expansion(mult = c(0, 0.02))) +
+    labs(x = NULL, y = metric_name) +
+    facet_wrap(~ panel, nrow = 1) +
+    guides(fill = guide_legend(nrow = 1)) +
+    theme_merged
+  
+  pdf_dev <- if (capabilities("cairo")) cairo_pdf else "pdf"
+  ggsave(file.path(output_dir, paste0(file_stem, ".png")), plot = p,
+         width = fig_w, height = fig_h, dpi = 600)
+  ggsave(file.path(output_dir, paste0(file_stem, ".pdf")), plot = p,
+         width = fig_w, height = fig_h, device = pdf_dev)
+  
+  message("Saved: ", file.path(output_dir, paste0(file_stem, ".png / .pdf")))
+  invisible(p)
+}
+
+make_merged_figure("f1",       "F1 score (%)",  "merged_f1_all_tasks")
+make_merged_figure("accuracy", "Accuracy (%)",  "merged_accuracy_all_tasks")

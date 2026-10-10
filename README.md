@@ -1,16 +1,18 @@
 # Spatiotemporal Insight Extraction with LLM Agents for Urban Sustainability: The Role of Multi-Agent Pipelines
 
-This repository accompanies a Master of IT research thesis built around
-two contributions: **SpatialInsightBench**, a spatiotemporal insight
-benchmark, and **SpatialInsightAgent**, a multi agent framework proposed
-and evaluated on that benchmark.
+This repository accompanies a Master research thesis and the
+related paper *SpatialInsightBench: Benchmarking LLM Agents for
+Spatiotemporal Insight Extraction from Urban Open Data*. Both are built
+around two contributions: **SpatialInsightBench**, a spatiotemporal
+insight benchmark, and **SpatialInsightAgent**, a multi agent framework
+proposed and evaluated on that benchmark.
 
 ## Overview
 
 Cities generate spatiotemporal data faster than analysts can interpret
 it. Large language model agents have been proposed as a way to close
 this gap, but it remains unclear how much architecture such a system
-actually needs. This thesis addresses that question directly.
+actually needs. This work addresses that question directly.
 
 **SpatialInsightBench** is a benchmark of more than 300 test cases
 across five spatial and spatiotemporal insight categories, built from
@@ -28,7 +30,7 @@ for example that the reported statistic is a finite computed value and
 that the code reproduces it when re-run. It never checks the correct
 answer or method.
 
-The thesis compares SpatialInsightAgent against three baselines on
+The study compares SpatialInsightAgent against three baselines on
 SpatialInsightBench, a single agent answering in one turn, the same
 agent given several turns to self correct, and a zero-shot ReAct baseline, 
 across eight large language models spanning generalist and reasoning augmented
@@ -58,10 +60,11 @@ families.
   SpatialInsightAgent. Under the two simplest baselines, the strongest
   generalist model, Kimi-K2.6, beats every reasoning augmented model, so
   model family alone does not decide performance.
-- **Task difficulty varies sharply.** Cross variable clustering is the
-  hardest category in every configuration. Spatial outlier detection is
-  the easiest under the three baselines, and spatiotemporal change
-  clustering under SpatialInsightAgent.
+- **Task difficulty varies sharply.** Spatial correlation and cross
+  variable clustering are the two hardest categories in every
+  configuration. Spatial outlier detection is the easiest under the
+  three baselines, and spatiotemporal change clustering under
+  SpatialInsightAgent.
 
 ---
 
@@ -172,13 +175,3 @@ statistical method, so a model may choose any suitable one.
 └── README.md
 ```
 
-## Citation
-
-If you use SpatialInsightBench or SpatialInsightAgent, please cite the
-accompanying thesis:
-
-```
-Hossain, M.T. and Ali, M.E. (2026). Spatiotemporal Insight Extraction
-with LLM Agents for Urban Sustainability: The Role of Multi-Agent
-Pipelines. Master's thesis, Monash University.
-```

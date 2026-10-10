@@ -35,7 +35,7 @@ suppressPackageStartupMessages({
 ## ---- 0. CONFIG --------------------------------------------------------------
 
 # Folder containing the 4 input CSVs (edit if needed)
-setwd("D:/Australia/Monash/Semester 4/Research stream/Master Thesis/Master-Thesis-LLM/Follow up/summary results")
+setwd("D:/Australia/Monash/Semester 4/Research stream/Master Thesis/Master-Thesis-LLM/Evaluations/Experimental Results")
 
 getwd()
 list.files(pattern = "\\.csv$", ignore.case = TRUE)
@@ -327,13 +327,21 @@ theme_pub <- theme_classic(base_size = 13, base_family = "sans") +
 # message("\nAll figures written to: ", normalizePath(output_dir))
 
 
-## ---- 6. GENERALIST VS REASONING HEATMAP --------------------------------------
-## Sequential ColorBrewer palette (YlOrRd), dark = high, light = low, this is
-## the standard convention for sequential palettes and is colourblind safe
-## for every class (unlike qualitative palettes, where only a few classes
-## are). Family labels rendered on the left via facet strip switching. No
-## value here is averaged; every cell is one real model, configuration,
-## category F1 score.
+## ---- 6. GENERALIST VS REASONING HEATMAPS (F1 AND ACCURACY) ---------------------
+## Replaces the old section 6. One function draws both heatmaps, so F1 and
+## accuracy share the same palette, 0-100 scale, layout and labels.
+##
+## Palette: ColorBrewer sequential "YlOrRd" (Harrower & Brewer, 2003), unchanged,
+## dark = high, light = low. No value is averaged; every cell is one real
+## model, configuration, category score.
+##
+## Cell-label colour: white text only on the darkest cells. With YlOrRd the
+## mid-range cells are orange, where white text has poor contrast (about
+## 2.5-3.5:1 between 55 and 70), so labels switch to white only above 80, where
+## white overtakes black (computed with the WCAG contrast ratio, Lab-space
+## interpolation of the 7-colour ramp used by scale_fill_distiller). The old
+## rule was 55; to restore it, set label_white_above <- 55.
+label_white_above <- 80
 
 model_family <- c(
   "DeepSeek V3"  = "Generalist", "GPT 4o mini" = "Generalist",
@@ -350,24 +358,20 @@ category_labels <- c(
   "Spatiotemporal change clustering detection" = "Change Clu"
 )
 
-# Explicit top-to-bottom display order per family. ggplot draws discrete y
-# axes bottom-to-top, so each family's block is listed here bottom first;
-# facet_grid(scales = "free_y") shows only that family's four levels in
-# its own panel, so the two families' orderings don't interfere with
-# each other despite sharing one factor.
+# Explicit top-to-bottom display order per family (ggplot draws discrete y axes
+# bottom-to-top, so each family's block is listed bottom first).
 model_display_order <- c(
   "Qwen3 32B", "o4 mini", "o3", "DeepSeek R1",              # reasoning: bottom -> top
   "Llama 3.1 8B", "Kimi K2.6", "GPT 4o mini", "DeepSeek V3" # generalist: bottom -> top
 )
 
-heat_data <- all_data %>%
+heat_base <- all_data %>%
   filter(task %in% names(category_labels)) %>%
   mutate(
     family   = factor(model_family[as.character(model)],
                       levels = c("Generalist", "Reasoning augmented")),
     model    = factor(as.character(model), levels = model_display_order),
-    category = factor(category_labels[task], levels = unname(category_labels)),
-    f1_pct   = f1 * 100
+    category = factor(category_labels[task], levels = unname(category_labels))
   )
 
 abbrev_note <- paste0(
@@ -377,32 +381,43 @@ abbrev_note <- paste0(
   "change clustering detection."
 )
 
-p_heat <- ggplot(heat_data, aes(x = category, y = model, fill = f1_pct)) +
-  geom_tile(colour = "white", linewidth = 0.4) +
-  geom_text(aes(label = sprintf("%.0f", f1_pct),
-                colour = f1_pct > 55), size = 2.6, show.legend = FALSE) +
-  scale_colour_manual(values = c(`TRUE` = "white", `FALSE` = "black")) +
-  facet_grid(family ~ config, scales = "free_y", space = "free_y",
-             switch = "y") +
-  scale_fill_distiller(palette = "YlOrRd", direction = 1,
-                       name = "F1 score (%)", limits = c(0, 100)) +
-  labs(x = NULL, y = NULL, caption = abbrev_note) +
-  theme_minimal(base_size = 11) +
-  theme(
-    axis.text.x       = element_text(angle = 45, hjust = 1, size = 8),
-    axis.text.y       = element_text(size = 8),
-    strip.text        = element_text(face = "bold", size = 9),
-    strip.placement   = "outside",
-    strip.text.y.left = element_text(angle = 0, face = "bold", size = 9),
-    panel.grid        = element_blank(),
-    legend.position    = "right",
-    plot.caption       = element_text(hjust = 0, size = 10, colour = "grey30",
-                                      margin = margin(t = 8))
-  )
+round_half_up <- function(x, digits = 0) floor(x * 10^digits + 0.5 + 1e-9) / 10^digits
 
-ggsave(file.path(output_dir, "family_f1_heatmap.png"), plot = p_heat,
-       width = 11, height = 5.5, dpi = 300)
-message("Saved: ", file.path(output_dir, "family_f1_heatmap.png"))
+make_family_heatmap <- function(metric_col, metric_label, file_name) {
+  
+  d <- heat_base %>% mutate(value_pct = .data[[metric_col]] * 100)
+  
+  p <- ggplot(d, aes(x = category, y = model, fill = value_pct)) +
+    geom_tile(colour = "white", linewidth = 0.4) +
+    geom_text(aes(label = sprintf("%.0f", round_half_up(value_pct)),
+                  colour = value_pct > label_white_above),
+              size = 2.6, show.legend = FALSE) +
+    scale_colour_manual(values = c(`TRUE` = "white", `FALSE` = "black")) +
+    facet_grid(family ~ config, scales = "free_y", space = "free_y",
+               switch = "y") +
+    scale_fill_distiller(palette = "YlOrRd", direction = 1,
+                         name = metric_label, limits = c(0, 100)) +
+    labs(x = NULL, y = NULL, caption = abbrev_note) +
+    theme_minimal(base_size = 11) +
+    theme(
+      axis.text.x       = element_text(angle = 45, hjust = 1, size = 8),
+      axis.text.y       = element_text(size = 8),
+      strip.text        = element_text(face = "bold", size = 9),
+      strip.placement   = "outside",
+      strip.text.y.left = element_text(angle = 0, face = "bold", size = 9),
+      panel.grid        = element_blank(),
+      legend.position   = "right",
+      plot.caption      = element_text(hjust = 0, size = 10, colour = "grey30",
+                                       margin = margin(t = 8))
+    )
+  
+  ggsave(file.path(output_dir, file_name), plot = p,
+         width = 11, height = 5.5, dpi = 300)
+  message("Saved: ", file.path(output_dir, file_name))
+}
+
+make_family_heatmap("f1",       "F1 score (%)", "family_f1_heatmap.png")
+make_family_heatmap("accuracy", "Accuracy (%)", "family_accuracy_heatmap.png")
 
 
 ## ---- 8. GROUNDING VS CORRECTNESS SCATTER (F1) ---------------------------------

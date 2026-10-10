@@ -57,6 +57,11 @@ this re-check to NOT have returned a confirmed failure (True or
 inconclusive both pass; only a confirmed False disqualifies), same
 tri-state handling as bivariate.
 
+The evidence check applies to BOTH verdicts: a correct NOT CLUSTERED
+answer must also cite a real, finite, plausible statistic that passes
+the shift-invariance re-check, since "no pattern" still rests on a
+computed statistic and p-value (an earlier version exempted it).
+
 Note on p-values: the task prompt itself warns that permutation-based
 p-values need >=500 shuffles to be stable, i.e. p-values carry real,
 expected Monte Carlo noise even from a correct implementation. This
@@ -87,8 +92,8 @@ MANIFEST2_PATH = "chunks_csv/changespillover/manifest2.csv"  # additional chunks
 
 
 #Multi agent
-RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
-OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
+#RESULTS_CSV = "results/multi agent/changespillover_results_multiagent_with_method.csv"
+#OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
 
 #Multi turn
 #RESULTS_CSV = "results/single agent/changespillover_results_multi_with_method.csv"
@@ -99,8 +104,8 @@ OUT_CSV = "Scores/multi agent/changespillover_scoring_summary_multiagent.csv"
 #OUT_CSV = "Scores/single turn/changespillover_scoring_summary.csv"
 
 #ReAct multi turn
-#RESULTS_CSV = "ReAct/changespillover_results_react.csv"
-#OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
+RESULTS_CSV = "ReAct/changespillover_results_react.csv"
+OUT_CSV = "Scores/ReAct/changespillover_scoring_summary_ReAct.csv"
 
 # Maps attach_statistical_method_changespillover.py's free-text labels
 # onto the (fewer) method names that actually have ground truth
@@ -361,21 +366,18 @@ def load():
     df["correct"] = (~df["ambiguous"]) & (df["predicted_bool"] == df["gt_clustered_used"])
 
     def _correct_ef_value(row):
-        # Match compute_metrics()'s OWN lenient rule for
-        # f1_evidence_filtered/precision_ef/recall_ef -- a NOT_CLUSTERED
-        # (False) claim doesn't need real evidence to count, since
-        # there's nothing to fabricate when claiming "nothing was
-        # found"; only a CLUSTERED (True) claim does. Confirmed
-        # necessary (found via the identical bug in score_spatial_results.py):
-        # without this, correct_evidence_filtered used a STRICTER bar
-        # than f1_evidence_filtered, which already exempts False
-        # predictions via compute_metrics' keep_as_is logic -- causing
-        # accuracy_evidence_filtered to read systematically below
-        # f1_evidence_filtered for every model, not a real finding.
+        # A correct NOT_CLUSTERED (False) verdict is NO LONGER exempt
+        # from the evidence check: it must also cite a real, finite,
+        # plausible statistic that survives the shift-invariance
+        # re-execution, exactly like a CLUSTERED (True) verdict. A
+        # "no pattern" claim still rests on a computed statistic and
+        # p-value, so an invented or never-computed number must not earn
+        # credit. compute_metrics()'s keep_as_is rule applies the SAME
+        # requirement to f1_evidence_filtered/precision_ef/recall_ef, so
+        # accuracy_evidence_filtered and f1_evidence_filtered share one
+        # definition of "evidenced".
         if row["ambiguous"]:
             return False
-        if row["predicted_bool"] == False and row["correct"]:  # noqa: E712
-            return True
         return bool(row["correct"] and row["has_evidence_bool"])
 
     df["correct_evidence_filtered"] = df.apply(_correct_ef_value, axis=1)
@@ -404,7 +406,10 @@ def compute_metrics(g, use_evidence_filter):
     has_evidence = g["has_evidence_bool"].astype(bool)
 
     if use_evidence_filter:
-        keep_as_is = g["predicted_bool"].isna() | (g["predicted_bool"] == False) | has_evidence  # noqa: E712
+        # NOT_CLUSTERED (False) predictions are held to the SAME evidence
+        # requirement as CLUSTERED (True) ones -- only a missing
+        # prediction passes through untouched.
+        keep_as_is = g["predicted_bool"].isna() | has_evidence
         y_pred = g["predicted_bool"].where(keep_as_is, None)
     else:
         y_pred = g["predicted_bool"]

@@ -47,7 +47,7 @@ suppressPackageStartupMessages({
 ## Identical to the original script -- same folder, same file mapping,
 ## same task names, same model order/labels, same config order/colours.
 
-setwd("D:/Australia/Monash/Semester 4/Research stream/Master Thesis/Master-Thesis-LLM/Follow up/summary results")
+setwd("D:/Australia/Monash/Semester 4/Research stream/Master Thesis/Master-Thesis-LLM/Evaluations/Experimental Results")
 
 getwd()
 list.files(pattern = "\\.csv$", ignore.case = TRUE)
@@ -286,7 +286,7 @@ p_scatter <- ggplot(scatter_data, aes(x = evidence_rate, y = f1_pct,
   scale_colour_manual(values = config_colors, name = NULL) +
   scale_x_continuous(limits = c(0, 100), expand = expansion(mult = c(0.01, 0.03))) +
   scale_y_continuous(limits = c(0, 100), expand = expansion(mult = c(0.01, 0.03))) +
-  labs(x = "Evidence rate (%)", y = "F1 score (%)") +
+  labs(x = "Evidence rate (%)", y = "Outcome\u2013based F1 score  (%)") +
   theme_classic(base_size = 12) +
   theme(
     legend.position = "bottom",

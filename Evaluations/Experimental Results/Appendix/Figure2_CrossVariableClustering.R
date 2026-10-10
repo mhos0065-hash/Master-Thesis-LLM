@@ -90,10 +90,15 @@ lee_local <- lee(zx, zy, lw, n_obs, S2, zero.policy = TRUE)
 global_L  <- lee_local$L                     # global Lee's L statistic
 local_L   <- lee_local$localL                # per-borough local values
 
-lee_perm <- lee.mc(zx, zy, lw, nsim = 999, zero.policy = TRUE)
+# Two-sided test, matching the ground truth script (bivariate_moran_all_years.R).
+# spdep::lee.mc() defaults to alternative = "greater" (upper tail only), under
+# which a significantly NEGATIVE L would print a p-value close to 1.
+set.seed(1)
+lee_perm <- lee.mc(zx, zy, lw, nsim = 999, zero.policy = TRUE,
+                   alternative = "two.sided")
 global_p <- lee_perm$p.value
 
-cat(sprintf("\nGlobal Lee's L = %.4f, permutation p-value = %.4f\n",
+cat(sprintf("\nGlobal Lee's L = %.4f, two-sided permutation p-value = %.4f\n",
             global_L, global_p))
 
 # ── Bivariate cluster classification (GeoDa-style quadrants) ───
@@ -300,7 +305,7 @@ caption_text <- paste0(
   "(a) Bivariate cluster map: boroughs where Gas Consumption (X) is significantly linked to neighbouring Waste Generation (Y); No data = City of London.\n",
   "(b) Scatter: each borough's standardised Gas Consumption (x) vs. the mean standardised Waste Generation of its neighbours (y); red line = fitted slope.\n",
   "HH/LL = high/low X with high/low neighbouring Y; HL/LH = high X with low neighbouring Y, or low X with high neighbouring Y; ns = not significant.\n",
-  sprintf("Global Lee's L = %.3f (999-permutation p = %.3f); local tests: 999 permutations, p < %.2f; n = %d boroughs.",
+  sprintf("Global Lee's L = %.3f (999-permutation two-sided p = %.3f); local tests: 999 permutations, p < %.2f; n = %d boroughs.",
           global_L, global_p, p_thresh, sum(!missing_mask))
 ) %>% str_wrap(width = 200)
 

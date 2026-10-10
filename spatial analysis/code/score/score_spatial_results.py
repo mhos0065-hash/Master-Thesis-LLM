@@ -46,6 +46,12 @@ now additionally requires this re-check to NOT have returned a
 confirmed failure (True or inconclusive both pass; only a confirmed
 False disqualifies), same tri-state handling as bivariate.
 
+For GLOBAL rows the evidence check applies to BOTH verdicts: a correct
+NOT CLUSTERED answer must also cite a real, finite, plausible statistic
+that passes the shift-invariance re-check, since "no pattern" still
+rests on a computed statistic and p-value (an earlier version exempted
+it). LOCAL rows were already strict.
+
 Usage:
     python score_spatial_results.py
 Reads:  <mode>_results_with_method.csv (must include `statistical_method`
@@ -66,8 +72,8 @@ MANIFEST_PATH = "chunks_csv/manifest.csv"  # must have csv_path / adjacency_path
 MANIFEST2_PATH = "chunks_csv/manifest2.csv"  # additional chunks; same schema, appended for scoring
 
 # ReAct multi-turn agent
-RESULTS_CSV = "ReAct/spatial_correlation_results_react_with_method.csv"
-OUT_CSV = "Scores/ReAct/scoring_spatial_summary_react.csv"
+#RESULTS_CSV = "ReAct/spatial_correlation_results_react_with_method.csv"
+#OUT_CSV = "Scores/ReAct/scoring_spatial_summary_react.csv"
 
 # Multi agent
 #RESULTS_CSV = "results/multi agent/spatial_correlation_results_multiagent_with_method.csv"
@@ -78,8 +84,8 @@ OUT_CSV = "Scores/ReAct/scoring_spatial_summary_react.csv"
 #OUT_CSV = "Scores/multi turn/scoring_spatial_summary.csv"
 
 # Single turn
-#RESULTS_CSV = "spatial_results_with_method.csv"
-#OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
+RESULTS_CSV = "spatial_results_with_method.csv"
+OUT_CSV = "Scores/single turn/scoring_spatial_summary.csv"
 
 METHOD_NAME_MAP_GLOBAL = {
     "Global Moran's I": "Global Moran's I",
@@ -454,21 +460,18 @@ def load():
         # the way there is for a bare boolean -- keep the strict rule.
         if row["is_local"]:
             return row["correct"] * float(row["has_evidence_bool"])
-        # GLOBAL rows: match compute_metrics()'s OWN lenient rule for
-        # f1_evidence_filtered/precision_ef/recall_ef -- a NOT_CLUSTERED
-        # (False) claim doesn't need real evidence to count, since
-        # there's nothing to fabricate when claiming "nothing was
-        # found"; only a CLUSTERED (True) claim does. Confirmed
-        # necessary: without this, correct_evidence_filtered used a
-        # STRICTER bar than f1_evidence_filtered, causing
-        # accuracy_evidence_filtered to read far below f1_evidence_filtered
-        # for EVERY model in this dataset, not just one -- a systematic
-        # inconsistency between two metrics that are supposed to share
-        # the same definition of "evidenced", not two different ones.
+        # GLOBAL rows: a correct NOT_CLUSTERED (False) verdict is NO
+        # LONGER exempt from the evidence check -- it must also cite a
+        # real, finite, plausible statistic that survives the shift-
+        # invariance re-execution, exactly like a CLUSTERED (True)
+        # verdict. A "no pattern" claim still rests on a computed
+        # statistic and p-value, so an invented or never-computed number
+        # must not earn credit. compute_metrics()'s keep_as_is rule
+        # applies the SAME requirement to f1_evidence_filtered/
+        # precision_ef/recall_ef, so accuracy_evidence_filtered and
+        # f1_evidence_filtered share one definition of "evidenced".
         if row["ambiguous"]:
             return 0.0
-        if row["predicted_bool"] == False and row["correct"] >= 1.0:  # noqa: E712
-            return 1.0
         return row["correct"] * float(row["has_evidence_bool"])
 
     df["correct_evidence_filtered"] = df.apply(_correct_ef_value, axis=1)
@@ -513,7 +516,10 @@ def compute_metrics(g, use_evidence_filter):
         y_true = g_global["gt_clustered_used"].astype(bool)
         has_evidence = g_global["has_evidence_bool"].astype(bool)
         if use_evidence_filter:
-            keep_as_is = g_global["predicted_bool"].isna() | (g_global["predicted_bool"] == False) | has_evidence  # noqa: E712
+            # NOT_CLUSTERED (False) predictions are held to the SAME
+            # evidence requirement as CLUSTERED (True) ones -- only a
+            # missing prediction passes through untouched.
+            keep_as_is = g_global["predicted_bool"].isna() | has_evidence
             y_pred = g_global["predicted_bool"].where(keep_as_is, None)
         else:
             y_pred = g_global["predicted_bool"]
