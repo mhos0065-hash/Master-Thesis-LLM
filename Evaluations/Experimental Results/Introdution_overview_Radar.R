@@ -10,7 +10,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-CSV_PATH <- "Follow up_summary_single agent_single_turn.csv"
+CSV_PATH <- "Follow up_summary_multi_agent.csv"
 
 target_tasks <- c(
   "1. spatial correlation detection"              = "Spatial\nCorrelation",
@@ -147,7 +147,7 @@ p <- ggplot() +
   scale_color_manual(values = cols) +
   scale_x_continuous(breaks = unname(angle_lookup), labels = names(angle_lookup),
                      limits = c(0, 2 * pi)) +
-  scale_y_continuous(limits = c(0, 112), breaks = seq(0, 100, 25), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 125), breaks = seq(0, 100, 25), expand = c(0, 0)) +
   coord_radar() +
   theme_void(base_size = 13) +
   theme(
@@ -163,5 +163,5 @@ p <- ggplot() +
   ) +
   guides(color = guide_legend(nrow = 4, byrow = TRUE, override.aes = list(linewidth = 1.4)))
 
-ggsave("baseline-radar.png", p,
+ggsave("multiagent-radar.png", p,
        width = 6.2, height = 6.8, dpi = 380, bg = "white")

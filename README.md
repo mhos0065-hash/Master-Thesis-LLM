@@ -1,10 +1,9 @@
 # Spatiotemporal Insight Extraction with LLM Agents for Urban Sustainability: The Role of Multi-Agent Pipelines
 
-This repository accompanies a Master research thesis and the
-related paper *SpatialInsightBench: Benchmarking LLM Agents for
-Spatiotemporal Insight Extraction from Urban Open Data*. Both are built
-around two contributions: **SpatialInsightBench**, a spatiotemporal
-insight benchmark, and **SpatialInsightAgent**, a multi agent framework
+This repository accompanies the paper *SpatialInsightBench: Benchmarking LLM Agents for
+Spatiotemporal Insight Extraction from Urban Open Data*. It has two
+contributions: **SpatialInsightBench**, a spatiotemporal insight
+benchmark, and **SpatialInsightAgent**, a multi agent framework
 proposed and evaluated on that benchmark.
 
 ## Overview
